@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="insertValue" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nValue" type="num" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  if nDistance[0]!=-1
+    // insert
+    insert(nDistance[x_nIndex])
+    insert(nCoeff[x_nIndex])
+    insert(nJoint[x_nIndex])
+    insert(nHome[x_nIndex])
+  endIf
+  // copy
+  nCoeff[x_nIndex]=x_nValue[3]
+  nDistance[x_nIndex]=x_nValue[2]
+  nJoint[x_nIndex]=x_nValue[1]
+  nHome[x_nIndex]=x_nValue
+end]]></Code>
+  </Program>
+</Programs>

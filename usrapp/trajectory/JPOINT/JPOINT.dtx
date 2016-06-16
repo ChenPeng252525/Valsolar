@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="sItems" access="public" xsi:type="array" type="string" size="1" />
+    <Data name="sPathTemplate" access="private" xsi:type="array" type="string" size="1">
+      <Value key="0" value="Disk://kernel/template/JPOINT" />
+    </Data>
+    <Data name="bMoveType" access="public" xsi:type="array" type="bool" size="3" />
+    <Data name="bStepping" access="public" xsi:type="array" type="bool" size="1" />
+    <Data name="pToGo" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="pLastPoint" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="nom_speed" access="private" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" accel="50" vel="50" decel="50" blend="off" />
+    </Data>
+    <Data name="nTcpAction" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="pPointTo" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="sTrajType" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sMenu" access="private" xsi:type="array" type="string" size="8" />
+    <Data name="mMdesc" access="private" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" accel="25" vel="25" decel="25" blend="off" />
+    </Data>
+    <Data name="bToSave" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="tcpInstr" access="private" xsi:type="array" type="InstrItem" size="1">
+      <Value key="0">
+        <Field name="sType" xsi:type="array" type="string" size="1" />
+        <Field name="sData" xsi:type="array" type="string" size="1" />
+      </Value>
+    </Data>
+    <Data name="tTraj" access="public" xsi:type="array" type="Trajectory" size="1">
+      <Value key="0">
+        <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+          <Value key="0">
+            <Field name="distance" xsi:type="array" type="num" size="1" />
+            <Field name="moveType" xsi:type="array" type="num" size="1" />
+            <Field name="nTime" xsi:type="array" type="num" size="1" />
+            <Field name="nStop" xsi:type="array" type="num" size="1" />
+            <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+            <Field name="comment" xsi:type="array" type="string" size="1" />
+            <Field name="toStop" xsi:type="array" type="bool" size="1" />
+            <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+              <Value key="0" tmax="300" rmax="9999" leave="30" reach="30" />
+            </Field>
+            <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+              <Value key="0">
+                <Field name="sType" xsi:type="array" type="string" size="1" />
+                <Field name="sData" xsi:type="array" type="string" size="1" />
+              </Value>
+              <Value key="1">
+                <Field name="sType" xsi:type="array" type="string" size="1" />
+                <Field name="sData" xsi:type="array" type="string" size="1" />
+              </Value>
+              <Value key="2">
+                <Field name="sType" xsi:type="array" type="string" size="1" />
+                <Field name="sData" xsi:type="array" type="string" size="1" />
+              </Value>
+            </Field>
+            <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+          </Value>
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1" />
+        <Field name="nId" xsi:type="array" type="num" size="1" />
+      </Value>
+    </Data>
+    <Data name="nIndex" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nKey" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="jEditPoint" access="private" xsi:type="array" type="TrajJoint" size="1">
+      <Value key="0">
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1" />
+        <Field name="tData" xsi:type="array" type="TrajJointItem" size="1">
+          <Value key="0">
+            <Field name="jJoint" xsi:type="array" type="jointRx" size="1" />
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="distance" xsi:type="array" type="num" size="1" />
+                <Field name="moveType" xsi:type="array" type="num" size="1" />
+                <Field name="nTime" xsi:type="array" type="num" size="1" />
+                <Field name="nStop" xsi:type="array" type="num" size="1" />
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+                <Field name="comment" xsi:type="array" type="string" size="1" />
+                <Field name="toStop" xsi:type="array" type="bool" size="1" />
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="9999" rmax="9999" leave="30" reach="30" />
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="1">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="2">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+              </Value>
+            </Field>
+          </Value>
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1" />
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1" />
+      </Value>
+    </Data>
+    <Data name="sTrajCycle" access="private" xsi:type="array" type="string" size="1" />
+  </Datas>
+</Database>

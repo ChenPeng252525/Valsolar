@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="save" access="public">
+    <Description><![CDATA[save the process list]]></Description>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // setMutex
+  setMutex(cycleStatus:bMutex)
+  // save IT
+  if saveCycle:libSave()!=0
+    delay(0.5)
+    i=saveCycle:libSave()
+    if i!=0
+      popUpMsg("libsave cycle error: "+toString("",i))
+      logMsg("[KERNEL] CYCLE:Error saving cycle "+toString("",i))
+    endIf
+  endIf
+  //release
+  cycleStatus:bMutex=false
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

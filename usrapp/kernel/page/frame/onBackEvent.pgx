@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onBackEvent">
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // rename
+  //
+  if nFrame>0
+    l_sItem=saveData:fFrameItem[nFrame].sName
+    if l_sItem!=""
+      i=find(sEvent,l_sItem)
+    else
+      i=len(toString("",nFrame))+3
+    endIf
+    if i!=-1
+      // clean the line
+      call use:listcursor(use:nView,false)
+      // read the name
+      call use:read(40-use:nBottomX+i-1,nView+1,l_sItem,10,false)
+      saveData:fFrameItem[nFrame].sName=l_sItem
+      call buildList()
+      use:bUseRefresh=true
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

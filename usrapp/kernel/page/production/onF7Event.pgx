@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sProgram" type="string" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    // STOP/START CYCLE
+    //
+    if cycleStatus:bCycle
+      logMsg("[KERNEL] INTERFACE:Stop cycle")
+      stopMove()
+      cycleStatus:bToStop=true
+      call use:timerDialog(" STOP CYCLE ",1)
+      watch(cycleStatus:bToStop==false,1)
+    else
+      // start cycle
+      l_nZero=0
+      call processList:getCycle(l_sProgram,l_nZero,l_nZero,l_nZero,1)
+      if l_sProgram!=""
+        //if (cycleStatus:nWorkingMode==3 or cycleStatus:nWorkingMode==4)
+        logMsg("[KERNEL] INTERFACE:Start cycle")
+        cycleStatus:bToStart=true
+        wait(cycleStatus:bToStart==false)
+      else
+        // program in the process List
+        call language:message(l_sMessage,91)
+        popUpMsg(l_sMessage)
+      endIf
+    endIf
+    call use:nullKey(nKey)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

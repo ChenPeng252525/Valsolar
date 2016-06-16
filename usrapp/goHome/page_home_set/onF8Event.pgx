@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF8Event">
+    <Locals>
+      <Local name="l_bUndo" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sNew" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if bButton[7]
+    // new one
+    call alreadyExist(l_sNew,l_bUndo)
+    if !l_bUndo and l_sNew!=""
+      call set:new(l_sNew,l_nResult)
+      if l_nResult==0
+          set:bWizard=true
+        if save:nBoxType==1
+          call Wizard_smlBox(l_sNew,l_nResult)
+        elseIf save:nBoxType==2
+          call set:editBigData(l_sNew,l_nResult) 
+        endIf 
+        ///////////////////////////////////
+        if l_nResult==0
+          call language2:message(l_sMessage,4)
+          call use:timerDialog(l_sMessage,0)
+          call set:onSave() 
+          sEvent=l_sNew
+          call buildList()
+        else
+           call set:delete(l_sNew,l_nResult)
+           call set:onSave() 
+       endIf
+      endIf
+    endIf 
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="editBigData" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sIsEanble" type="string" xsi:type="array" size="6" />
+      <Local name="l_n" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nItemLow" type="num" xsi:type="array" size="6" />
+      <Local name="l_nItemHigh" type="num" xsi:type="array" size="6" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sFindEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nValueMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValueMax" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty1" type="string" xsi:type="array" size="1" />
+      <Local name="l_nMinX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMark" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_bResult" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_jPoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_bPoint" type="bool" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  nIndex=0
+  use:nView=0
+  cls()
+  x_nResult=-1
+  l_nStep=0
+  //////////////////////////////////////
+  bFaceA=true
+  bSetMax=false 
+  if bWizard==true
+     big:box[x_sName].jToHome[size(big:box[x_sName].jToHome)-1]=jHome:tTraj["home"].tData.jJoint[size(jHome:tTraj["home"].tData)-1]
+     big:box[x_sName].nIndexGun=saveData:nIndexTool
+  endIf 
+  while l_nStep<10
+    switch l_nStep
+      case -1
+        x_nResult=-1
+        resetMotion()
+        return
+      break
+      case 0
+        call language2:message(sMessage,69)
+        title(sMessage)
+        do
+          if bFaceA
+            cls()
+            call use:type(31,13,"<<")
+            call use:type(36,13,">>")
+            call use:setSizeList(21,1,17,6)
+            call use:setView(false)
+            call language2:message(l_sItem,62)
+            call use:listcreate(l_sItem)
+            for l_n=0 to 5
+              if big:box[x_sName].bPosEnabCheck[l_n]
+                l_sIsEanble[l_n]=""
+              else 
+                l_sIsEanble[l_n]="!"
+              endIf 
+              l_nItemLow[l_n]=big:box[x_sName].nRobCtrlAreaNum[l_n*2]
+              l_nItemHigh[l_n]=big:box[x_sName].nRobCtrlAreaNum[l_n*2+1]
+            endFor 
+            
+            sFrmRob[0]="<Rob_X<"
+            sFrmRob[1]="<Rob_Y<"
+            sFrmRob[2]="<Rob_Z<"
+            sFrmRob[3]="<Rob_RX<"
+            sFrmRob[4]="<Rob_RY<"
+            sFrmRob[5]="<Rob_RZ<"
+            for l_n=0 to 5
+              sFrmRob[l_n]=l_sIsEanble[l_n]+toString("",l_nItemLow[l_n])+sFrmRob[l_n]+toString("",l_nItemHigh[l_n])
+            endFor 
+            call use:listadd(sFrmRob)
+            call use:listupdate1(0)
+            //////////////////////////////////////
+            call use:setSizeList(0,1,17,6)
+            call use:setView(false)
+            call language2:message(l_sItem,63)
+            call use:listcreate(l_sItem)
+            for l_n=0 to 5
+              if big:box[x_sName].bJtEnabCheck[l_n]
+                l_sIsEanble[l_n]=""
+              else 
+                l_sIsEanble[l_n]="!"
+              endIf 
+              l_nItemLow[l_n]=big:box[x_sName].nRobCtrlHJtsNum[l_n*2]
+              l_nItemHigh[l_n]=big:box[x_sName].nRobCtrlHJtsNum[l_n*2+1]
+            endFor 
+            sJointLimt[0]="<joint1<"
+            sJointLimt[1]="<joint2<"
+            sJointLimt[2]="<joint3<"
+            sJointLimt[3]="<joint4<"
+            sJointLimt[4]="<joint5<"
+            sJointLimt[5]="<joint6<"
+            for l_n=0 to 5
+              sJointLimt[l_n]=l_sIsEanble[l_n]+toString("",l_nItemLow[l_n])+sJointLimt[l_n]+toString("",l_nItemHigh[l_n])
+            endFor 
+            call use:listadd(sJointLimt)
+            call use:listupdate(0)
+            if !bSetMax
+              i=get()
+            endIf 
+            call use:listevent(i,nIndex,sEvent)
+            if i==268
+              bFaceA=false
+            endIf 
+            delay(0)
+          else 
+            cls()
+            call use:type(30,13,"<<")
+            call use:type(35,13,">>")
+            call use:setSizeList(0,1,17,6)
+            call use:setView(false)
+            call language2:message(l_sItem,63)
+            call use:listcreate(l_sItem)
+            for l_n=0 to 5
+              if big:box[x_sName].bJtEnabCheck[l_n]
+                l_sIsEanble[l_n]=""
+              else 
+                l_sIsEanble[l_n]="!"
+              endIf 
+              l_nItemLow[l_n]=big:box[x_sName].nRobCtrlHJtsNum[l_n*2]
+              l_nItemHigh[l_n]=big:box[x_sName].nRobCtrlHJtsNum[l_n*2+1]
+            endFor 
+            sJointLimt[0]="<joint1<"
+            sJointLimt[1]="<joint2<"
+            sJointLimt[2]="<joint3<"
+            sJointLimt[3]="<joint4<"
+            sJointLimt[4]="<joint5<"
+            sJointLimt[5]="<joint6<"
+            for l_n=0 to 5
+              sJointLimt[l_n]=l_sIsEanble[l_n]+toString("",l_nItemLow[l_n])+sJointLimt[l_n]+toString("",l_nItemHigh[l_n])
+            endFor 
+            call use:listadd(sJointLimt)
+            call use:listupdate1(0)
+            /////////////////////////////////
+            call use:setSizeList(21,1,17,6)
+            call use:setView(false)
+            call language2:message(l_sItem,62)
+            call use:listcreate(l_sItem)
+            for l_n=0 to 5
+              if big:box[x_sName].bPosEnabCheck[l_n]
+                l_sIsEanble[l_n]=""
+              else 
+                l_sIsEanble[l_n]="!"
+              endIf 
+              l_nItemLow[l_n]=big:box[x_sName].nRobCtrlAreaNum[l_n*2]
+              l_nItemHigh[l_n]=big:box[x_sName].nRobCtrlAreaNum[l_n*2+1]
+            endFor 
+            sFrmRob[0]="<Rob_X<"
+            sFrmRob[1]="<Rob_Y<"
+            sFrmRob[2]="<Rob_Z<"
+            sFrmRob[3]="<Rob_RX<"
+            sFrmRob[4]="<Rob_RY<"
+            sFrmRob[5]="<Rob_RZ<"
+            for l_n=0 to 5
+              sFrmRob[l_n]=l_sIsEanble[l_n]+toString("",l_nItemLow[l_n])+sFrmRob[l_n]+toString("",l_nItemHigh[l_n])
+            endFor 
+            call use:listadd(sFrmRob)
+            call use:listupdate(0)
+            if !bSetMax
+              i=get()
+            endIf 
+            call use:listevent(i,nIndex,sEvent)
+            if i==264
+              bFaceA=true
+            endIf 
+            delay(0)
+          endIf 
+          if i==278
+            l_nStep=l_nStep+1
+            l_bOk=true
+          endIf 
+          if i==277
+            x_nResult=-1
+            wait(getKey()==-1)
+            resetMotion( )
+            return 
+          endIf 
+          if i==32
+            if !bFaceA 
+              big:box[x_sName].bPosEnabCheck[nIndex]=!big:box[x_sName].bPosEnabCheck[nIndex]
+            else 
+              big:box[x_sName].bJtEnabCheck[nIndex]=!big:box[x_sName].bJtEnabCheck[nIndex]
+            endIf 
+          endIf 
+          if i==270 or bSetMax==true
+            call use:listcursor(use:nView,false)
+            if bFaceA==true 
+              if bSetMax==false 
+                l_nValueMin=big:box[x_sName].nRobCtrlHJtsNum[nIndex*2]
+                
+                if big:box[x_sName].bJtEnabCheck[nIndex]==true
+                  l_nMinX=1
+                else 
+                  l_nMinX=1+1
+                endIf 
+                call HMI_setValue(l_nValueMin,0,0,l_nMinX,2+nIndex,l_sEmpty1)
+                big:box[x_sName].nRobCtrlHJtsNum[nIndex*2]=l_nValueMin 
+                bSetMax=true
+              else 
+                /////////////////////////////////////////////////////////////
+                l_nValueMax=big:box[x_sName].nRobCtrlHJtsNum[nIndex*2+1]
+                l_sFindEvent="joint"+toString("",nIndex+1)+"<"
+                call use:findPos(sEvent,l_sFindEvent,j)
+                call HMI_setValue(l_nValueMax,0,0,j+8,2+nIndex,l_sEmpty1)
+                big:box[x_sName].nRobCtrlHJtsNum[nIndex*2+1]=l_nValueMax 
+                bSetMax=false
+              endIf 
+            else 
+              if bSetMax==false 
+                l_nValueMin=big:box[x_sName].nRobCtrlAreaNum[nIndex*2]
+                
+                if big:box[x_sName].bPosEnabCheck[nIndex]==true
+                  l_nMinX=22
+                else 
+                  l_nMinX=22+1
+                endIf 
+                call HMI_setValue(l_nValueMin,0,0,l_nMinX,2+nIndex,l_sEmpty1)
+                big:box[x_sName].nRobCtrlAreaNum[nIndex*2]=l_nValueMin 
+                bSetMax=true
+              else 
+                /////////////////////////////////////////////////////////////
+                l_nValueMax=big:box[x_sName].nRobCtrlAreaNum[nIndex*2+1]
+                l_sFindEvent="Rob"
+                call use:findPos(sEvent,l_sFindEvent,j)
+                if nIndex<=2
+                  l_nMark=6
+                else 
+                  l_nMark=7
+                endIf 
+                call HMI_setValue(l_nValueMax,0,0,j+l_nMark+22,2+nIndex,l_sEmpty1)
+                big:box[x_sName].nRobCtrlAreaNum[nIndex*2+1]=l_nValueMax 
+                bSetMax=false
+              endIf 
+            endIf 
+          endIf 
+          i=-1
+        until l_bOk==true 
+      break 
+       case 1
+        if !cycleStatus:bCycle 
+          resetMotion( )
+        endIf 
+        cls()
+        call use:nullKey(nKey)
+        call language2:message(sMessage,70)
+        title(sMessage)
+        //******************************************//
+        bRefresh=true
+        bSelected=false 
+        nIndex=0
+        do 
+          do
+            if big:box[x_sName].bMoveJHomeJoint[nIndex]
+              l_nMoveType=1
+            else
+              l_nMoveType=0
+            endIf 
+            call getTrajTool(l_tTool,big:box[x_sName].nIndexGun)
+            call J_goTo(big:box[x_sName].jToHome[nIndex],nIndex,l_bUnreached,x_sName,l_nMoveType,l_tTool)
+            if l_bUnreached 
+              // show the message out of range
+              call language2:message(sMessage,51)
+              call use:timerDialog(sMessage,1)
+              l_bUnreached=false
+              cls()
+              bRefresh=true
+            endIf
+            if bRefresh==true
+              bRefresh=false 
+              //******************bulid list*****************//
+              l_sEmpty=""
+              call use:stringCopy(l_sEmpty,sList)
+              // Build the list
+              l_nSize=size(big:box[x_sName].jToHome)
+              for i=0 to l_nSize-1
+                if big:box[x_sName].bMoveJHomeJoint[i]
+                  call language2:message(l_sItem,46)
+                else 
+                  call language2:message(l_sItem,45)
+                endIf 
+                call language2:message(sMessage,44)
+                l_sInstruction=toString("2",i+1)+" "+sMessage+" "+l_sItem
+                call listAdd(l_sInstruction)
+                l_sEvent=sList[i]
+                if l_sEvent!=""
+                  l_bFound=true
+                  // update the selected item
+                  if l_sEvent==sEvent
+                    // nSelected=l_nCount
+                  endIf
+                  // add  
+                  if l_bFound
+                    l_nCount=l_nCount+1
+                  endIf
+                endIf
+              endFor
+              cls()
+              // define your list size for default
+              call use:setSizeList(16,0,22,11)
+              call use:setView(false)
+              call language2:message(sMessage,43)
+              call use:listcreate(sMessage)
+              call use:listadd(sList)
+              call language2:page(sMessage,304)
+              call use:stringToArray(sMessage,sMenu)
+              call use:setMenu(sMenu,true,3)
+              // refresh the list
+              call use:selectNewField(nSelected,nIndex,nView)
+              
+            else
+              
+            endIf
+            nKey=getKey()
+            call use:listevent(nKey,nIndex,sEvent)
+            nView=use:nView
+            nSelected=nIndex
+            switch nKey 
+              case 271
+                call language:getYesNo(l_sButton)
+                call language2:message(sMessage,47)
+                call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                if l_bResult==true
+                  big:box[x_sName].jToHome[nIndex]=herej()
+                endIf 
+                bRefresh=true
+                call use:nullKey(nKey)
+              break 
+              case 272
+                l_jPoint=big:box[x_sName].jToHome[nIndex]
+                l_bPoint=big:box[x_sName].bMoveJHomeJoint[nIndex]
+                insert(big:box[x_sName].jToHome[nIndex+1])
+                insert(big:box[x_sName].bMoveJHomeJoint[nIndex+1])
+                big:box[x_sName].jToHome[nIndex+1]=l_jPoint
+                big:box[x_sName].bMoveJHomeJoint[nIndex+1]=l_bPoint
+                bRefresh=true
+                nSelected=nIndex+1
+                call use:nullKey(nKey)
+              break 
+              case 273
+                if size(big:box[x_sName].jToHome)>1 
+                  call language:getYesNo(l_sButton)
+                  call language2:message(sMessage,48)
+                  call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                  if l_bResult==true
+                    delete(big:box[x_sName].jToHome[nIndex])
+                    delete(big:box[x_sName].bMoveJHomeJoint[nIndex])
+                    if nIndex>0
+                      nIndex=nIndex-1
+                      nSelected=nIndex-1
+                    endIf 
+                  endIf 
+                  bRefresh=true
+                endIf 
+                call use:nullKey(nKey)
+              break 
+              case 274
+                big:box[x_sName].bMoveJHomeJoint[nIndex]=!big:box[x_sName].bMoveJHomeJoint[nIndex]
+                bRefresh=true
+                call use:nullKey(nKey)
+              break 
+              case 277
+                l_nStep=l_nStep-1
+                bRefresh=true 
+                bSelected=true
+                call use:nullKey(nKey)
+              break 
+              case 278
+                bRefresh=true 
+                bSelected=true 
+                call use:nullKey(nKey)
+                x_nResult=0
+                if !cycleStatus:bCycle 
+                  resetMotion( )
+                endIf 
+                return  
+              break 
+            endSwitch 
+            delay(0)
+          until  bRefresh==true 
+        until  bSelected==true 
+        bSelected=false 
+    break 
+    endSwitch 
+  endWhile 
+  call use:nullKey(nKey)
+  x_nResult=0
+end]]></Code>
+  </Program>
+</Programs>

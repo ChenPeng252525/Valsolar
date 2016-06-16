@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_onRun" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_iInstr" type="InstrItem" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_iInstruction" type="Instruction" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // load the instruction
+  //
+  if isDefined(saveData:iInstruction[x_iInstr.sType])
+    switch saveData:iInstruction[x_iInstr.sType].nIndex
+      case 0
+        if instr0:libPath()!=""
+          call instr0:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 1
+        if instr1:libPath()!=""
+          call instr1:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 2
+        if instr2:libPath()!=""
+          call instr2:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 3
+        if instr3:libPath()!=""
+          call instr3:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 4
+        if instr4:libPath()!=""
+          call instr4:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 5
+        if instr5:libPath()!=""
+          call instr5:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 6
+        if instr6:libPath()!=""
+          call instr6:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 7
+        if instr7:libPath()!=""
+          call instr7:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 8
+        if instr8:libPath()!=""
+          call instr8:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 9
+        if instr9:libPath()!=""
+          call instr9:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 10
+        if instr10:libPath()!=""
+          call instr10:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 11
+        if instr11:libPath()!=""
+          call instr11:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 12
+        if instr12:libPath()!=""
+          call instr12:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 13
+        if instr13:libPath()!=""
+          call instr13:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 14
+        if instr14:libPath()!=""
+          call instr14:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 15
+        if instr15:libPath()!=""
+          call instr15:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 16
+        if instr16:libPath()!=""
+          call instr16:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 17
+        if instr17:libPath()!=""
+          call instr17:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 18
+        if instr18:libPath()!=""
+          call instr18:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 19
+        if instr19:libPath()!=""
+          call instr19:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 20
+        if instr20:libPath()!=""
+          call instr20:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 21
+        if instr21:libPath()!=""
+          call instr21:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 22
+        if instr22:libPath()!=""
+          call instr22:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 23
+        if instr23:libPath()!=""
+          call instr23:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 24
+        if instr24:libPath()!=""
+          call instr24:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 25
+        if instr25:libPath()!=""
+          call instr25:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 26
+        if instr26:libPath()!=""
+          call instr26:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 27
+        if instr27:libPath()!=""
+          call instr27:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 28
+        if instr28:libPath()!=""
+          call instr28:onRun(x_iInstr.sData)
+        endIf
+      break
+      case 29
+        if instr29:libPath()!=""
+          call instr29:onRun(x_iInstr.sData)
+        endIf
+      break
+    endSwitch
+  else
+    // error instruction
+    popUpMsg("INSTRUCTION NOT DEFINE !!!")
+    cycleStatus:bToStop=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

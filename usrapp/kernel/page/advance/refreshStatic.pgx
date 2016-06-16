@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sString" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPreset" type="string" xsi:type="array" size="3" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOutMode" type="bool" xsi:type="array" size="6" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=140
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  //
+  if cycleStatus:bCycle
+    use:nPage=use:nPage+3
+  endIf
+  if saveData:language!="japanese"
+    // SET THE VIEW OF THE PAGE
+    call language:page(l_sMessage,use:nPage)
+    // define the menu
+    call use:stringToArray(l_sMessage,sMenu)
+  else
+    // japanese use the array for the menu
+    call language:page(sMenu8,use:nPage)
+    call use:stringCopy(sMenu8,sMenu)
+  endIf
+  //
+  //
+  // TOOL
+  //
+  call language:message(l_sMessage,124)
+  call tcp:getName(l_sName,saveData:nIndexTool)
+  call use:type(18,2,"┌-> "+l_sMessage+":"+toString("",saveData:nIndexTool)+" "+l_sName)
+  call language:message(l_sMessage,124)
+  l_sName=saveData:fFrameItem[saveData:nFrameActive].sName
+  call use:type(18,3,"--> Frame:"+toString("",saveData:nFrameActive)+" "+l_sName)  
+  //
+  //  PLC
+  //
+  if saveData:bPlc
+    call use:type(18,8,"--> ON ")
+  else
+    call use:type(18,8,"--> OFF")
+  endIf
+  // Profile
+  //
+  // switch case mode
+  //
+  call language:message(l_sString,limit(saveData:mode,0,2))
+  call use:type(18,9,"-->"+l_sString)
+  //
+  if !cycleStatus:bTrackEnable
+    sMenu[7]=""
+  endIf
+  //
+  // define the bButton and Menu
+  call use:setMenu(sMenu,false,3)
+  call use:getMenu(sMenu,bButton)
+end]]></Code>
+  </Program>
+</Programs>

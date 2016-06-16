@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="findItem" access="public">
+    <Description><![CDATA[procedure]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_iItem" type="InstrItem" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_bUseSession" type="bool" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProgName" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSizeItem" type="num" xsi:type="array" size="1" />
+      <Local name="l_iItem" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+      <Local name="l_sSession" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // search in all of the program the x_iItem
+  //
+  // check if the cycle is running or the simulation...
+  //
+  // mutex the resource
+  //
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    setMutex(cycleStatus:bMutex)
+    // save the actual session
+    call saveData:getSession(l_sSession)
+    // clean the string
+    call use:stringCopy(l_sEmpty,sSession)
+    if x_bUseSession
+      // get the session list
+      call saveData:getListSession(sSession)
+    endIf
+    cls()
+    // show the timerDialog
+    call use:timerDialog("#",0)
+    call use:type(1,2,"SEARCHING: "+x_iItem.sType+" "+x_iItem.sData)
+    // for all the session
+    for z=0 to size(sSession)-1
+      if x_bUseSession
+        // scan ALL
+        call saveData:changeSession(sSession[z])
+      else
+        // just the local ONE
+        sSession[z]=l_sSession
+        z=size(sSession)-1
+      endIf
+      // look in all the current path
+      call getSize(l_nSize)
+      for i=0 to (l_nSize-1)
+        // load all the program
+        call get(l_sProgName,i)
+        if l_sProgName!=""
+          // SHOW THE program name
+          l_sMessage="SESSION:"+sSession[z]+" >PROG "+l_sProgName
+          call use:typeLen(1,5,l_sMessage,38)
+          // load the select program and search inside
+          call load(l_sProgName,x_nResult)
+          if x_nResult==0
+            // SEARCH IN ALL THE ITEMS
+            call getSizeItem(l_nSizeItem)
+            if l_nSize!=0
+              for j=0 to (l_nSizeItem-1)
+                call getItem(l_iItem,j)
+                // look inside
+                l_bFound=(l_iItem.sType==x_iItem.sType and(l_iItem.sData==x_iItem.sData or find(l_iItem.sData," "+x_iItem.sData)!=-1))
+                // use nested items
+                if x_iItem.sType=="IN" or x_iItem.sType=="OUT" or x_iItem.sType=="NUM"
+                  l_bFound=l_bFound or (find(l_iItem.sData,x_iItem.sType)!=-1 and find(l_iItem.sData," "+x_iItem.sData)!=-1)
+                else
+                  l_bFound=l_bFound or (find(l_iItem.sData,x_iItem.sType)!=-1 and find(l_iItem.sData+"#"," "+x_iItem.sData+"#")!=-1)
+                endIf
+                // FOUND IT
+                if l_bFound
+                  x_nResult=-1
+                  call language:message(l_sMessage,23)
+                  popUpMsg(l_sMessage+x_iItem.sType+" "+x_iItem.sData+chr(10)+"SESSION:"+sSession[z]+chr(10)+"PROG: "+l_sProgName+" > "+l_iItem.sType+" "+l_iItem.sData)
+                  // back
+                  call saveData:changeSession(l_sSession)
+                  // release
+                  cycleStatus:bMutex=false
+                  return
+                endIf
+                delay(0)
+              endFor
+            endIf
+          else
+            popUpMsg("error loading...SESSION:"+sSession[z]+">PROG "+l_sProgName+" error "+toString("",x_nResult))
+            // release
+            cycleStatus:bMutex=false
+            return
+          endIf
+        endIf
+        delay(0)
+      endFor
+      delay(0)
+    endFor
+    // check if the type is a TRAJ...
+    call saveData:getPathInstr(x_iItem.sType,l_sPath)
+    if find(l_sPath,"trajectory")==-1
+      // SCAN THE SUB
+      call sub:findItem(x_iItem,x_nResult,x_bUseSession)
+      if x_nResult!=-1
+        // SCAN ALL THE TRAJ
+        call findTrajItem(x_iItem,x_nResult)
+      endIf
+      if x_nResult!=-1
+        // SCAN ALL THE TCP
+        call tcp:findItem(x_iItem,x_nResult)
+      endIf
+      // back
+    endIf
+    // set the old session 
+    call saveData:changeSession(l_sSession)
+    // release
+    cycleStatus:bMutex=false
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_doEvent" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_iInstr" type="InstrItem" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_aAction" type="ActionItem" xsi:type="array" size="1" />
+      <Local name="l_bTraj" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOffset" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // DIVIDE INTO trajectory or NOT
+  //
+  call saveData:getPathInstr(x_iInstr.sType,l_sPath)
+  if l_sPath!=""
+    // DIVIDE INSTRUCTION FROM TRAJECTORY
+    if find(l_sPath,"trajectory")==-1
+      // EXECUTE THE ACTION
+      call action_wait()
+      // UPDATE THE ACTION TO DO...
+      l_aAction.nDistance=1-saveData:nRound/100
+      call cycleStatus:getLastId(l_aAction.nMoveId)
+      l_aAction.iInstr=x_iInstr
+      l_aAction.nPointId=-1
+      call action_do(l_aAction,x_nIndex)
+    else
+      // TRAJ
+      // print the action log
+      l_sInstruction=x_iInstr.sType+" "+x_iInstr.sData
+      if cycleStatus:bCycle
+        // set the clock end
+        call cycleStatus:printLog("-"+l_sInstruction)
+      endIf
+      // update the LINE ID
+      cycleStatus:nLastIdPoint=x_nIndex
+      // run it
+      call memory_onRun(x_iInstr)
+    endIf
+  else
+    // PATH NOT FOUND
+    cycleStatus:bToStop=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

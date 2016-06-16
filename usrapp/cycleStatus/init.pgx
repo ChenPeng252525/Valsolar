@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="init" access="public">
+    <Description><![CDATA[initialization of the cycle]]></Description>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="index" type="num" xsi:type="array" size="1" />
+      <Local name="hours" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init all the cyclestatus variable
+  //
+  // BOOLEAN
+  //
+  // mutex
+  bActionMutex=false
+  bLogMutex=false
+  // mutex it
+  setMutex(bActionMutex)
+  // use for pause the cycle
+  bPause=false
+  bToPause=false
+  bPausePLC=false
+  // use to goto another program and not came back
+  bGOTO=false
+  // use to call an other program and came back
+  bCALL=false
+  // use to wait after an input
+  bWait=false
+  // init the restart MOVE
+  bMoveStopped=false
+  // set the motion token to false
+  bMotionToken=false
+  // use to see if is going to home
+  bHoming=false
+  // show a message on the screen
+  bShowMessage=false
+  // auto_on
+  bAutoON=false
+  // stop motion control
+  bStop=false
+  // the stop boolean
+  bToStop=false
+  // use to end the cycle
+  bToEnd=false
+  bEnding=false
+  // to start the cycle
+  bToStart=false
+  // to homing
+  bToHome=false
+  bHoming=false
+  // reset TASK CONTROL
+  bActionRunning=false
+  // STRING
+  //
+  // show the event that is processing
+  sToShow=""
+  //
+  // INTEGER
+  //
+  // cycleEvent
+  nEvent=0
+  nPoint=0
+  nProg=0
+  // cycle Type
+  nProcessType=0
+  // ACTION
+  resize(aAction,1,1)
+  resize(aAction.iInstr,1,3)
+  aAction.iInstr.sType="null"
+  aAction.iInstr.sData=""
+  aAction.iInstr[1].sType="null"
+  aAction.iInstr[1].sData=""
+  aAction.iInstr[2].sType="null"
+  aAction.iInstr[2].sData=""
+  aAction.nMoveId=-1
+  aAction.nPointId=0
+  aAction.sIdTraj="null"
+  // TRAJECTORY
+  resize(tTrajCycle,1,1)
+  tTrajCycle.sID="null"
+  resize(tTrajCycle.tSuper,1,1)
+  // PROGRAM
+  resize(pCycleProg.iEvent,1,1)
+  pCycleProg.iEvent.sType=""
+  pCycleProg.iEvent.sData=""
+  pCycleProg.sID=""
+  // release
+  bActionMutex=false
+end]]></Code>
+  </Program>
+</Programs>

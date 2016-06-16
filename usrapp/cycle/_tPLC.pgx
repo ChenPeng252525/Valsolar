@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="_tPLC" access="public">
+    <Locals>
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bStopStatus" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  while true
+    
+    io:dOutIsReady=(bIsHome and bIsRemote and !bIsEstop and !bRobotErr and !bCycle)
+    if io:dOutIsReady==true
+      bIsReady=true
+    endIf
+    
+    //远程自动上电
+    if io:dInStart==true 
+      if taskStatus("cycle")==-1 and bIsReady==true
+        bCycle=true
+        call PowerOn(l_bContinue)
+        if l_bContinue==true
+          taskCreate "cycle",100,_tcycle()
+          wait(taskStatus("cycle")==1)
+        else
+          bCycle=false
+        endIf
+      endIf
+      endIf
+    
+    if bCycle==true
+      call isStopped(l_bStopStatus)
+    endIf
+      
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

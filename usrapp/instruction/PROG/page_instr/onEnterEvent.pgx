@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDefault" type="num" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bCancel" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_iInstr" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProgType" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSelect" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProgram" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  // get the item
+  l_sProgType=saveData:sProgTypeUsing
+  l_nIndex=nIndex
+  l_nSelect=nSelected
+  l_sProgram=sProgram
+  call prog:getItem(l_iInstr,nIndex)
+  call saveData:getPathInstr(l_iInstr.sType,l_sPath)
+  // libload the instruction
+  j=events:libLoad(l_sPath)
+  delay(0)
+  if j==0
+    call prog:getItem(l_iInstr,nIndex)
+    // copy
+    sField=l_iInstr.sData
+    call events:onEdit(sField)
+    // reload the template
+    call loadTemplate()
+    //
+    if find(sField,"Disk://")!=-1
+      //
+      // ask if you want to save yor modification
+      //
+      if x_bSave
+        call language:message(l_sMessage,-1)
+        // get the yes_no button Key
+        call language:getYesNo(l_sButton)
+        // ask the question 
+        call use:yes_no_cancel(l_sMessage,l_sButton,l_bYes,l_bCancel)
+        if l_bYes
+          call saveIt(x_bSave)
+        endIf
+      endIf
+      // check if the cancel button has been pressed          
+      if !l_bCancel
+        //
+        // load the page
+        //
+        call loadPage(sField,sField[1])
+        //
+        // came back
+        //
+        if saveData:sProgTypeUsing!=l_sProgType or sField[1]!=l_sProgram
+          // rebuild all
+          saveData:sProgTypeUsing=l_sProgType
+          nIndex=l_nIndex
+          nSelected=l_nSelect
+          sProgram=l_sProgram
+          // load the program TYPE
+          call saveData:getPathInstr(saveData:sProgTypeUsing,l_sPath)
+          l_nResult=prog:libLoad(l_sPath)
+          delay(0)
+          // load the program
+          call prog:load(sProgram,i)
+          call refresh()
+        endIf
+      endIf
+    else
+      if l_iInstr.sData!=sField and !use:bUseEscape and l_iInstr.sData!=""
+        // paste
+        l_iInstr.sData=sField
+        x_bSave=true
+      endIf
+      // look if every is OK
+      call prog:setItem(l_iInstr,nIndex)
+    endIf
+    // rebuilt
+    call buildList()
+  else
+    popUpMsg("Loading event "+l_iInstr.sType+" error CODE "+toString("",j))
+  endIf
+  // refresh
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="pasteItem" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nIndex" type="num" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_nTemp" type="num" xsi:type="array" size="1" />
+      <Local name="l_sRight" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  call getSizeItem(l_nSize)
+  l_nTemp=x_nIndex+1
+  for i=0 to (l_nSize-1)
+    call getItem(l_sItem,i)
+    if find(l_sItem.sType,"#")!=-1
+      if l_nTemp<=i
+        i=i+1
+      endIf
+      l_sItem.sType=right(l_sItem.sType,len(l_sItem.sType)-1)
+      call insertItem(l_sItem,l_nTemp)
+      l_nTemp=l_nTemp+1
+      l_nSize=l_nSize+1
+    endIf
+  endFor
+  // unselect all
+  call unSelectItem()
+end]]></Code>
+  </Program>
+</Programs>

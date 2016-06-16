@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="loadProcessList" access="public">
+    <Description><![CDATA[load the process list]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nResult" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // setMutex
+  setMutex(cycleStatus:bMutex)
+  // load a different processList
+  if cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+    //saveData:sPathPList+x_sProcess
+    x_nResult=saveCycle:libLoad(saveData:sPathPList)
+    delay(0)
+    if saveData:bDebug and x_nResult!=0
+      logMsg("[KERNEL] SETPROCESSLIST:Loading processList, CODE: "+toString("",x_nResult))
+    endIf
+    // check the result
+    if x_nResult!=0
+      // load the template and empty the list
+      x_nResult=saveCycle:libLoad("kernel/template/session/saveCycle")
+      delay(0)
+      libDelete(saveData:sPathPList)
+      saveCycle:libSave(saveData:sPathPList)
+      // default process list has been charged
+      call language:message(l_sMessage,-7)
+      call language:message(l_sMessage2,97)
+      popUpMsg(l_sMessage+"saveCycle... "+l_sMessage2)
+    endIf
+  else
+    x_nResult=-1
+  endIf
+  //release
+  cycleStatus:bMutex=false
+end]]></Code>
+  </Program>
+</Programs>

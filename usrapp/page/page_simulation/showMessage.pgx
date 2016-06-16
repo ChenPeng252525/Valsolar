@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="showMessage">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  bShowMessage=false
+  // look for the esStatus
+  if esStatus()==2
+    call language:message(l_sMessage,222)
+    bShowMessage=true
+  else
+    // look for the Working Mode and power in SimulMode
+    if cycleStatus:bSimulation or bMoveToPoint
+      if !isPowered() and cycleStatus:nWorkingMode!=4
+        call language:message(l_sMessage,201)
+        bShowMessage=true
+      elseIf cycleStatus:nWorkingStatus!=0
+        // PRESS MOVE HOLD
+        call language:message(l_sMessage,203)
+        if cycleStatus:nWorkingMode==1
+          switch cycleStatus:nWorkingStatus
+            case 2
+              // JOINT
+              call language:message(l_sMessage,140)
+            break
+            case 3
+              // WORLD
+              call language:message(l_sMessage,141)
+            break
+            case 4
+              // TOOL
+              call language:message(l_sMessage,142)
+            break
+            case 5
+              // POINT
+              call language:message(l_sMessage,143)
+            break
+          endSwitch
+        endIf
+        bShowMessage=true
+      elseIf bStepping
+        l_sMessage=" STEPPING ..."
+        bShowMessage=true
+      endIf
+    endIf
+  endIf
+  //
+  if bShowMessage
+    call use:timerDialog(l_sMessage,0)
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

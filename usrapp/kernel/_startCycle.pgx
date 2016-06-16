@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_startCycle" access="private" >
+    <Locals>
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sProcessList" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check home
+  if cycleStatus:bIsHome or saveData:bNoUseHome
+    // look if there are program into the process list
+    if !cycleStatus:bCycle and !cycleStatus:bSimulation and esStatus()!=2
+      call processList:getLoaded(l_sProcessList)
+      if l_sProcessList!=""
+        l_nID=0
+        call processList:getCycle(l_sMessage,l_nID,l_nID,0,1)
+        if l_sMessage!=""
+          // Create the Cycle Task
+          if taskStatus("Cycle")==-1
+            // init all
+            call cycleStatus:init()
+            // onEvent
+            cycleStatus:bCycle=true
+            call OnEvent:OnCycleEvent(13)
+            if cycleStatus:bToStop
+              cycleStatus:bCycle=false
+              return
+            endIf
+            // put the power ON on remote
+            call cycle_autoON(l_bContinue)
+            if l_bContinue
+              taskCreate "Cycle",80,cycle_start()
+              // start the action Task for the traj
+              if taskStatus("Action")==-1
+                taskCreate "Action",80,action_buffer()
+              endIf
+            else
+              // error while starting
+              cycleStatus:bCycle=false
+              return
+            endIf
+          endIf
+        else
+          // ERROR no program into the process list
+          call OnEvent:OnCycleEvent(9)
+        endIf
+      else
+        // NO processList loaded
+        call OnEvent:OnCycleEvent(9)
+      endIf
+    endIf
+  else
+    // the robot is not at home
+    call language:message(l_sMessage,223)
+    popUpMsg(l_sMessage)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

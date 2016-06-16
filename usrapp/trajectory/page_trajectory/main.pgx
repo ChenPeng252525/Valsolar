@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverRide" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart()
+  // LOOP UNTIL nKey=255
+  nIndexItem=0
+  do
+    // GOTO
+    call goTo(nIndexItem,l_bUnreached)
+    if l_bUnreached 
+      // show the message out of range
+      call language:message(l_sMessage,-5)
+      call use:timerDialog(l_sMessage,1)
+      l_bUnreached=false
+    endIf
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    nSelected=nIndex
+    //
+    // OVERRIDE NORMAL FUNCTIONALITY-> POLYMORPHISM
+    //
+    if nKey>=271 and nKey<=278
+      if sMenuUser[nKey-271]!=""
+        // normal one
+        call trajType:onFunctionSel(nIndex,sEvent,nKey)
+        l_bOverRide=true
+        call buildList()
+        l_bSave=true
+      endIf
+    endIf
+    if !l_bOverRide
+      switch nKey
+        case 264
+          // left
+          call onLeftEvent(l_bSave)
+        break
+        case 268
+          // right
+          call onRightEvent(l_bSave)
+        break
+        case 271
+          // SIMULATION
+          call onF1Event()
+        break
+        case 272
+          // Option
+          call onF2Event()
+        break
+        case 273
+          call onF3Event()
+        break
+        case 274
+          call onF4Event()
+        break
+        case 275
+          // SELECT THE TRAJ TYPE
+          call onF5Event()
+        break
+        case 276
+          // DUPLICATE
+          call onF6Event()
+          l_bSave=true
+        break
+        case 277
+          // DELETE
+          call onF7Event()
+          l_bSave=true
+        break
+        case 278
+          // NEW
+          call onF8Event()
+          l_bSave=true
+        break
+        case 270
+          call onEnterEvent()
+        break
+      endSwitch
+    endIf
+    l_bOverRide=false
+    // release the resource
+    delay(0)
+    if nKey==255 and isKeyPressed(289)==true
+      call language:message(l_sMessage,143)
+      call use:timerDialog(l_sMessage,3)
+    endIf
+  until nKey==255 and isKeyPressed(289)==false
+  // exit
+  call onExit(l_bSave)
+end]]></Code>
+  </Program>
+</Programs>

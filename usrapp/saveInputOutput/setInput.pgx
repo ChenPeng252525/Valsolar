@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setInput" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  switch x_nType
+    //
+    // DIGITAL
+    //
+    case 0
+      if ioStatus(fIn0)>=0
+        // CS8C
+        bCS8=false
+        call insert_dIn("fIn0",true,fIn0)
+        call insert_dIn("fIn1",true,fIn1)
+        call insert_dIn("usrIn0",true,usrIn0)
+        call insert_dIn("usrIn1",true,usrIn1)
+      else
+        bCS8=true
+      endIf
+    break
+    case 1
+      // BIO 1
+      call insert_dIn("bIn00",false,bIn0)
+      call insert_dIn("bIn01",false,bIn1)
+      call insert_dIn("bIn02",false,bIn2)
+      call insert_dIn("bIn03",false,bIn3)
+      call insert_dIn("bIn04",false,bIn4)
+      call insert_dIn("bIn05",false,bIn5)
+      call insert_dIn("bIn06",false,bIn6)
+      call insert_dIn("bIn07",false,bIn7)
+      call insert_dIn("bIn08",false,bIn8)
+      call insert_dIn("bIn09",false,bIn9)
+      call insert_dIn("bIn10",false,bIn10)
+      call insert_dIn("bIn11",false,bIn11)
+      call insert_dIn("bIn12",false,bIn12)
+      call insert_dIn("bIn13",false,bIn13)
+      call insert_dIn("bIn14",false,bIn14)
+      call insert_dIn("bIn15",false,bIn15)
+    break
+    case 2
+      if bCS8
+        // MIO
+        call insert_dIn("mIn00",false,mIn0)
+        call insert_dIn("mIn01",false,mIn1)
+        call insert_dIn("mIn02",false,mIn2)
+        call insert_dIn("mIn03",false,mIn3)
+        call insert_dIn("mIn04",false,mIn4)
+        call insert_dIn("mIn05",false,mIn5)
+        call insert_dIn("mIn06",false,mIn6)
+        call insert_dIn("mIn07",false,mIn7)
+        call insert_dIn("mIn08",false,mIn8)
+        call insert_dIn("mIn09",false,mIn9)
+        call insert_dIn("mIn10",false,mIn10)
+        call insert_dIn("mIn11",false,mIn11)
+        call insert_dIn("mIn12",false,mIn12)
+        call insert_dIn("mIn13",false,mIn13)
+        call insert_dIn("mIn14",false,mIn14)
+        call insert_dIn("mIn15",false,mIn15)
+        call insert_dIn("mIn16",false,mIn16)
+        call insert_dIn("mIn17",false,mIn17)
+        call insert_dIn("mIn18",false,mIn18)
+        call insert_dIn("mIn19",false,mIn19)
+        call insert_dIn("mIn20",false,mIn20)
+        call insert_dIn("mIn21",false,mIn21)
+        call insert_dIn("mIn22",false,mIn22)
+        call insert_dIn("mIn23",false,mIn23)
+        call insert_dIn("mIn24",false,mIn24)
+        call insert_dIn("mIn25",false,mIn25)
+        call insert_dIn("mIn26",false,mIn26)
+        call insert_dIn("mIn27",false,mIn27)
+        call insert_dIn("mIn28",false,mIn28)
+        call insert_dIn("mIn29",false,mIn29)
+        call insert_dIn("mIn30",false,mIn30)
+        call insert_dIn("mIn31",false,mIn31)
+      else
+        // BIO2 - MIO
+        call insert_dIn("b2In00",false,b2In0)
+        call insert_dIn("b2In01",false,b2In1)
+        call insert_dIn("b2In02",false,b2In2)
+        call insert_dIn("b2In03",false,b2In3)
+        call insert_dIn("b2In04",false,b2In4)
+        call insert_dIn("b2In05",false,b2In5)
+        call insert_dIn("b2In06",false,b2In6)
+        call insert_dIn("b2In07",false,b2In7)
+        call insert_dIn("b2In08",false,b2In8)
+        call insert_dIn("b2In09",false,b2In9)
+        call insert_dIn("b2In10",false,b2In10)
+        call insert_dIn("b2In11",false,b2In11)
+        call insert_dIn("b2In12",false,b2In12)
+        call insert_dIn("b2In13",false,b2In13)
+        call insert_dIn("b2In14",false,b2In14)
+        call insert_dIn("b2In15",false,b2In15)
+      endIf
+    break
+    case 3
+      for i=0 to size(MbIn)-1
+        // modbus
+        if i<10
+          call insert_dIn("MbIn00"+toString("",i),false,MbIn[i])
+        elseIf i<100
+          call insert_dIn("MbIn0"+toString("",i),false,MbIn[i])
+        else
+          call insert_dIn("MbIn"+toString("",i),false,MbIn[i])
+        endIf
+      endFor
+    break
+    case 4
+      // USER
+      for i=0 to size(dInUser)-1
+        // others
+        if i<10
+          call insert_dIn("userIn00"+toString("",i),false,dInUser[i])
+        elseIf i<100
+          call insert_dIn("userIn0"+toString("",i),false,dInUser[i])
+        else
+          call insert_dIn("userIn"+toString("",i),false,dInUser[i])
+        endIf
+      endFor
+    break
+    case 5
+      // armIO
+      call insert_dIn("remIn0",false,cDin0)
+      call insert_dIn("remIn1",false,cDin1)
+      call insert_dIn("remIn2",false,cDin2)
+      call insert_dIn("remIn3",false,cDin3)
+      call insert_dIn("remIn4",false,cDin4)
+      call insert_dIn("remIn5",false,cDin5)
+      call insert_dIn("remIn6",false,cDin6)
+      call insert_dIn("remIn7",false,cDin7)
+    break
+    //
+    case 6
+        call insert_dIn("NetIn00",false,NetIn0)
+        call insert_dIn("NetIn01",false,NetIn1)
+        call insert_dIn("NetIn02",false,NetIn2)
+        call insert_dIn("NetIn03",false,NetIn3)
+        call insert_dIn("NetIn04",false,NetIn4)
+        call insert_dIn("NetIn05",false,NetIn5)
+        call insert_dIn("NetIn06",false,NetIn6)
+        call insert_dIn("NetIn07",false,NetIn7)
+        call insert_dIn("NetIn08",false,NetIn8)
+        call insert_dIn("NetIn09",false,NetIn9)
+        call insert_dIn("NetIn10",false,NetIn10)
+        call insert_dIn("NetIn11",false,NetIn11)
+        call insert_dIn("NetIn12",false,NetIn12)
+        call insert_dIn("NetIn13",false,NetIn13)
+        call insert_dIn("NetIn14",false,NetIn14)
+        call insert_dIn("NetIn15",false,NetIn15)
+        call insert_dIn("NetIn16",false,NetIn16)
+        call insert_dIn("NetIn17",false,NetIn17)
+        call insert_dIn("NetIn18",false,NetIn18)
+        call insert_dIn("NetIn19",false,NetIn19)
+        call insert_dIn("NetIn20",false,NetIn20)
+        call insert_dIn("NetIn21",false,NetIn21)
+        call insert_dIn("NetIn22",false,NetIn22)
+        call insert_dIn("NetIn23",false,NetIn23)
+        call insert_dIn("NetIn24",false,NetIn24)
+        call insert_dIn("NetIn25",false,NetIn25)
+        call insert_dIn("NetIn26",false,NetIn26)
+        call insert_dIn("NetIn27",false,NetIn27)
+        call insert_dIn("NetIn28",false,NetIn28)
+        call insert_dIn("NetIn29",false,NetIn29)
+        call insert_dIn("NetIn30",false,NetIn30)
+        call insert_dIn("NetIn31",false,NetIn31)
+        call insert_dIn("NetIn32",false,NetIn32)
+        call insert_dIn("NetIn33",false,NetIn33)
+        call insert_dIn("NetIn34",false,NetIn34)
+        call insert_dIn("NetIn35",false,NetIn35)
+        call insert_dIn("NetIn36",false,NetIn36)
+        call insert_dIn("NetIn37",false,NetIn37)
+        call insert_dIn("NetIn38",false,NetIn38)
+        call insert_dIn("NetIn39",false,NetIn39)
+        call insert_dIn("NetIn40",false,NetIn40)
+        call insert_dIn("NetIn41",false,NetIn41)
+        call insert_dIn("NetIn42",false,NetIn42)
+        call insert_dIn("NetIn43",false,NetIn43)
+        call insert_dIn("NetIn44",false,NetIn44)
+        call insert_dIn("NetIn45",false,NetIn45)
+        call insert_dIn("NetIn46",false,NetIn46)
+        call insert_dIn("NetIn47",false,NetIn47)
+        call insert_dIn("NetIn48",false,NetIn48)
+        call insert_dIn("NetIn49",false,NetIn49)
+        call insert_dIn("NetIn50",false,NetIn50)
+        call insert_dIn("NetIn51",false,NetIn51)
+        call insert_dIn("NetIn52",false,NetIn52)
+        call insert_dIn("NetIn53",false,NetIn53)
+        call insert_dIn("NetIn54",false,NetIn54)
+        call insert_dIn("NetIn55",false,NetIn55)
+        call insert_dIn("NetIn56",false,NetIn56)
+        call insert_dIn("NetIn57",false,NetIn57)
+        call insert_dIn("NetIn58",false,NetIn58)
+        call insert_dIn("NetIn59",false,NetIn59)
+        call insert_dIn("NetIn60",false,NetIn60)
+        call insert_dIn("NetIn61",false,NetIn61)
+        call insert_dIn("NetIn62",false,NetIn62)
+        call insert_dIn("NetIn63",false,NetIn63)
+    break 
+      // ANALOGIC
+      //
+    case 10
+      // default no INPUT
+    break
+    case 11
+      // modbus
+      for i=0 to size(MbAnaIn)-1
+        call insert_aCount("MbAnaIn"+toString("",i),true,MbAnaIn[i])
+      endFor
+    break
+    case 12
+      //     
+      // USER
+      //
+    break
+    case 13
+      // armIO
+      call insert_aCount("cArmIn0",true,cAin0)
+      call insert_aCount("cArmIn1",true,cAin1)
+      call insert_aCount("cArmIn2",true,cAin2)
+      call insert_aCount("cArmIn3",true,cAin3)
+    break
+    case 14
+      // others
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

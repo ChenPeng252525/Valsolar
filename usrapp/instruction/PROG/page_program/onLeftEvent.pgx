@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onLeftEvent">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDefault" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // left click
+  //
+  // select the previous one
+  //
+  nProgID=(size(saveData:sProgType)+nProgID-1)%size(saveData:sProgType)
+  if nProgID!=2
+    sProgType=saveData:sProgType[nProgID]
+  else
+    // maintenance program
+    sProgType=saveData:sProgType[0]
+  endIf
+  // load the progType
+  call load()
+  // rebuild the list
+  call buildList()
+  // refresh
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

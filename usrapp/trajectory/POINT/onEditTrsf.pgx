@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onEditTrsf" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nIndexItem" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sEvent" type="string" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMax" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // edit TRSF OF THE POINT
+  l_tTrsf=pEditPoint.tData[x_nIndexItem].pPoint.trsf
+  // find the >
+  call use:findPos(x_sEvent,">",i)
+  i=i+1
+  // find the line
+  if !cycleStatus:bCycle
+    l_nMin=l_nMax=0
+  else
+    switch x_nIndex
+      case 0
+        // x
+        l_nMin=l_tTrsf.x-10
+        l_nMax=l_tTrsf.x+10
+      break
+      case 1
+        // y
+        l_nMin=l_tTrsf.y-10
+        l_nMax=l_tTrsf.y+10
+      break
+      case 2
+        // z
+        l_nMin=l_tTrsf.z-10
+        l_nMax=l_tTrsf.z+10
+      break
+      case 3
+        // rx
+        l_nMin=l_tTrsf.rx-5
+        l_nMax=l_tTrsf.rx+5
+      break
+      case 4
+        // ry
+        l_nMin=l_tTrsf.ry-5
+        l_nMax=l_tTrsf.ry+5
+      break
+      case 5
+        // rz
+        l_nMin=l_tTrsf.rz-5
+        l_nMax=l_tTrsf.rz+5
+      break
+    endSwitch
+  endIf
+  // clean the line
+  call use:listcursor(use:nView,false)
+  // 
+  switch x_nIndex
+    case 0
+      //  x-value
+      call use:changeValue(l_tTrsf.x,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+    case 1
+      //  y-value
+      call use:changeValue(l_tTrsf.y,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+    case 2
+      //  z-value
+      call use:changeValue(l_tTrsf.z,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+    case 3
+      //  rx-value
+      call use:changeValue(l_tTrsf.rx,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+    case 4
+      //  ry-value
+      call use:changeValue(l_tTrsf.ry,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+    case 5
+      //  rz-value
+      call use:changeValue(l_tTrsf.rz,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    break
+  endSwitch
+  // validate
+  if !use:bUseEscape
+    pEditPoint.tData[x_nIndexItem].pPoint.trsf=l_tTrsf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_taskControl" access="private" >
+    <Locals>
+      <Local name="l_bRestart" type="bool" xsi:type="array" size="2" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // Check the task Cycle
+  //
+  if taskStatus("Cycle")>1 or (cycleStatus:bCycle and taskStatus("Action")>1)
+    if taskStatus("Cycle")>=150 and taskStatus("Cycle")<=154
+      call outOfRange()
+    else
+      logMsg("[KERNEL] SUPERVISOR:Task Cycle problem")
+      call OnEvent:OnCycleEvent(12)
+    endIf
+    call _stopCycle()
+  endIf
+  //
+  // Check the task Simulation
+  //
+  if taskStatus("Simulation")>1 or (cycleStatus:bSimulation and taskStatus("Action")>1)
+    if taskStatus("Simulation")>=150 and taskStatus("Simulation")<=154
+      call outOfRange()
+    else
+      logMsg("[KERNEL] SUPERVISOR:Task Simulation problem")
+      call OnEvent:OnCycleEvent(12)
+    endIf
+    call _stopSimul()
+  endIf
+  // Check the task PLC every 5 second
+  if taskStatus("Plc")>1
+    if clock()-nPLCClock>5
+      nPLCClock=clock()
+      taskResume("Plc",0)
+    endIf
+  else
+    nPLCClock=clock()
+  endIf
+  // check the task remote every 5 seconds
+  if taskStatus("Remote")>1
+    if clock()-nRemoteClock>5
+      nRemoteClock=clock()
+      taskKill("Remote")
+      taskCreate "Remote",20,remote_it()
+    endIf
+  else
+    nRemoteClock=clock()
+  endIf
+  // 
+  // TASK INTERFACE
+  //
+  //
+  // look if there is something wrong for the interface
+  //
+  l_bRestart=false
+  if taskStatus("Interface")==61
+    logMsg("[KERNEL] SUPERVISOR:WakeUpInterface> error61")
+    get()
+    taskResume("Interface",0)
+    watch(taskStatus("Interface")==1,1)
+  endIf
+  //
+  // look if the interface has been stopped
+  //
+  if cycleStatus:nInterfaceToSV==-1 and taskStatus("Simulation")==-1
+    // look for the mode
+    if taskStatus("Interface")>1
+      call language:message(l_sMessage,221)
+      call use:timerDialog(l_sMessage,1)
+      // get a Key
+      get()
+      // RESTART ...
+      logMsg("[KERNEL] SUPERVISOR:WakeUpInterface>Restart")
+      call language:message(l_sMessage,220)
+      call use:timerDialog(l_sMessage,1)
+      taskKill("Interface")
+      taskCreate "Interface",60,interface:main()
+      wait(taskStatus("Interface")==1)
+    endIf
+  endIf
+  //
+  // look if the interface has been stopped
+  //
+  if cycleStatus:nInterfaceToSV==-1 and taskStatus("Simulation")==-1
+    if taskStatus("Point")>1
+      call language:message(l_sMessage,221)
+      call use:timerDialog(l_sMessage,1)
+      // get a Key
+      get()
+      // RESTART
+      logMsg("[KERNEL] SUPERVISOR:WakeUpInterface>Restart Point")
+      call language:message(l_sMessage,220)
+      call use:timerDialog(l_sMessage,1)
+      taskKill("Point")
+      taskCreate "Point",50,point_interface:main()
+      wait(taskStatus("Point")==1)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

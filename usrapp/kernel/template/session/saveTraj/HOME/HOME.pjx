@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5.3" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="copy_it.pgx" />
+    <Program file="link_it.pgx" />
+  </Programs>
+  <Database>
+    <Data file="HOME.dtx" />
+  </Database>
+  <Libraries />
+  <Types>
+    <Type name="TrajHome" path="Disk://kernel/template/TrajHome/TrajHome.pjx" />
+  </Types>
+</Project>

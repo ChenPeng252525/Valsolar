@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="CycleRefresh">
+    <Locals>
+      <Local name="l_nEvent" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_bTrajRunning" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // set the size
+  call use:setSizeList(19,0,19,10)
+  //
+  // TRAJECTORY
+  //
+  if use:bUseRefresh
+    // refresh the board
+    call refreshStatic()
+    //
+    use:bUseRefresh=false
+    //
+    // rebuilt the Traj list
+    //
+    call refreshPoints(saveData:sTrajTypeUsing+" "+sTrajName)
+    // look if the init has finished
+    if cycleStatus:bSimulation 
+      nPoint=cycleStatus:nPoint
+    endIf
+    // REFRESH ACTUAL POINT
+    use:nView=nPoint%use:nBottomY
+    call use:listredraw(nPoint-use:nView)
+  else
+    // only update
+    nPoint=cycleStatus:nPoint
+    if use:nView>=nPoint%use:nBottomY
+      // update the list
+      use:nView=nPoint%use:nBottomY
+      call use:listupdate(nPoint-use:nView)
+    else
+      //just the line
+      call use:listcursor(use:nView,false)
+      use:nView=nPoint%use:nBottomY
+      call use:listcursor(use:nView,true)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

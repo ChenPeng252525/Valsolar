@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_startSimul" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_iInstr" type="InstrItem" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init all
+  call cycleStatus:init()
+  // CHECK FOR CYCLE EVENT
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    // set the Simulation is ON
+    cycleStatus:bSimulation=true
+    if x_iInstr.sType=="HOME"
+      cycleStatus:bHoming=true
+    endIf
+    // SIMULATION
+    logMsg("[KERNEL] SUPERVISOR:Interface>Simulation of the event: "+x_iInstr.sType+" "+x_iInstr.sData)
+    taskCreate "Simulation",50,cycle_simul(x_iInstr)
+    // start the action Task for the traj
+    taskCreate "Action",80,action_buffer()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

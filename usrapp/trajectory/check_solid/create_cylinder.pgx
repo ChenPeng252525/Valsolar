@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="create_cylinder" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pOrigin" type="point" xsi:type="element" />
+      <Parameter name="x_nRadius" type="num" xsi:type="element" />
+      <Parameter name="x_nDistanceZ" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  // build the Cylinder
+  // 
+  if setFrame(x_pOrigin,compose(x_pOrigin,world,{x_nRadius,0,0,0,0,0}),compose(x_pOrigin,world,{0,x_nRadius,0,0,0,0}),fCylinder)==0
+    bCreate_cylind=true
+  else
+    bCreate_cylind=false
+  endIf
+  // copy all
+  nRadius_cyl=x_nRadius
+  nDistanceZ_cyl=x_nDistanceZ
+  pOrigin_cylind.trsf=position(x_pOrigin,world)
+end]]></Code>
+  </Program>
+</Programs>

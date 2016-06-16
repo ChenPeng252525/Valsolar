@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="sGun" access="private" xsi:type="array" type="string" size="2">
+      <Value key="0" value="valve1" />
+      <Value key="1" value="valve2" />
+    </Data>
+    <Data name="nom_speed" access="private" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" tmax="9999" rmax="9999" blend="off" />
+    </Data>
+    <Data name="valve1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve1" />
+    </Data>
+    <Data name="valve2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve2" />
+    </Data>
+  </Datas>
+</Database>

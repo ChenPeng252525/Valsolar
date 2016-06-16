@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setPallet">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="3" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="8" />
+      <Local name="l_sTcp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sYesNo" type="string" xsi:type="array" size="2" />
+      <Local name="l_bDifferent" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bCancel" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_jPoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_sXYZline" type="string" xsi:type="array" size="3" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="3" />
+      <Local name="l_nMax" type="num" xsi:type="array" size="3" />
+      <Local name="l_bRecompute" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nLineMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_nLineMax" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nApproach" type="num" xsi:type="array" size="1" />
+      <Local name="l_bLinear" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSpeed" type="num" xsi:type="array" size="3" />
+      <Local name="l_nLine" type="num" xsi:type="array" size="3" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDepart" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="x" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+      <Local name="y" type="num" xsi:type="array" size="1" />
+      <Local name="l_sShow" type="string" xsi:type="array" size="1" />
+      <Local name="l_sSpeed" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Change the Frame associate to the Pallet
+  //
+  //  take all the value
+  //
+  l_nStep=0
+  l_sButton[0]=">>"
+  l_sButton[1]="<<"
+  call pallet:getTool(i)
+  call tcp:getTool(saveData:tTool,i)
+  saveData:nIndexTool=i
+  call pallet:getPalletData(false,tTrajPallet)
+  
+  fFather=tTrajPallet.fReference
+  // start it
+  call language:message(l_sMessage,8)
+  title("PALLET "+sPalletName+" "+l_sMessage)
+  // WIZARD
+  while l_nStep<10
+    switch l_nStep
+      case -1
+        return
+      break
+      // select the TOOL
+      // take the Origin-X-Y-Z
+      case 0
+        if !cycleStatus:bCycle
+          cls()
+          do
+            call language:message(l_sMessage,150)
+            call language:message(l_sMessage[1],167)
+            call language:message(l_sMessage[2],190)
+            call use:typeMenu(1,l_sMessage)
+            call use:typeMenu(2,l_sMessage[1])
+            call use:typeMenu(7,"<<")
+            call use:typeMenu(8,">>")
+            // show the here and the edit button
+            call use:setSizeList(14,2,24,5)
+            call use:listcreate(l_sMessage[2])
+            // TOOL
+            call language:message(l_sMessage,124)
+            l_sItem=l_sMessage+": "+toString("3",saveData:nIndexTool)
+            call use:listadd(l_sItem)
+            //origin
+            call language:message(l_sMessage,198)
+            // pos. X
+            call language2:message(l_sMessage[1],12)
+            // pos. Y
+            call language2:message(l_sMessage[2],13)
+            call use:listadd(l_sMessage)
+            // pos. Z 
+            call language2:message(l_sMessage[2],14)
+            call use:listadd(l_sMessage[2])
+            call use:listupdate(0)
+            l_nKey=getKey()
+            l_sEmpty=""
+            call use:listevent(l_nKey,l_nResult,l_sEmpty)
+            // 
+            if l_nResult!=l_nIndex or cycleStatus:nWorkingStatus!=0
+              l_nIndex=l_nResult
+              resetMotion()
+            endIf
+            switch l_nResult
+              case 0
+                if l_nKey==270
+                  // TOOL
+                  l_sEmpty=""
+                  call loadPage("Disk://kernel/page/tool",l_sEmpty)
+                  call tcp:getTool(saveData:tTool,saveData:nIndexTool)
+                  tTrajPallet.nIndexTool=saveData:nIndexTool
+                  // release
+                  call use:nullKey(l_nKey)
+                  cls()
+                endIf
+              break
+              case 1
+                // take the Origin
+                if pointToJoint(saveData:tTool,herej(),tTrajPallet.pO,l_jPoint) and cycleStatus:nWorkingMode==1 and isEmpty()
+                  movej(tTrajPallet.pO,saveData:tTool,{25,25,25,9999,9999,off,50,50})
+                endIf
+                //
+                if l_nKey==271
+                  tTrajPallet.pO=here(saveData:tTool,fFather)
+                  l_sMessage=" [x] "
+                  call use:type(2,4,l_sMessage)
+                  // compute the point again
+                  l_bRecompute=true
+                elseIf l_nKey==272 or l_nKey==270
+                  call language:message(l_sMessage,198)
+                  call use:changeTrsf(tTrajPallet.pO.trsf,l_sMessage,"")
+                  // compute the point again
+                  l_bRecompute=true
+                  cls()
+                endIf
+              break
+              case 2
+                //take the X Point
+                if pointToJoint(saveData:tTool,herej(),tTrajPallet.pX,l_jPoint) and cycleStatus:nWorkingMode==1 and isEmpty()
+                  movej(tTrajPallet.pX,saveData:tTool,{25,25,25,9999,9999,off,50,50})
+                endIf
+                // key pressure
+                if l_nKey==271
+                  tTrajPallet.pX=here(saveData:tTool,fFather)
+                  l_sMessage=" [x] "
+                  call use:type(2,5,l_sMessage)
+                  // compute the point again
+                  l_bRecompute=true
+                elseIf l_nKey==272 or l_nKey==270
+                  call language:message(l_sMessage,199)
+                  call use:changeTrsf(tTrajPallet.pX.trsf,l_sMessage+" X","")
+                  // compute the point again
+                  l_bRecompute=true
+                  cls()
+                endIf
+              break
+              case 3
+                // take the Y Point
+                if pointToJoint(saveData:tTool,herej(),tTrajPallet.pY,l_jPoint) and cycleStatus:nWorkingMode==1 and isEmpty()
+                  movej(tTrajPallet.pY,saveData:tTool,{25,25,25,9999,9999,off,50,50})
+                endIf
+                // key pressure
+                if l_nKey==271
+                  tTrajPallet.pY=here(saveData:tTool,fFather)
+                  l_sMessage=" [x] "
+                  call use:type(2,6,l_sMessage)
+                  // compute the point again
+                  l_bRecompute=true
+                elseIf l_nKey==272 or l_nKey==270
+                  call language:message(l_sMessage,199)
+                  call use:changeTrsf(tTrajPallet.pY.trsf,l_sMessage+" Y","")
+                  // compute the point again
+                  l_bRecompute=true
+                  cls()
+                endIf
+              break
+              case 4
+                // take the Z point
+                if pointToJoint(saveData:tTool,herej(),tTrajPallet.pZ,l_jPoint) and cycleStatus:nWorkingMode==1 and isEmpty()
+                  movej(tTrajPallet.pZ,saveData:tTool,{25,25,25,9999,9999,off,50,50})
+                endIf
+                // key pressure
+                if l_nKey==271
+                  tTrajPallet.pZ=here(saveData:tTool,fFather)
+                  l_sMessage=" [x] "
+                  call use:type(2,7,l_sMessage)
+                  // compute the point again
+                  l_bRecompute=true
+                else
+                  if l_nKey==272 or l_nKey==270
+                    call language:message(l_sMessage,199)
+                    call use:changeTrsf(tTrajPallet.pZ.trsf,l_sMessage+" Z","")
+                    // compute the point again
+                    l_bRecompute=true
+                    cls()
+                  else
+                    call use:clear(0,11)
+                  endIf
+                endIf
+              break
+            endSwitch
+            use:nView=l_nResult
+            delay(0)
+          until l_nKey==278 or l_nKey==277 or l_nKey==255 or l_nKey==264 or l_nKey==268
+          // validate
+          switch l_nKey
+            case 278,268
+              l_nResult=0
+            break
+            case 277,264
+              l_nResult=2
+            break
+            case 255
+              l_nResult=-1
+            break
+          endSwitch
+          //
+          // check the point[2] if point[1]
+          //
+          if l_nResult!=-1
+            if tTrajPallet.pX.trsf!=tTrajPallet.pY.trsf and tTrajPallet.pO.trsf!=tTrajPallet.pY.trsf and tTrajPallet.pY.trsf!={0,0,0,0,0,0}
+              // set the frame
+              if setFrame(tTrajPallet.pO,tTrajPallet.pX,tTrajPallet.pY,tTrajPallet.fFrame)!=0
+                // if not put a message
+                call language2:message(l_sMessage,32)
+                popUpMsg(l_sMessage)
+                // came back
+                l_nResult=2
+              endIf
+            elseIf tTrajPallet.pO.trsf!=tTrajPallet.pX.trsf and tTrajPallet.pO.trsf!={0,0,0,0,0,0}
+              // try to put the y to fFather with the same Z as the origin point
+              l_pPoint=here(saveData:tTool,fFather)
+              l_pPoint.trsf=position(tTrajPallet.pO,fFather)
+              l_pPoint.trsf={0,0,l_pPoint.trsf.z,0,0,0}
+              if setFrame(tTrajPallet.pO,tTrajPallet.pX,l_pPoint,tTrajPallet.fFrame)!=0
+                // if not put a message
+                call language2:message(l_sMessage,32)
+                popUpMsg(l_sMessage)
+                // came back
+                l_nResult=2
+              endIf
+            endIf
+          endIf
+        endIf
+      break
+      // set the OPTION
+      case 1
+        l_nResult=100
+        do
+          // BUILD THE LIST
+          call language:message(l_sMessage,167)
+          l_sButton[0]=">>"
+          l_sButton[1]="<<"
+          l_sButton[2]=""
+          l_sButton[3]=""
+          l_sButton[4]=""
+          l_sButton[5]=""
+          l_sButton[6]=l_sMessage
+          l_sButton[7]=""
+          call use:typeMenu(7,"<<")
+          call use:typeMenu(8,">>")
+          call use:typeMenu(2,l_sMessage)
+          // create the list
+          call use:setSizeList(16,2,22,6)
+          call language:message(l_sItem,167)
+          call use:listcreate(l_sItem)
+          // take how many X,Y,Z lines
+          l_nLine[0]=tTrajPallet.nX
+          l_nLine[1]=tTrajPallet.nY
+          l_nLine[2]=tTrajPallet.nZ
+          l_sItem="Line: "+toString("",tTrajPallet.nX)+","+toString("",tTrajPallet.nY)+","+toString("",tTrajPallet.nZ)
+          call use:listadd(l_sItem)
+          call language2:message(l_sItem,3)
+          l_sItem=l_sItem+": "+toString("",-tTrajPallet.trAppro.z)
+          call use:listadd(l_sItem)
+          call language2:message(l_sItem,4)
+          l_sItem=l_sItem+": "+toString("",-tTrajPallet.trDepart.z)
+          call use:listadd(l_sItem)
+          // linear move or not
+          call language:message(l_sMessage,157)
+          call language:message(l_sMessage[1],164+tTrajPallet.tData.tSuper.moveType)
+          l_sItem=l_sMessage+":"+l_sMessage[1]
+          l_bLinear=tTrajPallet.tData.tSuper.moveType==1
+          call use:listadd(l_sItem)
+          // show the speed
+          call language:message(l_sSpeed,158)
+          l_sSpeed=l_sSpeed+": "+toString("",tTrajPallet.nSpeedApproach)+","
+          l_sSpeed=l_sSpeed+toString("",tTrajPallet.nSpeedDepart)+","
+          if !l_bLinear
+            // JOINT Move
+            l_sSpeed=l_sSpeed+toString("",tTrajPallet.tData.tSuper.nom_speed.vel)+"%"
+          else
+            // Linear Move
+            l_sSpeed=l_sSpeed+toString("",tTrajPallet.tData.tSuper.nom_speed.tvel)+"mm/sec"
+          endIf
+          call use:listadd(l_sSpeed)
+          // STOP time
+          call language:message(l_sMessage,174)
+          l_sItem=l_sMessage+": "+toString(".2",tTrajPallet.tData.tSuper.nStop)
+          call use:listadd(l_sItem)
+          // update it
+          call use:listupdate(0)
+          l_nKey=get()
+          call use:listevent(l_nKey,l_nIndex,l_sMessage)
+          // key event
+          if l_nKey==270 or l_nKey==32 or l_nKey==272
+            switch l_nIndex
+              case 0
+                cls()
+                l_sButton[7]=""
+                l_sButton[6]=""
+                // set the message
+                //line X
+                call language2:message(l_sMessage,18)
+                l_sXYZline[0]=l_sMessage
+                // line Y
+                if tTrajPallet.pY.trsf!={0,0,0,0,0,0}
+                  call language2:message(l_sMessage,19)
+                  l_sXYZline[1]=l_sMessage
+                endIf
+                // line Z
+                if tTrajPallet.pZ.trsf!={0,0,0,0,0,0}
+                  call language2:message(l_sMessage,20)
+                  l_sXYZline[2]=l_sMessage
+                endIf
+                l_nLineMin=0
+                l_nLineMax=100
+                call use:editNumField("PALLET X Y Z",l_sXYZline,l_nLine,l_nLineMin,l_nLineMax)
+                // check the size
+                l_bDifferent=false
+                if l_nLine[0]!=tTrajPallet.nX or l_nLine[1]!=tTrajPallet.nY or l_nLine[2]!=tTrajPallet.nZ
+                  l_bDifferent=true
+                  tTrajPallet.nX=l_nLine[0]
+                  tTrajPallet.nY=l_nLine[1]
+                  tTrajPallet.nZ=l_nLine[2]
+                else
+                  l_bDifferent=false
+                endIf
+              break
+              case 1
+                // APPROACH
+                call language:message(l_sMessage,167)
+                call use:typeMenu(2,l_sMessage)
+                // look for the approach
+                if tTrajPallet.trAppro[0]==tTrajPallet.trAppro[1] and (tTrajPallet.trAppro.x==0 and tTrajPallet.trAppro.y==0 and tTrajPallet.trAppro.rx==0 and tTrajPallet.trAppro.ry==0 and tTrajPallet.trAppro.rz==0) and l_nKey==270
+                  // normal Approach only Z
+                  call language2:message(l_sMessage,21)
+                  l_nApproach=-tTrajPallet.trAppro.z
+                  call use:insertDialog(l_sMessage,l_nApproach,0,999)
+                  tTrajPallet.trAppro=tTrajPallet.trAppro[1]={0,0,-l_nApproach,0,0,0}
+                  // edit IT
+                else
+                  // TRSF APPROACH
+                  call language2:message(l_sMessage,40)
+                  call language2:message(l_sMessage[1],42)
+                  if tTrajPallet.trAppro==tTrajPallet.trAppro[1] and tTrajPallet.trAppro=={0,0,0,0,0,0}
+                    // change the approach 1
+                    call use:changeTrsf(tTrajPallet.trAppro,l_sMessage+" [1]",l_sMessage[1])
+                    tTrajPallet.trAppro[1]=tTrajPallet.trAppro
+                  else
+                    call use:changeTrsf(tTrajPallet.trAppro,l_sMessage+" [1]",l_sMessage[1])
+                  endIf
+                  // change the approach 2
+                  call use:changeTrsf(tTrajPallet.trAppro[1],l_sMessage+" [2]",l_sMessage[1])
+                endIf
+              break
+              case 2
+                // DEPART
+                call language:message(l_sMessage,167)
+                call use:typeMenu(2,l_sMessage)
+                // look for the depart
+                if tTrajPallet.trDepart==tTrajPallet.trDepart[1] and (tTrajPallet.trDepart.x==0 and tTrajPallet.trDepart.y==0 and tTrajPallet.trDepart.rx==0 and tTrajPallet.trDepart.ry==0 and tTrajPallet.trDepart.rz==0) and l_nKey==270
+                  // normal Depart only Z
+                  l_nDepart=-tTrajPallet.trDepart.z
+                  call language2:message(l_sMessage,22)
+                  call use:insertDialog(l_sMessage,l_nDepart,0,999)
+                  tTrajPallet.trDepart=tTrajPallet.trDepart[1]={0,0,-l_nDepart,0,0,0}
+                else
+                  // TRSF DEPART
+                  call language2:message(l_sMessage,41)
+                  call language2:message(l_sMessage[1],42)
+                  if tTrajPallet.trDepart==tTrajPallet.trDepart[1] and tTrajPallet.trDepart=={0,0,0,0,0,0}
+                    // change the approach 1
+                    call use:changeTrsf(tTrajPallet.trDepart,l_sMessage+" [1]",l_sMessage[1])
+                    tTrajPallet.trDepart[1]=tTrajPallet.trDepart
+                  else
+                    call use:changeTrsf(tTrajPallet.trDepart,l_sMessage+" [1]",l_sMessage[1])
+                  endIf
+                  // change the approach 2
+                  call use:changeTrsf(tTrajPallet.trDepart[1],l_sMessage+" [2]",l_sMessage[1])
+                endIf
+              break
+              case 3
+                if l_nKey==270 or l_nKey==32
+                  l_bLinear=!l_bLinear
+                  tTrajPallet.tData.tSuper.moveType=sel(l_bLinear,1,0)
+                  // check the moveType
+                  if tTrajPallet.tData.tSuper.moveType==1
+                    // convert to LINEAR
+                    tTrajPallet.tData.tSuper.nom_speed.tvel=600
+                    tTrajPallet.tData.tSuper.nom_speed.vel=450
+                  elseIf tTrajPallet.tData.tSuper.moveType==0
+                    // convert TO JOINT
+                    tTrajPallet.tData.tSuper.nom_speed.tvel=9999
+                    tTrajPallet.tData.tSuper.nom_speed.vel=50
+                  endIf
+                endIf
+              break
+              case 4
+                if l_nKey==270 or l_nKey==32
+                  // go to the default
+                  call language:message(l_sMessage[2],158)
+                  // take the speed approach
+                  l_nSpeed[0]=tTrajPallet.nSpeedApproach
+                  call language2:message(l_sMessage[0],40)
+                  l_sMessage[0]=l_sMessage[0]+" "+l_sMessage[2]+" mm/sec"
+                  l_nMin[0]=1
+                  l_nMax[0]=2000
+                  // take the speed Depart
+                  l_nSpeed[1]=tTrajPallet.nSpeedDepart
+                  call language2:message(l_sMessage[1],41)
+                  l_sMessage[1]=l_sMessage[1]+" "+l_sMessage[2]+" mm/sec"
+                  l_nMin[1]=1
+                  l_nMax[1]=2000
+                  // take the speed
+                  if tTrajPallet.tData.tSuper.moveType==0
+                    call language:message(l_sMessage[2],158)
+                    l_sMessage[2]=l_sMessage[2]+" % "
+                    l_nSpeed[2]=tTrajPallet.tData.tSuper.nom_speed.vel
+                    l_nMin[2]=10
+                    l_nMax[2]=200
+                  else
+                    call language:message(l_sMessage[2],158)
+                    l_sMessage[2]=l_sMessage[2]+" mm/sec"
+                    l_nSpeed[2]=tTrajPallet.tData.tSuper.nom_speed.tvel
+                    l_nMin[2]=100
+                    l_nMax[2]=20000
+                  endIf
+                  // edit the field
+                  call use:editNumField("",l_sMessage,l_nSpeed,l_nMin,l_nMax)
+                  // copy back
+                  tTrajPallet.nSpeedApproach=l_nSpeed[0]
+                  tTrajPallet.nSpeedDepart=l_nSpeed[1]
+                  if  tTrajPallet.tData.tSuper.moveType==0
+                    tTrajPallet.tData.tSuper.nom_speed.vel=l_nSpeed[2]
+                    tTrajPallet.tData.tSuper.nom_speed.tvel=9999
+                  else
+                    tTrajPallet.tData.tSuper.nom_speed.tvel=l_nSpeed[2]
+                    tTrajPallet.tData.tSuper.nom_speed.vel=450
+                  endIf
+                endIf
+              break
+              case 5
+                if l_nKey==270 or l_nKey==32
+                  // STOP TIME
+                  call language2:message(l_sMessage,43)
+                  call use:insertDialog(l_sMessage,tTrajPallet.tData.tSuper.nStop,0,10)
+                endIf
+              break
+            endSwitch
+            // release
+            call use:nullKey(l_nKey)
+            cls()
+          elseIf l_nKey==278 or l_nKey==268
+            l_nResult=0
+          elseIf l_nKey==277 or l_nKey==264
+            l_nResult=2
+          elseIf l_nKey==255
+            l_nResult=-1
+          endIf
+          // 
+          // release
+          delay(0)
+        until l_nResult!=100
+      break
+      case 2
+        // take the instruction
+        //  Insert the first instruction
+        //
+        l_sButton[0]=">>>"
+        l_sButton[1]="<<"
+        l_sButton[2]=""
+        l_sButton[3]=""
+        l_sButton[4]=""
+        l_sButton[5]="NONE"
+        l_sButton[6]="ON"
+        l_sButton[5]="OFF"
+        l_sButton[7]="INSTR"
+        if tTrajPallet.tData.tSuper.nTcpAction==1
+          l_sMessage="ON "
+        elseIf tTrajPallet.tData.tSuper.nTcpAction==2
+          l_sMessage="OFF"
+        else
+          l_sMessage="..."
+        endIf
+        call use:type(2,10,"TCP-> "+l_sMessage)
+        call language2:message(l_sMessage,26)
+        call use:questionDialog(l_sMessage,l_sButton,l_nResult)
+        switch l_nResult
+          case 8
+            call insertInstr(tTrajPallet.tData[0].tSuper.iInstr)
+          break
+          case 7
+            // SET TCP ON
+            tTrajPallet.tData.tSuper.nTcpAction=1
+          break
+          case 6
+            // SET TCP OFF
+            tTrajPallet.tData.tSuper.nTcpAction=2
+          break
+          case 5
+            // empty all
+            tTrajPallet.tData.tSuper.nTcpAction=0
+            tTrajPallet.tData[0].tSuper.iInstr.sType=""
+            tTrajPallet.tData[0].tSuper.iInstr.sData=""
+          break
+          case 0,1
+            // go to end
+          break
+        endSwitch
+      break
+      case 3
+        // REBUILD the pallet
+        l_sButton[7]=""
+        l_nSize=l_nLine[0]*l_nLine[1]*l_nLine[2]
+        // calcolate the distance
+        if l_bDifferent or l_bRecompute
+          // POINT X
+          if l_nLine[0]>1
+            l_pPoint=here(flange,tTrajPallet.fFrame)
+            l_pPoint.trsf=position(tTrajPallet.pX,tTrajPallet.fFrame)
+             tTrajPallet.nDistanceXYZ[0]=l_pPoint.trsf.x/(l_nLine-1)
+          else
+            tTrajPallet.nDistanceXYZ[0]=0
+          endIf
+          // POINT Y
+          if l_nLine[1]>1
+            l_pPoint=here(flange,tTrajPallet.fFrame)
+            l_pPoint.trsf=position(tTrajPallet.pY,tTrajPallet.fFrame)
+            tTrajPallet.nDistanceXYZ[1]=abs(l_pPoint.trsf.y/(l_nLine[1]-1))
+          else
+            tTrajPallet.nDistanceXYZ[1]=0
+          endIf
+          // POINT Z
+          if l_nLine[2]>1
+            // put the point Z in the tTrajPallet.fFrame frame to have the good distance
+            l_pPoint=here(flange,tTrajPallet.fFrame)
+            l_pPoint.trsf=position(tTrajPallet.pZ,tTrajPallet.fFrame)
+            tTrajPallet.nDistanceXYZ[2]=l_pPoint.trsf.z/(l_nLine[2]-1)
+          else
+            tTrajPallet.nDistanceXYZ[2]=0
+          endIf
+          // calcolate all the point
+          link(pOrigin,tTrajPallet.fFrame)
+          pOrigin.trsf=position(tTrajPallet.pO,tTrajPallet.fFrame)
+          // Redifine the size
+          if l_bDifferent
+            resize(tTrajPallet.tData,1,l_nSize)
+            resize(tTrajPallet.sAction,1,l_nLine[2])
+          endIf
+          // save the change...
+          i=0
+          l_bCancel=false
+          for z=0 to tTrajPallet.nZ-1
+            for y=0 to tTrajPallet.nY-1
+              for x=0 to tTrajPallet.nX-1
+                l_pPoint=compose(pOrigin,tTrajPallet.fFrame,{tTrajPallet.nDistanceXYZ[0]*x,tTrajPallet.nDistanceXYZ[1]*y,tTrajPallet.nDistanceXYZ[2]*z,0,0,0})
+                // check the point config
+                // set the data
+                tTrajPallet.tData[i].pPoint.trsf=l_pPoint.trsf
+                link(tTrajPallet.tData[i].pPoint,tTrajPallet.fFrame)
+                tTrajPallet.tData[i].tSuper.comment="("+toString("",x+1)+","+toString("",y+1)+","+toString("",z+1)+")"
+                // increase the index
+                i=i+1
+                if !pointToJoint(saveData:tTool,herej(),l_pPoint,l_jPoint)
+                  l_bCancel=true
+                  popUpMsg("the point: "+toString("",i)+" is not accessible...")
+                endIf
+              endFor
+            endFor
+          endFor
+        endIf
+        for i=0 to l_nSize-1
+          // copy all the value from the first element
+          tTrajPallet.tData[i].tSuper.moveType=tTrajPallet.tData[0].tSuper.moveType
+          tTrajPallet.tData[i].tSuper.nStop=tTrajPallet.tData[0].tSuper.nStop
+          tTrajPallet.tData[i].tSuper.nTcpAction=tTrajPallet.tData[0].tSuper.nTcpAction
+          tTrajPallet.tData[i].tSuper.toStop=tTrajPallet.tData[0].tSuper.toStop
+          tTrajPallet.tData[i].tSuper.nom_speed=tTrajPallet.tData[0].tSuper.nom_speed
+          for j=0 to size(tTrajPallet.tData[i].tSuper.iInstr[j])-1
+            tTrajPallet.tData[i].tSuper.iInstr[j].sType=tTrajPallet.tData[0].tSuper.iInstr[j].sType
+            tTrajPallet.tData[i].tSuper.iInstr[j].sData=tTrajPallet.tData[0].tSuper.iInstr[j].sData
+          endFor
+        endFor
+        //
+        // save
+        //
+        tTrajPallet.fReference.trsf=saveData:fFrameItem[tTrajPallet.nIndexFrame].fFrame.trsf
+        call pallet:setPalletData(tTrajPallet)
+        x_bSave=true
+        // check 
+        if !l_bCancel
+          popUpMsg("Pallet OK")
+        endIf
+        return
+      break
+      //
+    endSwitch
+    // release
+    call use:nullKey(l_nKey)
+    // step control
+    if l_nResult==0 or l_nResult==1
+      l_nStep=l_nStep+1
+      // clear the screen
+      cls()
+    else
+      if l_nResult==2
+        l_nStep=l_nStep-1
+        // clear the screen
+        cls()
+      else
+        if l_nResult==-1
+          // check if the pallet already exist
+          if l_nLine>=1
+            // ask if they want to save the config
+            call language2:message(l_sMessage,31)
+            // get the yes_no button
+            call language:getYesNo(l_sYesNo)
+            // ask the question
+            call use:yes_no_cancel(l_sMessage,l_sYesNo,l_bDifferent,l_bCancel)
+            if !l_bCancel
+              if l_bDifferent
+                // save the last modification
+                l_nStep=3
+              else
+                // exit
+                return
+              endIf
+            endIf
+          else
+            // exit without saving 
+            return
+          endIf
+        endIf
+      endIf
+    endIf
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

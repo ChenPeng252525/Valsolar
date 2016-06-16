@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.1" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="check_cube.pgx" />
+    <Program file="check_cylinder.pgx" />
+    <Program file="check_plane.pgx" />
+    <Program file="check_sphere.pgx" />
+    <Program file="create_cube.pgx" />
+    <Program file="create_cylinder.pgx" />
+    <Program file="create_easyCube.pgx" />
+    <Program file="create_plane.pgx" />
+    <Program file="create_sphere.pgx" />
+  </Programs>
+  <Database>
+    <Data file="check_solid.dtx" />
+  </Database>
+  <Libraries />
+</Project>

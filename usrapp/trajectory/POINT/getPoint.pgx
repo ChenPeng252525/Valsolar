@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getPoint" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pPoint" type="point" xsi:type="array" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPoint" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // take
+  if x_bCycle
+    // in Cycle
+    switch pt:tTraj[sItemCycle].tData[x_nIndex].nType
+      case 0,2
+        call getSizeItem(true,l_nSize)
+        for i=0 to l_nSize-1
+          // scan for the real point
+          if pt:tTraj[sItemCycle].tData[i].nType==1
+            l_nPoint=i
+            i=l_nSize-1
+          endIf
+        endFor
+        // give back
+        x_pPoint=appro(pt:tTraj[sItemCycle].tData[l_nPoint].pPoint,pt:tTraj[sItemCycle].tData[x_nIndex].pPoint.trsf)
+      break
+      case 1
+        // real point
+        x_pPoint=pt:tTraj[sItemCycle].tData[x_nIndex].pPoint
+      break
+    endSwitch
+  else
+    // not in Cycle
+    switch pEditPoint.tData[x_nIndex].nType
+      case 0,2
+        call getSizeItem(false,l_nSize)
+        for i=0 to l_nSize-1
+          // scan for the real point
+          if pEditPoint.tData[i].nType==1
+            l_nPoint=i
+            i=l_nSize-1
+          endIf
+        endFor
+        // give back
+        x_pPoint=appro(pEditPoint.tData[l_nPoint].pPoint,pEditPoint.tData[x_nIndex].pPoint.trsf)
+      break
+      case 1
+        // real point
+        x_pPoint=pEditPoint.tData[x_nIndex].pPoint
+      break
+    endSwitch
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bDone" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // show the string
+  //
+  do
+    if taskStatus("PULSE")==-1
+      taskCreate "PULSE",20,execute(x_sItem,bExecute)
+      watch(bExecute,0.5)
+      l_bDone=true
+    elseIf taskStatus("PULSE2")==-1
+      taskCreate "PULSE2",20,execute(x_sItem,bExecute[1])
+      watch(bExecute[1],0.5)
+      l_bDone=true
+    elseIf taskStatus("PULSE3")==-1
+      taskCreate "PULSE3",20,execute(x_sItem,bExecute[2])
+      watch(bExecute[2],0.5)
+      l_bDone=true
+    endIf
+    delay(0)
+  until l_bDone==true
+end
+
+]]></Code>
+  </Program>
+</Programs>

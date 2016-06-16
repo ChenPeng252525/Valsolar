@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+    call use:stringCopy(l_sEmpty,sList)
+  ////  call use:setSizeList(17,0,21,7)
+  ////  call use:setSizeList(15,0,18,9)
+  ////  建立对话款
+  ////  call use:listcreate("")
+  
+  //  sWorkingmode[0]="[ ] 生产循环状态"
+  //  sWorkingmode[1]="[ ] 循环暂停状态"
+  //  sWorkingmode[2]="[ ] 机器人HOME点"
+  //  sWorkingmode[3]="[ ] 机器人准备好"
+  //  sWorkingmode[4]="[ ] 急停报警"
+  //  sWorkingmode[5]="[ ] 防止碰撞功能开启"
+  //  sWorkingmode[6]="[ ] 通讯正常"
+  
+  //  call use:listadd(sWorkingmode)
+  //  call use:selectNewField(nSelected,nIndex,nView)
+  //  call use:listupdate(0)
+  // nIndex=data:nPage_Traj
+  // call use:selectNewField(nSelected,nIndex,nView)
+end
+
+]]></Code>
+  </Program>
+</Programs>

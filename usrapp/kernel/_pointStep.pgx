@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_pointStep" access="private" >
+    <Locals>
+      <Local name="l_aPointData" type="ActionItem" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIdPoint" type="num" xsi:type="array" size="1" />
+      <Local name="l_nLastId" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="Trajectory" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //  
+  //  SYNCRO the point STEP of the trajectory
+  //  
+  //  only if on Cycle
+  if (cycleStatus:bCycle or cycleStatus:bSimulation)
+    // get the actual Point ID..
+    call cycleStatus:getTraj(l_tTraj)
+    if l_tTraj.sID!="null" and l_tTraj.sID!=""
+      // check it..
+      if cycleStatus:nPoint>size(l_tTraj.tSuper)-1
+        // init all
+        cycleStatus:nPoint=0
+        call cycleStatus:removeTraj()
+        //? "[POINTSTEP]: trajectory removed:"+l_tTraj.sID
+      elseIf getMoveId()>l_tTraj.tSuper[cycleStatus:nPoint].nMoveId+1
+        //? "[POINTSTEP]: trajectory update: "+l_tTraj.sID+toString("4",cycleStatus:nPoint)
+        // put one MORE
+        cycleStatus:nPoint=cycleStatus:nPoint+1
+      endIf
+      if !isEmpty()
+        // set a traj is doing
+        cycleStatus:bTraj=true
+        if cycleStatus:nEvent!=l_tTraj[0].nId
+          // update the EVENT ID
+          cycleStatus:nEvent=l_tTraj[0].nId
+          //? "[POINTSTEP]: trajectory event update: "+l_tTraj.sID+toString("4",cycleStatus:nEvent)
+        endIf
+        l_nId=roundDown(getMoveId())
+        // refresh the percentage point distance
+        cycleStatus:nIdPercentage=abs(getMoveId()-l_nId)*100
+      endIf
+    elseIf cycleStatus:nPoint!=0 or cycleStatus:bTraj
+      // reset
+      //? "[POINTSTEP]: reset the traj parameter"
+      cycleStatus:bTraj=false
+      cycleStatus:nPoint=0
+    endIf
+  else
+    // reset the TRAJ
+    cycleStatus:nPoint=0
+    cycleStatus:bTraj=false
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

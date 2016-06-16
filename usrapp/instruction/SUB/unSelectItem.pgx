@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="unSelectItem" access="public">
+    <Locals>
+      <Local name="l_sEvent" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // deselect all
+  call getSizeItem(l_nSize)
+  for i=0 to (l_nSize-1)
+    call getItem(l_sEvent,i)
+    if find(l_sEvent.sType,"#")!=-1
+      l_sEvent.sType=right(l_sEvent.sType,len(l_sEvent.sType)-1)
+      call setItem(l_sEvent,i)
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

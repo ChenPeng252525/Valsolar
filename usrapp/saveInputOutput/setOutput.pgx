@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setOutput" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  switch x_nType
+    //
+    // DIGITAL
+    //
+    case 0
+      // valve 1-2 fastOut
+      call insert_dOut("valve1",true,valve1)
+      call insert_dOut("valve2",true,valve2)
+      if ioStatus(fOut0)>=0
+        // CS8C
+        bCS8=false
+        call insert_dOut("fOut0",true,fOut0)
+      else
+        bCS8=true
+      endIf
+    break
+    case 1
+      // BIO 1
+      call insert_dOut("bOut00",false,bOut0)
+      call insert_dOut("bOut01",false,bOut1)
+      call insert_dOut("bOut02",false,bOut2)
+      call insert_dOut("bOut03",false,bOut3)
+      call insert_dOut("bOut04",false,bOut4)
+      call insert_dOut("bOut05",false,bOut5)
+      call insert_dOut("bOut06",false,bOut6)
+      call insert_dOut("bOut07",false,bOut7)
+      call insert_dOut("bOut08",false,bOut8)
+      call insert_dOut("bOut09",false,bOut9)
+      call insert_dOut("bOut10",false,bOut10)
+      call insert_dOut("bOut11",false,bOut11)
+      call insert_dOut("bOut12",false,bOut12)
+      call insert_dOut("bOut13",false,bOut13)
+      call insert_dOut("bOut14",false,bOut14)
+      call insert_dOut("bOut15",false,bOut15)
+    break
+    case 2
+      if bCS8
+        // MIO
+        call insert_dOut("mOut00",false,mOut0)
+        call insert_dOut("mOut01",false,mOut1)
+        call insert_dOut("mOut02",false,mOut2)
+        call insert_dOut("mOut03",false,mOut3)
+        call insert_dOut("mOut04",false,mOut4)
+        call insert_dOut("mOut05",false,mOut5)
+        call insert_dOut("mOut06",false,mOut6)
+        call insert_dOut("mOut07",false,mOut7)
+        call insert_dOut("mOut08",false,mOut8)
+        call insert_dOut("mOut09",false,mOut9)
+        call insert_dOut("mOut10",false,mOut10)
+        call insert_dOut("mOut11",false,mOut11)
+        call insert_dOut("mOut12",false,mOut12)
+        call insert_dOut("mOut13",false,mOut13)
+        call insert_dOut("mOut14",false,mOut14)
+        call insert_dOut("mOut15",false,mOut15)
+        call insert_dOut("mOut16",false,mOut16)
+        call insert_dOut("mOut17",false,mOut17)
+        call insert_dOut("mOut18",false,mOut18)
+        call insert_dOut("mOut19",false,mOut19)
+        call insert_dOut("mOut20",false,mOut20)
+        call insert_dOut("mOut21",false,mOut21)
+        call insert_dOut("mOut22",false,mOut22)
+        call insert_dOut("mOut23",false,mOut23)
+        call insert_dOut("mOut24",false,mOut24)
+        call insert_dOut("mOut25",false,mOut25)
+        call insert_dOut("mOut26",false,mOut26)
+        call insert_dOut("mOut27",false,mOut27)
+        call insert_dOut("mOut28",false,mOut28)
+        call insert_dOut("mOut29",false,mOut29)
+        call insert_dOut("mOut30",false,mOut30)
+        call insert_dOut("mOut31",false,mOut31)
+      else
+        // BIO2 - MIO
+        call insert_dOut("b2Out00",false,b2Out0)
+        call insert_dOut("b2Out01",false,b2Out1)
+        call insert_dOut("b2Out02",false,b2Out2)
+        call insert_dOut("b2Out03",false,b2Out3)
+        call insert_dOut("b2Out04",false,b2Out4)
+        call insert_dOut("b2Out05",false,b2Out5)
+        call insert_dOut("b2Out06",false,b2Out6)
+        call insert_dOut("b2Out07",false,b2Out7)
+        call insert_dOut("b2Out08",false,b2Out8)
+        call insert_dOut("b2Out09",false,b2Out9)
+        call insert_dOut("b2Out10",false,b2Out10)
+        call insert_dOut("b2Out11",false,b2Out11)
+        call insert_dOut("b2Out12",false,b2Out12)
+        call insert_dOut("b2Out13",false,b2Out13)
+        call insert_dOut("b2Out14",false,b2Out14)
+        call insert_dOut("b2Out15",false,b2Out15)
+      endIf
+    break
+    case 3
+      for i=0 to size(MbOut)-1
+        // modbus
+        if i<10
+          call insert_dOut("MbOut00"+toString("",i),false,MbOut[i])
+        elseIf i<100
+          call insert_dOut("MbOut0"+toString("",i),false,MbOut[i])
+        else
+          call insert_dOut("MbOut"+toString("",i),false,MbOut[i])
+        endIf
+      endFor
+    break
+    case 4
+      // USER
+      for i=0 to size(dOutUser)-1
+        // modbus
+        if i<10
+          call insert_dOut("userOut00"+toString("",i),false,dOutUser[i])
+        elseIf i<100
+          call insert_dOut("userOut0"+toString("",i),false,dOutUser[i])
+        else
+          call insert_dOut("userOut"+toString("",i),false,dOutUser[i])
+        endIf
+      endFor
+    break
+    case 5
+      // armIO
+      call insert_dOut("remOut0",false,cDout0)
+      call insert_dOut("remOut1",false,cDout1)
+      call insert_dOut("remOut2",false,cDout2)
+      call insert_dOut("remOut3",false,cDout3)
+      call insert_dOut("remOut4",false,cDout4)
+      call insert_dOut("remOut5",false,cDout5)
+      call insert_dOut("remOut6",false,cDout6)
+      call insert_dOut("remOut7",false,cDout7)
+    break
+    case 6
+        call insert_dOut("NetOut00",false,NetOut0)
+        call insert_dOut("NetOut01",false,NetOut1)
+        call insert_dOut("NetOut02",false,NetOut2)
+        call insert_dOut("NetOut03",false,NetOut3)
+        call insert_dOut("NetOut04",false,NetOut4)
+        call insert_dOut("NetOut05",false,NetOut5)
+        call insert_dOut("NetOut06",false,NetOut6)
+        call insert_dOut("NetOut07",false,NetOut7)
+        call insert_dOut("NetOut08",false,NetOut8)
+        call insert_dOut("NetOut09",false,NetOut9)
+        call insert_dOut("NetOut10",false,NetOut10)
+        call insert_dOut("NetOut11",false,NetOut11)
+        call insert_dOut("NetOut12",false,NetOut12)
+        call insert_dOut("NetOut13",false,NetOut13)
+        call insert_dOut("NetOut14",false,NetOut14)
+        call insert_dOut("NetOut15",false,NetOut15)
+        call insert_dOut("NetOut16",false,NetOut16)
+        call insert_dOut("NetOut17",false,NetOut17)
+        call insert_dOut("NetOut18",false,NetOut18)
+        call insert_dOut("NetOut19",false,NetOut19)
+        call insert_dOut("NetOut20",false,NetOut20)
+        call insert_dOut("NetOut21",false,NetOut21)
+        call insert_dOut("NetOut22",false,NetOut22)
+        call insert_dOut("NetOut23",false,NetOut23)
+        call insert_dOut("NetOut24",false,NetOut24)
+        call insert_dOut("NetOut25",false,NetOut25)
+        call insert_dOut("NetOut26",false,NetOut26)
+        call insert_dOut("NetOut27",false,NetOut27)
+        call insert_dOut("NetOut28",false,NetOut28)
+        call insert_dOut("NetOut29",false,NetOut29)
+        call insert_dOut("NetOut30",false,NetOut30)
+        call insert_dOut("NetOut31",false,NetOut31)    
+        call insert_dOut("NetOut32",false,NetOut32)
+        call insert_dOut("NetOut33",false,NetOut33)
+        call insert_dOut("NetOut34",false,NetOut34)
+        call insert_dOut("NetOut35",false,NetOut35)
+        call insert_dOut("NetOut36",false,NetOut36)
+        call insert_dOut("NetOut37",false,NetOut37)
+        call insert_dOut("NetOut38",false,NetOut38)
+        call insert_dOut("NetOut39",false,NetOut39)
+        call insert_dOut("NetOut40",false,NetOut40)
+        call insert_dOut("NetOut41",false,NetOut41)
+        call insert_dOut("NetOut42",false,NetOut42)
+        call insert_dOut("NetOut43",false,NetOut43)
+        call insert_dOut("NetOut44",false,NetOut44)
+        call insert_dOut("NetOut45",false,NetOut45)
+        call insert_dOut("NetOut46",false,NetOut46)
+        call insert_dOut("NetOut47",false,NetOut47)
+        call insert_dOut("NetOut48",false,NetOut48)
+        call insert_dOut("NetOut49",false,NetOut49)
+        call insert_dOut("NetOut50",false,NetOut50)
+        call insert_dOut("NetOut51",false,NetOut51)
+        call insert_dOut("NetOut52",false,NetOut52)
+        call insert_dOut("NetOut53",false,NetOut53)
+        call insert_dOut("NetOut54",false,NetOut54)
+        call insert_dOut("NetOut55",false,NetOut55)
+        call insert_dOut("NetOut56",false,NetOut56)
+        call insert_dOut("NetOut57",false,NetOut57)
+        call insert_dOut("NetOut58",false,NetOut58)
+        call insert_dOut("NetOut59",false,NetOut59)
+        call insert_dOut("NetOut60",false,NetOut60)
+        call insert_dOut("NetOut61",false,NetOut61)
+        call insert_dOut("NetOut62",false,NetOut62)
+        call insert_dOut("NetOut63",false,NetOut63)     
+    break
+    //
+      // ANALOGIC
+      //
+    case 10
+      // default use the COUNTER
+      call insert_cCount("num0",true,nCounter[0])
+      call insert_cCount("num1",true,nCounter[1])
+      call insert_cCount("num2",true,nCounter[2])
+      call insert_cCount("num3",true,nCounter[3])
+      call insert_cCount("num4",true,nCounter[4])
+      call insert_cCount("num5",true,nCounter[5])
+      call insert_cCount("num6",true,nCounter[6])
+      call insert_cCount("num7",true,nCounter[7])
+      call insert_cCount("num8",true,nCounter[8])
+      call insert_cCount("num9",true,nCounter[9])
+      // analogic one
+      for i=0 to size(aUser)-1
+        call insert_aCount("usrNum"+toString("",i),true,aUser[i])
+      endFor
+    break
+    case 11
+      // modbus
+      for i=0 to size(MbAnaOut)-1
+        call insert_aCount("MbAnaOut"+toString("",i),true,MbAnaOut[i])
+      endFor
+    break
+    case 12
+      //     
+      // USER
+      //
+    break
+    case 13
+      // armIO
+      call insert_aCount("cAout0",true,cAout0)
+      call insert_aCount("cAout1",true,cAout1)
+      call insert_aCount("cAout2",true,cAout2)
+      call insert_aCount("cAout3",true,cAout3)
+    break
+    case 14
+      // others
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

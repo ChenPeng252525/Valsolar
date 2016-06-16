@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_control" access="private" >
+    <Locals>
+      <Local name="l_bCycle" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bSimulation" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // load in advance to keep time
+  //
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation and cycleStatus:bMutex==false and use:nPage>=20 and use:nPage<=29
+    l_nID=0
+    call processList:getCycle(l_sProg,l_nID,l_nID,0,1)
+    if l_sProg!="" and !bErrorLoading
+      // load the init one
+      call processList:getCycle(l_sProg,l_nID,l_nID,0,0)
+      if l_sProg==""
+        call processList:getCycle(l_sProg,l_nID,l_nID,0,1)
+      endIf
+      // load it
+      call prog:getProgItem(cycleStatus:pCycleProg,l_sProg)
+      if cycleStatus:pCycleProg.sID==""
+        // remove from the list
+        bErrorLoading=true
+      endIf
+    elseIf l_sProg==""
+      // reset the PROGRAM elements..
+      resize(cycleStatus:pCycleProg.iEvent,1,1)
+      cycleStatus:pCycleProg.iEvent.sType=""
+      cycleStatus:pCycleProg.iEvent.sData=""
+      cycleStatus:pCycleProg.sID=""
+    endIf
+  else
+    bErrorLoading=false
+  endIf
+  //
+  // look for the cycleStatus
+  //
+  if cycleStatus:bCycle
+    // or cycleStatus:bSimulation
+    //
+    // if the working mode is not in the local or remote mode
+    //
+    if nLastWorkingM!=cycleStatus:nWorkingMode
+      logMsg("[KERNEL] SUPERVISOR:Change working mode")
+      call OnEvent:OnCycleEvent(6)
+      nLastWorkingM=cycleStatus:nWorkingMode
+    endIf
+    // look if the power is on
+    if isPowered()==false
+      if bPowered
+        // set the bit
+        bPowered=false
+        // save the last joint position if it wasn't stopped
+        call cycleStatus:recordPowerDown()
+        logMsg("[KERNEL] SUPERVISOR:Power off")
+        call OnEvent:OnCycleEvent(7)
+      endIf
+    else
+      bPowered=true
+    endIf
+    //
+    // if the robot was moving and you release the hold key
+    //
+    if cycleStatus:nWorkingStatus==2 and cycleStatus:nPoint>0
+      if !bHold
+        logMsg("[KERNEL] SUPERVISOR:Release move Hold")
+        call OnEvent:OnCycleEvent(0)
+        bHold=true
+      endIf
+    else
+      if cycleStatus:nWorkingStatus!=2
+        bHold=false
+      endIf
+    endIf
+    //
+    // check the emergency
+    //
+    if esStatus()==2
+      if !bEmergency
+        bEmergency=true
+        // look if the emergency is active
+        call language:message(l_sMessage,222)
+        popUpMsg(l_sMessage)
+        call OnEvent:OnCycleEvent(1)
+        logMsg("[KERNEL] SUPERVISOR:Emergence press")
+        if saveData:bStopToPowerOff
+          if cycleStatus:bCycle
+            // CYCLE
+            call _stopCycle()
+          elseIf cycleStatus:bSimulation
+            // SIMULATION
+            call _stopSimul()
+          endIf
+          return
+        endIf
+      endIf
+    else
+      bEmergency=false
+    endIf
+  else
+    // RESET ALL THE BIT
+    bPowered=false
+    bEmergency=false
+    bHold=false
+    nLastWorkingM=cycleStatus:nWorkingMode
+    // check if already home -> reset the jPowerDown
+    if cycleStatus:bIsHome
+      call cycleStatus:recordPowerDown()
+    endIf
+  endIf
+  //
+  // check the restart move procedure
+  //
+  if !cycleStatus:bWait and !cycleStatus:bPause and !cycleStatus:bPausePLC and !cycleStatus:bStop and cycleStatus:bMoveStopped
+    // restart the move
+    restartMove()
+    if saveData:bDebug
+      ? "MOTION Restart,"+toString(".3",clock()-cycleStatus:nTime)
+    endIf
+    cycleStatus:bMoveStopped=false
+    cycleStatus:bMotionToken=false
+  else
+    // stop the move
+    if (cycleStatus:bWait or cycleStatus:bPause or cycleStatus:bPausePLC or cycleStatus:bStop) and !cycleStatus:bMoveStopped
+      if saveData:bDebug
+        ? "MOTION stopped,"+toString(".3",clock()-cycleStatus:nTime)
+      endIf
+      cycleStatus:bMoveStopped=true
+    endIf
+  endIf
+  //
+  // time control
+  //    
+  // check for the resume of the task
+  if bTimeOut and !cycleStatus:bPause and !cycleStatus:bPausePLC
+    // resume the task 
+    call action_resume()
+  endIf
+  // is waiting 
+  if (cycleStatus:bWait and !cycleStatus:bPause and !cycleStatus:bPausePLC)
+    if !bWait
+      bTimeOut=false
+      bWait=true
+      nTimeOut=clock()
+    endIf
+    // check the time and pause the cycle
+    if (clock()-nTimeOut)>saveData:nTimeOut and !bTimeOut and saveData:nTimeOut>0
+      bTimeOut=true
+      // suspend all the task action
+      call action_suspend()
+      call OnEvent:OnCycleEvent(22)
+    endIf
+  else
+    // reset the time
+    bWait=false
+  endIf
+  //
+  // STATUS CONTROL
+  //
+  // save the status and the working mode of the task in global
+  //
+  cycleStatus:nWorkingMode=workingMode(cycleStatus:nWorkingStatus)
+  cycleStatus:nEmergency=esStatus()
+  // CYCLE STATUS
+  l_bCycle=taskStatus("Cycle")==1 or taskStatus("Cycle")==0
+  // SIMULATION STATUS
+  l_bSimulation=taskStatus("Simulation")==1 or taskStatus("Simulation")==0
+  //
+  // REFRESH and CYCLE status
+  //
+  if cycleStatus:bSimulation!=l_bSimulation
+    // simulation
+    cycleStatus:bSimulation=l_bSimulation
+    // INIT ALL
+    if !l_bSimulation
+      // init all
+      call cycle_init()
+      l_sEmpty=""
+      call memory_onStop(l_sEmpty)
+    endIf
+    use:bUseRefresh=true
+  endIf
+  if cycleStatus:bCycle!=l_bCycle
+    // cycle
+    cycleStatus:bCycle=l_bCycle
+    if !l_bCycle
+      // init all
+      call cycle_init()
+      l_sEmpty=""
+      call memory_onStop(l_sEmpty)
+      // check if reload the last process List saved
+      if saveData:bReloadList
+        call processList:loadProcessList(l_nResult)
+        if l_nResult!=0
+          // message
+          call language:message(l_sMessage,-7)
+          call language:message(l_sMessage[1],70)
+          popUpMsg(l_sMessage+" "+l_sMessage[1])
+        endIf
+      endIf
+    endIf
+    use:bUseRefresh=true
+  endIf
+  // check if is need to reload ALL
+  if saveData:bToReload and !cycleStatus:bCycle and !cycleStatus:bSimulation
+    call memory_reLoad()
+    saveData:bToReload=false
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

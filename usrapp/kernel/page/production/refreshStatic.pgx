@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="refreshStatic" access="private" >
+    <Locals>
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPreset" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nProcessType" type="num" xsi:type="array" size="1" />
+      <Local name="l_bMode" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sProgram" type="string" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // clear the button line
+  call use:clear(0,13)
+  //
+  // print to video info of all
+  //
+  if !bLarge
+    call use:getListPosition(l_nX,l_nY)
+    // line 0
+    call use:typeLen(0,0,"",l_nX-1)
+    // line 1-2
+    //
+    // print to video the first 2 program in the process List
+    //
+    l_nProcessType=cycleStatus:nProcessType
+    // show the nProcessTypeis the start List empty
+    l_nZero=0
+    call processList:getCycle(l_sProgram,l_nZero,l_nZero,l_nZero,0)
+    if l_sProgram=="" and l_nProcessType==0
+      l_nProcessType=1
+    endIf
+    // PRINT THE PROGRAM LIST
+    call printList(l_nProcessType)
+    // line 3
+    //  print to video the clock
+    call language:message(l_sMessage,90)
+    call use:strfill(l_sMessage+" "+toString(".2",cycleStatus:nCycleTime),use:nBottomX,l_sMessage)
+    call use:typeLen(0,3,"",l_nX-1)
+    call use:typeLen(0,4,l_sMessage,l_nX-1)
+    // line 4
+    call use:typeLen(0,5,"",l_nX-1)
+    //line 5 
+    l_sMessage=""
+    call use:typeLen(0,6,l_sMessage,l_nX-1)
+    // line 7- 11 none
+    for i=7 to 11
+      call use:typeLen(0,i," ",l_nX-1)
+    endFor
+  endIf
+  // check the if the robot is at home
+  call language:message(l_sMessage,223)
+  if !cycleStatus:bIsHome and !cycleStatus:bCycle and !cycleStatus:bSimulation
+    // ROBOT IS NOT AT HOME
+    cycleStatus:sToShow=l_sMessage
+    // reset the signal
+  elseIf cycleStatus:sToShow==l_sMessage
+    cycleStatus:sToShow=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

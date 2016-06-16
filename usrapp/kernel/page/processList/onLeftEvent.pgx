@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onLeftEvent">
+    <Locals>
+      <Local name="l_nDefault" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_nSize=3
+  // step -1
+  call processList:getDefaultType(l_nDefault)
+  l_nDefault=(l_nDefault+2)%(l_nSize)
+  call processList:setDefaultType(l_nDefault)
+  use:bUseRefresh=true
+end
+]]></Code>
+  </Program>
+</Programs>

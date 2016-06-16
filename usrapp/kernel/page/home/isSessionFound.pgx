@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="isSessionFound">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nResult" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sString" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the trajectory already exist
+  call language:message(l_sString,21)
+  call use:timerDialog(l_sString,0)
+  l_nX=(40-len(l_sString))/2
+  l_nY=5
+  // read the sessino list
+  call use:read(l_nX+len(l_sString),l_nY,x_sName,10,false)
+  // look for the special char . and /
+  if find(x_sName,".")==-1 and find(x_sName,"/")==-1 and find(x_sName,"*")==-1 and find(x_sName,"?")==-1 and find(x_sName,":")==-1 and find(x_sName,chr(34))==-1 and find(x_sName,"\")==-1
+    if !use:bUseEscape
+      // search inside the sSession
+      for i=0 to size(sSession)-1
+        if x_sName==sSession[i]
+          // trajectory already exist
+          call language:message(l_sString,-2)
+          popUpMsg(l_sString)
+          x_nResult=-1
+          return
+        endIf
+      endFor
+    else
+      x_nResult=-1
+    endIf
+  else
+    x_nResult=-1
+    call language:message(l_sMessage,-3)
+    l_sMessage=l_sMessage+" . / * ? : \ "+ chr(34)+" "
+    popUpMsg(l_sMessage)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

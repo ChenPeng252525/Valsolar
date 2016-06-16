@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setCycle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_nTotal" type="num" xsi:type="element" />
+      <Parameter name="x_nDone" type="num" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // insert one cycle in the processLIST
+  switch x_nType
+    case 0
+      // ON START CYCLE
+      logMsg("[KERNEL] CYCLE:Insert the program: "+x_sName+" at the position: "+toString("",x_nIndex))
+      saveCycle:sLoadStart[x_nIndex]=x_sName
+      saveCycle:nTotalStart[x_nIndex]=x_nTotal
+      saveCycle:nDoneStart[x_nIndex]=x_nDone
+    break
+    case 1
+      // get the information about the actual process list
+      logMsg("[KERNEL] CYCLE:Insert the program: "+x_sName+" at the position: "+toString("",x_nIndex))
+      saveCycle:sLoadProg[x_nIndex]=x_sName
+      saveCycle:nTotalCycle[x_nIndex]=x_nTotal
+      saveCycle:nDoneCycle[x_nIndex]=x_nDone
+    break
+    case 2
+      // ON END CYCLE
+      logMsg("[KERNEL] CYCLE:Insert the program: "+x_sName+" at the position: "+toString("",x_nIndex))
+      saveCycle:sLoadEnd[x_nIndex]=x_sName
+      saveCycle:nTotalEnd[x_nIndex]=x_nTotal
+      saveCycle:nDoneEnd[x_nIndex]=x_nDone
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

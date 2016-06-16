@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  title("PE_Solar")
+    l_sMenu="模拟,复位,,,,,,"
+  // define the menu
+  call use:stringToArray(l_sMenu,sMenu)
+    // set the menu
+  call use:setMenu(sMenu,true,2)
+  call use:getMenu(sMenu,bButton)
+end]]></Code>
+  </Program>
+</Programs>

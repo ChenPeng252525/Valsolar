@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changePCircle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bRefresh" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bUnreach" type="bool" xsi:type="array" size="1" />
+      <Local name="l_fTraj" type="frame" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMoveId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="2" />
+      <Local name="l_nView" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_tTrsfTemp" type="trsf" xsi:type="array" size="2" />
+      <Local name="l_trsfPoint" type="trsf" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  l_bRefresh=false
+  l_nIndex=0
+  l_nView=0
+  call use:setSizeList(10,3,20,6)
+  call use:setView(false)
+  // get the tool
+  call tcp:getTool(l_tTool,pEditPoint.nIndexTool)
+  // get the point and the circle point
+  call getPoint(l_pPoint,false,x_nIndex)
+  // point final
+  pPoints=l_pPoint
+  // point intermediare
+  pPoints[1]=l_pPoint[1]
+  l_tTrsf=l_pPoint[1].trsf
+  //
+  do
+    // check if the intermediate point is reachable
+    call isReachable(l_pPoint[1],l_tTool,l_bUnreach)
+    //move to
+    if cycleStatus:nWorkingMode==1 and !cycleStatus:bCycle and !cycleStatus:bSimulation and !l_bUnreach
+      // empty the stack
+      resetMotion()
+      if distance(here(l_tTool,pEditPoint.fFrame),pPoints[1])>1
+        call checkPCircle(x_nIndex,here(l_tTool,pEditPoint.fFrame),l_nResult)
+        // CIRCULAR MOVE  
+        if l_nResult!=-1
+          // find P.I. percentage
+          call checkPCircle(x_nIndex,pPoints[1],l_nResult[1])
+          // take the previous point 
+          call getPoint(l_pPoint,false,x_nIndex-1)
+          //
+          // find the intermediate point
+          //
+          l_pPoint[1]=pPoints[1]
+          pPoints[1].trsf=interpolateC(l_pPoint.trsf,pPoints[1].trsf,pPoints.trsf,(l_nResult+l_nResult[1])/2)
+          // go to the intermediate point
+          pPoints[0]=l_pPoint[1]
+          movec(pPoints[1],pPoints,l_tTool,mMdesc)
+        else
+          // joint MOVE
+          movej(pPoints[1],l_tTool,mMdesc)
+        endIf
+        // joint MOVE
+      else
+        // joint MOVE
+        movej(pPoints[1],l_tTool,mMdesc)
+      endIf
+    endIf
+    // show the menu
+    call use:clear(0,13)
+    call use:typeMenu(8,"OK")
+    if !cycleStatus:bCycle and !cycleStatus:bSimulation
+      call use:typeMenu(1,"Here")
+    endIf
+    // show the context
+    call use:listcreate("")
+    l_sMessage="coord  X > "+toString(".2",l_tTrsf.x)
+    call use:listadd(l_sMessage)
+    l_sMessage="coord  Y > "+toString(".2",l_tTrsf.y)
+    call use:listadd(l_sMessage)
+    l_sMessage="coord  Z > "+toString(".2",l_tTrsf.z)
+    call use:listadd(l_sMessage)
+    l_sMessage="coord RX > "+toString(".2",l_tTrsf.rx)
+    call use:listadd(l_sMessage)
+    l_sMessage="coord RY > "+toString(".2",l_tTrsf.ry)
+    call use:listadd(l_sMessage)
+    l_sMessage="coord RZ > "+toString(".2",l_tTrsf.rz)
+    call use:listadd(l_sMessage)
+    use:nView=l_nIndex
+    call use:listupdate(l_nIndex-l_nView)
+    // edit the items
+    do
+      l_nView=use:nView
+      l_nKey=get()
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+      switch l_nKey
+        case 271
+          // here POINT
+          if !cycleStatus:bCycle and !cycleStatus:bSimulation
+            // ASK IF YOU WANT TO RECORD THE POINT
+            call language:message(l_sMessage,131)
+            call language:getYesNo(l_sButton)
+            call use:yes_no(l_sMessage,l_sButton,l_bOk)
+            if l_bOk
+              call HerePointCircle(x_nIndex)
+            endIf
+          endIf
+        break
+        case 270
+          // clean the line
+          call use:listcursor(use:nView,false)
+          // EDIT FIELD
+          switch l_nIndex
+            case 0
+              //  x-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.x,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+            case 1
+              //  y-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.y,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+            case 2
+              //  z-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.z,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+            case 3
+              //  rx-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.rx,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+            case 4
+              //  ry-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.ry,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+            case 5
+              //  rz-value
+              l_sItem=""
+              call use:changeValue(l_tTrsf.rz,0,0,2+40-use:nBottomX,use:nView+1+3,l_sItem)
+            break
+          endSwitch
+          l_bRefresh=true
+        break
+      endSwitch
+      delay(0)
+    until l_bRefresh==true or l_nKey==255 or l_nKey==278 or l_nKey==271
+    //
+    // check if is OK   VALUE CHANGE
+    //
+    if l_nKey==270
+      pPoints[1].trsf=l_pPoint[1].trsf=l_tTrsf
+    endIf
+    //
+    l_bRefresh=false
+    delay(0)
+  until l_nKey==255 or l_nKey==278 or l_nKey==271 or l_bUnreach
+  //
+  // save the data
+  //
+  if l_nKey==278
+    // record it
+    if !l_bUnreach
+      // update the circle point
+      pEditPoint.tData[x_nIndex].pCircle.trsf=l_tTrsf
+    endIf
+  endIf
+  // release the resource
+  call use:nullKey(l_nKey)
+end]]></Code>
+  </Program>
+</Programs>

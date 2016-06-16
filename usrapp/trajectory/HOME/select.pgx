@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="select">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nSelect" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // to save:
+  // x_nBest [0] -# Traejctory
+  // x_nBest [1] -# index
+  //
+  // STRATEGY look the FIRST VALUE
+  if nDistance>saveData:nRadiusHome
+    // take the first
+    l_nIndex=0
+  else
+    // look for the point beyond the radius
+    l_nMin=100000
+    for i=0 to size(nDistance)-1
+      if nDistance[i]<saveData:nRadiusHome
+        if nCoeff[i]<l_nMin and abs(nCoeff[i]-l_nMin)>30
+          l_nMin=nCoeff[i]
+          l_nIndex=i
+          if saveData:bDebug
+            ? "searching inside"
+            ? nDistance[i]
+            ? nJoint[i]
+            ? nHome[i]
+          endIf
+        endIf
+      else
+        // exit
+        i=size(nDistance)-1
+      endIf
+    endFor
+  endIf
+  // save the value
+  x_nSelect[0]=nHome[l_nIndex]
+  x_nSelect[1]=nJoint[l_nIndex]
+end]]></Code>
+  </Program>
+</Programs>

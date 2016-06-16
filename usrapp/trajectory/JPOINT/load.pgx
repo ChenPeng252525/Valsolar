@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="load" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // load the select trajectory..already loaded
+  call getTrajType(l_sType)
+  if find(pt:libPath(),saveData:sPathTraj)==-1
+    pt:libLoad(saveData:sPathTraj+l_sType)
+    delay(0)
+    if saveData:bDebug
+      ? "loading JPOINT..."+saveData:sPathTraj+l_sType
+    endIf
+  endIf
+  // use the type...
+  if isDefined(pt:tTraj[x_sItem])
+    // use the type...
+    jEditPoint=pt:tTraj[x_sItem]
+    jEditPoint.sID=x_sItem
+    x_nResult=0
+  elseIf x_sItem!="" and find(x_sItem,"@")==-1
+    // not FOUND
+    call language:message(l_sMessage,-7)
+    x_nResult=-1
+    popUpMsg(l_sMessage+x_sItem)
+    jEditPoint.sID=""
+  elseIf x_sItem==""
+    // reload all the template
+    x_nResult=home:libLoad(saveData:sPathTraj+"HOME")
+    if saveData:bDebug
+      ? "loading JPOINT HOME..."+saveData:sPathTraj+"HOME"
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

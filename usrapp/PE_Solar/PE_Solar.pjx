@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.8.3" stackSize="10000" millimeterUnit="true" />
+  <Programs>
+    <Program file="init.pgx" />
+    <Program file="libload.pgx" />
+    <Program file="start.pgx" />
+    <Program file="stop.pgx" />
+    <Program file="WatchDog.pgx" />
+  </Programs>
+  <Database>
+    <Data file="PE_Solar.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="page_view" path="Disk://page/page_viewTraj/page_viewTraj.pjx" />
+    <Library alias="pub" path="Disk://public_temp/pub/pub.pjx" />
+    <Library alias="cycle" path="Disk://cycle/cycle.pjx" />
+    <Library alias="io" path="Disk://io/io.pjx" />
+  </Libraries>
+</Project>

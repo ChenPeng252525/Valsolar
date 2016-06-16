@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="checkIoBus" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bBool" type="bool" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nStatus" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  x_bBool=true
+  //check bus status
+  l_nStatus=ioBusStatus(sIoBusStatus)
+  nJishu=size(sIoBusStatus)
+  for i=0 to size(sIoBusStatus)-1
+    //是否找到了相应的APLICOM端口
+    if left(sIoBusStatus[i],1)!="0"
+      x_bBool=false
+      return
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="scan_prog" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sProg" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sName" type="string" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // do the scan and save the file
+  // init the sWrite
+  call use:stringCopy(l_sEmpty,sWrite)
+  // open the file
+  nFile=$fileOpen(x_sName+".txt","w")
+  // start the scanning
+  l_nId=0
+  call scanning(x_sProg,0,l_nId,false)
+  // save the file
+  $fileSet(nFile,sWrite,size(sWrite))
+  $fileClose(nFile)
+end]]></Code>
+  </Program>
+</Programs>

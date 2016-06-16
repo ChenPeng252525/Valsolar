@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.8.3" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="_tcycle.pgx" />
+    <Program file="_tPLC.pgx" />
+    <Program file="_WatchDog.pgx" />
+    <Program file="checkIoBus.pgx" />
+    <Program file="isStopped.pgx" />
+    <Program file="PowerOn.pgx" />
+    <Program file="save.pgx" />
+    <Program file="start.pgx" />
+    <Program file="stop.pgx" />
+    <Program file="wizard.pgx" />
+  </Programs>
+  <Database>
+    <Data file="cycle.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="data" path="Disk://SaveData/SaveData.pjx" />
+    <Library alias="io" path="Disk://io/io.pjx" />
+    <Library alias="use" path="Disk://public_temp/userPage/USERPAGE.pjx" />
+  </Libraries>
+</Project>

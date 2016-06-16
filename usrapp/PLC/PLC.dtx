@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="nToSuperV" access="public" xsi:type="array" type="num" size="1" />
+    <Data name="sProgList" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sPresetList" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="listProgram" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="jHome" access="public" xsi:type="array" type="jointRx" size="1" />
+    <Data name="nom_speed" access="public" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" rmax="9999" blend="off" />
+    </Data>
+    <Data name="sSessionList" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sPalletName" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sSession" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sSession2" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="dOutRobIsReady" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q1" />
+    </Data>
+    <Data name="dOutRobInHome" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q0" />
+    </Data>
+    <Data name="dOutRobCycle" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q2" />
+    </Data>
+    <Data name="dOutRobErr" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q4" />
+    </Data>
+    <Data name="dInCycle" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I0" />
+    </Data>
+    <Data name="bError" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="aSelect" access="private" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%IW8" />
+    </Data>
+    <Data name="nProgCode" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="sProgName" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="dInPlcErr" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I1" />
+    </Data>
+    <Data name="dOutGunOn" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve1" />
+    </Data>
+    <Data name="dOutJobDone" access="private" xsi:type="array" type="dio" size="1" />
+    <Data name="dInGohome" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I4" />
+    </Data>
+    <Data name="dInPauseCycle" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I2" />
+    </Data>
+    <Data name="dInResumeCycle" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I3" />
+    </Data>
+    <Data name="dIndisablepower" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I5" />
+    </Data>
+    <Data name="dOutPauseCycle" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q3" />
+    </Data>
+    <Data name="aTime" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%QW8" />
+    </Data>
+    <Data name="aSudu" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%IW10" />
+    </Data>
+  </Datas>
+</Database>

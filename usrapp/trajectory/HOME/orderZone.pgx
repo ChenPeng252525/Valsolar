@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="orderZone" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nDistance" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nTrajectory" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nBest" type="num" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nValue" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // check if the new HOME trajectory is better then the last one...
+  //
+  // MOVETYPE PRIORITY
+  // 
+  // BOX -> SPHERE -> PLANE
+  //
+  // SAME MOVETYPE 
+  //
+  // check the distance from the plane or the center of the sphere
+  //
+  // x_nTrajectory= home index
+  // 0= joint index
+  // x_nDistance= nDistance
+  // type CUBE-SPHERE-PLANE= nCoeff
+  //
+  // copy all the value
+  l_nValue=x_nTrajectory
+  l_nValue[1]=0
+  l_nValue[2]=x_nDistance
+  l_nValue[3]=x_nType
+  // order all 
+  // MINOR
+  if x_nType<nCoeff
+    // insert into
+    call insertValue(l_nValue,0)
+    // EQUAL order by distance
+  elseIf x_nType==nCoeff
+    // order by distance
+    for i=0 to size(nCoeff)-1
+      if x_nDistance<=nDistance[i] or i==size(nCoeff)-1
+        // insert
+        call insertValue(l_nValue,i)
+        // exit
+        i=size(nCoeff)-1
+      endIf
+    endFor
+    // MAJOR
+  elseIf x_nType>nCoeff
+    // order by type
+    for i=0 to size(nCoeff)-1
+      if nCoeff[i]==x_nType
+        // found it
+        l_bFound=true
+        if x_nDistance<=nDistance[i] or i==size(nCoeff)-1
+          // insert
+          call insertValue(l_nValue,i+1)
+          // exit
+          i=size(nCoeff)-1
+        endIf
+        // not the same but the prevoius one was ok
+      elseIf l_bFound
+        // insert one before
+        call insertValue(l_nValue,i)
+        // exit
+        i=size(nCoeff)-1
+        // found in the last item
+      elseIf x_nDistance<=nDistance[i] or (i==size(nCoeff)-1)
+        if nDistance[0]==-1
+          // first item
+          call insertValue(l_nValue,i)
+        else
+          // insert
+          call insertValue(l_nValue,i+1)
+        endIf
+        // exit
+        i=size(nCoeff)-1
+      endIf
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

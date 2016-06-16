@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="buildList" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nViewMode" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sId" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_bStatus" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSizeOut" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSizeIn" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  l_nSizeOut=-1
+  l_nSizeIn=-1
+  call out:getSize(l_nSizeOut)
+  call in:getSize(l_nSizeIn)
+  call use:stringCopy(l_sEmpty,sList)
+  // set the view
+  switch x_nViewMode
+    case 0
+      //
+      // output
+      //
+      sMode="OUT"
+      for i=0 to l_nSizeOut-1
+        // get 
+        call out:get(l_sId,i)
+        call out:isActive(l_bActive,l_sId)
+        if l_bActive
+          call out:getStatus(l_bStatus,l_sId)
+          call use:showBoolStatus(l_bStatus,l_sTemp)
+          call out:getItem(l_sName,l_sId)
+          call out:isEnable(l_bStatus,l_sId)
+          if l_bStatus
+            call listAdd(l_sTemp+" "+l_sId+" {"+l_sName+"}")
+          else
+            call listAdd(l_sTemp+"!"+l_sId+" {"+l_sName+"}")
+          endIf
+          // SET THE START_STOP_END_HOME
+          if l_sName=="start"
+            saveData:sOutStart=l_sId
+          elseIf l_sName=="stop"
+            saveData:sOutStop=l_sId
+          elseIf l_sName=="end"
+            saveData:sOutEnd=l_sId
+          elseIf l_sName=="home"
+            saveData:sOutHome=l_sId
+          endIf
+        endIf
+      endFor
+    break
+    case 1
+      //
+      // INPUT
+      //
+      sMode="IN"
+      for i=0 to l_nSizeIn-1
+        // CS8 
+        call in:get(l_sId,i)
+        call in:isActive(l_bActive,l_sId)
+        if l_bActive
+          call in:getStatus(l_bStatus,l_sId)
+          call use:showBoolStatus(l_bStatus,l_sTemp)
+          call in:getItem(l_sName,l_sId)
+          call in:isEnable(l_bStatus,l_sId)
+          if l_bStatus
+            call listAdd(l_sTemp+" "+l_sId+" {"+l_sName+"}")
+          else
+            call listAdd(l_sTemp+"!"+l_sId+" {"+l_sName+"}")
+          endIf
+          // SET THE START_STOP_END_HOME
+          if l_sName=="start"
+            saveData:sInStart=l_sId
+          elseIf l_sName=="stop"
+            saveData:sInStop=l_sId
+          elseIf l_sName=="end"
+            saveData:sInEnd=l_sId
+          elseIf l_sName=="home"
+            saveData:sInHome=l_sId
+          endIf
+        endIf
+      endFor
+    break
+  endSwitch
+  // rebuild the Function LIST
+  call use:listempty()
+  call use:listadd(sList)
+end]]></Code>
+  </Program>
+</Programs>

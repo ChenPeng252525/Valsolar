@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5.3" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="control.pgx" />
+    <Program file="endCycle.pgx" />
+    <Program file="goHome.pgx" />
+    <Program file="OnCycleEvent.pgx" />
+    <Program file="OnStartup.pgx" />
+    <Program file="pauseCycle.pgx" />
+    <Program file="restartMotion.pgx" />
+    <Program file="resumeCycle.pgx" />
+    <Program file="stopCycle.pgx" />
+    <Program file="stopMotion.pgx" />
+  </Programs>
+  <Database>
+    <Data file="OnEvent.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="tcp" path="Disk://kernel/tool/tool.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+  </Libraries>
+</Project>

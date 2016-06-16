@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertInstr">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="InstrItem" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  call use:setSizeList(19,0,19,11)
+  call use:setView(false)
+  call language2:message(l_sMessage,16)
+  call use:listcreate(l_sMessage)
+  // insert the action on Point
+  call use:listadd(saveData:sInstrOnPoint)
+  call use:listupdate(0)
+  // SELECT THE ITEM
+  x_sItem.sType=""
+  x_sItem.sData=""
+  do
+    i=get()
+    l_nIndex=0
+    call use:listevent(i,l_nIndex,l_sItem)
+  until i==255 or i==270
+  //
+  if l_sItem!="" and i==270
+    call saveData:getPathInstr(l_sItem,l_sPath)
+    events:libLoad(l_sPath)
+    delay(0)
+    call events:onInsert(l_sData)
+    // insert the item
+    x_sItem.sType=l_sItem
+    x_sItem.sData=l_sData
+    return
+  endIf
+  // NOT GOOD
+  x_sItem.sType=""
+  x_sItem.sData=""
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

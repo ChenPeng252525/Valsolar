@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF4Event">
+    <Locals>
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[3]
+    // get the tool
+    call tcp:getTool(tTool,saveData:nFrameTool)
+    l_pPoint=here(tTool,world)
+    l_pPoint.trsf=align(l_pPoint.trsf,fSetFrame.trsf)
+    movej(l_pPoint,tTool,nom_speed)
+    call use:timerDialog(" ALIGN.... ",1)
+    watch(isEmpty() or isKeyPressed(255),3)
+    if !isEmpty()
+      resetMotion()
+    endIf
+    delay(2)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

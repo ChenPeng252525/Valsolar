@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="tTraj" access="public" xsi:type="collection" type="TrajHome" >
+      <Value key="home">
+        <Field name="fFrame" xsi:type="array" type="frame" size="1">
+          <Value key="0" fatherId="world[0]" />
+        </Field>
+        <Field name="nDimension" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="nZoneMove" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="nZoneType" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="pO" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="world[0]" />
+        </Field>
+        <Field name="pPointMove" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="tTraj[&quot;home&quot;].fFrame[0]" />
+        </Field>
+        <Field name="pX" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="world[0]" />
+        </Field>
+        <Field name="pY" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="world[0]" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="home" />
+        </Field>
+        <Field name="sProgram" xsi:type="array" type="string" size="1">
+        </Field>
+        <Field name="tData" xsi:type="array" type="TrajJointItem" size="1">
+          <Value key="0">
+            <Field name="jJoint" xsi:type="array" type="jointRx" size="1">
+              <Value key="0" j1="-1.981461" j2="-1.703528" j3="129.306225" j4="91.953066" j5="84.190333" j6="-117.933934" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1">
+                </Field>
+                <Field name="distance" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                      <Value key="0" value="valve1&gt;ON" />
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                      <Value key="0" value="OUT" />
+                    </Field>
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nStop" xsi:type="array" type="num" size="1">
+                  <Value key="0" value="2" />
+                </Field>
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTime" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" vel="50" tmax="500" blend="off" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1">
+                  <Value key="0" value="true" />
+                </Field>
+              </Value>
+            </Field>
+          </Value>
+        </Field>
+      </Value>
+    </Data>
+  </Datas>
+</Database>

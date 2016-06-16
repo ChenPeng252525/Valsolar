@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // get all the field
+  call trajType:getSizeItem(false,l_nSize)
+  call trajType:getTrajItem(l_tTraj,nIndexItem)
+  //
+  // make the list
+  //
+  // the name
+  call language:message(l_sMessage,21)
+  call listAdd(l_sMessage+"> "+l_tTraj.comment)
+  if find(l_tTraj.comment,"@")==-1
+    // insert the user function if NOT @LINK
+    call trajType:getListItem(sListUser,nIndexItem)
+    if sListUser!=""
+      for i=0 to size(sListUser)-1
+        call listAdd(sListUser[i])
+      endFor
+      nUserItem=size(sListUser)
+    else
+      nUserItem=0
+    endIf
+    // check the size for the line underline
+    if size(sListUser)!=size(sOldListUser) and sOldListUser!=""
+      nSelected=nIndex+(size(sListUser)-size(sOldListUser))
+      // copy it
+      call use:stringCopy(sListUser,sOldListUser)
+      use:bUseRefresh=true
+    else
+      nSelected=-1
+    endIf
+  else
+    // empty it
+    call use:stringCopy(l_sEmpty,sListUser)
+    nUserItem=0
+    nSelected=nIndex
+  endIf
+  // the movetype
+  switch l_tTraj.moveType
+    case 0
+      // JOINT
+      call language:message(l_sTemp,164)
+      call language:message(l_sMessage,157)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+l_sTemp)
+      call language:message(l_sMessage,158)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+toString("",l_tTraj.nom_speed.vel)+" %")
+    break
+    case 1
+      //LINEAR
+      call language:message(l_sTemp,165)
+      call language:message(l_sMessage,157)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+l_sTemp)
+      call language:message(l_sMessage,158)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+toString("",l_tTraj.nom_speed.tvel)+" mm/s")
+    break
+    case 2
+      //  CIRCULAR
+      call language:message(l_sTemp,166)
+      call language:message(l_sMessage,157)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+l_sTemp)
+      call language:message(l_sMessage,158)
+      call use:strfill(l_sMessage,9,l_sMessage)
+      call listAdd(l_sMessage+"> "+toString("",l_tTraj.nom_speed.tvel)+" mm/s")
+    break
+  endSwitch
+  // ACCELERATION
+  call language:message(l_sMessage,159)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  call listAdd(l_sMessage+"> "+toString("",l_tTraj.nom_speed.accel)+" %")
+  // STOP
+  call use:showBoolStatus(l_tTraj.toStop,l_sTemp)
+  call language:message(l_sMessage,174)
+  call use:strfill(l_sMessage,6,l_sMessage)
+  l_sMessage=l_sMessage+l_sTemp
+  if l_tTraj.toStop
+    // STOP
+    if round(l_tTraj.nStop)!=l_tTraj.nStop
+      l_sTemp=toString(".2",l_tTraj.nStop)+" sec"
+    else
+      l_sTemp=toString("",l_tTraj.nStop)+" sec"
+    endIf
+  else
+    // NO STOP
+    l_sTemp=""
+  endIf
+  call listAdd(l_sMessage+"> "+l_sTemp)
+  // BLEND
+  if l_tTraj.nom_speed.blend==off
+    l_sTemp="[ ]> "
+  else
+    if l_tTraj.nom_speed.blend==joint
+      l_sTemp="[x]> "+toString("",l_tTraj.nom_speed.leave)+" mm"
+    endIf
+  endIf
+  call language:message(l_sMessage,175)
+  call use:strfill(l_sMessage,6,l_sMessage)
+  call listAdd(l_sMessage+l_sTemp)
+  // TCP ON OFF
+  call language:message(l_sMessage,123)
+  call use:strfill(l_sMessage,6,l_sMessage)
+  switch l_tTraj.nTcpAction
+    case 1
+      l_sTemp="[x]> ON "
+    break
+    case 2
+      l_sTemp="[x]> OFF"
+    break
+    default
+      l_sTemp="[ ]>    "
+    break
+  endSwitch
+  call listAdd(l_sMessage+l_sTemp)
+  // INSTRUCTION
+  call language:message(l_sMessage,176)
+  // copy all
+  for i=0 to size(l_tTraj.iInstr)-1
+    l_sData=l_tTraj.iInstr[i].sData
+    l_sType=l_tTraj.iInstr[i].sType
+    call saveInOut:replaceIO(l_sData,l_sType,l_sData)
+    call listAdd(l_sMessage+toString("1",i+1)+"> "+l_sType+" "+l_sData)
+  endFor
+  // DISTANCE
+  call language:message(l_sMessage,177)
+  call listAdd(l_sMessage+" > "+toString("",l_tTraj.distance)+" mm")
+  // update
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

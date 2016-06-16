@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="session_change" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sName" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bResult" type="bool" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check if exist
+  // clean the string
+  l_sEmpty=""
+  x_bResult=false
+  if cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+    // search inside the sSession
+    for i=0 to size(sSessionList)-1
+      if x_sName==sSessionList[i]
+        // the session exist
+        call saveData:changeSession(x_sName)
+        // reload the processList
+        call processList:loadProcessList(i)
+        if i!=0
+          popUpMsg("error loading: "+toString("",i))
+        else
+          // the session has been changed
+          x_bResult=true
+        endIf
+        //
+        if !x_bResult
+          // not found
+          popUpMsg("session not FOUND....")
+        endIf
+        // reset the homing trajectory
+        cycleStatus:bHomeLoaded=false
+        // refresh
+        use:bUseRefresh=true
+        return
+      endIf
+    endFor
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

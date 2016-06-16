@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+  <Parameters version="s7.6.2" stackSize="5000" millimeterUnit="true" />
+=======
+  <Parameters version="s7.8.3" stackSize="5000" millimeterUnit="true" />
+>>>>>>> Valsolar
+  <Programs>
+    <Program file="start.pgx" />
+    <Program file="stop.pgx" />
+  </Programs>
+  <Database>
+    <Data file="default.dtx" />
+  </Database>
+</Project>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onEdit" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // go to the view instruction page
+  //
+  if size(x_sItem)>1
+    call load(x_sItem,l_nResult)
+    // give it back
+    x_sItem[1]=x_sItem
+    x_sItem="Disk://instruction/PROG/page_viewInstr"
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

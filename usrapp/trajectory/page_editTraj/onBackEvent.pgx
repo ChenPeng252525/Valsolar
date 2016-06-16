@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onBackEvent" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="3" />
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sAction" type="string" xsi:type="array" size="3" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  if nIndex!=0
+    l_nIndex=nIndex-nUserItem
+  else
+    // change the name
+    call changePoint(0)
+  endIf
+  if (l_nIndex)>0
+    //
+    //  There are 7 fields,
+    //
+    //
+    call trajType:getTrajItem(l_tTraj,nIndexItem)
+    switch l_nIndex
+      case 1
+        //
+        //  change the movetype
+        //
+      break
+      case 2
+        //
+        //  change the speed
+        //
+      break
+      case 3
+        //
+        //  change the acceleration
+        //
+      break
+      case 4
+        //
+        //  put a stop, after the robot reach to the point
+        //
+        // CLEAR THE STOP
+        l_tTraj.toStop=false
+      break
+      case 5
+        //
+        //  set the blend (joint/off) for the point
+        //
+        l_tTraj.nom_speed.blend=off
+      break
+      case 6
+        //
+        // set TCP ON/OFF
+        //
+        // SET TCP OFF
+        l_tTraj.nTcpAction=0
+      break
+      case 7,8,9
+        //
+        //  Delete the instruction
+        //
+        if l_tTraj.iInstr[l_nIndex-7].sType!=""
+          call language:message(l_sMessage,171)
+          call language:getYesNo(l_sButton)
+          // ask the yes_no question
+          call use:yes_no(l_sMessage,l_sButton,l_bYes)
+          if l_bYes
+            l_tTraj.iInstr[l_nIndex-7].sType=""
+            l_tTraj.iInstr[l_nIndex-7].sData=""
+          endIf
+        endIf
+      break
+      case 10
+        //
+        //  set the distance from the point where the call will be actived
+        //
+        l_tTraj.distance=0
+      break
+    endSwitch
+    //set and exit
+    x_bSave=true
+    call trajType:setTrajItem(l_tTraj,nIndexItem)
+    call buildList()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

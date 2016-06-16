@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_HomeWatchDog" access="public" >
+    <Code><![CDATA[begin
+  if taskStatus("resetProgram")!=-1
+    //过滤硬件波动
+    //    if watch(cycleStatus:bIsHome==true,0)
+    if watch(dInGohome==true,0)
+    else
+      stopMove()
+      taskKill("resetProgram")
+      watch(taskStatus("resetProgram")==-1,1)
+      resetMotion()
+    endIf
+    if taskStatus("resetProgram")>1
+      if taskStatus("resetProgram")>=150 and taskStatus("resetProgram")<=154
+        popUpMsg("运动无法到达，超限")
+      else
+        logMsg("[KERNEL] SUPERVISOR:Task resetProgram problem")
+        call OnEvent:OnCycleEvent(12)
+      endIf
+      stopMove()
+      taskKill("resetProgram")
+      watch(taskStatus("resetProgram")==-1,1)
+      resetMotion()
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="editAction">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_iAction" type="InstrItem" xsi:type="array" use="reference" />
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nTime" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nTime" type="num" xsi:type="array" size="1" />
+      <Local name="l_iAction" type="InstrItem" xsi:type="array" size="3" />
+      <Local name="l_iNewAction" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // make a copy
+  l_nTime=x_nTime
+  for i=0 to size(x_iAction)-1
+    // copy all the action
+    l_iAction[i]=x_iAction[i]
+  endFor
+  // loop
+  do 
+    // refresh
+    call refreshAction(l_nIndex,l_iAction,l_nTime)
+    // get the Key
+    l_nKey=get()
+    l_sEmpty=""
+    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    if l_nKey==270
+      switch l_nIndex
+        case 0,1,2
+          //
+          //  edit the instruction
+          //
+          // insert a new one
+          if l_iAction[l_nIndex].sType==""
+            l_iNewAction.sType=l_iAction[l_nIndex].sType
+            call insertInstr(l_iNewAction)
+            if l_iNewAction.sData!=""
+              l_iAction[l_nIndex]=l_iNewAction
+            endIf
+          else
+            // delete 
+            call language:message(l_sMessage,171)
+            // get the yes_no button
+            call language:getYesNo(l_sButton)
+            // ask the question 
+            call use:yes_no(l_sMessage,l_sButton,l_bYes)
+            if l_bYes
+              l_iAction[l_nIndex].sType=""
+              l_iAction[l_nIndex].sData=""
+            endIf
+          endIf
+        break
+        case 3
+          //
+          // set the distance...
+          //
+          call use:findPos(l_sEvent,">",i)
+          // clean the line
+          call use:listcursor(use:nView,false)
+          // edit it
+          l_sEmpty=""
+          call use:changeValue(l_nTime,-300,300,i+use:nTopX+3,use:nView+use:nTopY+1,l_sEmpty)
+        break
+      endSwitch
+    endIf
+    // use left to go bak or escape to no validate
+  until l_nKey==264 or l_nKey==255 or l_nKey==278
+  //
+  if l_nKey!=255
+    x_bSave=true
+    for i=0 to size(x_iAction)-1
+      // copy all the action
+      x_iAction[i]=l_iAction[i]
+    endFor
+    x_nTime=l_nTime
+  endIf
+  //nullKey
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

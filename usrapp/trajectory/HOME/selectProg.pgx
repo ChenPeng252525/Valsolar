@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="selectProg">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sProg" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // show the proram list
+  call use:clear(0,13)
+  //
+  call use:stringCopy(l_sEmpty,sList)
+  nSelected=-1
+  //
+  // Build the list
+  //
+  call prog:getSize(l_nSize)
+  for i=0 to l_nSize-1
+    call prog:get(l_sEvent,i)
+    if l_sEvent!=""
+      call listAdd(l_sEvent)
+      if l_sEvent==x_sProg
+        // select the default
+        nSelected=i
+      endIf
+    endIf
+  endFor
+  //
+  // Show the list
+  //
+  // define your list size for default
+  call use:setSizeList(10,0,17,10)
+  //
+  call use:listcreate("PROG")
+  call use:listadd(sList)
+  call use:selectNewField(nSelected,0,0)
+  //
+  call use:type(35,13,"RESET")
+  do
+    l_nKey=get()
+    call use:listevent(l_nKey,l_nIndex,l_sProg)
+    if l_nKey==278
+      jEditPoint.sProgram=""
+      return
+    endIf
+  until l_nKey==255 or l_nKey==270
+  // save the data
+  if l_nKey!=255
+    jEditPoint.sProgram=l_sProg
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

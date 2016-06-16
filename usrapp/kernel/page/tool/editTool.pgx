@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="editTool">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_bEdit" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nTime" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  search the ">" to change the right side from here of the the string
+  //
+  call use:getListPosition(l_nX,l_nY)
+  //i=find(sEvent,">")
+  call use:findPos(sEvent,">",i)
+  // clean the line
+  call use:listcursor(use:nView,false)
+  // read the name
+  if i!=-1 and nIndex==0
+    sEvent=right(sEvent,getDisplayLen(sEvent)-i-2)
+    // read the name
+    call use:read(i+l_nX+1,1,sEvent,10,false)
+  endIf
+  // COPY
+  l_sEmpty=""
+  l_tTool=x_tTool
+  l_tTool.otime=x_tTool.otime
+  l_tTool.ctime=x_tTool.ctime
+  // INDEX
+  switch nIndex
+    case 0
+      if nIndexTool!=-1
+        call tcp:setName(sEvent,nIndexTool)
+      endIf
+    break
+    case 1
+      //
+      //  x-value
+      //
+      call use:changeValue(l_tTool.trsf.x,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 2
+      //
+      //  y-value
+      //
+      call use:changeValue(l_tTool.trsf.y,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 3
+      //
+      //  z-value
+      //
+      call use:changeValue(l_tTool.trsf.z,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 4
+      //
+      //  rx-value
+      //
+      call use:changeValue(l_tTool.trsf.rx,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 5
+      //
+      //  ry-value
+      //
+      call use:changeValue(l_tTool.trsf.ry,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 6
+      //
+      //  rz-value
+      //
+      call use:changeValue(l_tTool.trsf.rz,0,0,i+40-use:nBottomX+1,use:nView+1,l_sEmpty)
+    break
+    case 7
+      //
+      // change the ACTION ON
+      //
+      l_nTime=l_tTool.otime
+      call editAction(iInstrTcpON,l_bEdit,l_nTime)
+      if l_bEdit
+        call tcp:setInstr(iInstrTcpON,nIndexTool,true)
+        l_tTool.otime=l_nTime
+      endIf
+    break
+    case 8
+      //
+      // change the ACTION OFF
+      //
+      l_nTime=l_tTool.ctime
+      call editAction(iInstrTcpOFF,l_bEdit,l_nTime)
+      if l_bEdit
+        call tcp:setInstr(iInstrTcpOFF,nIndexTool,false)
+        l_tTool.ctime=l_nTime
+      endIf
+    break
+  endSwitch
+  // copy back
+  x_tTool.trsf=l_tTool.trsf
+  x_tTool.otime=l_tTool.otime
+  x_tTool.ctime=l_tTool.ctime
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getListItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="12" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_pPoint=pEditPoint.tData[x_nIndex].pPoint
+  l_tTrsf=l_pPoint.trsf
+  l_sItem[0]=("coord  X > "+toString(".2",l_tTrsf.x))
+  l_sItem[1]=("coord  Y > "+toString(".2",l_tTrsf.y))
+  l_sItem[2]=("coord  Z > "+toString(".2",l_tTrsf.z))
+  l_sItem[3]=("coord RX > "+toString(".2",l_tTrsf.rx))
+  l_sItem[4]=("coord RY > "+toString(".2",l_tTrsf.ry))
+  l_sItem[5]=("coord RZ > "+toString(".2",l_tTrsf.rz))
+  // approach
+  call language2:message(l_sMessage,3)
+  call use:strfill(l_sMessage,8,l_sMessage)
+  call showTrsf(pEditPoint.trAppro,l_sMessage[1])
+  l_sItem[6]=(l_sMessage+"1>"+l_sMessage[1])
+  call showTrsf(pEditPoint.trAppro[1],l_sMessage[1])
+  l_sItem[7]=(l_sMessage+"2>"+l_sMessage[1])
+  // approach speed
+  call language2:message(l_sMessage,5)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  l_sItem[8]=(l_sMessage+"> "+toString("",pEditPoint.nSpeedApproach))
+  // depart
+  call language2:message(l_sMessage,4)
+  call use:strfill(l_sMessage,8,l_sMessage)
+  call showTrsf(pEditPoint.trDepart,l_sMessage[1])
+  l_sItem[9]=(l_sMessage+"1>"+l_sMessage[1])
+  call showTrsf(pEditPoint.trDepart[1],l_sMessage[1])
+  l_sItem[10]=(l_sMessage+"2>"+l_sMessage[1])
+  // depart speed
+  call language2:message(l_sMessage,6)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  l_sItem[11]=(l_sMessage+"> "+toString("",pEditPoint.nSpeedDepart))
+  // copy it
+  call use:stringCopy(l_sItem,x_sItem)
+end]]></Code>
+  </Program>
+</Programs>

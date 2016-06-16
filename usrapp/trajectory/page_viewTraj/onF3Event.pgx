@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF3Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bContinue" type="bool" xsi:type="element" />
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sYesNo" type="string" xsi:type="array" size="2" />
+      <Local name="l_bValidate" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[2]
+    // use a list menu
+    call use:setSizeList(9,9,8,2)
+    call use:listcreate("")
+    call use:clear(0,13)
+    call use:type(9,13,sMenu[2])
+    // TOOL
+    call language:message(l_sItem,124)
+    call use:listadd(l_sItem)
+    if saveData:sTrajTypeUsing!="TRACK" 
+      l_sItem="Frame"
+      call use:listadd(l_sItem)
+    endIf
+    call use:listupdate(0)
+    // get the key
+    do
+      l_nKey=get()
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    until l_nKey==270 or l_nKey==255
+    // check the Enter key pressure
+    if l_nKey==270
+      switch l_nIndex
+        case 0
+          // Select the gun
+          l_sPage="Disk://kernel/page/tool"
+          call loadPage(l_sPage,l_sItem)
+          // Reload the TRAJ
+          call trajType:load(sTrajName,i)
+          // save It
+          if i!=0
+            popUpMsg("error load "+sTrajName+toString("",i))
+            x_bContinue=false
+          else
+            // logMsg
+            call trajType:setTool(saveData:nIndexTool)
+            x_bSave=true
+            //
+          endIf
+        break
+        case 1
+          // Select the Frame
+          call trajType:getFrameId(l_nIndex)
+          call buildListFrame(l_nIndex)
+          // get the Item
+          do
+            l_nKey=get()
+            call use:listevent(l_nKey,l_nIndex,l_sEvent)
+          until l_nKey==270 or l_nKey==255
+          // validate
+          if l_nKey==270 and(saveData:sTrajTypeUsing=="POINT" or saveData:sTrajTypeUsing=="TRAJ" or saveData:sTrajTypeUsing=="PALLET")
+            // TOOL advice
+            call language:message(l_sMessage,129)
+            popUpMsg(l_sMessage)
+            call use:listadd(l_sItem)
+            // question dialog for the recompute
+            call language:message(l_sMessage,227)
+            call language:getYesNo(l_sYesNo)
+            call use:yes_no(l_sMessage,l_sYesNo,l_bValidate)
+            if l_bValidate
+              // cahnge al the points into the new frame
+              call trajType:computeFrame(l_nIndex)
+            endIf
+            saveData:nFrameActive=l_nIndex
+            call trajType:setFrameId(saveData:nFrameActive)
+            // update the father 
+            call trajType:getFrame(fFather,false)
+            // load the actual frame
+            $jogContext(saveData:tTool,fFather,0)
+            x_bSave=true
+            //
+          endIf
+        break
+      endSwitch
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

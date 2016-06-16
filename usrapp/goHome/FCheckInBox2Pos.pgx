@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="FCheckInBox2Pos" access="public">
+    <Description><![CDATA[Pruefen ob Roboter innerhalb eines definierten Bereichs]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="t_tool" type="tool" xsi:type="element" />
+      <Parameter name="fr_frame" type="frame" xsi:type="element" />
+      <Parameter name="b_inArea" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_bJtEnabCheck" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_bPosEnabCheck" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nRobCtrlJts" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nRobCtrlArea" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="tr_here" type="trsf" xsi:type="array" size="1" />
+      <Local name="p_here" type="point" xsi:type="array" size="1" />
+      <Local name="tr_NegPos" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_PosPos" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_BoxPos1" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_BoxPos2" type="trsf" xsi:type="array" size="1" />
+      <Local name="j_here" type="jointRx" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nItem" type="num" xsi:type="array" size="6" />
+    </Locals>
+    <Code><![CDATA[begin
+  //Header
+  if false
+    //判断机器人是否属于所设定的空间盒子中
+    //Parameter:
+    //  p_BoxPos1: Position 1 (包括开始位置跟结束位置)
+    //  p_BoxPos2: Position 2 (包括开始位置跟结束位置)
+    //  b_inArea: 返回参数  true  : 机器人在矩形中
+    //                          false : 机器人属于非矩形中
+    //
+  endIf
+  //判断变量返回
+  b_inArea=true
+  p_here=here(t_tool,fr_frame)
+  j_here=herej()
+  ///////////////////////////////////////////////////
+  tr_here=p_here.trsf
+  l_nItem[0]=j_here.j1
+  l_nItem[1]=j_here.j2
+  l_nItem[2]=j_here.j3
+  l_nItem[3]=j_here.j4
+  l_nItem[4]=j_here.j5
+  l_nItem[5]=j_here.j6
+  for i=0 to 5
+    if x_bJtEnabCheck[i]
+      if l_nItem[i]>=x_nRobCtrlJts[i*2+1] or l_nItem[i]<=x_nRobCtrlJts[i*2]
+        b_inArea=false
+      endIf
+    endIf
+  endFor 
+  /////////////////////////////////////////
+  l_nItem[0]=p_here.trsf.x
+  l_nItem[1]=p_here.trsf.y
+  l_nItem[2]=p_here.trsf.z
+  l_nItem[3]=p_here.trsf.rx 
+  l_nItem[4]=p_here.trsf.ry
+  l_nItem[5]=p_here.trsf.rz 
+  for i=0 to 5
+    if x_bPosEnabCheck[i]
+      if l_nItem[i]>=x_nRobCtrlArea[i*2+1] or l_nItem[i]<=x_nRobCtrlArea[i*2]
+        b_inArea=false
+      endIf
+    endIf
+  endFor 
+end]]></Code>
+  </Program>
+</Programs>

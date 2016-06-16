@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="delete" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // mutex for the loading
+  setMutex(cycleStatus:bMutex)
+  switch x_nType
+    case 0
+      // delete a program into the process list
+      logMsg("[KERNEL] CYCLE:Delete the program: "+saveCycle:sLoadStart[x_nIndex]+" at the index: "+toString("",x_nIndex))
+      if size(saveCycle:sLoadStart)>1
+        delete(saveCycle:sLoadStart[x_nIndex])
+        delete(saveCycle:nDoneStart[x_nIndex])
+        delete(saveCycle:nTotalStart[x_nIndex])
+      else
+        saveCycle:sLoadStart[0]=""
+        saveCycle:nDoneStart[0]=0
+        saveCycle:nTotalStart[0]=0
+      endIf
+    break
+    case 1
+      logMsg("[KERNEL] CYCLE:Delete the program: "+saveCycle:sLoadProg[x_nIndex]+" at the index: "+toString("",x_nIndex))
+      // delete a program into the process list
+      if size(saveCycle:sLoadProg)>1
+        delete(saveCycle:sLoadProg[x_nIndex])
+        delete(saveCycle:nDoneCycle[x_nIndex])
+        delete(saveCycle:nTotalCycle[x_nIndex])
+      else
+        saveCycle:sLoadProg[0]=""
+        saveCycle:nDoneCycle[0]=0
+        saveCycle:nTotalCycle[0]=0
+      endIf
+    break
+    case 2
+      logMsg("[KERNEL] CYCLE:Delete the program: "+saveCycle:sLoadEnd[x_nIndex]+" at the index: "+toString("",x_nIndex))
+      // delete a program into the process list
+      if size(saveCycle:sLoadEnd)>1
+        delete(saveCycle:sLoadEnd[x_nIndex])
+        delete(saveCycle:nDoneEnd[x_nIndex])
+        delete(saveCycle:nTotalEnd[x_nIndex])
+      else
+        saveCycle:sLoadEnd[0]=""
+        saveCycle:nDoneEnd[0]=0
+        saveCycle:nTotalEnd[0]=0
+      endIf
+    break
+  endSwitch
+//  // in order to refresh the first program
+//  if x_nIndex==0
+//    cycleStatus:bProgLoad=false
+//    cycleStatus:sProgLoad=""
+//  endIf
+  //
+  cycleStatus:bMutex=false
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

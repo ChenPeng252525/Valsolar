@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshDynamic">
+    <Locals>
+      <Local name="l_bStatus" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bReserved" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // DO NOT CHANGE
+  nRefresh=clock()
+  use:bUseRefresh=false
+  // update the list
+  if nViewMode==2
+    // show the count list
+    call buildList2(nViewMode)
+  else
+    // build the list
+    call buildList(nViewMode)
+  endIf
+  //
+  // ADD HERE
+  //
+  // this function ables to set the ON/OFF when you focus an OUT
+  // or SELECT/UNSELECT a program if is an INPUT
+  //
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=110
+  // USE <> PROFILE for <> PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  // get the data
+  if find(sEvent,"start")!=-1 or find(sEvent,"stop")!=-1 or find(sEvent,"end")!=-1 or find(sEvent,"home")!=-1 or find(sEvent,"*")!=-1
+    l_bReserved=true
+  endIf
+  // check th sID
+  if sId!=""
+    switch nViewMode
+      case 0
+        call out:isEnable(l_bStatus,sId)
+      break
+      case 1
+        call in:isEnable(l_bStatus,sId)
+      break
+      case 2
+        call use:stringCopy(l_sEmpty,sMenu)
+      break
+    endSwitch
+  endIf
+  if nViewMode==0 or nViewMode==1
+    // show the menu
+    if saveData:language!="japanese"
+      // SET THE VIEW OF THE PAGE
+      call language:page(l_sMessage,use:nPage)
+      // define the menu
+      call use:stringToArray(l_sMessage,sMenu)
+      // show the F1 - F5 button
+      if l_bStatus or sId==""
+        call language:message(l_sMessage,38)
+      else
+        call language:message(l_sMessage,37)
+      endIf
+      sMenu[0]=l_sMessage
+      if !l_bReserved
+        call language:message(l_sMessage,35)
+      else
+        call language:message(l_sMessage,36)
+      endIf
+      // activate the option button F5
+      if size(sMenu)>5
+        sMenu[4]=l_sMessage
+      endIf
+      if !bLarge
+        call use:setMenu(sMenu,true,3)
+      else
+        call use:setMenu(sMenu,true,-1)
+      endIf
+    else
+      // japanese use the array for the menu
+      call language:page(sMenu8,use:nPage)
+      call use:stringCopy(sMenu8,sMenu)
+      // show the F1 - F5 button
+      if !l_bStatus
+        sMenu8[0]="Enable"
+      else
+        sMenu8[0]="Disable"
+      endIf
+      if !l_bReserved
+        sMenu8[4]="Select"
+      else
+        sMenu8[4]="Unselect"
+      endIf
+      if !bLarge
+        call use:setMenu(sMenu8,false,3)
+      else
+        call use:setMenu(sMenu8,false,-1)
+      endIf
+    endIf
+  endIf
+  // refresh it
+  call use:getMenu(sMenu,bButton)
+  //bButton[0]=true
+  // refresh the list
+  call use:selectNewField(nSelected,nIndex,nView)
+  nSelected=-1
+end]]></Code>
+  </Program>
+</Programs>

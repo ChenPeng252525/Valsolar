@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // filter the result??
+  call prog:getSize(l_nSize)
+  for i=0 to l_nSize-1
+    call prog:get(l_sEvent,i)
+    // patch for the #program 
+    if l_sEvent!=""
+      //
+      // use the filter ?
+      //
+      l_bFound=true
+      if saveData:sProgFilter!="" 
+        l_bFound=find(l_sEvent,saveData:sProgFilter)!=-1
+      endIf
+      // add  
+      if l_bFound
+        if (left(l_sEvent,1)=="#" and nProgID==2)
+          call listAdd(l_sEvent)
+        elseIf nProgID!=2 and left(l_sEvent,1)!="#" and l_sEvent!="HOME1" and l_sEvent!="HOME2"
+          call listAdd(l_sEvent)
+        endIf
+        l_nCount=l_nCount+1
+      endIf
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

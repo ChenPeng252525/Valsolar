@@ -1,0 +1,25 @@
++---------------------------------------------------------------+
+| General configuration listing                                 |
++---------------------------------------------------------------+
+| COMPANY = Molex
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+| DATE    = Thursday, May 26, 2016 At 09:32
+| VERSION = 3.0.0
+| CONFIGURATION NAME = 20160525_DALIANGEER
+=======
+| DATE    = Tuesday, September 02, 2014 At 10:50
+| VERSION = 4.0 Build 20
+| CONFIGURATION NAME = BJHC
+>>>>>>> Valsolar
+| BOARD LOCATION = LAN TCP/IP
++---------------------------------------------------------------+
+
+  NUMBER OF BOARDS = 1
+
+  <CONFIGURATION DOWNLOADED BY LAN TCP/IP>
+
+  <BOARD_1>
+    TYPE   = PCU-DPIO
+
+    <CHANNEL_0>
+      Profibus, Slave

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_onEnd" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTime" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  l_nTime=clock()
+  //
+  //
+  l_sKey=first(saveData:iInstruction)
+  // search it
+  while l_sKey!="" and isDefined(saveData:iInstruction[l_sKey])
+    switch saveData:iInstruction[l_sKey].nIndex
+      case 0
+        if instr0:libPath()!=""
+          call instr0:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 1
+        if instr1:libPath()!=""
+          call instr1:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 2
+        if instr2:libPath()!=""
+          call instr2:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 3
+        if instr3:libPath()!=""
+          call instr3:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 4
+        if instr4:libPath()!=""
+          call instr4:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 5
+        if instr5:libPath()!=""
+          call instr5:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 6
+        if instr6:libPath()!=""
+          call instr6:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 7
+        if instr7:libPath()!=""
+          call instr7:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 8
+        if instr8:libPath()!=""
+          call instr8:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 9
+        if instr9:libPath()!=""
+          call instr9:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 10
+        if instr10:libPath()!=""
+          call instr10:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 11
+        if instr11:libPath()!=""
+          call instr11:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 12
+        if instr12:libPath()!=""
+          call instr12:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 13
+        if instr13:libPath()!=""
+          call instr13:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 14
+        if instr14:libPath()!=""
+          call instr14:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 15
+        if instr15:libPath()!=""
+          call instr15:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 16
+        if instr16:libPath()!=""
+          call instr16:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 17
+        if instr17:libPath()!=""
+          call instr17:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 18
+        if instr18:libPath()!=""
+          call instr18:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 19
+        if instr19:libPath()!=""
+          call instr19:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 20
+        if instr20:libPath()!=""
+          call instr20:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 21
+        if instr21:libPath()!=""
+          call instr21:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 22
+        if instr22:libPath()!=""
+          call instr22:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 23
+        if instr23:libPath()!=""
+          call instr23:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 24
+        if instr24:libPath()!=""
+          call instr24:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 25
+        if instr25:libPath()!=""
+          call instr25:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 26
+        if instr26:libPath()!=""
+          call instr26:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 27
+        if instr27:libPath()!=""
+          call instr27:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 28
+        if instr28:libPath()!=""
+          call instr28:onProgEnd(l_sEvent)
+        endIf
+      break
+      case 29
+        if instr29:libPath()!=""
+          call instr29:onProgEnd(l_sEvent)
+        endIf
+      break
+    endSwitch
+    l_sKey=next(saveData:iInstruction[l_sKey])
+  endWhile
+  //
+  if saveData:bDebug
+    logMsg("[DEBUG] MEMORY:Charged all onProgEnd function using time: "+toString(".3",clock()-l_nTime))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

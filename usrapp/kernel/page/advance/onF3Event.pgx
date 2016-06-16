@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF3Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_bImport" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="2" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_bDone" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nOldValue" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // look if the bButton is enable
+  if bButton[2]
+    if libList("USB0://",sImport)
+      l_bImport=false
+      //
+      //  importing file
+      //
+      // get the path
+      l_sPath="Disk://../usrapp/"
+      //
+      l_sPath[1]="USB0://"
+      //
+      title("< RESTORE / BACKUP >")
+      cls()
+      // copy the value
+      l_nOldValue[2]=nIndexImport
+      l_nOldValue[3]=nViewImport
+      l_nOldValue=nIndex=0
+      l_nOldValue[1]=nView
+      //
+      // IMPORT
+      call use2:setSizeList(0,0,17,11)
+      call use2:listcreate("USB")
+      // paste the value
+      nIndexImport=l_nOldValue[2]
+      nViewImport=l_nOldValue[3]
+      call refreshImport(false,l_sPath)
+      // EXPORT
+      call use:setSizeList(19,0,19,11)
+      call use:listcreate("ROBOT")
+      // paste the value
+      nIndex=l_nOldValue=0
+      nView=l_nOldValue[1]
+      call refreshExport(true,l_sPath)
+      l_sType="<<<<"
+      call use:type(17,12,l_sType)
+      //
+      do
+        call use:clear(0,13)
+        call use:typeMenu(8,"COPY")
+        l_nKey=get()
+        switch l_nKey
+          case 264
+            l_bImport=true
+            //refresh
+            call refreshExport(false,l_sPath)
+            call refreshImport(true,l_sPath)
+            l_sType=">>>>"
+            call use:type(17,12,l_sType)
+          break
+          case 268
+            l_bImport=false
+            //refresh
+            //call refreshExport(true,l_sPath)
+            call refreshImport(false,l_sPath)
+            call refreshExport(true,l_sPath)
+            l_sType="<<<<"
+            call use:type(17,12,l_sType)
+          break
+        endSwitch
+        // swich from import to export
+        if l_bImport
+          //
+          // IMPORT
+          //
+          call use2:listevent(l_nKey,nIndexImport,sEventImport)
+          nViewImport=use2:nView
+          //
+          if l_nKey>=259 and l_nKey<=278
+            if l_nKey==278
+              // look for already exist
+              l_bDone=true
+              for i=0 to size(sExport)-1
+                if sExport[i]==sEventImport
+                  call language:message(l_sMessage,11)
+                  // get the yes_no button Key
+                  call language:getYesNo(l_sButton)
+                  // ask the question 
+                  call use:yes_no(l_sMessage+"#"+l_sPath+sEventImport,l_sButton,l_bDone)
+                  i=size(sExport)-1
+                endIf
+              endFor
+              //
+              if l_bDone
+                call language:message(l_sMessage,10)
+                // show that will take several minute
+                if find(sEventExport,"usrapp")!=-1
+                  call language:message(l_sMessage[1],-9)
+                  l_sMessage=l_sMessage+"#"+l_sMessage[1]
+                endIf
+                call use:timerDialog(l_sMessage+"#"+l_sPath+sEventImport,0)
+                l_bDone=$copy(l_sPath[1]+sEventImport,l_sPath+sEventImport)
+                if !l_bDone
+                  call language:message(l_sMessage,-6)
+                  call use:timerDialog(l_sMessage+"#"+l_sPath+sEventImport,2)
+                endIf
+              endIf
+              // refresh backward
+              cls()
+              call refreshExport(false,l_sPath)
+              call refreshImport(true,l_sPath)
+              l_sType=">>>>"
+              call use:type(17,12,l_sType)
+            endIf
+          endIf
+          //
+        else
+          //
+          //  EXPORT
+          //
+          call use:listevent(l_nKey,nIndex,sEventExport)
+          nView=use:nView
+          //
+          if l_nKey>=259 and l_nKey<=278
+            if l_nKey==278
+              // look for already exist
+              l_bDone=true
+              for i=0 to size(sImport)-1
+                if sImport[i]==sEventExport
+                  call language:message(l_sMessage,11)
+                  // get the yes_no button Key
+                  call language:getYesNo(l_sButton)
+                  // ask the question 
+                  call use:yes_no(l_sMessage+"#"+l_sPath+sEventExport,l_sButton,l_bDone)
+                  i=size(sImport)-1
+                endIf
+              endFor
+              if l_bDone
+                call language:message(l_sMessage,10)
+                // show that will take several minute
+                if find(sEventExport,"usrapp")!=-1
+                  call language:message(l_sMessage[1],-9)
+                  l_sMessage=l_sMessage+"#"+l_sMessage[1]
+                endIf
+                // patch version 7
+                if l_sPath=="Disk://../../"
+                  l_sPath="Disk://../"
+                endIf
+                call use:timerDialog(l_sMessage+"#"+l_sPath[1]+sEventExport,0)
+                l_bDone=$copy(l_sPath+sEventExport,l_sPath[1]+sEventExport)
+                if !l_bDone
+                  l_sMessage=l_sMessage+"#"+l_sPath[1]+sEventExport
+                  call language:message(l_sMessage,-6)
+                  call use:timerDialog(l_sMessage,2)
+                endIf
+                // patch version 7
+                if l_sPath=="Disk://../"
+                  l_sPath="Disk://../../"
+                endIf
+              endIf
+              // refresh backward
+              cls()
+              call refreshImport(false,l_sPath)
+              call refreshExport(true,l_sPath)
+              l_sType="<<<<"
+              call use:type(17,12,l_sType)
+            endIf
+            //
+          endIf
+        endIf
+        // NAVIGATION
+        if l_nKey==270
+          if l_bImport
+            // IMPORT BOX
+            if sEventImport==".."
+              call findLastPathPos(l_sPath[1],i)
+              l_sPath[1]=left(l_sPath[1],i)
+            else
+              l_sPath[1]=l_sPath[1]+sEventImport+"/"
+            endIf
+            // refresh IMPORT
+            nIndexImport=nViewImport=use2:nView=0
+            call refreshImport(true,l_sPath)
+          else
+            // EXPORT BOX
+            if sEventExport==".."
+              call findLastPathPos(l_sPath,i)
+              l_sPath=left(l_sPath,i)
+              // patch version 7
+              if l_sPath=="Disk://../"
+                l_sPath="Disk://../../"
+              endIf
+            else
+              if l_sPath=="Disk://../../"
+                l_sPath="Disk://../"
+              endIf
+              l_sPath=l_sPath+sEventExport+"/"
+            endIf
+            // refresh EXPORT
+            nIndex=nView=use:nView=0
+            call refreshExport(true,l_sPath)
+          endIf
+        endIf
+        //
+      until l_nKey==255
+      //
+      call refreshStatic()
+      //
+    else
+      // NO USB in the controller
+      call language:message(l_sMessage,-10)
+      popUpMsg(l_sMessage)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  call use:setView(false)
+  call use:setSizeList(19,0,19,11)
+  //
+  // Prog
+  //
+  call use:listcreate("PROG")
+  call getSize(l_nSize)
+  // refresh the list
+  for i=0 to l_nSize-1
+    call get(l_sEvent,i)
+    if l_sEvent!="" and left(l_sEvent,1)!="#" and l_sEvent!="HOME1" and l_sEvent!="HOME2"
+      // check it
+      if saveData:sProgFilter!=""
+        l_bFound=find(l_sEvent,saveData:sProgFilter)==-1
+      else
+        l_bFound=true
+      endIf
+      // add  
+      if l_bFound
+        call use:listadd(l_sEvent)
+      endIf
+    endIf
+  endFor
+  // update the list
+  call use:listupdate(0)
+  call language:message(l_sMessage,60)
+  call use:typeLen(0,13,l_sMessage,40)
+  do
+    l_nKey=get()
+    call use:listevent(l_nKey,i,x_sItem)
+  until l_nKey==270 or l_nKey==255
+  // exit
+  if l_nKey==255
+    x_sItem=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

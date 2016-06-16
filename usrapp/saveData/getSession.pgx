@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="getSession" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sName" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nPos" type="num" xsi:type="array" size="2" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_nPos=find(sPathTraj,"Disk://session")
+  if l_nPos==-1
+    // give back the session name
+    x_sName=""
+  else
+    l_nPos[1]=find(sPathTraj,"/saveTraj/")
+    l_nSize=l_nPos[1]-l_nPos-len("Disk://session/")
+    x_sName=mid(sPathTraj,l_nSize,l_nPos+len("Disk://session/"))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

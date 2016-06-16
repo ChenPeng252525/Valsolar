@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_lock" access="private" >
+    <Code><![CDATA[begin
+  //
+  // Lock by PLC THE CYCLE
+  //
+  if !cycleStatus:bPausePLC
+    logMsg("[KERNEL] PLC:Lock the cycle")
+    // lock it
+    cycleStatus:bPausePLC=true
+    stopMove()
+    call OnEvent:OnCycleEvent(2)
+    //
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

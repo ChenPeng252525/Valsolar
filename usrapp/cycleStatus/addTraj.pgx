@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="addTraj" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTrajectory" type="Trajectory" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // mutex it
+  setMutex(bActionMutex)
+  if saveData:bDebug
+    ? "TRAJ: Add "+x_tTrajectory.sID
+  endIf
+  //
+  // insert a new action
+  //
+  if tTrajCycle.sID!="null" and tTrajCycle.sID!="" 
+    append(tTrajCycle)
+  endIf
+  // set the size
+  l_nSize=size(tTrajCycle)-1
+  // copy it
+  tTrajCycle[l_nSize]=x_tTrajectory
+  tTrajCycle[l_nSize].nId=nLastIdPoint
+  // release
+  bActionMutex=false
+end]]></Code>
+  </Program>
+</Programs>

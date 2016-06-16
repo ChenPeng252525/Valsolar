@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItemList" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSizeList" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  x_sItem=""
+  call getSize(l_nSizeList)
+  do
+    // create the list
+    //
+    call use:setSizeList(10,0,28,11)
+    call use:listcreate("OUTPUT ")
+    // start from the first
+    l_sKey=first(saveInOut:dOutput)
+    while l_sKey!=""
+      // scan
+      call isActive(l_bActive,l_sKey)
+      if l_bActive
+        // insert into the list
+        l_sName=saveInOut:dOutput[l_sKey].sName
+        l_sItemList=l_sKey+" {"+l_sName+"}"
+        call use:listadd(l_sItemList)
+      endIf
+      // next
+      l_sKey=next(saveInOut:dOutput[l_sKey])
+    endWhile
+    //
+    // display the list
+    //
+    call use:listredraw(min(l_nIndex-use:nView,0))
+    //
+    // wait a KEY
+    //
+    do
+      l_nKey=get()
+      // get one input from the list
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+      if l_nKey==255
+        return
+      endIf
+    until l_nKey==270
+    //
+    // insert the sentence
+    //
+    if l_sEvent==""
+      return
+    else
+      l_sEvent=left(l_sEvent,find(l_sEvent,"{")-1)
+    endIf
+    // update
+    l_sItem=l_sItem+l_sEvent
+    // get the status ON-OFF
+    call use:stringToArray("ON,OFF",sMessage)
+    call language:message(l_sMessage,40)
+    call use:questionDialog(l_sMessage,sMessage,i)
+    if i==1
+      l_sItem=l_sItem+">ON"
+    else
+      if i==2
+        l_sItem=l_sItem+">OFF"
+      else
+        // escape
+        return
+      endIf
+    endIf
+    l_nSize=l_nSize+1
+    // define the operator
+    if l_nSize!=3
+      call language:message(l_sMessage,41)
+      l_sButton="AND"
+      call use:questionDialog(l_sMessage,l_sButton,i)
+      if i==-1
+        // escape
+        return
+      else
+        if i==1
+          l_sItem=l_sItem+" AND "
+        endIf
+      endIf
+    endIf
+  until i==0 or l_nSize==3
+  // give it back
+  x_sItem=l_sItem
+end]]></Code>
+  </Program>
+</Programs>

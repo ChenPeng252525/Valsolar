@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="page" access="public">
+    <Description><![CDATA[set all the page]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="menuname" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  //  PAGE
+  //
+  //,,,,,,,,,,,,,,,,,,,,,,,
+  //  go home setting
+  //,,,,,,,,,,,,,,,,,,,,,,,
+  //
+  //  HOME PAGE
+  //
+  //
+  if index>=300 and index<=301
+    title("< 一键回零设置界面 > "+menuname)
+  endIf
+  
+  //,,,,,,,,,,,,,,,,,,,,
+  //  CYCLE
+  //,,,,,,,,,,,,,,,,,,,,
+  //  if index>=20 and index<=29
+  //    title("< Production Page >")
+  //  endIf
+  //  if index>=200 and index<=209
+  //    title("< Simulation >")
+  //  endIf
+  //  if index>=210 and index<=219
+  //    title ("< Stepping Simulation >")
+  //  endIf
+  //
+  //  MENU
+  //
+  menuname=""
+  //,,,,,,,,,,,,,,,,,,,,
+  //  KERNEL
+  //,,,,,,,,,,,,,,,,,,,,
+  switch index
+    
+    case 300
+      // 
+      menuname="测试,,,,,类型,删除,新建"
+    break
+    case 301
+      // cycle
+      menuname=",,,,,类型,删除,新建"
+    break
+    case 302
+      // Programmer
+      menuname="标记,全选,反选,,,,<<,>>"
+    break
+    case 303
+      // Programmer
+      menuname="记录,插入,删除,,,,<<,>>"
+    break
+    case 304
+      // Programmer
+      menuname="记录,插入,删除,切换移动方式,,,<<,>>"
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

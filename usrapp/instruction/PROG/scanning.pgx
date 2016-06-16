@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="scanning" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sProgram" type="string" xsi:type="element" />
+      <Parameter name="x_nX" type="num" xsi:type="element" />
+      <Parameter name="x_nY" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_bSaveResult" type="bool" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sProgram" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="100" />
+      <Local name="l_sMinus" type="string" xsi:type="array" size="1" />
+      <Local name="l_sLine" type="string" xsi:type="array" size="5" />
+      <Local name="l_sTrajName" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nLine" type="num" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_iItem" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSizeItem" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_pProg" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // open the program
+  //
+  call load(x_sProgram,i)
+  if i==0
+    //
+    // get the item
+    //
+    call getSizeItem(l_nSize)
+    //
+    // print all the line
+    //
+    for i=0 to l_nSize-1
+      //
+      // init the local variable
+      //
+      l_sEmpty=""
+      l_sMinus=""
+      l_sProgram=""
+      for j=0 to size(l_sLine)-1
+        l_sLine[j]=""
+      endFor
+      l_nLine=0
+      //
+      // scan the item looking for some tray type or SUB
+      //
+      call getItem(l_iItem,i)
+      // find if there is a program inside
+      if l_iItem.sType=="PROG"
+        // find the program name
+        l_sProgram=l_iItem.sData
+      elseIf l_iItem.sType=="IF"
+        // scan for the IF
+        l_nPos=find(l_iItem.sData,"PROG ")
+        if l_nPos!=-1
+          // find the program name
+          l_sProgram=right(l_iItem.sData,len(l_iItem.sData)-l_nPos-len("PROG "))
+        endIf
+      endIf
+      call saveInputOutput:replaceIO(l_iItem.sData,l_iItem.sType,l_iItem.sData)
+      l_sItem[i]=l_iItem.sType+" "+l_iItem.sData
+      //
+      // set the string in a nChar + 1 space
+      //
+      if len(l_sItem[i])>nChar
+        // save the line
+        l_nLine=roundUp(len(l_sItem[i])/(nChar-1))-1
+        for j=0 to l_nLine
+          if j==0
+            // FIRST LINE
+            // divide it
+            l_sLine[j]=left(l_sItem[i],(nChar-1))
+            // cut it
+            if len(l_sLine[j])==(nChar-1)
+              l_sLine[j]=l_sLine[j]+"~ "
+              l_sItem[i]=right(l_sItem[i],len(l_sItem[i])-(nChar-1))
+            endIf
+          else
+            // OTHERS LINE
+            // divide it
+            l_sLine[j]="-"+left(l_sItem[i],(nChar-2))
+            // cut it
+            if len(l_sLine[j])==(nChar-1)
+              l_sLine[j]=l_sLine[j]+"~ "
+              l_sItem[i]=right(l_sItem[i],len(l_sItem[i])-(nChar-2))
+            endIf
+          endIf
+        endFor
+      else
+        // set the string
+        l_sLine=l_sItem[i]
+      endIf
+      if len(l_sLine[l_nLine])<(nChar+1)
+        for j=0 to (nChar-len(l_sLine[l_nLine]))
+          // fill the empty
+          l_sEmpty=l_sEmpty+" "
+        endFor
+      endIf
+      // look if there is a program to write
+      if l_sProgram!=""
+        // write the line
+        for j=0 to l_nLine
+          if j==l_nLine
+            // write the minus
+            call write_to_file(x_nX,x_nY,l_sLine[j],true)
+          else
+            // write full sentence
+            call write_to_file(x_nX,x_nY,l_sLine[j],false)
+            x_nY=x_nY+1
+          endIf
+        endFor
+        // scan again
+        x_nY=x_nY+1
+        call scanning(l_sProgram,x_nX+15,x_nY,x_bSaveResult)
+        // recover the last program
+        call load(x_sProgram,i)
+      else
+        // write the line
+        for j=0 to l_nLine
+          if j==l_nLine
+            // write the space
+            call write_to_file(x_nX,x_nY,l_sLine[j]+l_sEmpty,false)
+          else
+            // no space
+            call write_to_file(x_nX,x_nY,l_sLine[j],false)
+          endIf
+          x_nY=x_nY+1
+        endFor
+        // get inside the trajectory field
+        call saveData:getPathInstr(l_iItem.sType,l_sPath)
+        // TRAJECTORY
+        if TrajItem:libLoad(l_sPath)==0
+          delay(0)
+          // scan for the action
+          call TrajItem:load(l_iItem.sData,l_nResult)
+          call TrajItem:getSizeItem(false,l_nSizeItem)
+          // patch for the pallet
+          if l_iItem.sType=="PALLET"
+            l_nSizeItem=1
+          endIf
+          for j=0 to l_nSizeItem-1
+            // get the item
+            call TrajItem:getTrajItem(l_tTraj,j)
+            // scan for the TCP
+            if l_tTraj.nTcpAction==1
+              call write_to_file(x_nX,x_nY,"   -TCP ON ",false)
+              //add one line
+              x_nY=x_nY+1
+            elseIf l_tTraj.nTcpAction==2
+              call write_to_file(x_nX,x_nY,"   -TCP OFF",false)
+              //add one line
+              x_nY=x_nY+1
+            endIf
+            for k=0 to size(l_tTraj.iInstr)-1
+              if l_tTraj.iInstr[k].sType!=""
+                call saveInputOutput:replaceIO(l_tTraj.iInstr[k].sData,l_tTraj.iInstr[k].sType,l_tTraj.iInstr[k].sData)
+                call write_to_file(x_nX,x_nY,"   -"+l_tTraj.iInstr[k].sType+" "+l_tTraj.iInstr[k].sData,false)
+                //add one line
+                x_nY=x_nY+1
+                if l_tTraj.iInstr[k].sType=="SUB"
+                  // SUB
+                  call sub:getProgItem(l_pProg,l_tTraj.iInstr[k].sData)
+                  l_nSizeItem=size(l_pProg.iEvent)
+                  for j=0 to l_nSizeItem-1
+                    if l_pProg.iEvent[j].sType!=""
+                      call saveInputOutput:replaceIO(l_pProg.iEvent[j].sData,l_pProg.iEvent[j].sType,l_pProg.iEvent[j].sData)
+                      call write_to_file(x_nX,x_nY,"        "+l_pProg.iEvent[j].sType+" "+l_pProg.iEvent[j].sData,false)
+                      //add one line
+                      x_nY=x_nY+1
+                    endIf
+                  endFor
+                endIf
+              endIf
+            endFor
+          endFor
+        elseIf l_iItem.sType=="SUB"
+          // SUB
+          call sub:getProgItem(l_pProg,l_iItem.sData)
+          l_nSizeItem=size(l_pProg.iEvent)
+          for j=0 to l_nSizeItem-1
+            if l_pProg.iEvent[j].sType!=""
+              call saveInputOutput:replaceIO(l_pProg.iEvent[j].sData,l_pProg.iEvent[j].sType,l_pProg.iEvent[j].sData)
+              call write_to_file(x_nX,x_nY,"    "+l_pProg.iEvent[j].sType+" "+l_pProg.iEvent[j].sData,false)
+              //add one line
+              x_nY=x_nY+1
+            endIf
+          endFor
+        endIf
+      endIf
+      delay(0)
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

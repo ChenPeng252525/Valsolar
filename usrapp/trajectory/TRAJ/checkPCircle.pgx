@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="checkPCircle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_pToCheck" type="point" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bDistance" type="bool" xsi:type="array" size="3" />
+      <Local name="l_bUnreach" type="bool" xsi:type="array" size="1" />
+      <Local name="l_fFrame" type="frame" xsi:type="array" size="1" />
+      <Local name="l_nDistance" type="num" xsi:type="array" size="1" />
+      <Local name="l_nNewDist" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTo" type="num" xsi:type="array" size="1" />
+      <Local name="l_pCircle" type="point" xsi:type="array" size="3" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check if the x_pToCheck is inside the Circle
+  //
+  //  INIT
+  //
+  l_nDistance=1000
+  l_nStep=x_nResult=-1
+  call tcp:getTool(l_tTool,pEditPoint.nIndexTool)
+  l_pPoint=here(l_tTool,pEditPoint.fFrame)
+  // get the three point
+  if x_nIndex>0
+    call getPoint(l_pCircle,false,x_nIndex-1)
+    call getPoint(l_pCircle[1],false,x_nIndex)
+  endIf
+  // check if the points are the same
+  l_bDistance=distance(position(l_pCircle,pEditPoint.fFrame),position(l_pCircle[2],pEditPoint.fFrame))<1
+  l_bDistance[1]=distance(position(l_pCircle[1],pEditPoint.fFrame),position(l_pCircle[2],pEditPoint.fFrame))<1
+  l_bDistance[2]=distance(position(l_pCircle,pEditPoint.fFrame),position(l_pCircle[1],pEditPoint.fFrame))<1
+  call isReachable(l_pCircle,l_tTool,l_bUnreach)
+  if !l_bUnreach
+    call isReachable(l_pCircle[1],l_tTool,l_bUnreach)
+    // check the frame
+    if !l_bUnreach
+      l_bUnreach=setFrame(l_pCircle,l_pCircle[2],l_pCircle[1],fSetFrame)!=0
+    endIf
+  endIf
+  if l_bDistance or l_bDistance[1] or l_bDistance[2] or l_bUnreach
+    // not valid circle point
+    x_nResult=-1
+    return
+  endIf
+  // first check step 0.1
+  for i=0 to 1 step 0.1
+    l_pPoint.trsf=interpolateC(position(l_pCircle,pEditPoint.fFrame),position(l_pCircle[2],pEditPoint.fFrame),position(l_pCircle[1],pEditPoint.fFrame),i)
+    l_nNewDist=distance(x_pToCheck.trsf,l_pPoint.trsf)
+    if l_nNewDist<l_nDistance
+      l_nDistance=l_nNewDist
+      l_nStep=i
+    endIf
+  endFor
+  if l_nStep!=-1
+    // second step 0.01
+    l_nTo=min(l_nStep+0.05,1)
+    for i=max(l_nStep-0.05,0) to l_nTo step 0.01
+      l_pPoint.trsf=interpolateC(position(l_pCircle,pEditPoint.fFrame),position(l_pCircle[2],pEditPoint.fFrame),position(l_pCircle[1],pEditPoint.fFrame),i)
+      l_nNewDist=distance(x_pToCheck.trsf,l_pPoint.trsf)
+      if l_nNewDist<l_nDistance
+        l_nDistance=l_nNewDist
+        l_nStep=i
+      endIf
+    endFor
+  endIf
+  if l_nStep!=-1
+    // third step 0.001
+    l_nTo=min(l_nStep+0.005,1)
+    for i=max(l_nStep-0.005,0) to l_nTo step 0.001
+      l_pPoint.trsf=interpolateC(position(l_pCircle,pEditPoint.fFrame),position(l_pCircle[2],pEditPoint.fFrame),position(l_pCircle[1],pEditPoint.fFrame),i)
+      l_nNewDist=distance(x_pToCheck.trsf,l_pPoint.trsf)
+      if l_nNewDist<l_nDistance
+        l_nDistance=l_nNewDist
+        l_nStep=i
+      endIf
+    endFor
+  endIf
+  // 5 mm tollerance
+  if l_nDistance<=5
+    // store the value
+    x_nResult=l_nStep
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

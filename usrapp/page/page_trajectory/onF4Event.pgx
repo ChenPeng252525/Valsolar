@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF4Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bImport" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="2" />
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_bDone" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nOldValue" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDefault" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // look if the bButton is enable
+//  if bButton[3] 
+//    //
+//  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

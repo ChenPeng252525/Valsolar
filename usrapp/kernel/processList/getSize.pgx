@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getSize" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nSize" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // get the size of the Start list
+  switch x_nType
+    case 0
+      // get the size of the Start list
+      if saveCycle:sLoadStart!=""
+        x_nSize=size(saveCycle:sLoadStart)
+      else
+        x_nSize=0
+      endIf
+    break
+    case 1
+      if saveCycle:sLoadProg!=""
+        // get the size of the process list
+        x_nSize=size(saveCycle:sLoadProg)
+      else
+        x_nSize=0
+      endIf
+    break
+    case 2
+      if saveCycle:sLoadEnd!=""
+        // get the size of the End list
+        x_nSize=size(saveCycle:sLoadEnd)
+      else
+        x_nSize=0
+      endIf
+    break
+  endSwitch
+end
+
+]]></Code>
+  </Program>
+</Programs>

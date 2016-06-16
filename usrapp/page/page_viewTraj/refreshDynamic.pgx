@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshDynamic">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // DO NOT CHANGE
+  nRefresh=clock()
+  use:bUseRefresh=false
+//  //
+//  // ADD HERE
+//  //
+//  // show line 12
+//  call trajType:getTrajItem(l_tTraj,nIndex)
+//  if bLarge
+//    // show the name
+//    call language:message(l_sMessage,21)
+//    l_sInstruction=(l_sMessage+">"+l_tTraj.comment)
+//  else
+//    // select the action
+//    switch l_tTraj.nTcpAction
+//      case 1
+//        l_sInstruction="[ON],"
+//      break
+//      case 2
+//        l_sInstruction="[OFF],"
+//      break
+//      default
+//      break
+//    endSwitch
+//    l_sType=l_tTraj.iInstr[0].sType
+//    l_sData=l_tTraj.iInstr[0].sData
+//    call saveInOut:replaceIO(l_sData,l_sType,l_sData)
+//    l_sInstruction=l_sInstruction+l_sType+" "+l_sData
+//    for i=1 to size(l_tTraj.iInstr)-1
+//      if l_tTraj.iInstr[i].sType!=""
+//        l_sType=l_tTraj.iInstr[i].sType
+//        l_sData=l_tTraj.iInstr[i].sData
+//        call saveInOut:replaceIO(l_sData,l_sType,l_sData)
+//        l_sInstruction=l_sInstruction+","+l_sType+" "+l_sData
+//      endIf
+//    endFor
+//  endIf
+//  call use:typeLen(0,12,l_sInstruction,40)
+//  // show the status
+//  call showPoint()
+end]]></Code>
+  </Program>
+</Programs>

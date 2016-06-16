@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="back.pgx" />
+    <Program file="changeOffset.pgx" />
+    <Program file="changeSpeed.pgx" />
+    <Program file="computeFrame.pgx" />
+    <Program file="delete.pgx" />
+    <Program file="deleteItem.pgx" />
+    <Program file="duplicate.pgx" />
+    <Program file="find.pgx" />
+    <Program file="get.pgx" />
+    <Program file="getDistance.pgx" />
+    <Program file="getFrame.pgx" />
+    <Program file="getFrameId.pgx" />
+    <Program file="getFunctionEdit.pgx" />
+    <Program file="getFunctionSel.pgx" />
+    <Program file="getFunctionView.pgx" />
+    <Program file="getListItem.pgx" />
+    <Program file="getPalletData.pgx" />
+    <Program file="getPalletPos.pgx" />
+    <Program file="getPoint.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="getSizeItem.pgx" />
+    <Program file="getSizePallet.pgx" />
+    <Program file="getTime.pgx" />
+    <Program file="getTool.pgx" />
+    <Program file="getTrajItem.pgx" />
+    <Program file="getTrajType.pgx" />
+    <Program file="getType.pgx" />
+    <Program file="goTo.pgx" />
+    <Program file="HerePoint.pgx" />
+    <Program file="insertItem.pgx" />
+    <Program file="load.pgx" />
+    <Program file="loadAction.pgx" />
+    <Program file="loadCycle.pgx" />
+    <Program file="loadPage.pgx" />
+    <Program file="makeTraj.pgx" />
+    <Program file="new.pgx" />
+    <Program file="next.pgx" />
+    <Program file="onEdit.pgx" />
+    <Program file="onEditItem.pgx" />
+    <Program file="onEditTrsf.pgx" />
+    <Program file="onFunctionEdit.pgx" />
+    <Program file="onFunctionSel.pgx" />
+    <Program file="onFunctionView.pgx" />
+    <Program file="onInsert.pgx" />
+    <Program file="onProgEnd.pgx" />
+    <Program file="onRun.pgx" />
+    <Program file="onSave.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="onStop.pgx" />
+    <Program file="reset.pgx" />
+    <Program file="setFrameId.pgx" />
+    <Program file="setPalletData.pgx" />
+    <Program file="setPalletPos.pgx" />
+    <Program file="setTool.pgx" />
+    <Program file="setTrajItem.pgx" />
+    <Program file="showTrsf.pgx" />
+  </Programs>
+  <Database>
+    <Data file="PALLET.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="tcp" path="Disk://kernel/tool/tool.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="pt" path="Disk://kernel/template/session/saveTraj/PALLET/PALLET.pjx" />
+    <Library alias="page" path="Disk://kernel/template/page/page.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="language2" path="Disk://trajectory/PALLET/language/language.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="TrajectoryItem" path="Disk://kernel/template/TrajectoryItem/TrajectoryItem.pjx" />
+    <Type name="ActionItem" path="Disk://kernel/template/ActionItem/ActionItem.pjx" />
+    <Type name="Trajectory" path="Disk://kernel/template/Trajectory/Trajectory.pjx" />
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+    <Type name="TrajPallet" path="Disk://kernel/template/TrajPallet/TrajPallet.pjx" />
+    <Type name="FrameItem" path="Disk://kernel/template/FrameItem/FrameItem.pjx" />
+    <Type name="ToolItem" path="Disk://kernel/template/ToolItem/ToolItem.pjx" />
+  </Types>
+</Project>

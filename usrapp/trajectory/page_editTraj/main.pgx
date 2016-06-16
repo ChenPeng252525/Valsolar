@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverRide" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart()
+  // LOOP UNTIL nKey=255
+  do
+    // GOTO
+    call goTo(nIndexItem,l_bUnreached)
+    if l_bUnreached
+      // show the message out of range
+      call language:message(l_sMessage,-5)
+      call use:timerDialog(l_sMessage,1)
+      l_bUnreached=false
+    endIf
+    //
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    // get Size
+    call trajType:getSizeItem(false,l_nSize)
+    //
+    // OVERRIDE NORMAL FUNCTIONALITY-> POLYMORPHISM
+    //
+    if nKey>=271 and nKey<=278
+      if sMenuUser[nKey-271]!=""
+        call trajType:onFunctionEdit(nIndexItem,sEvent,nKey)
+        l_bOverRide=true
+        l_bSave=true
+        call buildList()
+      endIf
+    endIf
+    //
+    // OVERRIDE ON ENTER EVENT -> POLYMORPHISM
+    //
+    if !l_bOverRide
+      switch nKey
+        case 264
+          // left
+          if nIndexItem>0
+            nIndexItem=nIndexItem-1
+            call buildList()
+          endIf
+        break
+        case 268
+          // right
+          if nIndexItem<(l_nSize-1)
+            nIndexItem=nIndexItem+1
+            call buildList()
+          endIf
+        break
+        case 259
+          // TAB
+          bLarge=!bLarge
+          call use:setView(bLarge)
+        break
+        case 32
+          call onSpaceEvent(l_bSave)
+        break
+        case 263
+          call onBackEvent(l_bSave)
+        break
+        case 271
+          call onF1Event()
+        break
+        case 272
+          call onF2Event()
+        break
+        case 273
+          call onF3Event()
+        break
+        case 274
+          // Blend
+          call onF4Event(l_bSave)
+        break
+        case 275
+          // Speed
+          call onF5Event(l_bSave)
+        break
+        case 276
+          // Delete
+          call onF6Event(l_bSave)
+        break
+        case 277
+          // Insert
+          call onF7Event(l_bSave)
+        break
+        case 278
+          // SAVE
+          call onF8Event(l_bSave)
+        break
+        case 270
+          // GO EDIT POINT
+          call onEnterEvent(l_bSave)
+        break
+      endSwitch
+    endIf
+    l_bOverRide=false
+    if nKey==255
+      // on Exit
+      call onExit(l_bSave)
+    endIf
+    // release
+    delay(0)
+  until bExit
+  // reset the bit
+  bExit=false
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onExit">
+    <Code><![CDATA[begin
+  // on EXIT
+  //
+  if cycleStatus:bSimulation
+    call stopCycle()
+  endIf
+  // clean the movement
+  if !isEmpty()
+    resetMotion()
+  endIf
+  call use:nullKey(nKey)
+  taskKill("stepping")
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

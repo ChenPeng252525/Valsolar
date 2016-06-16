@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="checkPoint" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_PointToGo" type="point" xsi:type="element" />
+      <Parameter name="x_PointStart" type="point" xsi:type="element" />
+      <Parameter name="x_bUnreached" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_bLinear" type="bool" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="jpO_frameint" type="joint" xsi:type="array" size="1" />
+      <Local name="message" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check if the pO_frameint is null???
+  if (cycleStatus:bCycle==false and cycleStatus:bSimulation==false) or !x_bLinear
+    x_bUnreached=(position(x_PointToGo,world)=={0,0,0,0,0,0})
+    //
+    if !x_bUnreached
+      //
+      // look if the pO_frameint that you want to reach is valid
+      if x_bLinear
+        //
+        // use the percentage....
+        //
+        for i=0.1 to 1 step 0.1
+          pCheck.trsf=interpolateL(position(x_PointStart,world),position(x_PointToGo,world),i)
+          x_bUnreached=!pointToJoint(x_tTool,herej(),pCheck,jpO_frameint)
+          if x_bUnreached
+            return
+          endIf
+        endFor
+      else
+        // joint move or check only the working area
+        x_PointToGo.config={sfree,efree,wfree}
+        x_bUnreached=!pointToJoint(x_tTool,herej(),x_PointToGo,jpO_frameint)
+      endIf
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

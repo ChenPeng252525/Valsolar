@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEditItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sEvent" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nIndexItem" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem5" type="string" xsi:type="array" size="5" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMax" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_tNull" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="4" />
+    </Locals>
+    <Code><![CDATA[begin
+  // edit the custom element that was add in the list
+  l_jJoint=jEditPoint.tData[x_nIndexItem].jJoint
+  call use:findPos(x_sEvent,">",i)
+  i=i+1
+  // clean the line
+  call use:listcursor(use:nView,false)
+  l_sEmpty=""
+  if x_nIndexItem>0 or (jEditPoint.nZoneType[x_nIndexItem]==0)
+    if find(jEditPoint.tData[x_nIndexItem].tSuper.comment,"@")==-1 and (jEditPoint.nZoneType==0 or x_nIndexItem>0)
+      switch x_nIndex
+        case 0
+          //  j1-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j1,l_jJoint.j1-5,l_jJoint.j1+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j1,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+        case 1
+          //  j2-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j2,l_jJoint.j2-5,l_jJoint.j2+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j2,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+        case 2
+          //  j3-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j3,l_jJoint.j3-5,l_jJoint.j3+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j3,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+        case 3
+          //  j4-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j4,l_jJoint.j4-5,l_jJoint.j4+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j4,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+        case 4
+          //  j5-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j5,l_jJoint.j5-5,l_jJoint.j5+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j5,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+        case 5
+          //  j6-value
+          if cycleStatus:bCycle
+            // set a limit +- 5
+            call use:changeValue(l_jJoint.j6,l_jJoint.j6-5,l_jJoint.j6+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          else
+            call use:changeValue(l_jJoint.j6,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        break
+      endSwitch
+    endIf
+    switch x_nIndex
+      case 6
+        // change the move type
+        l_sItem="---"
+        l_sItem[1]="Box"
+        l_sItem[2]="Sphere"
+        l_sItem[3]="Plane"
+        call use:clear(0,13)
+        call use:changeValue(jEditPoint.nZoneType[x_nIndexItem],0,0,i+40-use:nBottomX,use:nView+1,l_sItem)
+      break
+    endSwitch
+  elseIf x_nIndexItem==0
+    switch x_nIndex
+      // change the MOVE-TYPE
+      case 0
+        l_sItem[0]=" - - - "
+        l_sItem[1]="Box"
+        l_sItem[2]="Sphere"
+        l_sItem[3]="Plane"
+        call use:clear(0,13)
+        call use:changeValue(jEditPoint.nZoneType,0,0,i+40-use:nBottomX,use:nView+1,l_sItem)
+      break
+      // edit the MOVE-TYPE
+      case 1
+        switch jEditPoint.nZoneType
+          case 1
+            // BOX
+            call setPointFrame(jEditPoint.fFrame.trsf,jEditPoint.pO,jEditPoint.pX,jEditPoint.pY,jEditPoint.nDimension,1)
+            if jEditPoint.fFrame.trsf=={0,0,0,0,0,0}
+              call use:timerDialog("the frame has NOT been teached",2)
+            endIf
+          break
+          case 2
+            // sphere
+            call page_changeTrsf(jEditPoint.pO.trsf,"Sphere"," teach the origin...",true,jEditPoint.nDimension,"radius",world)
+            jEditPoint.pX=compose(jEditPoint.pO,world,{100,0,0,0,0,0})
+            jEditPoint.pY=compose(jEditPoint.pO,world,{0,100,0,0,0,0})
+            setFrame(jEditPoint.pO,jEditPoint.pX,jEditPoint.pY,jEditPoint.fFrame)
+          break
+          case 3
+            //plane
+            call setPointFrame(jEditPoint.fFrame.trsf,jEditPoint.pO,jEditPoint.pX,jEditPoint.pY,jEditPoint.nDimension,3)
+            if jEditPoint.fFrame.trsf=={0,0,0,0,0,0}
+              call use:timerDialog("the frame has NOT been teached",2)
+            endIf
+          break
+        endSwitch
+      break
+      // CHANGE THE MOVE-TO
+      case 2
+        // change the move to
+        l_sItem5[0]="Point"
+        l_sItem5[1]="Appro"
+        l_sItem5[2]="Z value"
+        //l_sItem5[3]="@JPoint"
+        //l_sItem5[4]="@Point"
+        call use:clear(0,13)
+        // change it
+        l_nValue=jEditPoint.nZoneMove
+        // sphere has not coord Z movement
+        if jEditPoint.nZoneMove==2
+          l_sItem5[2]=""
+        endIf
+        call use:changeValue(jEditPoint.nZoneMove,0,0,i+40-use:nBottomX,use:nView+1,l_sItem5)
+        // patch for the sphere
+        if jEditPoint.nZoneMove==2 and l_nValue>=2
+          l_nValue=l_nValue+1
+        endIf
+        if l_nValue!=jEditPoint.nZoneMove
+          switch jEditPoint.nZoneMove
+            case 0
+              // reset ?
+              if tPointTo=={0,0,0,0,0,0}
+                jEditPoint.pPointMove.trsf=tPointTo
+              endIf
+            break
+            case 1
+              // reset ?
+              if tAppro=={0,0,0,0,0,0}
+                jEditPoint.pPointMove.trsf=tAppro
+              endIf
+            break
+            case 2
+              // reset ?
+              if nZeta==0
+                jEditPoint.pPointMove.trsf={0,0,-nZeta,0,0,0}
+              endIf
+            break
+            case 3
+              // @Point
+              jEditPoint.tData.tSuper.comment=""
+            break
+            case 4
+              // @JPoint
+              jEditPoint.tData.tSuper.comment=""
+            break
+          endSwitch
+        endIf
+      break
+      // EDIT THE MOVE-TO
+      case 3
+        switch jEditPoint.nZoneMove
+          case 0
+            // Point
+            if tPointTo=={0,0,0,0,0,0}
+              tPointTo=jEditPoint.pPointMove.trsf
+            endIf
+            if (jEditPoint.nZoneType==2 or setFrame(jEditPoint.pO,jEditPoint.pX,jEditPoint.pY,jEditPoint.fFrame)==0)
+              call page_changeTrsf(tPointTo,"Point TO"," ",true,jEditPoint.nDimension,"",jEditPoint.fFrame)
+              // validate
+              if tPointTo!=jEditPoint.pPointMove.trsf
+                jEditPoint.pPointMove.trsf=tPointTo
+              endIf
+            else
+              call use:timerDialog("Frame is not Defined ! ",2)
+            endIf
+          break
+          case 1
+            // Appro
+            if tAppro=={0,0,0,0,0,0}
+              tAppro=jEditPoint.pPointMove.trsf
+            endIf
+            call page_changeTrsf(tAppro,"Appro"," ",false,jEditPoint.nDimension,"",jEditPoint.fFrame)
+            // validate
+            if tAppro!=jEditPoint.pPointMove.trsf
+              jEditPoint.pPointMove.trsf=tAppro
+            endIf
+          break
+          case 2
+            // Z Value
+            l_nMin=-500
+            l_nMax=500
+            l_sMessage="coord. Z "
+            if nZeta==0
+              nZeta=jEditPoint.pPointMove.trsf.z
+            endIf
+            // edit
+            l_nValue=nZeta
+            call use:editNumField("Move to a fix Z value",l_sMessage,l_nValue,l_nMin,l_nMax)
+            // validate
+            if nZeta!=l_nValue
+              nZeta=l_nValue
+              jEditPoint.pPointMove.trsf.z=l_nValue
+            endIf
+          break
+          //          case 3,4
+          //            // select the @Point - @jPoint
+          //            // build the list
+          //            call use:setSizeList(0,0,16,12)
+          //            if jEditPoint.nZoneMove==4
+          //              // POINT
+          //              call use:listcreate("@Point")
+          //              // insert all the item
+          //              l_sItem=first(pPoint:pCollection)
+          //              call use:listadd(l_sItem)
+          //              // search it
+          //              while l_sItem!=""
+          //                l_sItem=next(pPoint:pCollection[l_sItem])
+          //                call use:listadd(l_sItem)
+          //                delay(0)
+          //              endWhile
+          //              l_sItem="@POINT "
+          //            elseIf jEditPoint.nZoneMove==3
+          //              // JPOINT
+          //              call use:listcreate("@JPoint")
+          //              // insert all the item
+          //              l_sItem=first(jPoint:tTraj)
+          //              call use:listadd(l_sItem)
+          //              // search it
+          //              while l_sItem!=""
+          //                l_sItem=next(jPoint:tTraj[l_sItem])
+          //                call use:listadd(l_sItem)
+          //              endWhile
+          //              l_sItem="@JPOINT "
+          //            endIf
+          //            // refresh it
+          //            call use:listupdate(0)
+          //            // get the item
+          //            do
+          //              l_nKey=get()
+          //              call use:listevent(l_nKey,l_nIndex,l_sEvent)
+          //            until l_nKey==270 or l_nKey==255
+          //            // give back
+          //            if l_nKey==270
+          //              jEditPoint.tData.tSuper.comment=l_sItem+l_sEvent
+          //            endIf
+          //          break
+        endSwitch
+      break
+    endSwitch
+  endIf
+  //
+  if isInRange(l_jJoint)
+    jEditPoint.tData[x_nIndexItem].jJoint=l_jJoint
+  else
+    // error using the trsf
+    call language:message(l_sMessage,-5)
+    popUpMsg(l_sMessage)
+  endIf
+  // wait no key
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

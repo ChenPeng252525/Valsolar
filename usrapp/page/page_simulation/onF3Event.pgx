@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF3Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[2]
+    //
+    // go to next POINT
+    //
+    if !cycleStatus:bCycle or !cycleStatus:bSimulation
+      // check for the point proximity
+      call isAtPoint(nPoint,l_bInside)
+      if l_bInside
+        call goTo(nPoint+1)
+      else
+        call goTo(nPoint)
+      endIf
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

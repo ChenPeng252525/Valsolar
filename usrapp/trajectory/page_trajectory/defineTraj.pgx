@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="defineTraj">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // select the trajectory type
+  if saveData:sTrajTypeUsing==""
+    saveData:sTrajTypeUsing=saveData:sTrajType
+  endIf
+  // search inside all the instruction
+  call saveData:getPathInstr(saveData:sTrajTypeUsing,l_sPath)
+  // check the trajType
+  if trajType:libPath()!=l_sPath and l_sPath!=""
+    i=trajType:libLoad(l_sPath)
+    delay(0)
+  endIf
+  // error  
+  if i!=0
+    popUpMsg("error load traj type on ENTER"+saveData:sTrajTypeUsing+toString("",i))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

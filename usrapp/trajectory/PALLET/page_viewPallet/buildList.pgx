@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPalletName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPosition" type="num" xsi:type="array" size="4" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  //
+  // Build the list
+  //
+  for i=0 to size(sPalletName)-1
+    // scan all
+    if sPalletName[i]!=""
+      l_sPalletName=sPalletName[i]
+      call pallet:getPalletPos(l_sPalletName,l_nPosition)
+      call pallet:getSizePallet(l_sPalletName,l_nSize)
+      call use:strfill(l_sPalletName,12,l_sPalletName)
+      call listAdd(l_sPalletName+"> "+toString("",l_nPosition+1)+"/"+toString("",l_nSize))
+    endIf
+  endFor
+  // refresh it
+  // rebuild the list
+  call use:listempty()
+  call use:listadd(sList)
+end]]></Code>
+  </Program>
+</Programs>

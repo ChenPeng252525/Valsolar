@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_start" access="private" >
+    <Locals>
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // Start the cycle
+  //
+  call processList:getCycle(l_sName,l_nID,l_nID,0,1)
+  if l_sName!=""
+    logMsg("[KERNEL] PLC:Start Cycle")
+    nToSuperV=0
+    wait(nToSuperV==-1)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

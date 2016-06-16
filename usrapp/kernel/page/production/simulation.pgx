@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="simulation">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // SIMULATION
+  //
+  // syncro
+  bLarge=true
+  use:nPage=200
+  watch(cycleStatus:pCycleProg.sID!="",1)
+  use:bUseRefresh=true
+  cls()
+  do
+    nKey=getKey()
+    // REFRESH
+    if cycleStatus:bSimulation
+      call refresh()
+    endIf
+    call use:type(31,13,"STOP ")
+    // look for the restart button
+    if cycleStatus:bPause
+      call use:type(23,13,"RESTART")
+      if nKey==276
+        call OnEvent:resumeCycle()
+      endIf
+    else
+      call use:type(23,13,"        ")
+    endIf
+    delay(0)
+  until nKey==255 or nKey==277 or cycleStatus:bToStop or cycleStatus:bSimulation==false
+  //
+  if nKey==255 or nKey==277
+    cycleStatus:bToStop=true
+    watch(cycleStatus:bToStop==false,1)
+  endIf
+  // leave
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_reLoad" access="private" >
+    <Locals>
+      <Local name="l_iInstruction" type="Instruction" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // load the instruction
+  //
+  //
+  // find the instruction...
+  l_sKey=first(saveData:iInstruction)
+  // search it
+  while l_sKey!="" and isDefined(saveData:iInstruction[l_sKey])
+    l_nResult=0
+    switch saveData:iInstruction[l_sKey].nIndex
+      case 0
+        if instr0:libPath()!=""
+          call instr0:load("",l_nResult)
+        endIf
+      break
+      case 1
+        if instr1:libPath()!=""
+          call instr1:load("",l_nResult)
+        endIf
+      break
+      case 2
+        if instr2:libPath()!=""
+          call instr2:load("",l_nResult)
+        endIf
+      break
+      case 3
+        if instr3:libPath()!=""
+          call instr3:load("",l_nResult)
+        endIf
+      break
+      case 4
+        if instr4:libPath()!=""
+          call instr4:load("",l_nResult)
+        endIf
+      break
+      case 5
+        if instr5:libPath()!=""
+          call instr5:load("",l_nResult)
+        endIf
+      break
+      case 6
+        if instr6:libPath()!=""
+          call instr6:load("",l_nResult)
+        endIf
+      break
+      case 7
+        if instr7:libPath()!=""
+          call instr7:load("",l_nResult)
+        endIf
+      break
+      case 8
+        if instr8:libPath()!=""
+          call instr8:load("",l_nResult)
+        endIf
+      break
+      case 9
+        if instr9:libPath()!=""
+          call instr9:load("",l_nResult)
+        endIf
+      break
+      case 10
+        if instr10:libPath()!=""
+          call instr10:load("",l_nResult)
+        endIf
+      break
+      case 11
+        if instr11:libPath()!=""
+          call instr11:load("",l_nResult)
+        endIf
+      break
+      case 12
+        if instr12:libPath()!=""
+          call instr12:load("",l_nResult)
+        endIf
+      break
+      case 13
+        if instr13:libPath()!=""
+          call instr13:load("",l_nResult)
+        endIf
+      break
+      case 14
+        if instr14:libPath()!=""
+          call instr14:load("",l_nResult)
+        endIf
+      break
+      case 15
+        if instr15:libPath()!=""
+          call instr15:load("",l_nResult)
+        endIf
+      break
+      case 16
+        if instr16:libPath()!=""
+          call instr16:load("",l_nResult)
+        endIf
+      break
+      case 17
+        if instr17:libPath()!=""
+          call instr17:load("",l_nResult)
+        endIf
+      break
+      case 18
+        if instr18:libPath()!=""
+          call instr18:load("",l_nResult)
+        endIf
+      break
+      case 19
+        if instr19:libPath()!=""
+          call instr19:load("",l_nResult)
+        endIf
+      break
+      case 20
+        if instr20:libPath()!=""
+          call instr20:load("",l_nResult)
+        endIf
+      break
+      case 21
+        if instr21:libPath()!=""
+          call instr21:load("",l_nResult)
+        endIf
+      break
+      case 22
+        if instr22:libPath()!=""
+          call instr22:load("",l_nResult)
+        endIf
+      break
+      case 23
+        if instr23:libPath()!=""
+          call instr23:load("",l_nResult)
+        endIf
+      break
+      case 24
+        if instr24:libPath()!=""
+          call instr24:load("",l_nResult)
+        endIf
+      break
+      case 25
+        if instr25:libPath()!=""
+          call instr25:load("",l_nResult)
+        endIf
+      break
+      case 26
+        if instr26:libPath()!=""
+          call instr26:load("",l_nResult)
+        endIf
+      break
+      case 27
+        if instr27:libPath()!=""
+          call instr27:load("",l_nResult)
+        endIf
+      break
+      case 28
+        if instr28:libPath()!=""
+          call instr28:load("",l_nResult)
+        endIf
+      break
+      case 29
+        if instr29:libPath()!=""
+          call instr29:load("",l_nResult)
+        endIf
+      break
+    endSwitch
+    // TODO
+    if l_nResult!=0
+      popUpMsg("instruction PROBLEM on reloading..."+l_sKey)
+      logMsg("instruction PROBLEM on reloading..."+l_sKey)
+    endIf
+    // continue
+    l_sKey=next(saveData:iInstruction[l_sKey])
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

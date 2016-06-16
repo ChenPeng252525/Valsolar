@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changeSpeed">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_nActual" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOldValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // change all the speed
+  //
+  switch x_nType
+    case 0
+      // APPROACH
+      call language2:message(l_sMessage,0)
+      call language2:message(l_sMessage[1],2)
+      l_nActual=l_nOldValue=pEditPoint.nSpeedApproach
+      call use:insertDialog(l_sMessage+" "+l_sMessage[1],pEditPoint.nSpeedApproach,1,6000)
+    break
+    case 1
+      // DEPART
+      call language2:message(l_sMessage,1)
+      call language2:message(l_sMessage[1],2)
+      l_nActual=l_nOldValue=pEditPoint.nSpeedDepart
+      call use:insertDialog(l_sMessage+" "+l_sMessage[1],pEditPoint.nSpeedDepart,1,6000)
+    break
+    case 2
+      // NORMAL SPEED
+      call language:message(l_sMessage,161)
+      if pEditPoint.tData[x_nIndex].tSuper.moveType==0
+        l_nActual=l_nOldValue=pEditPoint.tData[x_nIndex].tSuper.nom_speed.vel
+        call use:insertDialog(l_sMessage,l_nActual,1,400)
+      else
+        if pEditPoint.tData[x_nIndex].tSuper.moveType==1
+          l_nActual=l_nOldValue=pEditPoint.tData[x_nIndex].tSuper.nom_speed.tvel
+          call use:insertDialog(l_sMessage,l_nActual,1,6000)
+        endIf
+      endIf
+    break
+  endSwitch
+  // set all the speed
+  if l_nActual!=l_nOldValue and x_nType==2
+    // normal speed, 2
+    call getSizeItem(false,l_nSize)
+    for i=0 to (l_nSize-1)
+      if (pEditPoint.tData[i].tSuper.moveType==0)and(l_nOldValue==pEditPoint.tData[i].tSuper.nom_speed.vel)
+        pEditPoint.tData[i].tSuper.nom_speed.vel=l_nActual
+      else
+        if (pEditPoint.tData[i].tSuper.moveType==1)and(l_nOldValue==pEditPoint.tData[i].tSuper.nom_speed.tvel)
+          pEditPoint.tData[i].tSuper.nom_speed.tvel=l_nActual
+        endIf
+      endIf
+    endFor
+  endIf
+  // to be saved
+  bToSave=true
+end]]></Code>
+  </Program>
+</Programs>

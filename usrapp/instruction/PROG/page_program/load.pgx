@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="load">
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // load the program  ???
+  if isDefined(saveData:iInstruction[sProgType])
+    call saveData:getPathInstr(sProgType,l_sPath)
+    l_nResult=prog:libLoad(l_sPath)
+    delay(0)
+    // save the sProgTypeUsing
+    saveData:sProgTypeUsing=sProgType
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

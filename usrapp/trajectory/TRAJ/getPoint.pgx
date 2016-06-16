@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getPoint" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pPoint" type="point" xsi:type="array" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPoint" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // take
+  if x_bCycle
+    // real point
+    x_pPoint=pt:tTraj[sTrajCycle].tData[x_nIndex].pPoint
+    if size(x_pPoint)>1
+      x_pPoint[1]=pt:tTraj[sTrajCycle].tData[x_nIndex].pCircle
+    endIf
+  else
+    // edit point
+    x_pPoint=pEditPoint.tData[x_nIndex].pPoint
+    if size(x_pPoint)>1
+      x_pPoint[1]=pEditPoint.tData[x_nIndex].pCircle
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

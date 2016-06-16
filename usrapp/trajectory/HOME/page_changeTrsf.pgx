@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="page_changeTrsf" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTrsf" type="trsf" xsi:type="array" use="reference" />
+      <Parameter name="x_sTitle" type="string" xsi:type="element" />
+      <Parameter name="x_sComment" type="string" xsi:type="element" />
+      <Parameter name="x_bHere" type="bool" xsi:type="element" />
+      <Parameter name="x_nAddon" type="num" xsi:type="element" use="reference" />
+      <Parameter name="x_sAddon" type="string" xsi:type="element" />
+      <Parameter name="x_fFrame" type="frame" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nView" type="num" xsi:type="array" size="1" />
+      <Local name="l_bRefresh" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nAddon" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistanceX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistanceY" type="num" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="l_jPoint" type="joint" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  logMsg("[KERNEL] INTERFACE:PAGE changeTrsf "+x_sTitle)
+  // INIT all 
+  //call tcp:getTool(l_tTool,jEditPoint.nIndexTool)
+  // use the flange
+  l_tTool=flange
+  l_bRefresh=false
+  l_nIndex=0
+  l_nView=0
+  call use:setSizeList(19,0,19,8)
+  call use:setView(false)
+  l_tTrsf=x_tTrsf
+  //release the button
+  call use:nullKey(nKey)
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    resetMotion()
+  endIf
+  if x_bHere
+    // use the x_fFrame
+    l_pPoint=here(l_tTool,x_fFrame)
+    l_pPoint.trsf=x_tTrsf
+    l_pPoint.config={sfree,efree,wfree}
+  endIf
+  l_nAddon=x_nAddon
+  // set the frame
+  do
+    cls()
+    call use:type(0,12,x_sComment)
+    call use:typeMenu(8,"OK")
+    if x_bHere
+      call language:message(l_sMessage,150)
+      call use:typeMenu(1,l_sMessage)
+    endIf
+    call use:listcreate(x_sTitle)
+    l_sItem=("coord  X > "+toString(".2",l_tTrsf.x))
+    call use:listadd(l_sItem)
+    l_sItem=("coord  Y > "+toString(".2",l_tTrsf.y))
+    call use:listadd(l_sItem)
+    l_sItem=("coord  Z > "+toString(".2",l_tTrsf.z))
+    call use:listadd(l_sItem)
+    l_sItem=("coord RX > "+toString(".2",l_tTrsf.rx))
+    call use:listadd(l_sItem)
+    l_sItem=("coord RY > "+toString(".2",l_tTrsf.ry))
+    call use:listadd(l_sItem)
+    l_sItem=("coord RZ > "+toString(".2",l_tTrsf.rz))
+    call use:listadd(l_sItem)
+    // check for the addon for the sphere
+    if x_sAddon!=""
+      l_sMessage=x_sAddon+"> "+toString("",l_nAddon)
+      call use:listadd(l_sMessage)
+    endIf
+    // show the list
+    use:nView=l_nIndex
+    call use:listupdate(l_nIndex-l_nView)
+    do
+      l_nView=use:nView
+      nKey=getKey()
+      l_pPoint.trsf=l_tTrsf
+      if x_bHere and isEmpty() and pointToJoint(l_tTool,herej(),l_pPoint,l_jPoint) and cycleStatus:nWorkingMode==1
+        movej(l_pPoint,l_tTool,{25,25,25,9999,9999,off,50,50})
+      endIf
+      call use:listevent(nKey,l_nIndex,l_sEvent)
+      switch nKey
+        case 270
+          //
+          // clean the line
+          call use:listcursor(use:nView,false)
+          l_sEmpty=""
+          switch l_nIndex
+            case 0
+              //  x-value
+              call use:changeValue(l_tTrsf.x,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 1
+              //  y-value
+              call use:changeValue(l_tTrsf.y,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 2
+              //  z-value
+              call use:changeValue(l_tTrsf.z,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 3
+              //  rx-value
+              call use:changeValue(l_tTrsf.rx,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 4
+              //  ry-value
+              call use:changeValue(l_tTrsf.ry,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 5
+              //  rz-value
+              call use:changeValue(l_tTrsf.rz,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 6
+              // addon
+              l_nIndex=find(l_sEvent,">")
+              call use:changeValue(l_nAddon,0,0,l_nIndex+1+2+use:nTopX,use:nView+use:nTopY+1,l_sEmpty)
+            break
+          endSwitch
+          l_bRefresh=true
+          // clean the movement
+          if !cycleStatus:bCycle and !cycleStatus:bSimulation
+            resetMotion()
+          endIf
+        break
+        case 278
+          // VALIDATE
+          x_tTrsf=l_tTrsf
+        break
+        case 271
+          // here
+          // use the x_fFrame
+          l_pPoint=here(l_tTool,x_fFrame)
+          l_pPoint.config={sfree,efree,wfree}
+          l_tTrsf=l_pPoint.trsf
+          l_bRefresh=true
+        break
+      endSwitch
+      // special ADDON for the sphere
+      if x_sAddon!=""
+        //  SPHERE
+        call checkZone(l_pPoint,l_tTool,l_nAddon,2,l_bCheck)
+        // check it
+        if l_bCheck
+          // inside the zone
+          call language:message(l_sMessage,225)
+        else
+          // outside the zone
+          call language:message(l_sMessage,226)
+        endIf
+        call use:typeLen(1,11,l_sMessage,39)
+      endIf
+      delay(0)
+    until l_bRefresh==true or nKey==255 or nKey==278
+    // check the refresh
+    l_bRefresh=false
+  until nKey==255 or nKey==278
+  // check the key
+  if nKey==278
+    // validate
+    x_tTrsf=l_tTrsf
+    x_nAddon=l_nAddon
+  endIf
+  // release the resource
+  call use:nullKey(nKey)
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    resetMotion()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

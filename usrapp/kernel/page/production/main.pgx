@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  if sItems=="simulation"
+    call simulation()
+  else
+    call onStart()
+    call refresh()
+    // LOOP UNTIL nKey=255
+    do
+      nKey=getKey()
+      switch nKey
+        case 259
+          //
+          //  USE TAB
+          //
+          bLarge=!bLarge
+          cls()
+          use:bUseRefresh=true
+        break
+        case 264,268
+          // change from one page to the other one
+          bPage=!bPage
+          cls()
+          use:bUseRefresh=true
+        break
+        case 271
+          call onF1Event()
+        break
+        case 272
+          call onF2Event()
+        break
+        case 273
+          call onF3Event()
+        break
+        case 274
+          call onF4Event()
+        break
+        case 275
+          call onF5Event()
+        break
+        case 276
+          call onF6Event()
+        break
+        case 277
+          call onF7Event()
+        break
+        case 278
+          call onF8Event()
+        break
+        case 270
+          // PAGE PROCESS LIST
+          call onEnterEvent()
+        break
+      endSwitch
+      // REFRESH
+      call refresh()
+      delay(0.1)
+    until nKey==255
+    // on Exit
+    call onExit()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

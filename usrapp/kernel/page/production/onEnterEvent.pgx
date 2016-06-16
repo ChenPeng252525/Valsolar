@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage3" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //if saveData:mode>0
+  if !bPage
+    //
+    //  open the processes list PAGE
+    //
+    //      saveData:sProcessList="default"
+    //      call processList:loadProcessList(saveData:sProcessList,l_nResult)
+    l_sItem="true"
+    call loadPage("kernel/page/processList",l_sItem)
+    // came back
+    logMsg("[KERNEL] INTERFACE:PAGE Production")
+    // refresh
+    cls()
+    use:bUseRefresh=true
+  endIf
+  //endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changeSession">
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_bDone" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPaste" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sSession" type="string" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  // init
+  use:nView=0
+  do
+    //
+    cls()
+    call use:setSizeList(19,0,19,11)
+    call use:setView(false)
+    //
+    call use:listcreate("Session")
+    // show the message
+    call language:page(l_sMessage,1030)
+    call use:stringToArray(l_sMessage,sMenu)
+    sMenu=""
+    if saveData:mode==1 
+      sMenu[6]=""
+    endIf
+    if saveData:mode>=1 
+      call use:setMenu(sMenu,true,3)
+    endIf
+    // clean the string
+    l_sEmpty=""
+    call use:stringCopy(l_sEmpty,sSession)
+    // get the list of session
+    call saveData:getListSession(sSession)
+    // build the list
+    call use:listadd(sSession)
+    // update
+    call use:listupdate(0)
+    // read the list
+    l_bDone=false
+    do
+      // get the item
+      nKey=get()
+      call use:listevent(nKey,l_nIndex,l_sEvent)
+    until nKey==270 or nKey==255 or ((nKey<=278 and nKey>=275)and sMenu[nKey-271]!="")
+    //
+    switch nKey
+      case 275
+        // rename
+        l_sPaste=l_sEvent
+        call isSessionFound(l_sPaste,l_nResult)
+        if l_sPaste!="" and l_sPaste!=l_sEvent
+          $rename("session/"+l_sEvent,"session/"+l_sPaste)
+        endIf
+      break
+      case 276
+        // duplicate
+        l_sPaste=l_sEvent
+        call isSessionFound(l_sPaste,l_nResult)
+        if l_nResult!=-1
+          // duplicate all the file
+          call copy_folder(l_sEvent,l_sPaste)
+          l_bDone=true
+        endIf
+      break
+      case 277
+        // delete
+        call saveData:getSession(l_sSession)
+        if l_sEvent!=l_sSession and l_sEvent!="default"
+          // delete
+          call language:getYesNo(l_sButton)
+          call language:message(l_sMessage,80)
+          l_sMessage=l_sMessage+l_sEvent
+          call use:yes_no(l_sMessage,l_sButton,l_bOk)
+          if l_bOk
+            $delete("Disk://session/"+l_sEvent)
+          endIf
+        else
+          call language:message(l_sMessage,23)
+          l_sMessage=l_sMessage+l_sEvent
+          popUpMsg(l_sMessage)
+        endIf
+      break
+      case 278
+        // create a new one
+        // look inside
+        call isSessionFound(l_sPaste,l_nResult)
+        if l_nResult!=-1
+          // create a new one
+          call copy_folder("",l_sPaste)
+        endIf
+      break
+    endSwitch
+  until l_bDone or nKey==255 or nKey==270
+  //
+  if nKey!=255 and cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+    // check if l_sPaste has been used
+    if l_sPaste!=""
+      l_sEvent=l_sPaste
+    endIf
+    // change session
+    call language:message(l_sMessage,19)
+    l_sMessage=l_sMessage+" SESSION DATA..." 
+    call use:timerDialog(l_sMessage,0)
+      // load the new session
+    call saveData:changeSession(l_sEvent)
+    // reload the processList using the default saveCycle
+    call processList:loadProcessList(i)
+    // reset the homing trajectory
+    cycleStatus:bHomeLoaded=false
+    // save the session
+    saveData:libSave()
+  endIf
+  //
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

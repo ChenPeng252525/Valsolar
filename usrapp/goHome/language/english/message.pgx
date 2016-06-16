@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    
+    case 1
+      message="COMPLEX AREA"
+    break 
+    case 2
+      message="SIMPLE AREA"
+    break 
+    case 3
+      message="Delete current selection?"
+    break 
+    case 4
+      message="Save...please wait"
+    break
+    case 5
+      message="F7 to mark,F8 to OK"
+    break 
+    case 6
+      message="Current selection"
+    break 
+    case 7
+      message="OK"
+    break 
+    case 8
+      message="Back"
+    break 
+    case 9
+      message="No edit home file!"
+    break 
+    case 10
+      message="Choose robot mount type"
+    break 
+    case 11
+      message="Flor"
+    break 
+    case 12
+      message="Ceiling"
+    break 
+    case 13
+      message="Limit setting"
+    break 
+    case 14
+      message="Tolerance Setting"
+    break 
+    case 15
+      message="Select Tool"
+    break 
+    case 16
+      message="The way to Safe Area"
+    break 
+    case 17
+      message="Tcp back"
+    break 
+    case 18
+      message="Tcp back to"
+    break 
+    case 19
+      message="Mannuing setting"
+    break 
+    case 20
+      message="Max"
+    break 
+    case 21
+      message="Min"
+    break 
+    case 22
+      message="lower limit"
+    break 
+    case 23
+      message="upper limit"
+    break 
+    case 24
+      message="Use the mark point for guide  data-base?"
+    break 
+    case 25
+      message="Please type value:"
+    break 
+    case 26
+      message="Choose the robot mount type:"
+    break 
+    case 27
+      message="Complex Area setting-Guide-1"
+    break 
+    case 28
+      message="Complex Area setting-Guide-2"
+    break 
+    case 29
+      message="Complex Area setting-Guide-3"
+    break 
+    case 30
+      message="Complex Area setting-Guide-4"
+    break
+    case 31
+      message="Complex Area setting-Guide-5"
+    break 
+    case 32
+      message="Complex Area setting-Guide-6"
+    break 
+    case 33
+      message="Complex Area setting-Guide-7"
+    break 
+    case 34
+      message="Move up to Coordinate-Z :"
+    break 
+    case 35
+      message="TCP(Z-):"
+    break 
+    case 36
+      message="TCP(Z-) to Coordinate-Z:"
+    break 
+    case 37
+      message="Select Current gun:"
+    break 
+    case 38
+      message="Out of limit!!"
+    break 
+    case 39
+      message="safe back pts"
+    break 
+    case 40
+      message="Use current positon to recocd the point?"
+    break 
+    case 41
+      message="Are you sure to delete the selection?"
+    break 
+    case 42
+      message="safe back points Editor"
+    break 
+    case 43
+      message="go Home points Editor"
+    break 
+    case 44
+      message="home "
+    break 
+    case 45
+      message="moveL"
+    break 
+    case 46
+      message="moveJ"
+    break 
+    case 47
+     message="Use current positon to recocd the jHome?"
+    break 
+    case 48
+     message="Are you sure to delete the selection?"
+    break 
+    case 49
+      message="Simple Area setting-Guide-1"
+    break 
+    case 50
+      message="Simple Area setting-Guide-2"
+    break
+    case 51
+      message="Cannot reach to taget positon"
+    break 
+    case 52
+      message="Current selected"
+    break 
+    case 53
+      message="Edit file"
+    break
+    case 54
+      message="Use different Tool in selected file"
+    break
+    case 55
+      message="The robot is in#Complex area "
+    break
+    case 56 
+      message=" ."
+    break 
+    case 57
+      message="Search... Identify robot position"
+    break 
+    case 58
+      message="The robot is already in home postion!"
+    break 
+    case 59
+      message="No setting file"
+    break 
+    case 60
+      message="Test Homing Simution..."
+    break 
+    case 61
+      message="AREA TYPE Editor"
+    break 
+    case 62
+      message="Coordinate limit setting"
+    break 
+    case 63
+      message="Joint limit setting"
+    break 
+    case 64
+      message="SIMPLE AREA setting-Guide"
+    break 
+    case 65
+      message="Type minimum value"
+    break 
+    case 66
+      message="Type maximal value"
+    break 
+    case 67
+      message="Unrecognized Area ,stop go home"
+    break 
+    case 68
+      message="Currnet robot is in#SIMPLE AREA "
+    break
+    case 69
+      message="SIMPLE AREA setting-Guide-1"
+    break 
+    case 70
+      message="SIMPLE AREA setting-Guide-2"
+    break 
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

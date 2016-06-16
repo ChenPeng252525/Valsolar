@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  // INIT
+  call onStart(l_nResult)
+  //
+  //
+  if trajType:bStepping
+    if l_nResult==0
+      // LOOP UNTIL nKey=255
+      do
+        //
+        nKey=getKey()
+        // REFRESH
+        call refresh()
+        //
+        switch nKey
+          case 271 ,264
+            // previous
+            call onF1Event()
+          break
+          case 272
+            // actual
+            call onF2Event()
+          break
+          case 273 ,268
+            // next
+            call onF3Event()
+          break
+          case 274
+            call onF4Event()
+          break
+          case 275
+            call onF5Event()
+          break
+          case 276
+            call onF6Event()
+          break
+          case 277,255
+            call onF7Event()
+          break
+          case 278
+            call onF8Event()
+          break
+          case 270
+            call onEnterEvent()
+          break
+        endSwitch
+        // release
+        delay(0)
+      until nKey==255
+      // on Exit
+      call onExit()
+    else
+      //
+      // check
+      //
+      popUpMsg("ERROR..: "+toString("",l_nResult))
+      logMsg("ERROR loading, "+toString("",l_nResult))
+    endIf
+    //
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

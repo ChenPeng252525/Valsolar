@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="showMessage" access="private" >
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="1" />
+      <Local name="l_bTollerance" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  bShowMessage=false
+  // look for the esStatus
+  if esStatus()==2
+    call language:message(l_sMessage,222)
+  elseIf cycleStatus:bCycle or cycleStatus:bSimulation
+    //
+    // PRIORITY
+    //
+    // 1) GO TO MANUAL IF OUTSIDE JOINT SECURE ZONE
+    // 2) GO TO AUTO MODE OR PRESS RESTART
+    // 3) CONNECTION MOVE 
+    // 4) PRESS RESTART
+    // 5) POWER ON
+    // 6) PRESS MOVE HOLD
+    // 7) JOINT / WORLD / TOOL
+    // check the tollerance
+    call cycleStatus:checkTollerance(l_bTollerance)
+    //
+    if !l_bTollerance and (cycleStatus:nWorkingMode==4 or cycleStatus:nWorkingMode==3) and cycleStatus:bPause
+      // ASK to GO manual to continue the connection movement
+      call language:message(l_sMessage,92)
+      call language:message(l_sMessage2,145)
+      l_sMessage=l_sMessage+"#"+l_sMessage2
+    elseIf l_bTollerance and cycleStatus:nWorkingMode==1 and cycleStatus:bPause
+      // ASK TO GO TO AUTO MODE AND PRESS RESTART
+      call language:message(l_sMessage,200)
+      call language:message(l_sMessage2,144)
+      l_sMessage=l_sMessage+"#"+l_sMessage2
+    elseIf cycleStatus:nWorkingStatus==1 and cycleStatus:nWorkingMode!=3 and cycleStatus:nWorkingMode!=4 and isPowered() and cycleStatus:bPause
+      // connection movement
+      call language:message(l_sMessage,145)
+    elseIf cycleStatus:bPause and l_bTollerance
+      //and(cycleStatus:nWorkingMode==3 or cycleStatus:nWorkingMode==4)
+      // press restart to continue
+      call language:message(l_sMessage,144)
+    elseIf (cycleStatus:nWorkingMode!=4 and !isPowered())
+      // POWER ON
+      call language:message(l_sMessage,201)
+    elseIf cycleStatus:nWorkingMode==4 and cycleStatus:nWorkingStatus==2 and !isPowered()
+      // settling the power...
+      call language:message(l_sMessage,146)
+      call use:timerDialog(l_sMessage,0.2)
+      if watch(cycleStatus:nWorkingStatus!=2,2)
+        // exit
+        return
+      endIf
+    elseIf (cycleStatus:nWorkingStatus!=0)
+      if isEmpty()
+        // PRESS MOVE HOLD
+        call language:message(l_sMessage,130)
+      else
+        // PRESS MOVE HOLD
+        call language:message(l_sMessage,203)
+      endIf
+      // MANUAL MODE 
+      if cycleStatus:nWorkingMode==1
+        switch cycleStatus:nWorkingStatus
+          case 2
+            // JOINT
+            call language:message(l_sMessage,140)
+          break
+          case 3
+            // WORLD
+            call language:message(l_sMessage,141)
+          break
+          case 4
+            // TOOL
+            call language:message(l_sMessage,142)
+          break
+          case 5
+            // POINT
+            call language:message(l_sMessage,143)
+          break
+        endSwitch
+      endIf
+    endIf
+  endIf
+  // show message
+  if l_sMessage!=""
+    bShowMessage=true
+    call use:timerDialog(l_sMessage,0.1)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

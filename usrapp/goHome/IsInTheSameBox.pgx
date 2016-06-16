@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="IsInTheSameBox">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bFindInBox1" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_sLodaBox1" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_bInBox1" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nNum" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_nNum=1
+  resize(nInWhichBox,1,1)
+  nInWhichBox=-1
+  for i=0 to size(x_bFindInBox1)-1
+    if x_bFindInBox1[i]==true
+      x_bInBox1=true
+      if nInWhichBox[size(nInWhichBox)-1]==-1
+        nInWhichBox=i
+      else
+        $dins(nInWhichBox,size(nInWhichBox))
+        nInWhichBox[size(nInWhichBox)-1]=i
+      endIf
+    endIf
+  endFor
+  if size(nInWhichBox)==1
+    x_sLodaBox1=sBox1[nInWhichBox]
+  else
+    call findInWhichBox1(x_sLodaBox1)
+  endIf
+
+end]]></Code>
+  </Program>
+</Programs>

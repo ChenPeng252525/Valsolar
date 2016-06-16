@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_fNewWorld" type="frame" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // load the default gun
+  if !cycleStatus:bCycle
+    call tcp:getSize(l_nSize)
+    if saveData:nIndexTool>=l_nSize
+      // BAD GUN INDEX load default ZERO
+      saveData:nIndexTool=0
+    endIf
+    // get the tool 
+    call tcp:getTool(saveData:tTool,saveData:nIndexTool)
+    fFrame.trsf=saveData:fFrameItem[saveData:nFrameActive].fFrame.trsf
+    $jogContext(saveData:tTool,fFrame,0)
+  endIf
+  //
+  // logMsg
+  logMsg("[KERNEL] INTERFACE:PAGE Advance")
+  //
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

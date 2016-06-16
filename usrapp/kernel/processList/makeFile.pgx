@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="makeFile" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_sFill" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check if the cycle is not running
+  if cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+    // scan all the processList
+    for i=0 to 2
+      call getSize(l_nSize[i],i)
+    endFor
+    // check if the process List is empty
+    if l_nSize[1]==0
+      // show message
+      call language:message(l_sMessage,91)
+      popUpMsg(l_sMessage)
+      // came back
+      return
+    endIf
+    // scan it
+    for l_nType=0 to 2
+      //
+      // init
+      l_sEmpty=""
+      call use:stringCopy(l_sEmpty,prog:sWrite)
+      //
+      switch l_nType
+        case 0
+          // START PROCESS LIST
+          // open the file
+          nFile=$fileOpen("start.txt","w")
+        break
+        case 1
+          // PROCESS LIST
+          // open the file
+          nFile=$fileOpen("production.txt","w")
+        break
+        case 2
+          // END PROCESS LIST
+          // open the file
+          nFile=$fileOpen("end.txt","w")
+        break
+      endSwitch
+      // scan all the program
+      if l_nSize[l_nType]>0
+        for i=0 to (l_nSize[l_nType]-1)
+          // get the cycle
+          l_nID=0
+          call getCycle(l_sProg,l_nID,l_nID,i,l_nType)
+          // scan the system and save the process List
+          // add the program name
+          insert(prog:sWrite[0])
+          insert(prog:sWrite[0])
+          insert(prog:sWrite[0])
+          // insert the program NAME
+          for j=0 to len(l_sProg)-1
+            l_sFill=l_sFill+"═"
+          endFor
+          prog:sWrite[0]="╔═════"+l_sFill+"╗"
+          prog:sWrite[1]="║PROG "+l_sProg+"║"
+          prog:sWrite[2]="╚═════"+l_sFill+"╝"
+          // scan the program
+          call use:timerDialog("Scanning the program: "+l_sProg+"# please wait...",0)
+          l_nID=3
+          call prog:scanning(l_sProg,0,l_nID,true)
+          // write to the file
+          $fileSet(nFile,prog:sWrite,size(prog:sWrite))
+          // reset the sWrite buffer
+          l_sEmpty=""
+          call use:stringCopy(l_sEmpty,prog:sWrite)
+          l_sFill=""
+        endFor
+        // save the file
+        $fileClose(nFile)
+      endIf
+    endFor
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

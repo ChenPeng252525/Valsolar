@@ -1,0 +1,949 @@
++---------------------------------------------------------------+
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+|                                                               |
+| Item configuration listing                                    |
+|                                                               |
++---------------------------------------------------------------+
+| COMPANY = Molex
+| DATE    = Thu May 26 09:32:05 2016
+| VERSION = 3.0.0
+=======
+| Item configuration listing                                    |
++---------------------------------------------------------------+
+| COMPANY = Molex
+| DATE    = Tuesday, September 02, 2014 At 10:50
+| VERSION = 4.0 Build 20
+| CONFIGURATION NAME = BJHC
+| BOARD LOCATION = LAN TCP/IP
+>>>>>>> Valsolar
++---------------------------------------------------------------+
+
+----------------------------------------------------------------
+[000] Local DP Slave
+       ---------------------------------------------------------
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+       Input  =   24 byte(s)                      Offset  Size
+       ---------------------------------------------------------
+       Slave module                                  0     24
+       ---------------------------------------------------------
+
+       Output =   24 byte(s)                      Offset  Size
+       ---------------------------------------------------------
+       Slave module                                  0     24
+=======
+       Input  =   20 byte(s)                      Offset  Size
+       ---------------------------------------------------------
+       Slave module                                  0     20
+       ---------------------------------------------------------
+
+       Output =   20 byte(s)                      Offset  Size
+       ---------------------------------------------------------
+       Slave module                                  0     20
+>>>>>>> Valsolar
+
+----------------------------------------------------------------
+
+=================================================================
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+Total Input         = 24  Byte(s)
+Total Output        = 24  Byte(s)
+=======
+Total Input         = 20  Byte(s)
+Total Output        = 20  Byte(s)
+>>>>>>> Valsolar
+=================================================================
+
+  <Equipment 0 >
+    TOPIC NAME     = TOPIC1_A
+    REFRESH PERIOD = 200
+
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+    <ITEM NAME = BLOCKA_IX0 >
+      SYNTAX          = %I0
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX1 >
+      SYNTAX          = %I1
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX2 >
+      SYNTAX          = %I2
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX3 >
+      SYNTAX          = %I3
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX4 >
+      SYNTAX          = %I4
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX5 >
+      SYNTAX          = %I5
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX6 >
+      SYNTAX          = %I6
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX7 >
+      SYNTAX          = %I7
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX8 >
+      SYNTAX          = %I8
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX9 >
+      SYNTAX          = %I9
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX10 >
+      SYNTAX          = %I10
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX11 >
+      SYNTAX          = %I11
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX12 >
+      SYNTAX          = %I12
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX13 >
+      SYNTAX          = %I13
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX14 >
+      SYNTAX          = %I14
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX15 >
+      SYNTAX          = %I15
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX16 >
+      SYNTAX          = %I16
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX17 >
+      SYNTAX          = %I17
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX18 >
+      SYNTAX          = %I18
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX19 >
+      SYNTAX          = %I19
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX20 >
+      SYNTAX          = %I20
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX21 >
+      SYNTAX          = %I21
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX22 >
+      SYNTAX          = %I22
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX23 >
+      SYNTAX          = %I23
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX24 >
+      SYNTAX          = %I24
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX25 >
+      SYNTAX          = %I25
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX26 >
+      SYNTAX          = %I26
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX27 >
+      SYNTAX          = %I27
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX28 >
+      SYNTAX          = %I28
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX29 >
+      SYNTAX          = %I29
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX30 >
+      SYNTAX          = %I30
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX31 >
+      SYNTAX          = %I31
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX32 >
+      SYNTAX          = %I32
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX33 >
+      SYNTAX          = %I33
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX34 >
+      SYNTAX          = %I34
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX35 >
+      SYNTAX          = %I35
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX36 >
+      SYNTAX          = %I36
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX37 >
+      SYNTAX          = %I37
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX38 >
+      SYNTAX          = %I38
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX39 >
+      SYNTAX          = %I39
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX40 >
+      SYNTAX          = %I40
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX41 >
+      SYNTAX          = %I41
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX42 >
+      SYNTAX          = %I42
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX43 >
+      SYNTAX          = %I43
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX44 >
+      SYNTAX          = %I44
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX45 >
+      SYNTAX          = %I45
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX46 >
+      SYNTAX          = %I46
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX47 >
+      SYNTAX          = %I47
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX48 >
+      SYNTAX          = %I48
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX49 >
+      SYNTAX          = %I49
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX50 >
+      SYNTAX          = %I50
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX51 >
+      SYNTAX          = %I51
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX52 >
+      SYNTAX          = %I52
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX53 >
+      SYNTAX          = %I53
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX54 >
+      SYNTAX          = %I54
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX55 >
+      SYNTAX          = %I55
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX56 >
+      SYNTAX          = %I56
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX57 >
+      SYNTAX          = %I57
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX58 >
+      SYNTAX          = %I58
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX59 >
+      SYNTAX          = %I59
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX60 >
+      SYNTAX          = %I60
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX61 >
+      SYNTAX          = %I61
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX62 >
+      SYNTAX          = %I62
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_IX63 >
+      SYNTAX          = %I63
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Input bit
+
+    <ITEM NAME = BLOCKA_QX0 >
+      SYNTAX          = %Q0
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX1 >
+      SYNTAX          = %Q1
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX2 >
+      SYNTAX          = %Q2
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX3 >
+      SYNTAX          = %Q3
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX4 >
+      SYNTAX          = %Q4
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX5 >
+      SYNTAX          = %Q5
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX6 >
+      SYNTAX          = %Q6
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX7 >
+      SYNTAX          = %Q7
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX8 >
+      SYNTAX          = %Q8
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX9 >
+      SYNTAX          = %Q9
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX10 >
+      SYNTAX          = %Q10
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX11 >
+      SYNTAX          = %Q11
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX12 >
+      SYNTAX          = %Q12
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX13 >
+      SYNTAX          = %Q13
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX14 >
+      SYNTAX          = %Q14
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX15 >
+      SYNTAX          = %Q15
+      OFFSET / MODULE = 1
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX16 >
+      SYNTAX          = %Q16
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX17 >
+      SYNTAX          = %Q17
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX18 >
+      SYNTAX          = %Q18
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX19 >
+      SYNTAX          = %Q19
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX20 >
+      SYNTAX          = %Q20
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX21 >
+      SYNTAX          = %Q21
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX22 >
+      SYNTAX          = %Q22
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX23 >
+      SYNTAX          = %Q23
+      OFFSET / MODULE = 2
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX24 >
+      SYNTAX          = %Q24
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX25 >
+      SYNTAX          = %Q25
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX26 >
+      SYNTAX          = %Q26
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX27 >
+      SYNTAX          = %Q27
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX28 >
+      SYNTAX          = %Q28
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX29 >
+      SYNTAX          = %Q29
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX30 >
+      SYNTAX          = %Q30
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX31 >
+      SYNTAX          = %Q31
+      OFFSET / MODULE = 3
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX32 >
+      SYNTAX          = %Q32
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX33 >
+      SYNTAX          = %Q33
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX34 >
+      SYNTAX          = %Q34
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX35 >
+      SYNTAX          = %Q35
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX36 >
+      SYNTAX          = %Q36
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX37 >
+      SYNTAX          = %Q37
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX38 >
+      SYNTAX          = %Q38
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX39 >
+      SYNTAX          = %Q39
+      OFFSET / MODULE = 4
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX40 >
+      SYNTAX          = %Q40
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX41 >
+      SYNTAX          = %Q41
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX42 >
+      SYNTAX          = %Q42
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX43 >
+      SYNTAX          = %Q43
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX44 >
+      SYNTAX          = %Q44
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX45 >
+      SYNTAX          = %Q45
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX46 >
+      SYNTAX          = %Q46
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX47 >
+      SYNTAX          = %Q47
+      OFFSET / MODULE = 5
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX48 >
+      SYNTAX          = %Q48
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX49 >
+      SYNTAX          = %Q49
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX50 >
+      SYNTAX          = %Q50
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX51 >
+      SYNTAX          = %Q51
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX52 >
+      SYNTAX          = %Q52
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX53 >
+      SYNTAX          = %Q53
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX54 >
+      SYNTAX          = %Q54
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX55 >
+      SYNTAX          = %Q55
+      OFFSET / MODULE = 6
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX56 >
+      SYNTAX          = %Q56
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX57 >
+      SYNTAX          = %Q57
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 1
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX58 >
+      SYNTAX          = %Q58
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 2
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX59 >
+      SYNTAX          = %Q59
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 3
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX60 >
+      SYNTAX          = %Q60
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 4
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX61 >
+      SYNTAX          = %Q61
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 5
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX62 >
+      SYNTAX          = %Q62
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 6
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_QX63 >
+      SYNTAX          = %Q63
+      OFFSET / MODULE = 7
+      BIT IN THE BYTE = 7
+      DATA TYPE       = Output bit
+
+    <ITEM NAME = BLOCKA_IW8 >
+      SYNTAX          = %IW8
+      OFFSET / MODULE = 8
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW9 >
+      SYNTAX          = %IW10
+      OFFSET / MODULE = 10
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW10 >
+      SYNTAX          = %IW12
+      OFFSET / MODULE = 12
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW11 >
+      SYNTAX          = %IW14
+      OFFSET / MODULE = 14
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW12 >
+      SYNTAX          = %IW16
+      OFFSET / MODULE = 16
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW13 >
+      SYNTAX          = %IW18
+      OFFSET / MODULE = 18
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW14 >
+      SYNTAX          = %IW20
+      OFFSET / MODULE = 20
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_IW15 >
+      SYNTAX          = %IW22
+      OFFSET / MODULE = 22
+      DATA TYPE       = Input word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW8 >
+      SYNTAX          = %QW8
+      OFFSET / MODULE = 8
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW9 >
+      SYNTAX          = %QW10
+      OFFSET / MODULE = 10
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW10 >
+      SYNTAX          = %QW12
+      OFFSET / MODULE = 12
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW11 >
+      SYNTAX          = %QW14
+      OFFSET / MODULE = 14
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW12 >
+      SYNTAX          = %QW16
+      OFFSET / MODULE = 16
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW13 >
+      SYNTAX          = %QW18
+      OFFSET / MODULE = 18
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW14 >
+      SYNTAX          = %QW20
+      OFFSET / MODULE = 20
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QW15 >
+      SYNTAX          = %QW22
+      OFFSET / MODULE = 22
+      DATA TYPE       = Output word
+      FORMAT          = Default
+      DEADBAND        = 0
+=======
+    <ITEM NAME = BLOCKA_IB4_16 >
+      SYNTAX          = %IB4:16
+      OFFSET / MODULE = 4
+      DATA TYPE       = Array of 16 input bytes
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QB4_16 >
+      SYNTAX          = %QB4:16
+      OFFSET / MODULE = 4
+      DATA TYPE       = Array of 16 output bytes
+      FORMAT          = Default
+      DEADBAND        = 0
+    <ITEM NAME = BLOCKA_QX0_32 >
+      SYNTAX          = %Q0:32
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Array of 32 output bits
+
+    <ITEM NAME = BLOCKA_IX0_32 >
+      SYNTAX          = %I0:32
+      OFFSET / MODULE = 0
+      BIT IN THE BYTE = 0
+      DATA TYPE       = Array of 32 input bits
+>>>>>>> Valsolar

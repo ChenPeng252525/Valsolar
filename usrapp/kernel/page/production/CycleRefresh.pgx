@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="CycleRefresh">
+    <Locals>
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPointView" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="Trajectory" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // set SIZE LIST
+  if !bLarge
+    // one HALF right
+    call use:setSizeList(19,0,19,10)
+  elseIf cycleStatus:bTraj
+    // one HALF LEFT
+    call use:setSizeList(0,0,18,10)
+  else
+    // FULL
+    call use:setSizeList(0,0,38,10)
+  endIf
+  // POINT LIST
+  call usePoint:setSizeList(19,0,19,10)
+  // check the update
+  if bTraj!=cycleStatus:bTraj
+    bTraj=cycleStatus:bTraj
+    use:bUseRefresh=true
+  endIf
+  // PROGRAM
+  if use:bUseRefresh or(sProgName!=cycleStatus:pCycleProg.sID)
+    // get the name
+    sProgName=cycleStatus:pCycleProg.sID
+    // build the program list and build the list
+    call printScreen()
+    call refreshProg(cycleStatus:pCycleProg)
+    // show the list
+    nEvent=cycleStatus:nEvent
+    use:nView=nEvent%use:nBottomY
+    call use:listupdate(nEvent-use:nView)
+    bRefreshPoint=true
+    // CHECK THE LINE NUMBER
+  elseIf nEvent!=cycleStatus:nEvent
+    nEvent=cycleStatus:nEvent
+    if use:nView>=nEvent%use:nBottomY
+      // refresh the list
+      use:nView=nEvent%use:nBottomY
+      call use:listupdate(nEvent-use:nView)
+    else
+      // just the line
+      call use:listcursor(use:nView,false)
+      call use:listcursor(nEvent%use:nBottomY,true)
+    endIf
+  endIf
+  // TRAJECTORY
+  if cycleStatus:bTraj
+    // get the first trajectory
+    call cycleStatus:getTraj(l_tTraj)
+    if l_tTraj.sID!="null" and l_tTraj.sID!=""
+      if use:bUseRefresh or bRefreshPoint or sTrajName!=l_tTraj.sID
+        //
+        // rebuilt the Traj list
+        //
+        call refreshPoints(l_tTraj)
+        nPoint=cycleStatus:nPoint
+        l_nPointView=nPointLine[nPoint]
+        usePoint:nView=l_nPointView%usePoint:nBottomY
+        //        if bRefreshPoint
+        //          bRefreshPoint=false
+        //          call usePoint:listupdate(l_nPointView-usePoint:nView)
+        //        else
+        call usePoint:listupdate(l_nPointView-usePoint:nView)
+        //        endIf
+      else
+        // just the line
+        if nPoint!=cycleStatus:nPoint
+          nPoint=cycleStatus:nPoint
+          l_nPointView=nPointLine[nPoint]
+          if usePoint:nView>=l_nPointView%usePoint:nBottomY
+            // update the list
+            usePoint:nView=l_nPointView%usePoint:nBottomY
+            call usePoint:listupdate(l_nPointView-usePoint:nView)
+          else
+            //just the line
+            call usePoint:listcursor(usePoint:nView,false)
+            usePoint:nView=l_nPointView%usePoint:nBottomY
+            call usePoint:listcursor(usePoint:nView,true)
+          endIf
+        endIf
+      endIf
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

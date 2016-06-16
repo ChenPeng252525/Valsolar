@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setPointFrame">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_trsfFrame" type="trsf" xsi:type="array" use="reference" />
+      <Parameter name="x_pO" type="point" xsi:type="element" use="reference" />
+      <Parameter name="x_pX" type="point" xsi:type="element" use="reference" />
+      <Parameter name="x_pY" type="point" xsi:type="element" use="reference" />
+      <Parameter name="x_nDimension" type="num" xsi:type="element" use="reference" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="3" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="8" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_bUnreachable" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nDimension" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nDistanceX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistanceY" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nOldLine" type="num" xsi:type="array" size="1" />
+      <Local name="l_jPoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_bGoto" type="bool" xsi:type="array" size="1" />
+      <Local name="l_tNull" type="trsf" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Change the Frame associate to the Trajectory
+  //
+  cls()
+  //
+  // copy from saveData
+  //
+  pPoints[0]=x_pO
+  pPoints[1]=x_pX
+  pPoints[2]=x_pY
+  // use the flange
+  l_tTool=flange
+  //  call tcp:getTool(l_tTool,jEditPoint.nIndexTool)
+  l_nDimension=x_nDimension
+  //release the button
+  call use:nullKey(nKey)
+  //
+  do
+    call language:message(l_sMessage,150)
+    // here
+    call language:message(l_sMessage[1],167)
+    // put the menu
+    call use:typeMenu(1,l_sMessage)
+    call use:typeMenu(2,l_sMessage[1])
+    // validate
+    call use:typeMenu(8,"OK")
+    // show the here and the edit button
+    call use:setSizeList(21,2,17,5)
+    // for the title
+    switch x_nType
+      case 1
+        l_sMessage[2]="BOX"
+      break
+      case 3
+        l_sMessage[2]="PLANE"
+      break
+    endSwitch
+    call use:listcreate(l_sMessage[2])
+    //origin
+    call language:message(l_sMessage,198)
+    // pos. X
+    call language:message(l_sMessage[1],199)
+    l_sMessage[1]=l_sMessage[1]+" X"
+    // pos. Y
+    call language:message(l_sMessage[2],199)
+    l_sMessage[2]=l_sMessage[2]+" Y"
+    call use:listadd(l_sMessage)
+    if x_nType==1
+      // height for the BOX
+      call language:message(l_sMessage[2],224)
+      l_sMessage[2]=l_sMessage[2]+"> "+toString("",l_nDimension)
+      call use:listadd(l_sMessage[2])
+    endIf
+    call use:listupdate(0)
+    // get the key
+    nKey=getKey()
+    l_sEmpty=""
+    call use:listevent(nKey,l_nResult,l_sEvent)
+    // 
+    if l_nResult!=l_nOldLine or nKey==270
+      l_bGoto=true
+      l_nOldLine=l_nResult
+      if !cycleStatus:bCycle and !cycleStatus:bSimulation
+        resetMotion()
+      endIf
+    else
+      l_bGoto=false
+    endIf
+    switch l_nResult
+      case 0
+        // take the Origin
+        if pointToJoint(l_tTool,herej(),pPoints[0],l_jPoint) and cycleStatus:nWorkingMode==1 and l_bGoto
+          movej(pPoints[0],l_tTool,{25,25,25,9999,9999,off,50,50})
+        endIf
+        // the key has been pressed
+        if nKey==271
+          pPoints[0]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,3,l_sMessage)
+        elseIf nKey==272 or nKey==270
+          call language:message(l_sMessage,198)
+          call page_changeTrsf(pPoints[0].trsf,l_sMessage,"",false,l_nStep,"",world)
+          cls()
+        endIf
+      break
+      case 1
+        //take the X Point
+        if pointToJoint(l_tTool,herej(),pPoints[1],l_jPoint) and cycleStatus:nWorkingMode==1 and l_bGoto
+          movej(pPoints[1],l_tTool,{25,25,25,9999,9999,off,50,50})
+        endIf
+        // key pressure
+        if nKey==271
+          pPoints[1]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,4,l_sMessage)
+        elseIf nKey==272 or nKey==270
+          call language:message(l_sMessage,199)
+          call page_changeTrsf(pPoints[1].trsf,l_sMessage+" X","",false,l_nStep,"",world)
+          cls()
+        endIf
+      break
+      case 2
+        // take the Y Point
+        if pointToJoint(l_tTool,herej(),pPoints[2],l_jPoint) and cycleStatus:nWorkingMode==1 and l_bGoto
+          movej(pPoints[2],l_tTool,{25,25,25,9999,9999,off,50,50})
+        endIf
+        // key pressure
+        if nKey==271
+          pPoints[2]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,5,l_sMessage)
+        elseIf nKey==272 or nKey==270
+          call language:message(l_sMessage,199)
+          call page_changeTrsf(pPoints[2].trsf,l_sMessage+" Y","",false,l_nStep,"",world)
+          cls()
+        endIf
+      break
+      case 3
+        // modify the Height
+        if nKey==270
+          l_nStep=find(l_sEvent,">")
+          // clean the line
+          call use:listcursor(use:nView,false)
+          call use:changeValue(l_nDimension,0,0,l_nStep+1+2+use:nTopX,use:nView+use:nTopY+1,l_sEmpty)
+        endIf
+      break
+    endSwitch
+    use:nView=l_nResult
+    // check the zone
+    if setFrame(pPoints[0],pPoints[1],pPoints[2],fSetFrame)==0
+      call checkZone(pPoints,l_tTool,l_nDimension,x_nType,l_bCheck)
+      // show the result
+      if l_bCheck
+        // inside the zone
+        call language:message(l_sMessage,225)
+      else
+        //outside the zone
+        call language:message(l_sMessage,226)
+      endIf
+      call use:typeLen(1,11,l_sMessage,39)
+    else
+      // frame not define
+      call language:message(l_sMessage,183)
+    endIf
+  until nKey==278 or nKey==255
+  // check the result
+  if nKey==278
+    // set the frame
+    if setFrame(pPoints[0],pPoints[1],pPoints[2],fSetFrame)==0
+      x_trsfFrame=fSetFrame.trsf
+      // copy back to save DATA
+      x_pO=pPoints[0]
+      x_pX=pPoints[1]
+      x_pY=pPoints[2]
+      x_nDimension=l_nDimension
+      //
+    else
+      call language:message(l_sMessage,183)
+      popUpMsg(l_sMessage+toString("",setFrame(pPoints[0],pPoints[1],pPoints[2],fSetFrame)))
+    endIf
+  endIf
+  //release the button
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

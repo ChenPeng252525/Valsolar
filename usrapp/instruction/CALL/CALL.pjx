@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="find.pgx" />
+    <Program file="get.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="getType.pgx" />
+    <Program file="load.pgx" />
+    <Program file="loadIt.pgx" />
+    <Program file="onEdit.pgx" />
+    <Program file="onInsert.pgx" />
+    <Program file="onProgEnd.pgx" />
+    <Program file="onRun.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="onStop.pgx" />
+  </Programs>
+  <Database>
+    <Data file="CALL.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="extCall0" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall1" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall2" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall3" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall4" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall5" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall6" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall7" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall8" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall9" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall10" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall11" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall12" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall13" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall14" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall15" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall16" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall17" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall18" path="Disk://..//templates/call/call.pjx" />
+    <Library alias="extCall19" path="Disk://..//templates/call/call.pjx" />
+  </Libraries>
+</Project>

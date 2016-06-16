@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English PALLET message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //           
+  switch index
+    case 0
+      message="cambiar todos los acercamientos"
+    break
+    case 1
+      message="cambiar todos los alejamientos"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="Velocidad"
+    break
+    case 3
+      message="Acercamiento"
+    break
+    case 4
+      message="Alejamiento"
+    break
+    case 5
+      message="Velocidad Acer"
+    break   
+    case 6
+      message="Velocidad Alej"
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="Llegar al PUNTO acercamiento..."
+    break
+    case 8
+      message="Llegar al PUNTO..."
+    break
+    case 9
+      message="Llegar al PUNTO alejamiento..."
+    break
+    case 10
+      message="Llegar al punto zona exterior "
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="posicin "
+    break
+    case 12
+      message="pos.  X  "
+    break
+    case 13
+      message="pos.  Y  "
+    break
+    case 14
+      message="pos.  Z  "
+    break
+    case 15
+      message="en el camino"
+    break
+    case 16
+      message="Seleccionar"
+    break
+    case 17
+      message="Pulse F1 para seleccionar la Herramienta#F8 para continuar con la de defecto: "
+    break
+    case 18
+      message="Cuantas lneas en X? "
+    break
+    case 19
+      message="Cuantas lneas en Y? "
+    break
+    case 20
+      message="Cuantas lneas en Z? "
+    break
+    case 21
+      message="Cul es el acercamiento? [mm] "
+    break
+    case 22
+      message="Cul es el alejamiento? [mm] "
+    break
+    case 23
+      message="Cul es la velocidad de acercamiento? [mm/sec] "
+    break
+    case 24
+      message="Cul es la velocidad de alejamiento? [mm/sec] "
+    break
+    case 25
+      message="Quiere un movimiento lineal al punto? "
+    break
+    case 26
+      message="Insertar la primera Instruccin,pulse:#F1 para seleccionar instruccin# F2 TCP-> ON # F3 TCP-> OFF # F8 fin ..."
+    break
+    case 27
+      message="Insertar la segunda Instruccin,pulse:#F1 para continuar sin introducir#F8 para seleccionar"
+    break
+    case 28
+      message="Cul es la velocidad? [%]"
+    break
+    case 29
+      message="Cul es la velocidad? [mm/sec]"
+    break
+    case 30
+      message="- Editar para modificar el punto  "
+    break
+    case 31
+      message="Do you want to validate the last modification ?"
+    break
+    case 32
+      message="Error while computing the frame check your points again"
+    break
+    //
+    case 40
+      message="Acercamiento"
+    break
+    case 41
+      message="Alejamiento"
+    break
+    case 42
+      message="Herramienta y punto referencia (z-)"
+    break
+    case 43
+      message="Stop Time"
+    break
+  endSwitch
+end   ]]></Code>
+  </Program>
+</Programs>

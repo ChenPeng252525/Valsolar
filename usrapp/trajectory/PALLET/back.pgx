@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="back" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the value
+  call getPalletPos(x_sItem,l_nValue)
+  call getSizePallet(x_sItem,l_nSize)
+  // set the value -1
+  if l_nValue>0
+    call setPalletPos(x_sItem,l_nValue-1)
+  else
+    call setPalletPos(x_sItem,l_nSize-1)
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

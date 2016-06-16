@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSizeList" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItemList" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  x_sItem=""
+  call getSize(l_nSizeList)
+  l_nSize=0
+  //
+  // create the list
+  //
+  call use:setSizeList(10,0,28,11)
+  call use:listcreate("OUTPUT ")
+  // insert in the list
+  for i=0 to l_nSizeList-1
+    call out:get(l_sItem,i)
+    call out:isActive(l_bActive,l_sItem)
+    if l_bActive
+      // insert into the list
+      call out:getItem(l_sName,l_sItem)
+      l_sItemList=l_sItem+" {"+l_sName+"}"
+      call use:listadd(l_sItemList)
+    endIf
+  endFor
+  call use:listredraw(min(l_nIndex-use:nView,0))
+  // display the actual item
+  call getType(l_sType)
+  l_sItem=l_sType
+  call use:clear(0,13)
+  call language:message(l_sMessage,63)
+  call use:typeCenter(13,l_sMessage,40,false)
+  do
+    l_nKey=get()
+    // get one output from the list
+    call use:listevent(l_nKey,l_nIndex,l_sItem)
+    if l_nKey==255
+      return
+    endIf
+  until l_nKey==270
+  // insert the pulse
+  call use:insertDialog("DELAY [Sec] ",l_nValue,0,100)
+  if !use:bUseEscape
+    //
+    // insert the sentence
+    //
+    if l_sItem==""
+      return
+    else
+      l_sItem=left(l_sItem,find(l_sItem,"{")-1)
+    endIf
+    // return the value
+    x_sItem="OUT "+l_sItem+">ON,"+toString(".2",l_nValue)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

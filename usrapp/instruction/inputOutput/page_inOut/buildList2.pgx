@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList2">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nViewMode" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sField" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // get the size
+  call NUM:getSize(l_nSize)
+  // Build the list
+  for i=0 to l_nSize-1
+    call NUM:get(l_sItem,i)
+    call saveInOut:getItem_num(l_sName,l_sItem)
+    call NUM:isActive(l_bActive,l_sItem)
+    if l_bActive
+      call saveInOut:getValue_num(l_nValue,l_sItem)
+      // COUNTING
+      call listAdd("["+toString("3",l_nValue)+"] "+l_sItem+" {"+l_sName+"}")
+    endIf
+  endFor
+  // rebuild the list
+  call use:listempty()
+  call use:listadd(sList)
+end]]></Code>
+  </Program>
+</Programs>

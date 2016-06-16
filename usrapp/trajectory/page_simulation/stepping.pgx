@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="stepping">
+    <Locals>
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // ENABLE STEPPING
+  //
+  bStepping=true
+  call use:clear(0,13)
+  call use:typeMenu(7,"STOP")
+  // wait the start
+  wait((cycleStatus:bSimulation and !isEmpty()) or nKey==255 or nKey==277)
+  // look if the key STEP has been pressed
+  if nKey!=255 or nKey!=277
+    // find one
+    if cycleStatus:bSimulation and !isEmpty()
+      // go stepping
+      call cycleStatus:getLastId(l_nId)
+      do
+        nKey=getKey()
+        delay(0)
+        // wait the ID stepping
+      until ((getMoveId()>=l_nId-0.015+1) or nKey==255 or nKey==277 or !cycleStatus:bSimulation)
+      // stepping is finished
+      bStepping=false
+      // STOP CYCLE
+      if cycleStatus:bSimulation
+        call stopCycle()
+      endIf
+      bShowMessage=false
+      //
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

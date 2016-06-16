@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="printToShow">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Print the instruction
+  //
+  if !bPage
+    call use:typeLen(0,12,cycleStatus:sToShow,40)
+  endIf
+  // print the bar
+  if !cycleStatus:bSimulation
+    //
+    //
+    // set the view of the page..
+    //
+    // SET THE PAGE NUMBER
+    use:nPage=20
+    // USE <>PROFILE for <>PAGE
+    use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+    if cycleStatus:bCycle
+      use:nPage=use:nPage+3
+    endIf
+    // load the menu page
+    if saveData:language!="japanese"
+      // SET THE VIEW OF THE PAGE
+      call language:page(l_sMessage,use:nPage)
+      // define the menu
+      call use:stringToArray(l_sMessage,sMenu)
+    else
+      // japanese use the array for the menu
+      call language:page(sMenu8,use:nPage)
+      call use:stringCopy(sMenu8,sMenu)
+    endIf
+    // set the HOME button as no button if not need
+    if cycleStatus:bCycle or cycleStatus:bIsHome
+      sMenu[0]=""
+    endIf
+    // if the action list is show do not use the first 4 button
+    if bPage
+      for i=0 to size(sMenu)-1
+        sMenu[i]=""
+      endFor
+      sMenu="Export"
+    endIf
+    call use:setMenu(sMenu,true,-1)
+    call use:getMenu(sMenu,bButton)
+    //
+    // print to video the Process List-Pause-END-STOP
+    //
+    // START END
+    bButton[6]=true
+    if !cycleStatus:bCycle
+      if cycleStatus:bIsHome or saveData:bNoUseHome
+        call use:type(31,13,"START")
+        bButton[6]=true
+      endIf
+    else
+      bButton[5]=true
+      // PAUSE
+      if !cycleStatus:bPause
+        call use:type(24,13,"  PAUSE")
+      else
+        call use:type(24,13,"RESTART")
+      endIf
+      call use:type(31,13," STOP ")
+      bButton[6]=true
+    endIf
+    if cycleStatus:bCycle and !cycleStatus:bEnding
+      bButton[7]=true
+      call use:type(37,13,"END")
+    else
+      bButton[7]=false
+      call use:type(37,13,"   ")
+    endIf
+  endIf
+  // show the trajectory status
+  if cycleStatus:bTraj and !bPage
+    // show the trajectory status
+    call usePoint:scroll(usePoint:nBottomX,usePoint:nBottomY+1,40-usePoint:nBottomX-2,cycleStatus:nIdPercentage)
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

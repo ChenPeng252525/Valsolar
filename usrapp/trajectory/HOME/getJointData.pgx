@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getJointData" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_jJoint" type="joint" xsi:type="element" use="reference" />
+      <Parameter name="x_tTool" type="tool" xsi:type="element" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sComment" type="string" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPointTo" type="point" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //  
+  //   !!! REMOVE DUE PROBLEMS of CROSS LINK
+  //  
+  //   get the comment type
+  //    if x_bCycle
+  //      l_sComment=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.comment
+  //    else
+  //      l_sComment=jEditPoint.tData[x_nIndex].tSuper.comment
+  //    endIf
+  //    if find(l_sComment,"@POINT")!=-1
+  //      //
+  //      // POINT
+  //      //
+  //      l_sName=right(l_sComment,len(l_sComment)-len("@POINT "))
+  //      call loadPoint(l_sName,l_nResult)
+  //      if l_nResult==0
+  //        // use the flange
+  //        x_tTool=flange
+  //        // get the tool
+  //        //call tcp:getTool(x_tTool,pPoint:tTraj[l_sName].nIndexTool)
+  //        // get the last point using the depart point
+  //        l_nSize=size(pPoint:tTraj[l_sName].tData)
+  //        // find the point use the real one
+  //        for i=0 to l_nSize-1
+  //          l_nType=pPoint:tTraj[l_sName].tData[i].nType
+  //          if l_nType==1
+  //            // get the real point
+  //            l_pPointTo=pPoint:tTraj[l_sName].tData[i].pPoint
+  //          endIf
+  //        endFor
+  //        // take the DEPART
+  //        l_pPoint=pPoint:tTraj[l_sName].tData[l_nSize-1].pPoint
+  //        l_pPoint=appro(l_pPointTo,l_pPoint.trsf)
+  //        // give back
+  //        pointToJoint(x_tTool,herej(),l_pPoint,x_jJoint)
+  //      endIf
+  //    elseIf find(l_sComment,"@JPOINT")!=-1
+  //      //
+  //      // JPOINT
+  //      //
+  //      l_sName=right(l_sComment,len(l_sComment)-len("@JPOINT "))
+  //      call loadJoint(l_sName,l_nResult)
+  //      if l_nResult==0
+  //        // use the flange
+  //        x_tTool=flange
+  //        // give back
+  //        //call tcp:getTool(x_tTool,jPoint:tTraj[l_sName].nIndexTool)
+  //        x_jJoint=jPoint:tTraj[l_sName].tData[0].jJoint
+  //      endIf
+  //    else
+  // give back
+  // use the flange
+  x_tTool=flange
+  if x_bCycle
+    x_jJoint=pt:tTraj[sTrajCycle].tData[x_nIndex].jJoint
+    //      call tcp:getTool(x_tTool,pt:tTraj[sTrajCycle].nIndexTool)
+  else
+    x_jJoint=jEditPoint.tData[x_nIndex].jJoint
+    //      call tcp:getTool(x_tTool,jEditPoint.nIndexTool)
+  endIf
+  //endIf
+  if l_nResult!=0
+    // remove the link    
+    jEditPoint.tData[x_nIndex].tSuper.comment=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

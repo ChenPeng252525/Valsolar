@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="main" access="public" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="sButton" type="string" xsi:type="array" size="3" />
+      <Local name="sItems" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  call onStart()
+  do
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    nSelected=nIndex
+    //
+    // OVERRIDE NORMAL FUNCTIONALITY-> POLYMORPHISM
+    //
+    switch nKey
+      case 264
+        // left
+        call onLeftEvent()
+      break
+      case 268
+        // right
+        call onRightEvent()
+      break
+      case 271
+        // test
+        call onF1Event()
+      break
+      case 272
+        // 
+        call onF2Event()
+      break
+      case 273
+        call onF3Event()
+      break
+      case 274
+        call onF4Event()
+      break
+      case 275
+        // 
+        call onF5Event()
+      break
+      case 276
+        // set type
+        call onF6Event()
+      break
+      case 277
+        // DELETE
+        call onF7Event()
+      break
+      case 278
+        // NEW
+        call onF8Event()
+        l_bSave=true
+      break
+      case 270
+        call onEnterEvent()
+      break
+    endSwitch
+    // release the resource
+    delay(0)
+  until nKey==255 and isKeyPressed(289)==false
+  // exit
+  call onExit(l_bSave)
+end]]></Code>
+  </Program>
+</Programs>

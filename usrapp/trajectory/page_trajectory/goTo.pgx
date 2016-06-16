@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="goTo">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_bUnreached" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItems" type="string" xsi:type="array" size="2" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check the cycle status
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    // check the working Mode
+    if cycleStatus:nWorkingMode==1 and isPowered()
+      // set the memory for the moveHold button
+      if cycleStatus:nWorkingStatus==6
+        bMoveRelease=true
+      endIf
+      // check for the index
+      if nOldIndex!=x_nIndex or (cycleStatus:nWorkingStatus!=0 and cycleStatus:nWorkingStatus!=6)
+        if !isEmpty()
+          resetMotion()
+        endIf
+        if nOldIndex!=x_nIndex
+          nOldIndex=x_nIndex
+        endIf
+      else
+        if isEmpty() and cycleStatus:nWorkingStatus==0 and bMoveRelease
+          bMoveRelease=false
+          cls()
+          // copy the item to the trajectory
+          l_sItems[0]=sEvent
+          // take the elements
+          call trajType:load(l_sItems,l_nResult)
+          call trajType:getSizeItem(false,l_nSize)
+          // MOVE
+          do
+            if x_nIndex>0
+              call use:typeMenu(7,"<<")
+            else
+              call use:typeMenu(7,"    ")
+            endIf
+            if x_nIndex<=l_nSize
+              call use:typeMenu(8,">>")
+            else
+              call use:typeMenu(8,"    ")
+            endIf
+            // get the data to move
+            call trajType:getTool(l_nIndexTool)
+            call tcp:getTool(l_tTool,l_nIndexTool)
+            call trajType:getTrajItem(l_tTraj,x_nIndex)
+            //
+            // use a sTemp mdesc to set the blend off
+            //
+            l_tTraj.nom_speed.blend=off
+            call trajType:goTo(l_tTool,l_tTraj.nom_speed,l_tTraj.moveType,x_bUnreached,x_nIndex)
+            // TO DO language
+            call use:timerDialog("Going to point: "+toString("",x_nIndex+1)+ " / "+toString("",l_nSize),0)
+            do 
+              l_nId=getKey()
+              call use:scroll(0,7,38,(getMoveId()-roundDown(getMoveId()))*100)
+              delay(0)
+            until isEmpty()or l_nId==255 or l_nId==277 or l_nId==278
+            // continue
+            if isEmpty() or (l_nId==278 and x_nIndex<l_nSize)
+              if isEmpty()
+                call use:timerDialog("At point: "+toString("",x_nIndex+1)+ " / "+toString("",l_nSize),1)
+              endIf
+              x_nIndex=x_nIndex+1
+            elseIf l_nId==277 and x_nIndex>0
+              // decrease
+              x_nIndex=x_nIndex-1
+            else
+              delay(1)
+            endIf
+            // release
+            resetMotion()    
+          until x_bUnreached or l_nId==255 or x_nIndex>=l_nSize or(x_nIndex==l_nSize and l_nSize==1)
+          // refresh
+          use:bUseRefresh=true
+        endIf
+      endIf
+    else
+      // reset the cycle
+      if cycleStatus:nWorkingMode!=1 or !isPowered()
+        resetMotion()
+      endIf
+    endIf
+  endIf
+  if l_nId==255
+    // release
+    call use:nullKey(l_nId)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

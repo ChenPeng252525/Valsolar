@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="find.pgx" />
+    <Program file="get.pgx" />
+    <Program file="getItem.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="getStatus.pgx" />
+    <Program file="insert.pgx" />
+    <Program file="isActive.pgx" />
+    <Program file="isEnable.pgx" />
+    <Program file="load.pgx" />
+    <Program file="onEdit.pgx" />
+    <Program file="onInsert.pgx" />
+    <Program file="onProgEnd.pgx" />
+    <Program file="onRun.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="onStop.pgx" />
+    <Program file="reset.pgx" />
+    <Program file="save.pgx" />
+    <Program file="setActive.pgx" />
+    <Program file="setEnable.pgx" />
+    <Program file="setItem.pgx" />
+    <Program file="stopRobot.pgx" />
+  </Programs>
+  <Database>
+    <Data file="IN.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="saveInOut" path="Disk://saveInputOutput/saveInputOutput.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="dioItem" path="Disk://kernel/template/dioItem/dioItem.pjx" />
+    <Type name="aioItem" path="Disk://kernel/template/aioItem/aioItem.pjx" />
+  </Types>
+</Project>

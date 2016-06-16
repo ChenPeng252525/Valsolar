@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="receive">
+    <Locals>
+      <Local name="l_nProg" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProgName" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bResult" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bRun" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_bLoaded" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //输入参考
+  //正常生产
+  if dInCycle==true and bError==false 
+    if esStatus()!=2 and !cycleStatus:bSimulation and cycleStatus:bIsHome and !cycleStatus:bCycle  and workingMode()==4
+      nProgCode=aioGet(aSelect)
+      call cycle_updateLst()
+      call cycle_searchPrg(nProgCode,sProgName,l_bFound)
+      if l_bFound
+        call cycle_clearList(1)
+        call cycle_putProg(sProgName,1)
+        call cycle_start() 
+        logMsg("开始程序-"+sProgName)
+        delay(1)
+      else
+        // no program in the process List
+        if workingMode()==1
+          call language:message(l_sMessage,91)
+          popUpMsg(l_sMessage)
+        endIf
+      endIf
+    endIf
+  endIf
+  
+  
+  //Pause
+  if cycleStatus:bCycle and !cycleStatus:bPause
+    if dInPauseCycle==true
+      logMsg("暂停程序-"+sProgName)
+      call OnEvent:pauseCycle()
+    endIf
+    //RESUME   
+  elseIf cycleStatus:bCycle and cycleStatus:bPause
+    if dInResumeCycle==true
+      logMsg("重启程序-"+sProgName)
+      call OnEvent:resumeCycle()
+    endIf
+  endIf
+  
+  if dIndisablepower==true
+    if workingMode()==4
+      disablePower()
+    endIf
+    endIf
+  
+  //停止生产
+  if dInPlcErr==true
+    bError=true
+    if cycleStatus:bCycle
+      logMsg("停止程序-"+sProgName)
+      call OnEvent:stopCycle()
+      cycleStatus:bToStop=true
+      call OnEvent:OnCycleEvent(5)
+      call language:message(l_sMessage,-84)
+      call use:timerDialog(l_sMessage,1)
+      watch(cycleStatus:bToStop==false,1)
+    if workingMode()==4
+      disablePower()
+    endIf
+      //      dOutGunOn=false 
+      //      dOutJobDone=false
+    endIf
+  else
+    bError=false
+  endIf
+  
+  if dInGohome==true
+    if cycleStatus:bIsHome==true
+      dOutGunOn=false
+      popUpMsg("123")
+    endIf 
+    if !isPowered() 
+      cycleStatus:bAutoON=true
+    endIf 
+    if watch(isPowered()==true,2)
+      call _resetProgram()
+    endIf 
+  else
+    call _HomeWatchDog() 
+  endIf
+  
+  if getMonitorSpeed()>=0 and getMonitorSpeed()<101
+  if getMonitorSpeed()!=aioGet(aSudu)
+    setProfile("Robot","")
+    setMonitorSpeed(aioGet(aSudu))
+    waitEndMove()
+    setProfile("maintenance","spec_cal")
+  endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

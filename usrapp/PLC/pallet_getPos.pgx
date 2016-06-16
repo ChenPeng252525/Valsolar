@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="pallet_getPos" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sPalletName" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nPos" type="num" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // get the actual position of the x_sPalletName
+  call pallet:getPalletPos(x_sPalletName,x_nPos)
+end]]></Code>
+  </Program>
+</Programs>

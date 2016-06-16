@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="init" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // setMutex
+  setMutex(cycleStatus:bMutex)
+  // START CYCLE
+  for i=0 to size(saveCycle:nDoneStart)-1
+    saveCycle:nDoneStart[i]=0
+  endFor
+  // PROCESS LIST
+  if saveCycle:bLoop
+    for i=0 to size(saveCycle:nDoneCycle)-1
+      saveCycle:nDoneCycle[i]=0
+    endFor
+  endIf
+  // END CYCLE
+  for i=0 to size(saveCycle:nDoneEnd)-1
+    saveCycle:nDoneEnd[i]=0
+  endFor
+  //release
+  cycleStatus:bMutex=false
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="initToSafePt">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_n" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_n=-9999
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.z>l_n and left(sml:box[x_sName].comment[i],1)=="#"
+      j=i
+    endIf
+  endFor
+  sml:box[x_sName].pToSafePt=sml:box[x_sName].pPointRx[j]
+end]]></Code>
+  </Program>
+</Programs>

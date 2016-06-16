@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bResult" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  bExit=false
+  nSelect=nIndex=nView=0
+  link(fFather,world)
+  // resetMotion
+  if !cycleStatus:bCycle
+    resetMotion()
+  endIf
+  //
+  // LOAD THE SELECT TRAJECTORY
+  //
+  // empty the userMenu
+  for i=0 to size(sMenuUser)-1
+    sMenuUser[i]=""
+  endFor
+  // load the type
+  call loadEditTraj(sItems)
+  // set the number
+  if size(sItems)>1
+    l_bOk=false
+    toNum(sItems[1],nSelect,l_bOk)
+  endIf
+  // logMsg
+  logMsg("[KERNEL] INTERFACE:PAGE view TRAJ")
+  //
+  // TOOL CONTEXT
+  //
+  call trajType:getTool(i)
+  call tcp:getSize(l_nSize)
+  if l_nSize>i
+    x_bResult=true
+    call tcp:getTool(saveData:tTool,i)
+    saveData:nIndexTool=i
+    call trajType:getFrameId(l_nIndex)
+    // make a backup of the last frame actived
+    nBackupFrame=saveData:nFrameActive
+    saveData:nFrameActive=l_nIndex
+    call trajType:getFrame(fFather,false)
+    // reset the Key pressure
+    call use:nullKey(nKey)
+    // define the list
+    call buildList()
+    nIndex=nSelect
+    // load the actual frame
+    $jogContext(saveData:tTool,fFather,0)
+  else
+    // gun not define
+    call language:message(l_sMessage,127)
+    call language:message(l_sMessage[1],128)
+    popUpMsg(l_sMessage+toString("2",i)+l_sMessage[1])
+    x_bResult=false
+  endIf
+  //
+  nOldIndex=-1
+end]]></Code>
+  </Program>
+</Programs>

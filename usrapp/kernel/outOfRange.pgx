@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="outOfRange" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPoint" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStackPoint" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTraj" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // find which trajectory and which point
+  wait(isSettled())
+  l_sTraj=cycleStatus:sTraj
+  //
+  l_nPoint=cycleStatus:nPoint
+  // call the onEvent
+  call OnEvent:OnCycleEvent(11)
+  // out of range
+  call language:message(l_sMessage,-5)
+  l_sMessage=l_sMessage+" "+l_sTraj+" POINT: "+toString("4",l_nPoint)
+  popUpMsg(l_sMessage)
+  logMsg("[KERNEL] trajectory:POINT OUT OF RANGE, "+l_sTraj+" POINT: "+toString("4",l_nPoint))
+  //
+end]]></Code>
+  </Program>
+</Programs>

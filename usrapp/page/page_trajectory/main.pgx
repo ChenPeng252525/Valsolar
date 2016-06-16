@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverRide" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //  // INIT
+    call onStart()
+  //  // LOOP UNTIL nKey=255
+  //  nIndexItem=0
+  do
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    nSelected=nIndex
+		data:nPage_Traj=nIndex
+    switch nKey
+      case 259
+        // TAB
+        bLarge=!bLarge
+      //  call use:setView()
+      break
+      case 263
+        // backSpace rename
+        //call onBackEvent(l_bSave)
+      break
+      case 32
+        // space to edit Action
+        //call onSpaceEvent()
+      break
+      case 271
+        call onF1Event()
+      break
+      case 272
+        //
+        call onF2Event()
+      break
+      case 273
+        // 
+        call onF3Event()
+      break
+      case 274
+        // 
+        call onF4Event()
+      break
+      case 275
+        // 
+        call onF5Event()
+      break
+      // 
+      case 276
+        call onF6Event()
+      break
+      case 277
+        // 
+        call onF7Event()
+      break
+      case 278
+        // 
+        call onF8Event()
+      break
+      case 270
+        // 
+        call onEnterEvent()
+      break
+    endSwitch
+    //    endIf
+    //    l_bOverRide=false
+    //    // release the resource
+        delay(0)
+    //    if nKey==255 and isKeyPressed(289)==true
+    //      call language:message(l_sMessage,143)
+    //      call use:timerDialog(l_sMessage,3)
+    //    endIf
+    if workingMode()!=1 
+      call use:timerDialog("请切换成手动模式",0)
+      wait(workingMode()==1)
+    endIf 
+  until nKey==255 and isKeyPressed(289)==false
+  use:bUseRefresh=true
+  //  // exit
+  //  call onExit(l_bSave)
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_mDesc" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_nTcpAction" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="false" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+      <Local name="l_bToStop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // Build the list
+  call trajType:getSizeItem(false,l_nSize)
+  for i=0 to l_nSize-1
+    if bLarge
+      // show the instruction 
+      l_bToStop=false
+      l_nZero=0
+      call trajType:getTrajItem(l_tTraj,i)
+      switch l_tTraj.nTcpAction
+        case 1
+          l_sInstruction="[ON],"
+        break
+        case 2
+          l_sInstruction="[OFF],"
+        break
+        default
+          l_sInstruction=""
+        break
+      endSwitch
+      // get all the action
+      l_sInstruction=l_sInstruction+l_tTraj.iInstr[0].sType+" "+l_tTraj.iInstr[0].sData
+      for j=1 to size(l_tTraj.iInstr)-1
+        l_sInstruction=l_sInstruction+","+l_tTraj.iInstr[j].sType+" "+l_tTraj.iInstr[j].sData
+      endFor
+      call use:typeLen(0,12,l_sInstruction,40)
+    else
+      call trajType:getTrajItem(l_tTraj,i)
+      l_sInstruction=l_tTraj.comment
+    endIf
+    // insert the line
+    call listAdd(toString("2",i+1)+" "+l_sInstruction)
+  endFor
+  // update
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

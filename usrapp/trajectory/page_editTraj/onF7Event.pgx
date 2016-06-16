@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF7Event" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_nItem" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    // insert 
+    l_nItem=nIndexItem
+    // insert the default value
+    call trajType:insertItem(nIndexItem,nIndexItem+1)
+    call trajType:getTrajItem(l_tTraj,nIndexItem)
+    l_tTraj.comment=""
+    l_tTraj.toStop=false
+    call trajType:setTrajItem(l_tTraj,nIndexItem+1)
+    nIndexItem=nIndexItem+1
+    // rebuild list
+    call buildList()
+    x_bSave=true
+    //refresh
+    call buildList()
+    use:bUseRefresh=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

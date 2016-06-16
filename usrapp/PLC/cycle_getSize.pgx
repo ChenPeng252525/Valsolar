@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_getSize" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nSize" type="num" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+      <Local name="sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // get the size of process list running
+  //
+  l_nID=0
+  call processList:getCycle(sName,l_nID,l_nID,0,x_nType)
+  // check if the name is not null
+  if sName!=""
+    call processList:getSize(x_nSize,x_nType)
+  else
+    x_nSize=0
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

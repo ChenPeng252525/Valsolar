@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="send">
+    <Code><![CDATA[begin
+  if 4==workingMode() and esStatus()!=2 and cycleStatus:bIsHome and !cycleStatus:bCycle
+    dOutRobIsReady=true
+  else
+    dOutRobIsReady=false
+  endIf
+  //检查机器是否在home位置
+  if cycleStatus:bIsHome
+    dOutRobInHome=true
+  else
+    dOutRobInHome=false
+  endIf
+  //检查机器人是否有生产程序在执行
+  if cycleStatus:bCycle
+    dOutRobCycle=true
+  else
+    dOutRobCycle=false
+  endIf
+
+  //急停触发
+  if esStatus()==2
+    dOutRobErr=true
+  else
+    dOutRobErr=false
+  endIf
+
+//机器人是否处于暂停状态
+  if cycleStatus:bPause==true
+		dOutPauseCycle=true
+	else
+    dOutPauseCycle=false
+  endIf
+  aioSet(aTime,cycleStatus:nCycleTime)
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="refresh" access="private" >
+    <Description><![CDATA[// page refresh]]></Description>
+    <Code><![CDATA[begin
+  if !use:bShowDialog and !cycleStatus:bShowMessage
+    //
+    // refresh the static message
+    if (nKey>=270 and nKey<=278) or (nKey==264 or nKey==268) or (use:bUseRefresh and !bShowStatus)
+      call refreshStatic()
+      call refreshDynamic()
+    else
+      if !bShowStatus
+        // refresh the Dynamic message
+        if abs(clock()-nRefresh)>nTime
+          call refreshDynamic()
+        endIf
+      endIf
+    endIf
+  endIf
+  //
+  call showStatus()
+end]]></Code>
+  </Program>
+</Programs>

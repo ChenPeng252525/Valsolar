@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF1Event">
+    <Locals>
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPath" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMode" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    //
+    //
+    // do not active the simulation if cycle is active
+    //
+    if !cycleStatus:bCycle
+      //
+      call language:message(l_sMessage,214)
+      // get the yes_no button Key
+      call language:getYesNo(l_sButton)
+      // ask the question 
+      call use:yes_no(l_sMessage,l_sButton,l_bYes)
+      if l_bYes
+        logMsg("[KERNEL] INTERFACE:Simulation of the program: "+sEvent)
+        cycleStatus:iToSuperV.sType=sProgType
+        cycleStatus:iToSuperV.sData=sEvent
+        cycleStatus:nInterfaceToSV=2
+        wait(cycleStatus:nInterfaceToSV==-1)
+        // load the production page
+        l_sMode="simulation"
+        call loadPage("kernel/page/production",l_sMode)
+        call use:setView(false)
+        // logMsg
+        logMsg("[KERNEL] INTERFACE:PAGE Select program")
+      endIf
+    endIf
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onRun" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // PROG NAME x_sItem
+  // SET THE CALL SUB..
+  cycleStatus:bCALL=true
+  if x_sItem!=""
+    cycleStatus:iToSuperV.sType="PROG"
+    cycleStatus:iToSuperV.sData=x_sItem
+  endIf
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

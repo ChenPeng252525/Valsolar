@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sOrigin" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_iItem" type="InstrItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    //
+    // insert a new field
+    //
+    if nIndex<0 or sEvent==""
+      l_nIndex=0
+    else
+      //
+      // insert a new field after
+      //
+      l_nIndex=nIndex+1
+    endIf
+    // show the list
+    call use:setSizeList(14,0,12,11)
+    call use:setView(false)
+    call use:listcreate("")
+    call use:clear(0,13)
+    call language:message(l_sMessage,66)
+    call use:type(0,13,l_sMessage)
+    if saveData:sProgTypeUsing=="PROG"
+      call use:listadd(saveData:sInstr)
+    elseIf saveData:sProgTypeUsing=="SUB"
+      // remove
+      for i=0 to size(saveData:sInstrOnPoint)-1
+        l_sItem=saveData:sInstrOnPoint[i]
+        if l_sItem!="SUB"
+          call use:listadd(l_sItem)
+        endIf
+      endFor
+    endIf
+    // update with the last select
+    use:nView=nViewItem
+    call use:listupdate(nIndexItem-nViewItem)
+    l_sItem=""
+    do
+      i=get()
+      call use:listevent(i,nIndexItem,l_sItem)
+    until i==255 or i==270
+    nViewItem=use:nView
+    l_iItem.sType=l_sItem
+    //
+    // load the instruction
+    if l_sItem!="" and i==270
+      call saveData:getPathInstr(l_sItem,l_sPath)
+      l_nResult=events:libLoad(l_sPath)
+      delay(0)
+      if l_nResult==0
+        //
+        call events:onInsert(l_iItem.sData)
+        use:bUseEscape=false
+        // insert the item
+        if l_iItem.sData!=""
+          call prog:insertItem(l_iItem,l_nIndex)
+          nSelected=nSelected+1
+          x_bSave=true
+          logMsg("[KERNEL] INTERFACE:Insert new item: "+l_sItem)
+          i=size(saveData:sInstr)-1
+        endIf
+      else
+        logMsg("[KERNEL] INTERFACE:Error loading "+l_sItem+" error "+toString("",l_nResult))
+      endIf
+    endIf
+    // rebuild the list
+    use:nView=nView
+    call buildList()
+    call loadTemplate()
+  endIf
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

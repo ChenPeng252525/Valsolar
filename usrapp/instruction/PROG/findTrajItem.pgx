@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="findTrajItem">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_iItem" type="InstrItem" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSizeItem" type="num" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+      <Local name="l_bnFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sSession" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // scan all the trajectory
+  for i=0 to size(saveData:sTrajType)-1
+    call saveData:getPathInstr(saveData:sTrajType[i],l_sPath)
+    // TRAJECTORY
+    l_nResult=TrajItem:libLoad(l_sPath)
+    delay(0)
+    if l_nResult==0
+      call TrajItem:getSize(l_nSize)
+      for j=0 to l_nSize-1
+        // load the trajectory
+        call TrajItem:get(l_sItem,j)
+        call saveData:getSession(l_sSession)
+        // SHOW THE trajectory name
+        l_sMessage="SESSION:"+l_sSession+">"+saveData:sTrajType[i]+" "+l_sItem
+        call use:typeLen(1,5,l_sMessage,38)
+        call TrajItem:load(l_sItem,x_nResult)
+        if x_nResult==0
+          call TrajItem:getSizeItem(false,l_nSizeItem)
+          // scan for the action
+          for k=0 to l_nSizeItem-1
+            // get the item
+            call TrajItem:getTrajItem(l_tTraj,k)
+            // scan deeper for all the action
+            for z=0 to size(l_tTraj.iInstr)-1
+              // look inside
+              l_bFound=(l_tTraj.iInstr[z].sType==x_iItem.sType and(l_tTraj.iInstr[z].sData==x_iItem.sData or find(l_tTraj.iInstr[z].sData,x_iItem.sData+">")!=-1))
+              // use nested items
+              l_bFound=l_bFound or find(l_tTraj.iInstr[z].sType+" "+l_tTraj.iInstr[z].sData,x_iItem.sData)!=-1
+              // FOUND IT
+              if l_bFound
+                x_nResult=-1
+                call language:message(l_sMessage,23)
+                popUpMsg(l_sMessage+x_iItem.sType+" "+x_iItem.sData+chr(10)+"SESSION:"+l_sSession+chr(10)+saveData:sTrajType[i]+" "+l_sItem+" > "+l_tTraj.iInstr[z].sType+" "+l_tTraj.iInstr[z].sData)
+                // back
+                return
+              endIf
+            endFor
+          endFor
+        else
+          popUpMsg("error loading...SESSION:"+l_sSession+">"+saveData:sTrajType[i]+" "+l_sItem+" error "+toString("",x_nResult))
+        endIf
+      endFor
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

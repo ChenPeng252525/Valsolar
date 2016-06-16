@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="isStopped" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bBool" type="bool" xsi:type="element" use="reference" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  if workingMode()!=4
+    logMsg("机器人有报警,循环停止")
+    return
+  endIf
+  
+  if io:dInStop==true
+    logMsg("机器人程序停止")
+    return
+  endIf
+  
+  
+end]]></Code>
+  </Program>
+</Programs>

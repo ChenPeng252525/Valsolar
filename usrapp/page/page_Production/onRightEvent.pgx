@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRightEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  //
+//  // right click
+//  //
+//  if x_bSave
+//    x_bSave=false
+//    l_sEmpty=""
+//    l_nResult=0
+//    call trajType:onSave(l_sEmpty)
+//    // show the message
+//    call language:message(l_sMessage,-4)
+//    call use:timerDialog(l_sMessage,1)
+//  endIf
+//  // select the next one
+//  do
+//    nType=(nType+1)%(size(saveData:sTrajType))
+//    saveData:sTrajTypeUsing=saveData:sTrajType[nType]
+//    if saveData:sTrajType[nType]!=""
+//      // find the good id
+//      if saveData:sTrajType[nType]!=""
+//        call saveData:getPathInstr(saveData:sTrajType[nType],l_sPath)
+//      endIf
+//    endIf
+//  until saveData:sTrajType[nType]!=""
+//  // load the type
+//  if trajType:libPath()!=l_sPath and l_sPath!=""
+//    i=trajType:libLoad(l_sPath)
+//    delay(0)
+//  endIf
+//  if l_sPath==""
+//    popUpMsg("error load traj type on ENTER "+saveData:sTrajTypeUsing+toString("",i))
+//  endIf
+//  // clean the user MENU
+//  call cleanUserMenu()
+//  // rebuild the list
+//  call buildList()
+end]]></Code>
+  </Program>
+</Programs>

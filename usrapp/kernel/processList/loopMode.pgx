@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="loopMode" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="sSwapLoad" type="string" xsi:type="array" size="1" />
+      <Local name="nSwapTotal" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //  set the process list after one cycle done
+  //
+  //  the variable loadProg has to not be minus than 1 items
+  //  THIS IS THE NO LOOP CODE
+  //
+  if !saveCycle:bLoop
+    //
+    call delete(0,1)
+  else
+    //
+    //  LOOP MODE
+    //
+    call getSize(l_nSize,1)
+    if cycleStatus:nProg<l_nSize-1
+      // continue
+      cycleStatus:nProg=cycleStatus:nProg+1
+    else
+      // REINIT
+      for i=0 to l_nSize-1
+        saveCycle:nDoneCycle[i]=0
+      endFor
+      cycleStatus:nProg=0
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

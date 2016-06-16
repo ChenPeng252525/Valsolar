@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_autoON" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bResult" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bTollerance" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nClock" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // look first if is in remote mode then
+  // look if it is in mode automatic and the power is ON
+  //
+  x_bResult=false
+  //
+  //  CHECK FOR STATUS MODE
+  //
+  // look for the remote status NB check jPowerDown
+  if workingMode()==4
+    // check tollerance
+    call cycleStatus:checkTollerance(l_bTollerance)
+    if (!isPowered() and !l_bTollerance and cycleStatus:bPause)
+      logMsg("[KERNEL] CYCLE:Error on Tollerance check during AUTO ON")
+    elseIf isPowered()==false and esStatus()!=2 and cycleStatus:nWorkingMode!=2
+      // enable auto connect move
+      autoConnectMove(true)
+      // VAL3 ?? unknow
+      x_bResult=true
+      // power it
+      enablePower()
+      delay(1)
+      watch((isPowered()==true or esStatus()==2),3)
+      if esStatus()==2
+        return
+      endIf
+    endIf
+  elseIf workingMode()!=3
+    // put the robot in AUTO MODE
+    call language:message(l_sMessage,200)
+    // look fot the auto mode
+    call use:timerDialog(l_sMessage,2)
+  elseIf workingMode()==3 and !isPowered()
+    // pu the power ON
+    call language:message(l_sMessage,201)
+    l_nClock=clock()
+    do
+      call use:timerDialog(l_sMessage,0.5)
+    until (clock()-l_nClock)>5 or getKey()==255 or esStatus()==2
+    if isPowered()==false
+      return
+    endIf
+  endIf
+  // it's ok give it back
+  if esStatus()!=2 and ((workingMode()==3 or workingMode()==4) and isPowered())
+    x_bResult=true
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

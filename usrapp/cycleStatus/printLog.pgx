@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="printLog" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sMessage" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check the size after is 200 clear it and keep the first 50
+  setMutex(bLogMutex)
+  // do it
+  if size(sLog)>=200
+    // clean it
+    delete(sLog[0])
+  endIf
+  // add one
+  if sLog!=""
+    insert(sLog[size(sLog)])
+  endIf
+  // write it
+  sLog[size(sLog)-1]=x_sMessage
+  //release
+  bLogMutex=false
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="page_changeTrsf" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTrsf" type="trsf" xsi:type="array" use="reference" />
+      <Parameter name="x_bUseFrame" type="bool" xsi:type="element" />
+      <Parameter name="x_bUseReset" type="bool" xsi:type="element" />
+      <Parameter name="x_sTitle" type="string" xsi:type="element" />
+      <Parameter name="x_sComment" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nFrame" type="num" xsi:type="array" size="1" />
+      <Local name="l_nView" type="num" xsi:type="array" size="1" />
+      <Local name="l_bRefresh" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bTest" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  logMsg("[KERNEL] INTERFACE:PAGE changeTrsf "+x_sTitle)
+  l_bRefresh=false
+  l_nFrame=0
+  l_nView=0
+  call use:setSizeList(19,0,19,8)
+  call use:setView(false)
+  l_tTrsf=x_tTrsf
+  //
+  do
+    cls()
+    call use:type(0,12,x_sComment)
+    call use:typeMenu(8,"OK")
+    if x_bUseReset
+      call language:message(l_sMessage,184)
+      call use:strfill(l_sMessage,5,l_sMessage)
+      call use:type(21,13,l_sMessage)
+    endIf
+    call use:listcreate(x_sTitle)
+    l_sItem="coord  X > "+toString(".3",l_tTrsf.x)
+    call use:listadd(l_sItem)
+    l_sItem="coord  Y > "+toString(".3",l_tTrsf.y)
+    call use:listadd(l_sItem)
+    l_sItem="coord  Z > "+toString(".3",l_tTrsf.z)
+    call use:listadd(l_sItem)
+    l_sItem="coord RX > "+toString(".3",l_tTrsf.rx)
+    call use:listadd(l_sItem)
+    l_sItem="coord RY > "+toString(".3",l_tTrsf.ry)
+    call use:listadd(l_sItem)
+    l_sItem="coord RZ > "+toString(".3",l_tTrsf.rz)
+    call use:listadd(l_sItem)
+    use:nView=l_nFrame
+    call use:listupdate(l_nFrame-l_nView)
+    do
+      l_nView=use:nView
+      l_nKey=get()
+      call use:listevent(l_nKey,l_nFrame,l_sEvent)
+      switch l_nKey
+        case 270
+          //
+          // clean the line
+          call use:listcursor(use:nView,false)
+          switch l_nFrame
+            case 0
+              //  x-value
+              call use:changeValue(l_tTrsf.x,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 1
+              //  y-value
+              call use:changeValue(l_tTrsf.y,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 2
+              //  z-value
+              call use:changeValue(l_tTrsf.z,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 3
+              //  rx-value
+              call use:changeValue(l_tTrsf.rx,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 4
+              //  ry-value
+              call use:changeValue(l_tTrsf.ry,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+            case 5
+              //  rz-value
+              call use:changeValue(l_tTrsf.rz,0,0,10+40-use:nBottomX,use:nView+1,l_sEmpty)
+            break
+          endSwitch
+          l_bRefresh=true
+        break
+        case 278
+          // VALIDATE
+          x_tTrsf=l_tTrsf
+        break
+        case 275
+          // RESET
+          if x_bUseReset
+            l_tTrsf={0,0,0,0,0,0}
+            l_bRefresh=true
+          endIf
+        break
+      endSwitch
+    until l_bRefresh==true or l_nKey==255 or l_nKey==278
+    l_bRefresh=false
+  until l_nKey==255 or l_nKey==278
+  // release the resource
+  call use:nullKey(l_nKey)
+  if !cycleStatus:bCycle and !cycleStatus:bSimulation
+    resetMotion()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

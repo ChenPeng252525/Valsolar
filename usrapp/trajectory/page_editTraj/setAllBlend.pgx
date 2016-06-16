@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setAllBlend" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nNewValue" type="num" xsi:type="element" />
+      <Parameter name="x_nOldValue" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check if is OK
+  if x_nNewValue!=x_nOldValue
+    // get the size
+    call trajType:getSizeItem(false,l_nSize)
+    for i=0 to (l_nSize-1)
+      // get it
+      call trajType:getTrajItem(l_tTraj,i)
+      // check it
+      if l_tTraj.nom_speed.leave==x_nOldValue or (l_tTraj.nom_speed.blend==off and x_nOldValue==-1)
+        if x_nNewValue<0
+          l_tTraj.nom_speed.blend=off
+        else
+          l_tTraj.nom_speed.leave=l_tTraj.nom_speed.reach=x_nNewValue
+          l_tTraj.nom_speed.blend=joint
+        endIf
+      endIf
+      // set it
+      call trajType:setTrajItem(l_tTraj,i)
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

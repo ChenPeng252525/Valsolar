@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nResult" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // clean the movement
+  if !isEmpty()
+    resetMotion()
+  endIf
+  nPoint=0
+  cls()
+  bStepping=false
+  // save the traj Name
+  sTrajName=sItems
+  // INIT the resource
+  use:bUseRefresh=true
+  // load all
+  call loadType(x_nResult)
+  //
+  // look if the trajType has the stepping enable
+  //
+  if trajType:bStepping
+    call loadEditTraj(sTrajName)
+    //
+    logMsg("[KERNEL] INTERFACE:PAGE Simulation")
+  else
+    // only start and return
+    call language:message(l_sMessage,214)
+    call language:getYesNo(l_sButton)
+    // ask the yes_no question
+    call use:yes_no(l_sMessage,l_sButton,l_bOk)
+    if l_bOk
+      cycleStatus:iToSuperV.sType=saveData:sTrajTypeUsing
+      cycleStatus:iToSuperV.sData=sTrajName
+      cycleStatus:nInterfaceToSV=3
+      logMsg("[KERNEL] INTERFACE:Simulation of the item: "+saveData:sTrajTypeUsing+" "+sTrajName)
+      wait(cycleStatus:nInterfaceToSV==-1)
+      // load the production page
+      l_sPage="kernel/page/production"
+      l_sItem="simulation"
+      call loadPage(l_sPage,l_sItem)
+      call use:setView(false)
+    endIf
+    x_nResult=99
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

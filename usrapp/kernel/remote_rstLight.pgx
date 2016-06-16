@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="remote_rstLight" access="private" >
+    <Code><![CDATA[begin
+  // START
+  if saveData:sOutStart!=""
+    if inOut:dOutput[saveData:sOutStart].bActive
+      inOut:dOutput[saveData:sOutStart].dDio=false
+    endIf
+  endIf
+  // STOP
+  if saveData:sOutStop!=""
+    if inOut:dOutput[saveData:sOutStop].bActive
+      inOut:dOutput[saveData:sOutStop].dDio=false
+    endIf
+  endIf
+  // END
+  if saveData:sOutEnd!=""
+    if inOut:dOutput[saveData:sOutEnd].bActive
+      inOut:dOutput[saveData:sOutEnd].dDio=false
+    endIf
+  endIf
+  // HOME
+  if saveData:sOutHome!=""
+    if inOut:dOutput[saveData:sOutHome].bActive
+      inOut:dOutput[saveData:sOutHome].dDio=false
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

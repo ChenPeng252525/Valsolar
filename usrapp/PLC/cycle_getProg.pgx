@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_getProg" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sName" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // get the programm name of the specific
+  // x_nIndex, return "" if there is an error
+  // x_nIndex start from 1 o N
+  //
+  if saveData:bDebug
+    ? "[KERNEL] PLC:Ask program name at index:"+toString("",x_nIndex)
+  endIf
+  call cycle_getSize(l_nSize,x_nType)
+  if x_nIndex<=l_nSize and x_nIndex>0
+    l_nID=0
+    call processList:getCycle(x_sName,l_nID,l_nID,x_nIndex-1,x_nType)
+  else
+    logMsg("[KERNEL] PLC: "+x_sName+" error on the index "+toString("",x_nIndex))
+    x_sName=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

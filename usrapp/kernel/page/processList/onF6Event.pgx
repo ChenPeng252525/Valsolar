@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF6Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[5]
+    //
+    //  Clear all the List
+    //
+    call processList:getDefaultType(l_nType)
+    logMsg("[KERNEL] INTERFACE:Clear the list")
+    call processList:deleteAll(l_nType)
+    if cycleStatus:bCycle
+      call language:message(l_sMessage,3)
+      popUpMsg(l_sMessage)
+    endIf
+    sEvent=""
+    nIndex=0
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

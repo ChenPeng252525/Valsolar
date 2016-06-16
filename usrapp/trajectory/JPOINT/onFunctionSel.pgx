@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onFunctionSel" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_sEvent" type="string" xsi:type="element" use="reference" />
+      <Parameter name="x_nFunctionKey" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_sString" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // do on Key action
+  //
+  // x_nIndex = actual index item
+  // x_sEvent = actual event item
+  //
+  l_nX=40-use:nBottomX-1
+  l_nY=use:nBottomY+1
+  switch x_nFunctionKey
+    // F1 button
+    case 271
+    break
+    // F2 button
+    case 272
+    break
+    // F3 button
+    case 273
+    break
+    // F4 button
+    case 274
+    break
+    // F5 button
+    case 275
+    break
+    // F6 button
+    case 276
+    break
+    // F7 button
+    case 277
+    break
+    // F8 button
+    case 278
+      //      call language:message(l_sString,21)
+      //      call use:type(l_nX,l_nY,l_sString)
+      //      // read the new trajectory
+      //      call use:read(l_nX+len(l_sString),l_nY,l_sName,10,false)
+      //      if !use:bUseEscape
+      //        // look if the items exist
+      //        if insert(pt:tTraj[l_sName])
+      //          call pt:link_it(l_sName)
+      //          pt:tTraj[l_sName].nIndexTool=saveData:nIndexTool
+      //          // save it
+      //          bToSave=true
+      //          // export
+      //          x_sEvent=l_sName
+      //        else
+      //          call language:message(l_sString,-2)
+      //          popUpMsg(l_sString)
+      //        endIf
+      //      endIf
+    break
+  endSwitch   
+end]]></Code>
+  </Program>
+</Programs>

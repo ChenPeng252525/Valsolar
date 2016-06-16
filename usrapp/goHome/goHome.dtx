@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="pRunBigPt" access="public" xsi:type="array" type="TrajBigBox" size="1">
+      <Value key="0">
+        <Field name="bJtEnabCheck" xsi:type="array" type="bool" size="6" />
+        <Field name="bMoveJHomeJoint" xsi:type="array" type="bool" size="1" />
+        <Field name="bPosEnabCheck" xsi:type="array" type="bool" size="3" />
+        <Field name="jToHome" xsi:type="array" type="jointRx" size="1" />
+        <Field name="nIndexGun" xsi:type="array" type="num" size="1" />
+        <Field name="nRobCtrlAreaNum" xsi:type="array" type="num" size="6" />
+        <Field name="nRobCtrlHJtsNum" xsi:type="array" type="num" size="12" />
+      </Value>
+    </Data>
+    <Data name="tTrajJoint" access="public" xsi:type="array" type="TrajJoint" size="1">
+      <Value key="0">
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1" />
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1" />
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="qwer" />
+        </Field>
+        <Field name="tData" xsi:type="array" type="TrajJointItem" size="2">
+          <Value key="0">
+            <Field name="jJoint" xsi:type="array" type="jointRx" size="1">
+              <Value key="0" j1="-15.581719" j2="14.249611" j3="85.047741" j5="80.702759" j6="3.379944" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1" />
+                <Field name="distance" xsi:type="array" type="num" size="1" />
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1" />
+                <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+                <Field name="nStop" xsi:type="array" type="num" size="1" />
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+                <Field name="nTime" xsi:type="array" type="num" size="1" />
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="9999" rmax="9999" leave="30" reach="30" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1" />
+              </Value>
+            </Field>
+          </Value>
+          <Value key="1">
+            <Field name="jJoint" xsi:type="array" type="jointRx" size="1">
+              <Value key="0" j1="21.410587" j2="14.249611" j3="85.047741" j5="80.702759" j6="3.379944" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1" />
+                <Field name="distance" xsi:type="array" type="num" size="1" />
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1" />
+                <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+                <Field name="nStop" xsi:type="array" type="num" size="1" />
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+                <Field name="nTime" xsi:type="array" type="num" size="1" />
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="9999" rmax="9999" leave="30" reach="30" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1" />
+              </Value>
+            </Field>
+          </Value>
+        </Field>
+      </Value>
+    </Data>
+    <Data name="pRunSmlPt" access="public" xsi:type="array" type="TrajSmallBox" size="1">
+      <Value key="0">
+        <Field name="bMountOnWall" xsi:type="array" type="bool" size="1" />
+        <Field name="bMoveJHomeJoint" xsi:type="array" type="bool" size="1" />
+        <Field name="bReverse_Tool_Z" xsi:type="array" type="bool" size="1" />
+        <Field name="comment" xsi:type="array" type="string" size="1" />
+        <Field name="jToHome" xsi:type="array" type="jointRx" size="1" />
+        <Field name="nIndexGun" xsi:type="array" type="num" size="1" />
+        <Field name="nKeySafeNum" xsi:type="array" type="num" size="6" />
+        <Field name="nRe_Tool_Z_Dits" xsi:type="array" type="num" size="1" />
+        <Field name="nRe_Tool_Z_WrdX" xsi:type="array" type="num" size="1" />
+        <Field name="nRe_Tool_Z_WrdY" xsi:type="array" type="num" size="1" />
+        <Field name="nRe_Tool_Z_WrdZ" xsi:type="array" type="num" size="1" />
+        <Field name="nToSafeFrmX" xsi:type="array" type="num" size="1" />
+        <Field name="nToSafeFrmY" xsi:type="array" type="num" size="1" />
+        <Field name="nToSafeFrmZ" xsi:type="array" type="num" size="1" />
+        <Field name="nToSafePtType" xsi:type="array" type="num" size="1" />
+        <Field name="nTolKeySafeNum" xsi:type="array" type="num" size="6" />
+        <Field name="pPointRx" xsi:type="array" type="pointRx" size="1" />
+        <Field name="pToSafePt" xsi:type="array" type="pointRx" size="1" />
+        <Field name="nToolType" xsi:type="array" type="num" size="1" />
+      </Value>
+    </Data>
+    <Data name="bWizard" access="public" xsi:type="array" type="bool" size="1" />
+    <Data name="pPointRx" access="public" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" x="539.985307" y="-152.401921" z="239.262224" rx="-0.000498" ry="179.999963" rz="-12.063425" fatherId="world[0]" />
+    </Data>
+    <Data name="tTool" access="private" xsi:type="array" type="tool" size="1">
+      <Value key="0" fatherId="flange[0]" ioLink="valve1" />
+    </Data>
+    <Data name="nSelected" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="sEvent" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sList" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="bRefresh" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="bSelected" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="nKey" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nIndex" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nView" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="sMessage" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sMenu" access="public" xsi:type="array" type="string" size="8" />
+    <Data name="nRefresh" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nTime" access="private" xsi:type="array" type="num" size="1">
+      <Value key="0" value="1" />
+    </Data>
+    <Data name="sTitle" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="nOldIndex" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nOldLine" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="bFaceA" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="sJointLimt" access="public" xsi:type="array" type="string" size="6" />
+    <Data name="sFrmRob" access="public" xsi:type="array" type="string" size="6" />
+    <Data name="bLocked" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="bFindInBox1" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="sHomingStatus" access="public" xsi:type="array" type="string" size="1" />
+    <Data name="sBox1" access="public" xsi:type="array" type="string" size="1" />
+    <Data name="sBox2" access="public" xsi:type="array" type="string" size="1" />
+    <Data name="mHomeSpd" access="public" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" accel="10" vel="10" decel="10" blend="off" />
+    </Data>
+    <Data name="nSign" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nCurrentUseType" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nInWhichBox" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nShortP2PDists" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nShortP2PAngle" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="bSetMax" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="tTraies" access="public" xsi:type="array" type="Traies" size="1">
+      <Value key="0">
+        <Field name="fFrame" xsi:type="array" type="frame" size="1" />
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1" />
+        <Field name="sID" xsi:type="array" type="string" size="1" />
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1" />
+        <Field name="tData" xsi:type="array" type="TrajItem" size="1">
+          <Value key="0">
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="distance" xsi:type="array" type="num" size="1" />
+                <Field name="moveType" xsi:type="array" type="num" size="1" />
+                <Field name="nTime" xsi:type="array" type="num" size="1" />
+                <Field name="nStop" xsi:type="array" type="num" size="1" />
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+                <Field name="comment" xsi:type="array" type="string" size="1" />
+                <Field name="toStop" xsi:type="array" type="bool" size="1" />
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" vel="450" tmax="1000" />
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="1">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="2">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+              </Value>
+            </Field>
+            <Field name="pPoint" xsi:type="array" type="pointRx" size="1" />
+            <Field name="nType" xsi:type="array" type="num" size="1" />
+            <Field name="pCircle" xsi:type="array" type="pointRx" size="1" />
+          </Value>
+        </Field>
+      </Value>
+    </Data>
+  </Datas>
+</Database>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="loadMarkData" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_sMarkList" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // x_sMarkList
+  
+  for i=0 to size(x_sMarkList)-1
+    if left(x_sMarkList[i],4)=="TRAJ"
+      l_sEvent=right(x_sMarkList[i],len(x_sMarkList[i])-5)
+      if isDefined(trajPt:tTraj[l_sEvent])
+        // use the type...
+        tTraies=trajPt:tTraj[l_sEvent]
+      endIf
+      l_nSize=size(tTraies.tData)
+      for j=0 to l_nSize-1
+        if l_nIndex!=0
+          insert(sml:box[x_sName].pPointRx[size(sml:box[x_sName].pPointRx)])
+          insert(sml:box[x_sName].comment[size(sml:box[x_sName].comment)])
+        endIf
+        l_pPoint=trajPt:tTraj[l_sEvent].tData[j].pPoint
+        pPointRx.trsf=position(l_pPoint,world)
+        link(sml:box[x_sName].pPointRx[l_nIndex],world)
+        sml:box[x_sName].pPointRx[l_nIndex].trsf=pPointRx.trsf
+        sml:box[x_sName].pPointRx[l_nIndex].config=l_pPoint.config
+        sml:box[x_sName].comment[l_nIndex]=trajPt:tTraj[l_sEvent].tData[j].tSuper.comment
+        l_nIndex=l_nIndex+1
+      endFor
+      if  sml:box[x_sName].nIndexGun!=tTraies.nIndexTool 
+        sml:box[x_sName].nIndexGun=tTraies.nIndexTool 
+      endIf 
+    endIf
+    if left(x_sMarkList[i],6)=="JPOINT"
+      l_sEvent=right(x_sMarkList[i],len(x_sMarkList[i])-7)
+      if isDefined(jPt:tTraj[l_sEvent])
+        // use the type...
+        tTrajJoint=jPt:tTraj[l_sEvent]
+      endIf
+      l_nSize=size(tTrajJoint.tData)
+      for j=0 to l_nSize-1
+        if l_nIndex!=0
+          insert(sml:box[x_sName].pPointRx[size(sml:box[x_sName].pPointRx)])
+          insert(sml:box[x_sName].comment[size(sml:box[x_sName].comment)])
+        endIf
+        l_pPoint=jointToPoint(tTool,world,jPt:tTraj[l_sEvent].tData[j].jJoint)
+        link(sml:box[x_sName].pPointRx[l_nIndex],world)
+        sml:box[x_sName].pPointRx[l_nIndex].trsf=l_pPoint.trsf
+        sml:box[x_sName].pPointRx[l_nIndex].config=l_pPoint.config
+        sml:box[x_sName].comment[l_nIndex]=jPt:tTraj[l_sEvent].tData[j].tSuper.comment
+        l_nIndex=l_nIndex+1
+      endFor
+      if  sml:box[x_sName].nIndexGun!=tTrajJoint.nIndexTool 
+        sml:box[x_sName].nIndexGun=tTrajJoint.nIndexTool 
+      endIf 
+    endIf
+  endFor
+  
+end]]></Code>
+  </Program>
+</Programs>

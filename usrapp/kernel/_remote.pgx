@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_remote" access="private" >
+    <Locals>
+      <Local name="bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_iProg" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="message" type="string" xsi:type="array" size="1" />
+      <Local name="sString" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  bActive=false
+  switch nRemoteID
+    case 0
+      // START
+      if taskStatus("Cycle")==-1
+        logMsg("[KERNEL] SUPERVISOR:REMOTE>Start cycle")
+        cycleStatus:bToStart=true
+      endIf
+      bActive=true
+    break
+    case 1
+      //STOP
+      cycleStatus:bToStop=true
+      bActive=true
+    break
+    case 2
+      //END CYCLE
+      if taskStatus("Cycle")!=-1
+        logMsg("[KERNEL] SUPERVISOR:REMOTE>End cycle")
+        cycleStatus:bToEnd=true
+      endIf
+      bActive=true
+    break
+    case 3
+      // HOME STRATEGY
+      if taskStatus("Cycle")==-1
+        logMsg("[KERNEL] SUPERVISOR:REMOTE>Home strategy")
+        cycleStatus:bToHome=true
+      endIf
+      bActive=true
+    break
+    case 4
+      // simulation of the program
+      l_iProg.sType="PROG"
+      l_iProg.sData=sRemoteID
+      call _startSimul(l_iProg)
+      logMsg("[KERNEL] SUPERVISOR:REMOTE>insert the program: "+sRemoteID)
+      bActive=true
+    break
+  endSwitch
+  if bActive
+    nRemoteID=-1
+    sRemoteID=""
+    if taskStatus("Interface")==0
+      taskResume("Interface",0)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

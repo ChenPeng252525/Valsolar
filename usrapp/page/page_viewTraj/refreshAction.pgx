@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshAction">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="3" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  //
+//  // INSTRUCTION
+//  //
+//  cls()
+//  // create a menu to edit the action
+//  call use:setSizeList(2,3,36,5)
+//  call use:setView(false)
+//  call use:listcreate(saveData:sTrajTypeUsing+" "+sTrajName+" "+" p. "+toString("",nIndex+1))
+//  // STOP
+//  call use:showBoolStatus(x_tTraj.toStop,l_sTemp)
+//  call language:message(l_sMessage,174)
+//  call use:strfill(l_sMessage,6,l_sMessage)
+//  l_sMessage=l_sMessage+l_sTemp
+//  if x_tTraj.toStop
+//    // STOP
+//    if round(x_tTraj.nStop)!=x_tTraj.nStop
+//      l_sTemp=toString(".2",x_tTraj.nStop)+" sec"
+//    else
+//      l_sTemp=toString("",x_tTraj.nStop)+" sec"
+//    endIf
+//  else
+//    // NO STOP
+//    l_sTemp=""
+//  endIf
+//  l_sMessage=l_sMessage+"> "+l_sTemp
+//  call use:listadd(l_sMessage)
+//  // TCP ON OFF
+//  call language:message(l_sMessage,124)
+//  call use:strfill(l_sMessage,6,l_sMessage)
+//  switch x_tTraj.nTcpAction
+//    case 1
+//      l_sTemp="[x]> ON "
+//    break
+//    case 2
+//      l_sTemp="[x]> OFF"
+//    break
+//    default
+//      l_sTemp="[ ]>    "
+//    break
+//  endSwitch
+//  // ADD to the list
+//  l_sMessage=l_sMessage+l_sTemp
+//  call use:listadd(l_sMessage)
+//  // insert all the 3 action
+//  for i=0 to size(x_tTraj.iInstr)-1
+//    call language:message(l_sMessage,176)
+//    l_sMessage=l_sMessage+toString("",i+1)+"> "+x_tTraj.iInstr[i].sType+x_tTraj.iInstr[i].sData
+//    call use:listadd(l_sMessage)
+//  endFor
+//  use:nView=x_nIndex
+//  call use:listupdate(0)
+//  // show the name
+//  call language:message(l_sMessage,21)
+//  l_sMessage=(l_sMessage+">"+x_tTraj.comment)
+//  call use:typeLen(0,12,l_sMessage,40)
+end]]></Code>
+  </Program>
+</Programs>

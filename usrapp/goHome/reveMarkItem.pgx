@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="reveMarkItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  for i=0 to size(sml:box[x_sName].comment)-1
+    if left(sml:box[x_sName].comment[i],1)!="#"
+      sml:box[x_sName].comment[i]="# "+sml:box[x_sName].comment[i]
+    else
+     sml:box[x_sName].comment[i]=right(sml:box[x_sName].comment[i],len(sml:box[x_sName].comment[i])-2)
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

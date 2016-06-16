@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setValue" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nValue" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_sItem" type="string" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  if find(x_sItem,"In")==-1
+    // set the data only for output
+    if isDefined(saveInOut:cCount[x_sItem])
+      saveInOut:cCount[x_sItem].nCount=x_nValue
+    elseIf isDefined(saveInOut:aCount[x_sItem])
+      aioSet(saveInOut:aCount[x_sItem].aAio,x_nValue)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

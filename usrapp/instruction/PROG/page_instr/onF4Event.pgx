@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF4Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[3]
+    // paste the items select
+    call prog:pasteItem(nIndex)
+    logMsg("[KERNEL] INTERFACE:Paste progs items")
+    call buildList()
+    x_bSave=true
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

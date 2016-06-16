@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3" >
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="Init.pgx" />
+  </Programs>
+  <Database>
+    <Data file="saveTrack.dtx" />
+  </Database>
+  <Libraries>
+  </Libraries>
+  <Types>
+  </Types>
+</Project>

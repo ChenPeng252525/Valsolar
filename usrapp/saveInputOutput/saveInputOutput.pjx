@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3" >
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="decompose_num.pgx" />
+    <Program file="decompose_wait.pgx" />
+    <Program file="getItem_num.pgx" />
+    <Program file="getSize_num.pgx" />
+    <Program file="getValue_num.pgx" />
+    <Program file="get_num.pgx" />
+    <Program file="insert_aCOunt.pgx" />
+    <Program file="insert_aIn.pgx" />
+    <Program file="insert_aOutput.pgx" />
+    <Program file="insert_cCount.pgx" />
+    <Program file="insert_dIn.pgx" />
+    <Program file="insert_dOut.pgx" />
+    <Program file="replaceIO.pgx" />
+    <Program file="resetAll.pgx" />
+    <Program file="setInput.pgx" />
+    <Program file="setOutput.pgx" />
+  </Programs>
+  <Database>
+    <Data file="saveInputOutput.dtx" />
+  </Database>
+  <Libraries>
+  </Libraries>
+  <Types>
+    <Type name="aioItem" path="Disk://kernel/template/aioItem/aioItem.pjx" />
+    <Type name="dioItem" path="Disk://kernel/template/dioItem/dioItem.pjx" />
+    <Type name="countItem" path="Disk://kernel/template/countItem/countItem.pjx" />
+  </Types>
+</Project>

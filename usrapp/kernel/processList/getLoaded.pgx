@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getLoaded" access="public">
+    <Description><![CDATA[get the loaded processList]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sLoaded" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // give back the actual saveCycle
+  x_sLoaded=saveCycle:libPath()
+  // empty the string if is the default
+  if find(x_sLoaded,"template/saveCycle")!=-1
+    x_sLoaded=""
+  endIf
+  // give back the program
+  call getPath(x_sLoaded)
+end
+]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[French PALLET message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="Changer toutes les approches"
+    break
+    case 1
+      message="Changer tous les départs"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="Vitesse"
+    break
+    case 3
+      message="Approche"
+    break
+    case 4
+      message="Départ"
+    break
+    case 5
+      message="V.Approche"
+    break
+    case 6
+      message="V.Départ"
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="On est au POINT d'approche..."
+    break
+    case 8
+      message="On est au POINT..."
+    break
+    case 9
+      message="On est au POINT départ..."
+    break
+    case 10
+      message="On est en approche PALETTE "
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="position "
+    break
+    case 12
+      message="pos.  X  "
+    break
+    case 13
+      message="pos.  Y  "
+    break
+    case 14
+      message="pos.  Z  "
+    break
+    case 15
+      message="sur la couche "
+    break
+    case 16
+      message="Sélect"
+    break
+    case 17
+      message="F1 sélectionner l'outil#F8 continuer avec l'outil par défaut: "
+    break
+    case 18
+      message="Nb de lignes (X)"
+    break
+    case 19
+      message="Nb de colonnes (Y)"
+    break
+    case 20
+      message="Nb de couches (Z)"
+    break
+    case 21
+      message="Quelle est l'appro? [mm] "
+    break
+    case 22
+      message="Quelle est le départ? [mm] "
+    break
+    case 23
+      message="Quelle est la vitesse d'appro? [mm/sec] "
+    break
+    case 24
+      message="Quelle est la vitesse de départ? [mm/sec] "
+    break
+    case 25
+      message="Voulez-vous un mouvement linéaire sur l'approche du point? "
+    break
+    case 26
+      message="Insérer la première Action:#F1 Pour sélectionner l'Action#F8 Aucune Action"
+    break
+    case 27
+      message="Insérer la deuxième Action:#F1 Pour sélectionner l'ActionF8 Aucune Action#"
+    break
+    case 28
+      message="Quelle est la vitesse? [%]"
+    break
+    case 29
+      message="Quelle est la vitesse? [mm/sec]"
+    break
+    case 30
+      message="- Editer pour modifier le point   "
+    break
+    case 31
+      message="Voulez-vous valider la dernière modification?"
+    break
+    case 32
+      message="Erreur lors du calcul de le repère,vérifier à nouveau vos points"
+    break
+    //
+    case 40
+      message="Approche"
+    break
+    case 41
+      message="Départ"
+    break
+    case 42
+      message="Outil et point de référence (z-)"
+    break
+    case 43
+      message="Temps d'arrêt au point [sec] "
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

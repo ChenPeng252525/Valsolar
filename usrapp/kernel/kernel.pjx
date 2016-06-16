@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3" >
+  <Parameters version="s7.7.2" stackSize="100000" millimeterUnit="true" />
+  <Programs>
+    <Program file="_control.pgx" />
+    <Program file="_cycle.pgx" />
+    <Program file="_interface.pgx" />
+    <Program file="_interfacePoint.pgx" />
+    <Program file="_kill.pgx" />
+    <Program file="_plc.pgx" />
+    <Program file="_pointStep.pgx" />
+    <Program file="_remote.pgx" />
+    <Program file="_startCycle.pgx" />
+    <Program file="_startSimul.pgx" />
+    <Program file="_stopCycle.pgx" />
+    <Program file="_stopSimul.pgx" />
+    <Program file="_taskControl.pgx" />
+    <Program file="action_buffer.pgx" />
+    <Program file="action_bufferT.pgx" />
+    <Program file="action_do.pgx" />
+    <Program file="action_resume.pgx" />
+    <Program file="action_suspend.pgx" />
+    <Program file="action_wait.pgx" />
+    <Program file="cycle_autoON.pgx" />
+    <Program file="cycle_doEvent.pgx" />
+    <Program file="cycle_init.pgx" />
+    <Program file="cycle_isCallUse.pgx" />
+    <Program file="cycle_run.pgx" />
+    <Program file="cycle_simul.pgx" />
+    <Program file="cycle_start.pgx" />
+    <Program file="cycle_version.pgx" />
+    <Program file="cycle_waitEmpty.pgx" />
+    <Program file="memory_instr.pgx" />
+    <Program file="memory_loadPage.pgx" />
+    <Program file="memory_onEnd.pgx" />
+    <Program file="memory_onRun.pgx" />
+    <Program file="memory_onStop.pgx" />
+    <Program file="memory_path.pgx" />
+    <Program file="memory_reLoad.pgx" />
+    <Program file="memory_showAll.pgx" />
+    <Program file="memory_startUp.pgx" />
+    <Program file="outOfRange.pgx" />
+    <Program file="remote_isHome.pgx" />
+    <Program file="remote_it.pgx" />
+    <Program file="remote_loadHome.pgx" />
+    <Program file="remote_rstLight.pgx" />
+    <Program file="start.pgx" />
+    <Program file="stop.pgx" />
+  </Programs>
+  <Database>
+    <Data file="kernel.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="OnEvent" path="Disk://OnEvent/OnEvent.pjx" autoload="true" password="" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" autoload="true" password="" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" autoload="true" password="" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" autoload="true" password="" />
+    <Library alias="plc" path="Disk://PLC/PLC.pjx" autoload="true" password="" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" autoload="true" password="" />
+    <Library alias="processList" path="Disk://kernel/processList/processList.pjx" autoload="true" password="" />
+    <Library alias="interface" path="Disk://kernel/template/page/page.pjx" autoload="true" password="" />
+    <Library alias="point_interface" path="Disk://trajectory/page_trajectory/page_trajectory.pjx" autoload="true" password="" />
+    <Library alias="inOut" path="Disk://saveInputOutput/saveInputOutput.pjx" autoload="true" password="" />
+    <Library alias="prog" path="Disk://instruction/PROG/PROG.pjx" autoload="true" password="" />
+    <Library alias="page0" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page1" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page2" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page3" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page4" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page5" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page6" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page7" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page8" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page9" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page10" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page11" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page12" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page13" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page14" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page15" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page16" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page17" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page18" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page19" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page20" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page21" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page22" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page23" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page24" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="page25" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="instr0" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr19" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr1" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr2" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr3" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr4" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr5" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr6" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr7" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr8" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr9" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr10" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr11" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr12" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr13" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr14" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr15" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr16" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr17" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr18" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="page" path="./template/page/page.pjx" autoload="true" password="" />
+    <Library alias="jHome" path="./template/session/saveTraj/HOME/HOME.pjx" autoload="true" password="" />
+    <Library alias="instr20" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr21" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr22" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr23" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr24" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr25" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr26" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr27" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr28" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="instr29" path="Disk://../templates/instruction/instruction.pjx" autoload="true" password="" />
+    <Library alias="saveInOut" path="Disk://saveInputOutput/saveInputOutput.pjx" autoload="true" password="" />
+  </Libraries>
+  <Types>
+    <Type name="ActionItem" path="./template/ActionItem/ActionItem.pjx" />
+    <Type name="Instruction" path="./template/Instruction/Instruction.pjx" />
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+    <Type name="progItem" path="./template/progItem/progItem.pjx" />
+    <Type name="Trajectory" path="./template/Trajectory/Trajectory.pjx" />
+    <Type name="dioItem" path="./template/dioItem/dioItem.pjx" />
+    <Type name="TrajJointItem" path="./template/TrajJointItem/TrajJointItem.pjx" />
+    <Type name="TrajHome" path="./template/TrajHome/TrajHome.pjx" />
+  </Types>
+</Project>

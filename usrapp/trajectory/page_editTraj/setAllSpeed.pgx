@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="setAllSpeed" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nNewValue" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nOldValue" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // change all the speed
+  if x_nNewValue!=x_nOldValue
+    call trajType:getSizeItem(false,l_nSize)
+    // scan it
+    for i=0 to (l_nSize-1)
+      // get the trajitem
+      call trajType:getTrajItem(l_tTraj,i)
+      // JOINT MOVEMENT
+      if (l_tTraj.moveType==0) and (x_nOldValue==l_tTraj.nom_speed.vel)
+        l_tTraj.nom_speed.vel=x_nNewValue
+        // LINEAR MOVEMENT
+      elseIf (l_tTraj.moveType==1 or l_tTraj.moveType==2) and (x_nOldValue==l_tTraj.nom_speed.tvel)
+        l_tTraj.nom_speed.tvel=x_nNewValue
+      endIf
+      // set the trajItem
+      call trajType:setTrajItem(l_tTraj,i)
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

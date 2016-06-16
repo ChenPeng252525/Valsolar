@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="putInstr_Traj" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_aAction" type="ActionItem" xsi:type="array" use="reference" />
+      <Parameter name="x_tTrajItem" type="TrajectoryItem" xsi:type="element" />
+      <Parameter name="x_nTCP" type="num" xsi:type="element" />
+      <Parameter name="x_nSize" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // save the data
+  aActionTCP.nMoveId=aActionPoint.nMoveId=x_aAction.nMoveId
+  aActionTCP.nPointId=aActionPoint.nPointId=x_aAction.nPointId
+  // use the blend anticipation for the last point
+  if aActionPoint.nPointId==x_nSize-1 and x_tTrajItem.nom_speed.blend!=off and saveData:bUseBlendAction
+    x_tTrajItem.distance=max(x_tTrajItem.distance,x_tTrajItem.nom_speed.leave+5)
+  endIf
+  aActionPoint.nDistance=(max(100-(x_tTrajItem.distance*100/max(x_aAction.nDistance,1)),0))/100
+  aActionTCP.nTimeId=aActionPoint.nTimeId=x_aAction.nTimeId
+  aActionTCP.sIdTraj=aActionPoint.sIdTraj=x_aAction.sIdTraj
+  // ADD the instruction
+  // TCP ON OFF 
+  if x_tTrajItem.nTcpAction>0
+    // get the instruction items
+    call tcp:getInstr(aActionTCP.iInstr,x_tTrajItem.nTcpAction==1,x_nTCP)
+    // get the time delay
+    call tcp:getTool(l_tTool,x_nTCP)
+    switch x_tTrajItem.nTcpAction
+      case 1
+        aActionTCP.nDistance=l_tTool.otime
+      break
+      case 2
+        aActionTCP.nDistance=l_tTool.ctime
+      break
+    endSwitch
+    if aActionTCP.nPointId==x_nSize-1 and x_tTrajItem.nom_speed.blend!=off and saveData:bUseBlendAction
+      aActionTCP.nDistance=max(aActionTCP.nDistance,x_tTrajItem.nom_speed.leave+5)
+    endIf
+    // use the blend anticipation for the last point
+    aActionTCP.nDistance=(max(100-(aActionTCP.nDistance*100/max(x_aAction.nDistance,1)),0))/100
+    // insert in the stack
+    call addAction(aActionTCP)
+  endIf
+  // ON POINT
+  for j=0 to size(x_tTrajItem.iInstr)-1
+    aActionPoint.iInstr[j]=x_tTrajItem.iInstr[j]
+  endFor
+  // insert in the stack
+  call addAction(aActionPoint)
+end]]></Code>
+  </Program>
+</Programs>

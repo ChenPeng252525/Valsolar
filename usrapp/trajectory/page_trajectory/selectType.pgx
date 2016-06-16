@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="selectType">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // clean the line
+  call use:clear(0,13)
+  call language:message(l_sMessage,191)
+  call use:typeCenter(13,l_sMessage,40,true)
+  call use:setSizeList(15,2,10,6)
+  // TODO message
+  call use:listcreate("")
+  call use:listadd(saveData:sTrajType)
+  call use:selectNewField(nType,0,0)
+  // select the Item
+  do
+    l_nKey=get()
+    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+  until l_nKey==270 or l_nKey==255
+  // choose the type
+  if l_nKey==270 and saveData:sTrajTypeUsing!=l_sEvent
+    saveData:sTrajTypeUsing=l_sEvent
+    // get the path
+    call saveData:getPathInstr(l_sEvent,l_sPath)
+    // load it
+    if trajType:libPath()!=l_sPath and l_sPath!=""
+      i=trajType:libLoad(l_sPath)
+      delay(0)
+    endIf
+    if l_sPath==""
+      popUpMsg("error load traj type on ENTER "+saveData:sTrajTypeUsing+toString("",i))
+    endIf
+  endIf
+  // clean the user MENU
+  call cleanUserMenu()
+end]]></Code>
+  </Program>
+</Programs>

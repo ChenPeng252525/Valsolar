@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF1Event">
+    <Locals>
+      <Local name="l" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    //
+    // go to previous POINT
+    //
+    if !cycleStatus:bCycle or !cycleStatus:bSimulation
+      call goTo(nPoint-1)
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

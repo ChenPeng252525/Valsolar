@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="5" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nChoice" type="num" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the language
+  call language2:getLanguage(l_sPath)
+  if l_sPath!=language2:libPath()+"/"+saveData:language
+    // set language
+    call language2:setLanguage(language2:libPath()+"/"+saveData:language)
+  endIf
+  call language2:message(l_sMessage,1)
+  title(l_sMessage)
+  for i=0 to size(l_sItem)-1
+    l_sItem[i]=" "
+  endFor
+  // start how to insert
+  while true
+    cls()
+    //
+    // compose the string
+    call getType(l_sType)
+    call use:type(1,13,l_sType+" "+l_sItem+" "+l_sItem[1]+" "+l_sItem[2]+" "+l_sItem[3]+" "+l_sItem[4])
+    switch l_nStep
+      case -1
+        x_sItem=""
+        return
+      break
+      // SELECT FROM OUT/ IN / EMAP
+      case 0
+        call use:stringToArray("IN,OUT,,NUM",sChoice)
+        call language2:message(l_sMessage,2)
+        call use:questionDialog(l_sMessage,sChoice,l_nChoice)
+        if l_nChoice>=1 
+          switch l_nChoice
+            case 1
+              l_sItem="IN"
+            break
+            case 2
+              l_sItem="OUT"
+            break
+            //            case 3
+            //              l_sItem="EMAP IN"
+            //            break
+            case 4
+              l_sItem="NUM"
+            break
+          endSwitch
+        else
+          return
+        endIf
+        l_nStep=l_nStep+1
+      break
+      // SELECT FROM THE LIST
+      case 1
+        switch l_nChoice
+          case 1
+            call language2:message(l_sMessage,3)
+            // insert the input from the list
+            call input:onInsert(l_sItem[1])
+          break
+          case 2
+            call language2:message(l_sMessage,4)
+            // insert the input from the list
+            call onInsert_out(l_sItem[1])
+          break
+          //          case 3
+          //            call language2:message(l_sMessage,5)
+          //            call use:type(1,11,l_sMessage)
+          //            // insert the input from the list
+          //            l_sItem[1]="IN"
+          //            call euromap:onInsert(l_sItem[1])
+          //          break
+          case 4
+            call language2:message(l_sMessage,4)
+            // insert the input from the list
+            l_sItem[1]="IF"
+            call NUM:onInsert(l_sItem[1])
+          break
+        endSwitch
+        //
+        l_nStep=l_nStep+1
+        //
+      break
+      case 2
+        call use:stringToArray("CALL,GOTO",sChoice)
+        call language2:message(l_sMessage,6)
+        call use:questionDialog(l_sMessage,sChoice,l_nChoice)
+        if l_nChoice==1 or l_nChoice==2
+          switch l_nChoice
+            case 1
+              l_sItem[2]="CALL"
+            break
+            case 2
+              l_sItem[2]="GOTO"
+            break
+          endSwitch
+        endIf
+        //
+        l_nStep=l_nStep+1
+        //
+      break
+      case 3
+        // select the event
+        call language2:message(l_sMessage,7)
+        // show the list
+        call showItem(l_sItem[3])
+        //
+        l_nStep=l_nStep+1
+        //
+      break
+      case 4
+        // seclect the item event
+        call language2:message(l_sMessage,8)
+        // show the item's list
+        l_sItem[4]=l_sItem[3]
+        call itemList(l_sItem[4])
+        //
+        l_nStep=l_nStep+1
+        //
+      break
+      case 5
+        // build the line
+        if l_sItem!="" and l_sItem[1]!="" and l_sItem[2]!="" and l_sItem[3]!="" and l_sItem[4]!=""
+          x_sItem=l_sItem+" "+l_sItem[1]+" "+l_sItem[2]+" "+l_sItem[3]+" "+l_sItem[4]
+        else
+          x_sItem=""
+        endIf
+        return
+      break
+    endSwitch
+    //
+    // step control
+    //
+    if l_nResult==-1 or l_sItem[1]=="" or l_sItem[2]=="" or l_sItem[3]==""
+      l_nStep=-1
+    endIf
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

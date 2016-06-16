@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="link_me">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // !!! REMOVE DUE PROBLEMS of CROSS LINK
+  //
+  //  // @POINT -> use depart
+  //  // @JOINT -> use the first JOINT
+  //  call use:clear(0,13)
+  //  call use:type(5,13,"@Link")
+  //  call use:setSizeList(4,8,8,3)
+  //  call use:listcreate("")
+  //  l_sItem=" NONE "
+  //  call use:listadd(l_sItem)
+  //  l_sItem="@JPOINT"
+  //  call use:listadd(l_sItem)
+  //  //  l_sItem="@POINT"
+  //  //  call use:listadd(l_sItem)
+  //  // refresh it
+  //  call use:listupdate(0)
+  //  // get the item
+  //  do
+  //    l_nKey=get()
+  //    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+  //  until l_nKey==270 or l_nKey==255
+  //  if l_nKey==270
+  //    // select the @Point - @jPoint
+  //    // build the list
+  //    call use:setSizeList(0,0,16,12)
+  //    switch l_nIndex
+  //      case 2
+  //        call use:listcreate("@Point")
+  //        // insert all the item
+  //        l_sItem=first(pPoint:tTraj)
+  //        call use:listadd(l_sItem)
+  //        // search it
+  //        while l_sItem!=""
+  //          l_sItem=next(pPoint:tTraj[l_sItem])
+  //          call use:listadd(l_sItem)
+  //        endWhile
+  //        l_sItem="@POINT "
+  //      break
+  //      case 1
+  //        call use:listcreate("@JPoint")
+  //        // insert all the item
+  //        l_sItem=first(jPoint:tTraj)
+  //        call use:listadd(l_sItem)
+  //        // search it
+  //        while l_sItem!=""
+  //          l_sItem=next(jPoint:tTraj[l_sItem])
+  //          call use:listadd(l_sItem)
+  //        endWhile
+  //        l_sItem="@JPOINT "
+  //      break
+  //      case 0
+  //        // empty one
+  //        l_sItem=l_sEvent=""
+  //      break
+  //    endSwitch
+  //    if l_nIndex!=0
+  //      // refresh it
+  //      call use:listupdate(0)
+  //      // get the item
+  //      do
+  //        l_nKey=get()
+  //        call use:listevent(l_nKey,l_nIndex,l_sEvent)
+  //      until l_nKey==270 or l_nKey==255
+  //    endIf
+  //    // give back
+  //    if l_nKey==270
+  //      // save it
+  //      jEditPoint.tData[x_nIndex].tSuper.comment=l_sItem+l_sEvent
+  //      if x_nIndex==0
+  //        jEditPoint.nZoneType=0
+  //      endIf
+  //    endIf
+  //  endIf
+end]]></Code>
+  </Program>
+</Programs>

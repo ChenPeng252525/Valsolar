@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getPointData">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nSpeed" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_mDesc" type="mdesc" xsi:type="array" use="reference" />
+      <Parameter name="x_nDistance" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_bToStop" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nMoveType" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nStop" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  if x_bCycle
+    // get tha parameter
+    // SPEED
+    // get the speed in mm/sec
+    if pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.moveType==0
+      x_nSpeed=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.nom_speed.vel*15
+    else
+      if pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.moveType==1
+        x_nSpeed=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.nom_speed.tvel
+      endIf
+    endIf
+    // MDESC
+    x_mDesc=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.nom_speed
+    // DISTANCE
+    x_nDistance=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.distance
+    //  check  for a stop using
+    x_bToStop=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.toStop
+    // get MoveType
+    x_nMoveType=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.moveType
+  else
+    // get tha parameter
+    // SPEED
+    // get the speed in mm/sec
+    if jEditPoint.tData[x_nIndex].tSuper.moveType==0
+      x_nSpeed=jEditPoint.tData[x_nIndex].tSuper.nom_speed.vel*15
+    else
+      if jEditPoint.tData[x_nIndex].tSuper.moveType==1
+        x_nSpeed=jEditPoint.tData[x_nIndex].tSuper.nom_speed.tvel
+      endIf
+    endIf
+    // MDESC
+    x_mDesc=jEditPoint.tData[x_nIndex].tSuper.nom_speed
+    // DISTANCE
+    x_nDistance=jEditPoint.tData[x_nIndex].tSuper.distance
+    //  check  for a stop using
+    x_bToStop=jEditPoint.tData[x_nIndex].tSuper.toStop
+    // get MoveType
+    x_nMoveType=jEditPoint.tData[x_nIndex].tSuper.moveType
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

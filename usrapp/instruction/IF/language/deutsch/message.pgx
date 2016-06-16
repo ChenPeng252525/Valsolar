@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[Deutsche IF message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="Wollen Sie das folgende Tool benutzen:"
+    break
+    case 1
+      message="< IF ASSISTENT >"
+    break
+    case 2
+      message="Wählen Sie den Typ der zu prüfenden Bedingung"
+    break
+    case 3
+      message="Eingang auswählen"
+    break
+    case 4
+      message="Ausgang auswählen"
+    break
+    case 5
+      message="EMAP-Eingang auswählen"
+    break
+    case 6
+      message="Wählen Sie wie der Befehl ausgeführt wird"
+    break
+    case 7
+      message="Wählen Sie den verknüpften Befehl :"
+    break
+    case 8
+      message="Wählen Sie aus der Liste den: "
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

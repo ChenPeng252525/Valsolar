@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changePoint">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="3" />
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nStop" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_iInstr" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // Init and save the right side of the string starting from ">"
+  //
+  logMsg("[KERNEL] INTERFACE:Change Point: "+sEvent+" item: "+toString("",nIndexItem))
+  //i=find(sEvent,">")+1
+  call use:findPos(sEvent,">",i)
+  i=i+1
+  //
+  if i!=-1
+    //
+    //  There are 10 fields,
+    //
+    call trajType:getTrajItem(l_tTraj,nIndexItem)
+    // clean the line
+    call use:listcursor(use:nView,false)
+    l_sEmpty=""
+    switch x_nIndex
+      case 0
+        //
+        //  comment for the point
+        //
+        // read the name
+        call use:read(i+40-use:nBottomX,use:nView+1,l_tTraj.comment,10,false)
+      break
+      case 1
+        //
+        //  change the movetype (0->Joint, 1->Linear, 2->Circle)
+        //
+        // JOINT
+        if trajType:bMoveType[0]
+          // normaly with joint can be also linear and circle
+          call language:message(l_sMessage,164)
+          call language:message(l_sMessage[1],165)
+          call language:message(l_sMessage[2],166)
+          if trajType:bMoveType[1]
+            l_sMessage=l_sMessage+","+l_sMessage[1]
+          endIf
+          if trajType:bMoveType[2] and nIndexItem!=0
+            l_sMessage=l_sMessage+","+l_sMessage[2]
+          endIf
+        else
+          // only linear
+          if trajType:bMoveType[1]
+            l_sMessage=l_sMessage
+          endIf
+        endIf
+        // compose the string
+        call use:stringToArray(l_sMessage,sMessage)
+        // look for multiple istance
+        if size(sMessage)>1
+          //
+          l_nLocal=l_tTraj.moveType
+          call use:changeValue(l_tTraj.moveType,0,0,i+40-use:nBottomX,use:nView+1,sMessage)
+          if l_nLocal!=l_tTraj.moveType
+            switch l_tTraj.moveType
+              case 0
+                if l_tTraj.nom_speed.tvel!=9999
+                  l_tTraj.nom_speed.vel=(l_tTraj.nom_speed.tvel)/15
+                  l_tTraj.nom_speed.tvel=9999
+                endIf
+              break
+              case 1,2
+                if l_tTraj.nom_speed.vel<450
+                  l_tTraj.nom_speed.tvel=(l_tTraj.nom_speed.vel)*15
+                  l_tTraj.nom_speed.vel=450
+                endIf
+              break
+            endSwitch
+            // update the line
+            if l_nLocal==2 and nIndex>0 and nView>0
+              // refresh the cursor
+              nView=nView-1
+              nIndex=nIndex-1
+            else
+              if l_tTraj.moveType==2
+                // refresh the cursor
+                nView=nView+1
+                nIndex=nIndex+1
+              endIf
+            endIf
+          endIf
+        endIf
+      break
+      case 2
+        //
+        //  change the speed
+        //
+        if l_tTraj.moveType==0
+          call use:changeValue(l_tTraj.nom_speed.vel,1,400,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+        else
+          if l_tTraj.moveType==1 or l_tTraj.moveType==2
+            call use:changeValue(l_tTraj.nom_speed.tvel,1,6000,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+          endIf
+        endIf
+      break
+      case 3
+        //
+        //  change the acceleration
+        //
+        call use:changeValue(l_tTraj.nom_speed.accel,1,800,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+        l_tTraj.nom_speed.decel=l_tTraj.nom_speed.accel
+      break
+      case 4
+        //
+        //  put a stop, after the robot reach to the point
+        //
+        l_nLocal=l_tTraj.nStop
+        call use:changeValue(l_nLocal,-1,100,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+        //
+        if l_nLocal<0
+          // no stop
+          l_tTraj.toStop=false
+          l_tTraj.nStop=0
+        else
+          // stop using time
+          l_tTraj.toStop=true
+          l_tTraj.nStop=l_nLocal
+        endIf
+      break
+      case 5
+        //
+        //  set the blend (joint/off) for the point
+        //
+        l_nLocal=l_tTraj.nom_speed.leave
+        call use:changeValue(l_nLocal,-1,400,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+        if l_nLocal<0
+          l_tTraj.nom_speed.blend=off
+        else
+          l_tTraj.nom_speed.leave=l_tTraj.nom_speed.reach=l_nLocal
+          l_tTraj.nom_speed.blend=joint
+        endIf
+      break
+      case 6
+        //
+        // set TCP ON/OFF
+        //
+        // NB: 0>NONE 1>ON 2>OFF 
+        call use:stringToArray("ON,OFF",sMessage)
+        if l_tTraj.nTcpAction!=0 and abs(l_tTraj.nTcpAction)<3
+          // NOTE 
+          // use only absolute
+          l_tTraj.nTcpAction=abs(l_tTraj.nTcpAction)-1
+        else
+          l_tTraj.nTcpAction=0
+        endIf
+        call use:changeValue(l_tTraj.nTcpAction,0,0,i+40-use:nBottomX,use:nView+1,sMessage)
+        // give back increase by one
+        l_tTraj.nTcpAction=l_tTraj.nTcpAction+1
+      break
+      case 7,8,9
+        //
+        //  Insert the instruction
+        //
+        // insert a new one
+        if l_tTraj.iInstr[x_nIndex-7].sType!=""
+          // show it 
+          if l_tTraj.iInstr[x_nIndex-7].sType=="OUT" or l_tTraj.iInstr[x_nIndex-7].sType=="IN" or l_tTraj.iInstr[x_nIndex-7].sType=="EMAP" 
+            popUpMsg(l_tTraj.iInstr[x_nIndex-7].sType+" "+l_tTraj.iInstr[x_nIndex-7].sData)
+          else
+            // update
+            l_sItem=l_tTraj.iInstr[x_nIndex-7].sType
+            l_sData=l_tTraj.iInstr[x_nIndex-7].sData
+            call saveData:getPathInstr(l_sItem,l_sPath)
+            events:libLoad(l_sPath)
+            delay(0)
+            call events:onEdit(l_sData)
+            if l_sData!=""
+              l_tTraj.iInstr[x_nIndex-7].sData=l_sData
+            endIf
+          endIf
+        else
+          // insert
+          call insertInstr(l_iInstr)
+          if l_iInstr.sData!=""
+            l_tTraj.iInstr[x_nIndex-7]=l_iInstr
+          endIf
+        endIf
+      break
+      case 10
+        //
+        //  set the distance from the point where the call will be actived
+        //
+        call use:changeValue(l_tTraj.distance,-300,300,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+    endSwitch
+    //set and exit
+    call trajType:setTrajItem(l_tTraj,nIndexItem)
+  endIf
+  //
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="isAtPoint">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_bInside" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nDistance" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTrajItem" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // reset the bool
+  x_bInside=false
+  // get the tcp
+  call trajType:getTool(l_nIndexTool)
+  call saveData:getTool(l_tTool,l_nIndexTool)
+  // get the mdesc
+  call trajType:getTrajItem(l_tTrajItem,x_nIndex)
+  // get the acutal point
+  l_pHere=here(l_tTool,world)
+  // look if the robot is inside the blend area
+  call trajType:getPoint(l_pPoint,false,x_nIndex)
+  // check the radius
+  if distance(position(l_pPoint,world),l_pHere.trsf)<=max(l_nDistance,nRoundStepping)
+    x_bInside=true
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

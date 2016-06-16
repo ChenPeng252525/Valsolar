@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF8Event">
+    <Locals>
+      <Local name="l_sNew" type="string" xsi:type="array" size="1" />
+      <Local name="l_bUndo" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // look if the bButton is enable
+//  if bButton[7]
+//    // new one
+//    call alreadyExist(l_sNew,l_bUndo)
+//    if !l_bUndo and l_sNew!=""
+//      call trajType:new(l_sNew,l_nResult)
+//      if l_nResult==0
+//        logMsg("[KERNEL] INTERFACE:Create the new trajectory: "+saveData:sTrajTypeUsing+" "+l_sNew)
+//        sEvent=l_sNew
+//        call buildList()
+//      else
+//        popUpMsg("error code: "+toString("",l_nResult))
+//        logMsg("[KERNEL] INTERFACE:Create the new trajectory: "+saveData:sTrajTypeUsing+" "+l_sNew+" error code "+toString("",l_nResult))
+//      endIf
+//    endIf
+//  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

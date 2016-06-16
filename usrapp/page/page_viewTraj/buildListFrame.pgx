@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildListFrame">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // Build the list
+//  call use:setSizeList(15,0,15,11)
+//  call use:listcreate("FRAME")
+//  // insert all the element
+//  for i=0 to size(saveData:fFrameItem)-1
+//    l_sItem=toString("2",i)+" "+saveData:fFrameItem[i].sName
+//    call use:listadd(l_sItem)
+//  endFor
+//  // update it
+//  call use:listupdate(0)
+//  call use:selectNewField(x_nIndex,x_nIndex,x_nIndex)
+//  // leave ...
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="create_easyCube" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pOrigin" type="point" xsi:type="element" />
+      <Parameter name="x_nDistanceX" type="num" xsi:type="element" />
+      <Parameter name="x_nDistanceY" type="num" xsi:type="element" />
+      <Parameter name="x_nDistanceZ" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_trsfCopy" type="trsf" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // build the cube
+  // Origin
+  if setFrame(x_pOrigin,compose(x_pOrigin,world,{x_nDistanceX,0,0,0,0,0}),compose(x_pOrigin,world,{0,x_nDistanceY,0,0,0,0}),fCube)==0
+    bCreate_cube=true
+  else
+    bCreate_cube=false
+  endIf
+  // Distance x y z
+  nDistanceX_cube=x_nDistanceX
+  nDistanceY_cube=x_nDistanceY
+  nDistanceZ_cube=x_nDistanceZ
+  // regolate the frame
+  l_trsfCopy=fCube.trsf
+  fCube.trsf={l_trsfCopy.x,l_trsfCopy.y,l_trsfCopy.z,0,0,0}
+end]]></Code>
+  </Program>
+</Programs>

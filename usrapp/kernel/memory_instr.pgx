@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_instr" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSearch" type="bool" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bDone" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nFind" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INIT
+  //
+  if x_bSearch
+    //
+    // this procedure build the list of instruction
+    // 
+    l_sPath=""
+    l_sEmpty=""
+    call use:stringCopy(l_sEmpty,sInstr)
+    call use:stringCopy(l_sEmpty,sPathInstr)
+    call use:stringCopy(l_sEmpty,saveData:sInstr)
+    call use:stringCopy(l_sEmpty,saveData:sInstrOnPoint)
+    call use:stringCopy(l_sEmpty,saveData:sPageLoad)
+    // delete all the instruction Type...
+    l_sKey=first(saveData:iInstruction)
+    // search it
+    while l_sKey!=""
+      // delete ALL
+      delete(saveData:iInstruction[l_sKey])
+      l_sKey=first(saveData:iInstruction)
+    endWhile
+    // rebuild
+    call memory_path(l_sPath,sPathInstr)
+    // copy the all path
+    call use:stringCopy(sPathInstr,sInstr)
+    call use:stringCopy(l_sEmpty,saveData:sPageLoad)
+    //
+    // delete the instruction that contain the field "_" as
+    // use for page or other folder
+    //
+    for i=0 to (size(sInstr)-1)
+      // look for all the page
+      if find(sInstr[i],"page/")!=-1 or find(sInstr[i],"page_")!=-1
+        if saveData:sPageLoad!=""
+          insert(saveData:sPageLoad[size(saveData:sPageLoad)])
+        endIf
+        saveData:sPageLoad[size(saveData:sPageLoad)-1]=sInstr[i]
+      endIf
+      // delete the prefix of the path
+      if find(sInstr[i],"instruction/")!=-1
+        sInstr[i]=right(sInstr[i],len(sInstr[i])-len("instruction/"))
+      else
+        if find(sInstr[i],"trajectory/")!=-1
+          sInstr[i]=right(sInstr[i],len(sInstr[i])-len("trajectory/"))
+        else
+          // delete
+          if size(sInstr)>1
+            delete(sInstr[i])
+            delete(sPathInstr[i])
+          endIf
+          i=i-1
+        endIf
+      endIf
+      if i>=0
+        if find(sInstr[i],"_")!=-1 or find(sInstr[i],"language")!=-1 or find(sInstr[i],"program")!=-1
+          delete(sInstr[i])
+          delete(sPathInstr[i])
+          i=i-1
+        endIf
+      endIf
+    endFor
+    // go just to the children
+    for i=0 to (size(sInstr)-2)
+      if find(sPathInstr[i+1],sPathInstr[i]+"/")!=-1
+        l_bDone=false
+        l_sPath=sPathInstr[i]
+        delete(sInstr[i])
+        delete(sPathInstr[i])
+        do
+          if find(sPathInstr[i],l_sPath)!=-1
+            sInstr[i]=right(sPathInstr[i],len(sPathInstr[i])-len(l_sPath)-1)
+            if i>=size(sPathInstr)-1
+              l_bDone=true
+            else
+              if find(sPathInstr[i+1],sPathInstr[i])!=-1
+                l_bDone=true
+                i=i-1
+              else
+                i=i+1
+              endIf
+            endIf
+          else
+            l_bDone=true
+            i=i-1
+          endIf
+        until l_bDone or i>=size(sInstr)
+      endIf
+    endFor
+    //
+    // BUILT the instr type as collection into saveData
+    //
+    // init saveData
+    call use:stringCopy(sInstr,saveData:sInstr)
+    call use:stringCopy(sInstr,saveData:sInstrOnPoint)
+    call use:stringCopy(l_sEmpty,saveData:sTrajType)
+    for i=0 to size(sInstr)-1
+      l_sItem=sInstr[i]
+      // insert all the item
+      insert(saveData:iInstruction[l_sItem])
+      saveData:iInstruction[l_sItem].sPath=sPathInstr[i]
+      saveData:iInstruction[l_sItem].sID=sInstr[i]
+      saveData:iInstruction[l_sItem].nIndex=i
+      saveData:iInstruction[l_sItem].bIsTraj=false
+      // check for traj
+      if find(sPathInstr[i],"trajectory/")!=-1
+        saveData:iInstruction[l_sItem].bIsTraj=true
+        saveData:sInstrOnPoint[i]=""
+        if saveData:sTrajType!=""
+          append(saveData:sTrajType)
+        endIf
+        saveData:sTrajType[size(saveData:sTrajType)-1]=l_sItem
+        // REMOVE the IF PROG from the point
+      elseIf l_sItem=="IF" or l_sItem=="PROG"
+        saveData:sInstrOnPoint[i]=""
+      endIf
+    endFor
+    // save it
+    saveData:libSave()
+  endIf
+  // start UP
+  call memory_startUp(x_bSearch)
+  // load all the page in the ram
+  call memory_loadPage()
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="selectZone" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nSelect" type="num" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // to save:
+  // x_nBest [0] -# Traejctory
+  // x_nBest [1] -# index
+  // x_nBest [2] -# Type
+  //
+  // save the value
+  // 
+  // use the first value
+  //
+  x_nSelect[0]=nHome[0]
+  x_nSelect[1]=0
+  x_nSelect[2]=nCoeff[0]
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="removeTraj" access="public">
+    <Code><![CDATA[begin
+  // mutex it
+  setMutex(bActionMutex)
+  if saveData:bDebug
+    ? "CYCLESTATUS: TRAJ Remove "+tTrajCycle.sID
+  endIf
+  // remove the action
+  if size(tTrajCycle)>1
+    delete(tTrajCycle[0])
+  else
+    // reset
+    resize(tTrajCycle.tSuper,1,1)
+    tTrajCycle.sID="null"
+    tTrajCycle.nId=0
+  endIf
+  // release
+  bActionMutex=false
+end]]></Code>
+  </Program>
+</Programs>

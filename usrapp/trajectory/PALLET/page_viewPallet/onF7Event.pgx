@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nMax" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    // BACK
+    call pallet:back(x_sName)
+    // refresh it
+    call buildList()
+    use:bUseRefresh=true
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

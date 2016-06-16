@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEditItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sEvent" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nIndexItem" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // edit the custom element that was add in the list
+  l_jJoint=jEditPoint.tData[x_nIndexItem].jJoint
+  call use:findPos(x_sEvent,">",i)
+  i=i+1
+  // clean the line
+  call use:listcursor(use:nView,false)
+  l_sEmpty=""
+  switch x_nIndex
+    case 0
+      //  j1-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j1,l_jJoint.j1-5,l_jJoint.j1+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j1,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+    case 1
+      //  j2-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j2,l_jJoint.j2-5,l_jJoint.j2+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j2,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+    case 2
+      //  j3-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j3,l_jJoint.j3-5,l_jJoint.j3+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j3,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+    case 3
+      //  j4-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j4,l_jJoint.j4-5,l_jJoint.j4+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j4,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+    case 4
+      //  j5-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j5,l_jJoint.j5-5,l_jJoint.j5+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j5,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+    case 5
+      //  j6-value
+      if cycleStatus:bCycle
+        // set a limit +- 5
+        call use:changeValue(l_jJoint.j6,l_jJoint.j6-5,l_jJoint.j6+5,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      else
+        call use:changeValue(l_jJoint.j6,0,0,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      endIf
+    break
+  endSwitch
+  //
+  if isInRange(l_jJoint)
+    jEditPoint.tData[x_nIndexItem].jJoint=l_jJoint
+  else
+    // error using the trsf
+    call language:message(l_sMessage,-5)
+    popUpMsg(l_sMessage)
+  endIf
+  // wait no key
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

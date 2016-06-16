@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onStart" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // logMsg
+  logMsg("[KERNEL] INTERFACE:PAGE PALLET")
+  // reset the exit button 
+  bExit=false
+  // reset the Key pressure
+  call use:nullKey(nKey)
+  nIndex=0
+  // load the TRAJ
+  sPalletName=sItems
+  // define the list
+  call pallet:load(sPalletName,i)
+  if i!=0
+    call language:message(l_sMessage,-7)
+    popUpMsg(l_sMessage+"#"+saveData:sTrajTypeUsing+"/"+sPalletName+" ; "+toString("",i))
+  endIf
+  //
+  call buildList()
+  // build the page
+  call refreshStatic()
+  // define the list
+end]]></Code>
+  </Program>
+</Programs>

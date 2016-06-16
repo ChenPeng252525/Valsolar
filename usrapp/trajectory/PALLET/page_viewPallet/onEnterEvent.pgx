@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPosition" type="num" xsi:type="array" size="4" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  call pallet:getPalletPos(x_sName,l_nPosition)
+  call pallet:getSizePallet(x_sName,l_nSize)
+  //
+  if nIndex>=0
+    i=find(sEvent,">")+1
+  endIf
+  //
+  // clean the line
+  call use:listcursor(use:nView,false)
+  //
+  if l_nSize>1
+    // absolute
+    l_sEmpty=""
+    l_nPosition=l_nPosition+1
+    call use:changeValue(l_nPosition,1,l_nSize,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+    call pallet:setPalletPos(x_sName,l_nPosition-1)
+    // refresh it
+    call buildList()
+  endIf
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="alreadyExist.pgx" />
+    <Program file="buildList.pgx" />
+    <Program file="buildList2.pgx" />
+    <Program file="insertIO.pgx" />
+    <Program file="listAdd.pgx" />
+    <Program file="loadNext.pgx" />
+    <Program file="main.pgx" />
+    <Program file="onBackEvent.pgx" />
+    <Program file="onEnterEvent.pgx" />
+    <Program file="onExit.pgx" />
+    <Program file="onF1Event.pgx" />
+    <Program file="onF2Event.pgx" />
+    <Program file="onF3Event.pgx" />
+    <Program file="onF4Event.pgx" />
+    <Program file="onF5Event.pgx" />
+    <Program file="onF6Event.pgx" />
+    <Program file="onF7Event.pgx" />
+    <Program file="onF8Event.pgx" />
+    <Program file="onSpaceEvent.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="refresh.pgx" />
+    <Program file="refreshDynamic.pgx" />
+    <Program file="refreshStatic.pgx" />
+    <Program file="showExist.pgx" />
+  </Programs>
+  <Database>
+    <Data file="page_inOut.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="page" path="Disk://kernel/template/page/page.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="prog" path="Disk://instruction/PROG/PROG.pjx" />
+    <Library alias="in" path="Disk://instruction/inputOutput/IN/IN.pjx" />
+    <Library alias="out" path="Disk://instruction/inputOutput/OUT/OUT.pjx" />
+    <Library alias="NUM" path="Disk://instruction/inputOutput/NUM/NUM.pjx" />
+    <Library alias="saveInOut" path="Disk://saveInputOutput/saveInputOutput.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+  </Types>
+</Project>

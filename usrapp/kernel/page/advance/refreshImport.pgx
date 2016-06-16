@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="refreshImport" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bShowLine" type="bool" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sPath" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  call use2:setSizeList(0,0,17,11)
+  call use2:listcreate("USB")
+  call use:stringCopy(l_sEmpty,sImport)
+  call use2:listempty()
+  //
+  // build the list
+  if libList(x_sPath[1],sImport)
+    // build and refresh
+    if x_sPath[1]!="USB0://"
+      l_sItem=".."
+      call use2:listadd(l_sItem)
+    endIf
+    call use2:listadd(sImport)
+    use2:nView=nViewImport
+    call use2:listredraw(nIndexImport-nViewImport)
+    if !x_bShowLine
+      call use2:listcursor(nViewImport,false)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

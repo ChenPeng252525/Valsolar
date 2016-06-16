@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.8.3" stackSize="10000" millimeterUnit="true" />
+  <Programs>
+    <Program file="buildList.pgx" />
+    <Program file="changePoint.pgx" />
+    <Program file="goTo.pgx" />
+    <Program file="insertInstr.pgx" />
+    <Program file="listAdd.pgx" />
+    <Program file="loadEditTraj.pgx" />
+    <Program file="loadPage.pgx" />
+    <Program file="main.pgx" />
+    <Program file="onBackEvent.pgx" />
+    <Program file="onEnterEvent.pgx" />
+    <Program file="onExit.pgx" />
+    <Program file="onF1Event.pgx" />
+    <Program file="onF2Event.pgx" />
+    <Program file="onF3Event.pgx" />
+    <Program file="onF4Event.pgx" />
+    <Program file="onF5Event.pgx" />
+    <Program file="onF6Event.pgx" />
+    <Program file="onF7Event.pgx" />
+    <Program file="onF8Event.pgx" />
+    <Program file="onSpaceEvent.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="password.pgx" />
+    <Program file="refresh.pgx" />
+    <Program file="refreshDynamic.pgx" />
+    <Program file="refreshStatic.pgx" />
+    <Program file="saveIt.pgx" />
+    <Program file="selectItem.pgx" />
+    <Program file="setAllAccel.pgx" />
+    <Program file="setAllBlend.pgx" />
+    <Program file="setAllSpeed.pgx" />
+    <Program file="showPoint.pgx" />
+    <Program file="showStatus.pgx" />
+    <Program file="unSelectItem.pgx" />
+  </Programs>
+  <Database>
+    <Data file="page_editTraj.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="use" path="Disk://public_temp/userPage/userPage.pjx" />
+    <Library alias="pub" path="Disk://public_temp/pub/pub.pjx" />
+    <Library alias="data" path="Disk://SaveData/SaveData.pjx" />
+    <Library alias="cycle" path="Disk://cycle/cycle.pjx" />
+  </Libraries>
+</Project>

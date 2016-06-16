@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertCycle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_nTotal" type="num" xsi:type="element" />
+      <Parameter name="x_nDone" type="num" xsi:type="element" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // setMutex
+  setMutex(cycleStatus:bMutex)
+  // insert a cycle into the process list
+  //
+  // use x_nIndex -1 to use FIFO politc
+  //
+  if x_nIndex!=-1
+    l_nIndex=x_nIndex
+  else
+    switch x_nType
+      case 0
+        // start List
+        if size(saveCycle:sLoadStart)==1 and saveCycle:sLoadStart[0]==""
+          l_nIndex=0
+        else
+          l_nIndex=(size(saveCycle:sLoadStart))
+        endIf
+      break
+      case 1
+        // production list
+        if size(saveCycle:sLoadProg)==1 and saveCycle:sLoadProg[0]==""
+          l_nIndex=0
+        else
+          l_nIndex=(size(saveCycle:sLoadProg))
+        endIf
+      break
+      case 2
+        // end List
+        if size(saveCycle:sLoadEnd)==1 and saveCycle:sLoadEnd[0]==""
+          l_nIndex=0
+        else
+          l_nIndex=(size(saveCycle:sLoadEnd))
+        endIf
+      break
+    endSwitch
+  endIf
+  //
+  // Val3 need to have at least 1 item into a vector so...
+  //
+  switch x_nType
+    case 0
+      // ON START CYCLE
+      if (l_nIndex>0) and saveCycle:sLoadStart!=""
+        insert(saveCycle:sLoadStart[l_nIndex])
+        insert(saveCycle:nDoneStart[l_nIndex])
+        insert(saveCycle:nTotalStart[l_nIndex])
+      endIf
+    break
+    case 1
+      // get the information about the actual process list
+      if (l_nIndex>0) and saveCycle:sLoadProg!=""
+        insert(saveCycle:sLoadProg[l_nIndex])
+        insert(saveCycle:nDoneCycle[l_nIndex])
+        insert(saveCycle:nTotalCycle[l_nIndex])
+      endIf
+    break
+    case 2
+      // ON END CYCLE
+      if (l_nIndex>0) and saveCycle:sLoadEnd!=""
+        insert(saveCycle:sLoadEnd[l_nIndex])
+        insert(saveCycle:nDoneEnd[l_nIndex])
+        insert(saveCycle:nTotalEnd[l_nIndex])
+      endIf
+    break
+  endSwitch
+  // set the cycle
+  call setCycle(x_sName,x_nTotal,x_nDone,l_nIndex,x_nType)
+  //release
+  cycleStatus:bMutex=false
+end
+      
+]]></Code>
+  </Program>
+</Programs>

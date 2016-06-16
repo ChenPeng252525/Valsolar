@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.3.1" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="checkIn.pgx" />
+    <Program file="checkOut.pgx" />
+    <Program file="find.pgx" />
+    <Program file="get.pgx" />
+    <Program file="getPath.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="getType.pgx" />
+    <Program file="insertCount.pgx" />
+    <Program file="itemList.pgx" />
+    <Program file="load.pgx" />
+    <Program file="loadPage.pgx" />
+    <Program file="onEdit.pgx" />
+    <Program file="onInsert.pgx" />
+    <Program file="onInsert_out.pgx" />
+    <Program file="onProgEnd.pgx" />
+    <Program file="onRun.pgx" />
+    <Program file="onStart.pgx" />
+    <Program file="onStop.pgx" />
+    <Program file="showItem.pgx" />
+  </Programs>
+  <Database>
+    <Data file="IF.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="input" path="Disk://instruction/inputOutput/IN/IN.pjx" />
+    <Library alias="output" path="Disk://instruction/inputOutput/OUT/OUT.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="page" path="Disk://kernel/template/page/page.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="instruction" path="Disk://..//templates/instruction/instruction.pjx" />
+    <Library alias="language2" path="Disk://instruction/IF/language/language.pjx" />
+    <Library alias="saveInOut" path="Disk://saveInputOutput/saveInputOutput.pjx" />
+    <Library alias="NUM" path="Disk://instruction/inputOutput/NUM/NUM.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+    <Type name="dioItem" path="Disk://kernel/template/dioItem/dioItem.pjx" />
+  </Types>
+</Project>

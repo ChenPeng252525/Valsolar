@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="getPointData" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_pPoint" type="point" use="reference" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bResult" type="bool" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sSession" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the joint data from the specific session...
+  x_bResult=false
+  call saveData:getSession(l_sSession)
+  // get the colletion type...
+  if sSession2!=l_sSession
+    // copy back
+    sSession2=l_sSession
+    // load the actual one
+    l_nResult=pt:libLoad(saveData:sPathTraj+"POINT")
+    delay(0)
+  endIf
+  // use the type...
+  if l_nResult==0 and isDefined(pt:tTraj[x_sItem]) and size(pt:tTraj[x_sItem].tData.pPoint)>x_nIndex
+    // get the JOINT DATA
+    x_pPoint=pt:tTraj[x_sItem].tData.pPoint[x_nIndex]
+    delay(0)
+    x_bResult=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

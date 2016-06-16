@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.8.3" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="_getP2PAngle.pgx" />
+    <Program file="_getP2PDistance.pgx" />
+    <Program file="_IsUseingBox.pgx" />
+    <Program file="compteBox1Value.pgx" />
+    <Program file="delete.pgx" />
+    <Program file="editBigData.pgx" />
+    <Program file="editSmlData.pgx" />
+    <Program file="FCheckInBox1Pos.pgx" />
+    <Program file="FCheckInBox2Pos.pgx" />
+    <Program file="find.pgx" />
+    <Program file="findInWhichBox1.pgx" />
+    <Program file="FNearJt.pgx" />
+    <Program file="getBoxSize.pgx" />
+    <Program file="getEvent.pgx" />
+    <Program file="getListTitle.pgx" />
+    <Program file="getSizeItem.pgx" />
+    <Program file="getTrajTool.pgx" />
+    <Program file="GOHOME.pgx" />
+    <Program file="goTo.pgx" />
+    <Program file="HMI_setNewValue.pgx" />
+    <Program file="HMI_setValue.pgx" />
+    <Program file="initToSafePt.pgx" />
+    <Program file="IsInTheSameBox.pgx" />
+    <Program file="IsSetValue.pgx" />
+    <Program file="IsUseSameTool.pgx" />
+    <Program file="J_goTo.pgx" />
+    <Program file="J_MoveTo.pgx" />
+    <Program file="listAdd.pgx" />
+    <Program file="loadMarkData.pgx" />
+    <Program file="mark_All_Item.pgx" />
+    <Program file="markItem.pgx" />
+    <Program file="MoveTo.pgx" />
+    <Program file="new.pgx" />
+    <Program file="onSave.pgx" />
+    <Program file="reveMarkItem.pgx" />
+  </Programs>
+  <Database>
+    <Data file="goHome.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="sml" path="./saveHomeBox/type1/type1.pjx" />
+    <Library alias="big" path="./saveHomeBox/type2/type2.pjx" />
+    <Library alias="save" path="./saveHomeBox/saveHomeBox.pjx" />
+    <Library alias="language2" path="./language/language.pjx" />
+    <Library alias="trajPt" path="Disk://session/default/saveTraj/TRAJ/TRAJ.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="jPt" path="Disk://session/default/saveTraj/JPOINT/JPOINT.pjx" />
+    <Library alias="use" path="./userPage/userPage.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="tcp" path="Disk://kernel/tool/tool.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="jHome" path="Disk://session/default/saveTraj/HOME/HOME.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="TrajSmallBox" path="./template/TrajSmallBox/TrajSmallBox.pjx" />
+    <Type name="TrajBigBox" path="./template/TrajBigBox/TrajBigBox.pjx" />
+    <Type name="TrajJoint" path="Disk://kernel/template/TrajJoint/TrajJoint.pjx" />
+    <Type name="Traies" path="Disk://kernel/template/Traies/Traies.pjx" />
+  </Types>
+</Project>

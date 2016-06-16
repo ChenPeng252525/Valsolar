@@ -1,0 +1,7 @@
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+Start Logger Thursday, May 26, 2016 At 08:58                                ** count:0001  @ line:0059 file:AppDebug.cpp 
+End Logger Thursday, May 26, 2016 At 09:11                                  ** count:0001  @ line:0131 file:AppDebug.cpp 
+=======
+Start Logger Tuesday, September 02, 2014 At 10:41                           ** count:0001  @ line:0059 file:AppDebug.cpp 
+End Logger Tuesday, September 02, 2014 At 10:45                             ** count:0001  @ line:0131 file:AppDebug.cpp 
+>>>>>>> Valsolar

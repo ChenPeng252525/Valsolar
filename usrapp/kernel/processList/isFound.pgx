@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="isFound" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_bFound" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+      <Local name="l_sString" type="string" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nID" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // find if a program is inside the processList
+  //
+  x_bFound=false
+  //
+  // update
+  //
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sProcessList)
+  // check all
+  call loadProcessList(l_nResult)
+  // get the size of the three processList
+  for i=0 to 2
+    call getSize(l_nSize[i],i)
+    // look in all the program
+    for j=0 to max(l_nSize[i]-1,0)
+      l_nID=0
+      call getCycle(l_sString,l_nID,l_nID,j,i)
+      if l_sString==x_sName
+        x_bFound=true
+        x_sName=l_sString
+        return
+      endIf
+    endFor
+  endFor
+end
+]]></Code>
+  </Program>
+</Programs>

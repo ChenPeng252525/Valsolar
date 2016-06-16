@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="Init" access="public">
+    <Code><![CDATA[begin
+  // check the 
+  if !bSimulate
+    // encoder 0
+    if ioStatus(e00CurrPos)>=0
+      // Part detection sensor
+      dioLink(dLatchInput,e00LatchSig)
+      dioLink(dEnableLatch,e00EnLatch)
+      // encoderValue
+      aioLink(aEncoder,e00CurrPos)
+      // nMaxCOunt using a DUALABZ
+      nMAXCOUNT=(power(2,31)*360)/(4*aioGet(e00Counts))
+      // encoder 1
+      //elseIf ioStatus(e01CurrPos)>0
+      //  // Part detection sensor
+      //  dioLink(dLatchInput,e01LatchSig)
+      //  dioLink(dEnableLatch,e01EnLatch)
+      //  // encoderValue
+      //  aioLink(aEncoder,e01CurrPos)
+      //  // nMaxCOunt using a DUALABZ
+      //  nMAXCOUNT=(power(2,31)*360)/(4*aioGet(e01Counts))
+      //
+      //  custom one
+      //
+      // elseIf ioStatus()>0
+      // // Part detection sensor
+      // dioLink(dLatchInput,)
+      // dioLink(dEnableLatch,)
+      // // encoderValue
+      // aioLink(aEncoder,)
+      // nMaxCOunt using a PROFIBUS CARD
+      // nMAXCOUNT=65535
+    endIf
+  else
+    // SIMULATION SENSOR
+    // Part detection sensor
+    dioLink(dLatchInput,valve1)
+    // encoderValue
+    aioLink(aEncoder,enc_speed)
+    nMAXCOUNT=65535
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

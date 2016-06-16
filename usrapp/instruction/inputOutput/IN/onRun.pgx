@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bMode" type="bool" xsi:type="array" size="3" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="3" />
+      <Local name="l_nFlag" type="num" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMode" type="string" xsi:type="array" size="1" />
+      <Local name="l_dDigital" type="dio" xsi:type="array" size="3" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_sId" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // find how many time and fill sItem and l_bMode
+  //
+  l_nCount=-1
+  do
+    l_nCount=l_nCount+1
+    // l_sMode
+    i=find(x_sItem,"AND")
+    if i==-1
+      i=find(x_sItem,"OR")
+      if i!=-1
+        l_sMode="OR"
+        i=i+len("OR")+1
+      endIf
+    else
+      l_sMode="AND"
+      i=i+len("AND")+1
+    endIf
+    //
+    if i!=-1
+      l_sItem[l_nCount]=left(x_sItem,i)
+      x_sItem=right(x_sItem,len(x_sItem)-i)
+    else
+      l_sItem[l_nCount]=x_sItem
+    endIf
+    l_nFlag=find(l_sItem[l_nCount],">")
+    // l_bMode
+    if find(l_sItem[l_nCount],">ON")!=-1
+      l_bMode[l_nCount]=true
+    else
+      l_bMode[l_nCount]=false
+    endIf
+    //sItem
+    l_sItem[l_nCount]=left(l_sItem[l_nCount],l_nFlag)
+  until i==-1
+  //
+  //LINK IT
+  //
+  call getSize(l_nSize)
+  // Link all
+  for i=0 to l_nCount
+    l_sId=l_sItem[i]
+    dioLink(l_dDigital[i],saveInOut:dInput[l_sId].dDio)
+  endFor
+  // link the noLink
+  for i=l_nCount to 2
+    l_sId=l_sItem[i]=l_sItem[l_nCount]
+    dioLink(l_dDigital[i],saveInOut:dInput[l_sId].dDio)
+    l_bMode[i]=l_bMode[l_nCount]
+  endFor
+  //
+  // DO IT
+  //
+  if l_sMode==""
+    if !(l_dDigital[0]==l_bMode[0] or !saveInOut:dInput[l_sItem[0]].bEnable)
+      call stopRobot()
+      // wait the signal
+      wait(l_dDigital[0]==l_bMode[0])
+      cycleStatus:bWait=false
+    endIf
+  elseIf l_sMode=="OR"
+    if !((l_dDigital[0]==l_bMode[0] or !saveInOut:dInput[l_sItem[0]].bEnable)or(l_dDigital[1]==l_bMode[1] or !saveInOut:dInput[l_sItem[1]].bEnable)or(l_dDigital[2]==l_bMode[2] or !saveInOut:dInput[l_sItem[2]].bEnable))
+      // mutex the motion status
+      call stopRobot()
+      // wait the signal
+      wait(l_dDigital[0]==l_bMode[0] or l_dDigital[1]==l_bMode[1] or l_dDigital[2]==l_bMode[2])
+      cycleStatus:bWait=false
+    endIf
+  elseIf l_sMode=="AND"
+    if !((l_dDigital[0]==l_bMode[0] or !saveInOut:dInput[l_sItem[0]].bEnable)and(l_dDigital[1]==l_bMode[1] or !saveInOut:dInput[l_sItem[1]].bEnable)and(l_dDigital[2]==l_bMode[2] or !saveInOut:dInput[l_sItem[2]].bEnable))
+      // mutex the motion status
+      call stopRobot()
+      // wait the signal
+      wait(l_dDigital[0]==l_bMode[0] and l_dDigital[1]==l_bMode[1] and l_dDigital[2]==l_bMode[2])
+      cycleStatus:bWait=false
+    endIf
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

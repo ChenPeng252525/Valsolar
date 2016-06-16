@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="get" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // start from the first
+  l_sKey=first(pt:tTraj)
+  // search it
+  while l_sKey!=""
+    x_sItem=l_sKey
+    l_sKey=next(pt:tTraj[l_sKey])
+    if i==x_nIndex
+      return
+    else
+      i=i+1
+    endIf
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

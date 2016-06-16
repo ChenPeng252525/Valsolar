@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="action_bufferT" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_aAction" type="ActionItem" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bMutex" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bTraj" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nActualStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIdTask" type="num" xsi:type="array" size="1" />
+      <Local name="l_nInstrId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMinus" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTask" type="num" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+      <Local name="l_sAction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sInstrType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INIT
+  //
+  // wait the Task Cycle or simulation has been started
+  wait(cycleStatus:bCycle or cycleStatus:bSimulation)
+  //
+  if x_aAction.iInstr.sType!="" and x_aAction.iInstr.sType!="null"
+    // compose the instruction
+    // do the action
+    x_aAction.nDistance=0
+    x_aAction.nMoveId=-1
+    x_aAction.nPointId=-1
+    call action_do(x_aAction,-1)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

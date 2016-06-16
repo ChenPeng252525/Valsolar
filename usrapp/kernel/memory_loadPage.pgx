@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_loadPage" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sChar" type="string" xsi:type="array" size="4" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT INSTRUCTION
+  call language:message(l_sMessage,20)
+  call use:typeLen(2,1,l_sMessage,30)
+  call use:clear(0,3)
+  l_sChar[0]="|"
+  l_sChar[1]="/"
+  l_sChar[2]="-"
+  l_sChar[3]="\"
+  l_nSize=size(saveData:sPageLoad)
+  k=0
+  // TO BE COMPATIBLE...
+  for i=0 to l_nSize-1
+    // print to screen
+    j=j%4
+    call use:type(0,4,l_sChar[j])
+    j=j+1
+    call use:typeLen(2,4,saveData:sPageLoad[i],38)
+    switch k
+      case 0
+        l_nResult=page0:libLoad(saveData:sPageLoad[i])
+      break
+      case 1
+        l_nResult=page1:libLoad(saveData:sPageLoad[i])
+      break
+      case 2
+        l_nResult=page2:libLoad(saveData:sPageLoad[i])
+      break
+      case 3
+        l_nResult=page3:libLoad(saveData:sPageLoad[i])
+      break
+      case 4
+        l_nResult=page4:libLoad(saveData:sPageLoad[i])
+      break
+      case 5
+        l_nResult=page5:libLoad(saveData:sPageLoad[i])
+      break
+      case 6
+        l_nResult=page6:libLoad(saveData:sPageLoad[i])
+      break
+      case 7
+        l_nResult=page7:libLoad(saveData:sPageLoad[i])
+      break
+      case 8
+        l_nResult=page8:libLoad(saveData:sPageLoad[i])
+      break
+      case 9
+        l_nResult=page9:libLoad(saveData:sPageLoad[i])
+      break
+      case 10
+        l_nResult=page10:libLoad(saveData:sPageLoad[i])
+      break
+      case 11
+        l_nResult=page11:libLoad(saveData:sPageLoad[i])
+      break
+      case 12
+        l_nResult=page12:libLoad(saveData:sPageLoad[i])
+      break
+      case 13
+        l_nResult=page13:libLoad(saveData:sPageLoad[i])
+      break
+      case 14
+        l_nResult=page14:libLoad(saveData:sPageLoad[i])
+      break
+      case 15
+        l_nResult=page15:libLoad(saveData:sPageLoad[i])
+      break
+      case 16
+        l_nResult=page16:libLoad(saveData:sPageLoad[i])
+      break
+      case 17
+        l_nResult=page17:libLoad(saveData:sPageLoad[i])
+      break
+      case 18
+        l_nResult=page18:libLoad(saveData:sPageLoad[i])
+      break
+      case 19
+        l_nResult=page19:libLoad(saveData:sPageLoad[i])
+      break
+      case 20
+        l_nResult=page20:libLoad(saveData:sPageLoad[i])
+      break
+      case 21
+        l_nResult=page21:libLoad(saveData:sPageLoad[i])
+      break
+      case 22
+        l_nResult=page22:libLoad(saveData:sPageLoad[i])
+      break
+      case 23
+        l_nResult=page23:libLoad(saveData:sPageLoad[i])
+      break
+      case 24
+        l_nResult=page24:libLoad(saveData:sPageLoad[i])
+      break
+      case 25
+        l_nResult=page25:libLoad(saveData:sPageLoad[i])
+      break
+    endSwitch
+    logMsg("[KERNEL] MEMORY:LOADED page "+saveData:sPageLoad[i]+toString("3",l_nResult))
+    if l_nResult==0
+      k=k+1
+    endIf
+    delay(0)
+  endFor
+  //
+  call use:clear(0,4)
+end]]></Code>
+  </Program>
+</Programs>

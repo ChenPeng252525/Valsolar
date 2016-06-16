@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="loadEditTraj">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // load the traj type
+  call saveData:getPathInstr(saveData:sTrajTypeUsing,l_sPath)
+  i=trajType:libLoad(l_sPath)
+  delay(0)
+  if i!=0
+    popUpMsg("error load traj type on START "+saveData:sTrajTypeUsing+toString("",i))
+  endIf
+  // save the name
+  sTrajName=x_sName
+end]]></Code>
+  </Program>
+</Programs>

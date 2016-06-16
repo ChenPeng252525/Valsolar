@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getCycle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nTotal" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nDone" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nType" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // mutex it
+  // setMutex
+  setMutex(cycleStatus:bMutex)
+  // get the cycle from the process LIST
+  switch x_nType
+    case 0
+      if x_nIndex<size(saveCycle:sLoadStart)
+        // ON START CYCLE
+        x_sName=saveCycle:sLoadStart[x_nIndex]
+        x_nTotal=saveCycle:nTotalStart[x_nIndex]
+        x_nDone=saveCycle:nDoneStart[x_nIndex]
+      endIf
+    break
+    case 1
+      if x_nIndex<size(saveCycle:sLoadProg)
+        // get the information about the actual process list
+        x_sName=saveCycle:sLoadProg[x_nIndex]
+        x_nTotal=saveCycle:nTotalCycle[x_nIndex]
+        x_nDone=saveCycle:nDoneCycle[x_nIndex]
+      endIf
+    break
+    case 2
+      if x_nIndex<size(saveCycle:sLoadEnd)
+        // ON END CYCLE
+        x_sName=saveCycle:sLoadEnd[x_nIndex]
+        x_nTotal=saveCycle:nTotalEnd[x_nIndex]
+        x_nDone=saveCycle:nDoneEnd[x_nIndex]
+      endIf
+    break
+  endSwitch
+  // release
+  cycleStatus:bMutex=false
+end
+
+]]></Code>
+  </Program>
+</Programs>

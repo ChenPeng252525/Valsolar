@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_mDesc" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_nTcpAction" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_bStop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nEmpty" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=100000
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  // load the menu page
+  if saveData:language!="japanese"
+    // SET THE VIEW OF THE PAGE
+    call language:page(l_sMessage,use:nPage)
+    // define the menu
+    call use:stringToArray(l_sMessage,sMenu)
+  else
+    // japanese use the array for the menu
+    call language:page(sMenu8,use:nPage)
+    call use:stringCopy(sMenu8,sMenu)
+  endIf
+  //
+  // polymorphism
+  //
+  // get the user Menu or special one
+  call trajType:getFunctionEdit(sMenuUser)
+  // OVERRIDE
+  for i=0 to size(sMenuUser)-1
+    if sMenuUser[i]!=""
+      sMenu[i]=sMenuUser[i]
+    endIf
+  endFor
+  // check for the here if not in cycle
+  if cycleStatus:bCycle or cycleStatus:bSimulation
+    sMenu[0]=""
+  endIf
+  // remove the insert delete in this page
+  sMenu[5]=sMenu[6]=""
+  if saveData:language!="japanese"
+    // set the menu
+    call use:setMenu(sMenu,true,3)
+  else
+    // set the menu
+    call use:setMenu(sMenu,false,3)
+  endIf
+  call use:getMenu(sMenu,bButton)
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  // get the nSize
+  call trajType:getSizeItem(false,l_nSize)
+  call use:setSizeList(19,0,19,10)
+  call use:setView(bLarge)
+  // show the title...
+  l_sName=sTrajName
+  if !bLarge and len(sTrajName)>12
+    // as japanese told us
+    l_sName=left(sTrajName,9)+"¬"+right(sTrajName,2)
+  endIf
+  call use:listcreate(l_sName+" "+toString("3",nIndexItem+1)+"/"+toString("3",l_nSize))
+  //
+  call use:listadd(sList)
+  //
+  // refresh the cursor
+  use:nView=nView
+  // refresh the list
+  call use:selectNewField(nSelected,nIndex,nView)
+  // show the instruction
+  l_sEmpty=""
+  l_bStop=false
+  l_nEmpty=0
+  call trajType:getTrajItem(l_tTraj,nIndexItem)
+  // select the action
+  switch l_tTraj.nTcpAction
+    case 1
+      l_sInstruction="[ON],"
+    break
+    case 2
+      l_sInstruction="[OFF],"
+    break
+    default
+    break
+  endSwitch
+  l_sType=l_tTraj.iInstr[0].sType
+  l_sData=l_tTraj.iInstr[0].sData
+  call saveInOut:replaceIO(l_sData,l_sType,l_sData)
+  l_sInstruction=l_sInstruction+l_sType+" "+l_sData
+  for i=1 to size(l_tTraj.iInstr)-1
+    if l_tTraj.iInstr[i].sType!=""
+      l_sType=l_tTraj.iInstr[i].sType
+      l_sData=l_tTraj.iInstr[i].sData
+      call saveInOut:replaceIO(l_sData,l_sType,l_sData)
+      l_sInstruction=l_sInstruction+","+l_sType+" "+l_sData
+    endIf
+  endFor
+  call use:typeLen(0,12,l_sInstruction,40)
+  // TOOL - FRAME
+  if !bLarge
+    call trajType:getTool(i)
+    call language:message(l_sMessage,124)
+    call tcp:getName(l_sName,i)
+    call use:type(0,0,l_sMessage+":"+toString("",i)+" "+l_sName)
+    call trajType:getFrameId(i)
+    call language:message(l_sMessage,124)
+    l_sName=saveData:fFrameItem[i].sName
+    call use:type(0,1,"Frame:"+toString("",i)+" "+l_sName)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

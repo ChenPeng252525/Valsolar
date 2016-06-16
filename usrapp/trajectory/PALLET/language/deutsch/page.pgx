@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="page" access="public">
+    <Description><![CDATA[set all the page in english]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="menuname" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  //  PAGE
+  //
+  //
+  // PALLET PAGE
+  if index>=10 and index<=19
+    title("< Palettenseite >")
+  endIf
+  // PALLET VIEW PAGE
+  if index>=100 and index<=109
+    title("< Palettenanzeize >")
+  endIf
+  switch index
+    //
+    // PALLET
+    //
+    // Integrator programmer
+    case 10,11
+      menuname="Programm anzeigen,Edit Palette,,,Assistent,Reset,Zurück,Nächste"
+    break
+    // On Cycle
+    case 13,14
+      menuname="Programm anzeigen,Edit Palette,,,,Reset,Zurück,Nächste"
+    break
+    // VIEW PALLET
+    case 100,101,102,103,104,105
+      menuname="Reset ALLES,,,,,Reset,Zurück,Nächste"
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

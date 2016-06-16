@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_interface" access="private" >
+    <Locals>
+      <Local name="bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="bStop" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="message" type="string" xsi:type="array" size="1" />
+      <Local name="sString" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  bActive=false
+  switch cycleStatus:nInterfaceToSV
+    case 0
+      //
+      // go to the production page
+      //
+      logMsg("[KERNEL] SUPERVISOR:Interface>Call Production page")
+      bActive=true
+    break
+    case 1
+      //
+      //  Exit from KERNEL
+      //
+      bQuit=true
+      bActive=true
+    break
+    case 2
+      //
+      //  Simulation of a program
+      //
+      call _startSimul(cycleStatus:iToSuperV)
+      bActive=true
+    break
+    case 3
+      //
+      //  Simulation of an Event
+      //
+      call _startSimul(cycleStatus:iToSuperV)
+      bActive=true
+    break
+    case 4
+      //
+      //  Timer simulation
+      //
+      cycleStatus:iToSuperV.sType="TIMER"
+      cycleStatus:iToSuperV.sData="executing"
+      call _startSimul(cycleStatus:iToSuperV)
+      bActive=true
+    break
+    // 
+    // PLC
+    //
+    case 10
+      // PLC activation
+      logMsg("[KERNEL] SUPERVISOR:Interface>Start the Task PLC")
+      plc:nToSuperV=-2
+      taskCreate "Plc",50,plc:Main()
+      saveData:bPlc=true
+      plc:nToSuperV=-1
+      bActive=true
+    break
+    case 11
+      // PLC de-activation
+      logMsg("[KERNEL] SUPERVISOR:Interface>Kill the Task PLC")
+      taskKill("Plc")
+      call plc:kill()
+      saveData:bPlc=false
+      bActive=true
+    break
+    default
+      //
+    break
+  endSwitch
+  // reset
+  if bActive
+    cycleStatus:nInterfaceToSV=-1
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

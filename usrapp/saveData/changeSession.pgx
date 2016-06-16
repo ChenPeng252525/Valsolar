@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changeSession" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sPathTraj" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPathProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_sRootPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPathCycle" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPathSave" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // change the session
+  //
+  // check if the robot is empty
+  if (isEmpty()and isSettled())and watch(bToReload==false,120)==true
+    if x_sName!="template"
+      l_sPathTraj="saveTraj/"
+      l_sPathProg="saveProg/"
+      l_sPathSave="saveCycle/"
+      l_sRootPath="Disk://session/"+x_sName+"/"
+      // trajectory
+      sPathTraj=l_sRootPath+l_sPathTraj
+      // program
+      sPathProg=l_sRootPath+l_sPathProg
+      // process list
+      sPathPList=l_sRootPath+l_sPathSave
+      // save it
+      sSession=x_sName
+    else
+      // trajectory
+      sPathTraj="kernel/template/session/saveTraj/"
+      // program
+      sPathProg="kernel/template/session/saveProg/"
+      // process list
+      sPathPList="kernel/template/session/saveCycle/"
+    endIf
+    // reaload all...
+    bToReload=true
+    // watch it
+    if watch(bToReload==false,120)==false
+      popUpMsg("ERROR TIMEOUT!!! LOADING SESSION ...")
+      logMsg("ERROR LOADING SESSION ...")
+      wait(bToReload==false)
+    endIf
+  else
+    popUpMsg("Error while changing the session the robot is working...")
+    logMsg("Error while changing the session the robot is working...")
+    delay(1)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

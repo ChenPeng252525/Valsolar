@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="Main" access="public" >
+    <Code><![CDATA[begin
+  wait(nToSuperV==-1)
+  // wait the session has been loaded
+  watch(saveData:bToReload==true,10)
+  watch(saveData:bToReload==false,10)
+  //
+  logMsg("[KERNEL] PLC:LOAD")
+  // Init
+  // Clean the process List
+  //  call cycle_clearList(0)
+  //  call cycle_clearList(1)
+  //  call cycle_clearList(2)
+  // Reset the loop
+  // call cycle_setLoop(false)
+  // reload the program LIST
+  call cycle_updateLst()
+  // set the PLC enable in order to wait a new program in the process LIST without END it
+  saveData:bPlcEnable=false
+  // get the list of session
+  call saveData:getListSession(sSessionList)
+  // HOME PARAMETER
+  // radius home to check for the best J4-J5-J6 config
+  saveData:nRadiusHome=400
+  // Set to use or not the HOME position before START the production
+  saveData:bNoUseHome=false
+  // set to search inside the joints with the same actual config or not 
+  saveData:bUseHomeConfig=false
+  // set to scan the best point along the home trajectory or to attach only to a joint point
+  saveData:bUseHomeScanner=true
+  while true
+    //
+    //  SEND TO PLC
+    //
+    call send()
+    //
+    //  RECEIVE FROM PLC
+    //
+    call receive()
+    //
+    delay(0)
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

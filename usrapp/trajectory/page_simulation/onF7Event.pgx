@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    // STOP /START
+    //
+    if !cycleStatus:bSimulation and nKey!=255
+      if nPoint!=0
+        // not for the first point
+        call isAtPoint(nPoint,l_bInside)
+      else
+        l_bInside=true
+      endIf
+      if l_bInside
+        // START
+        bStepping=false
+        call startCycle(nPoint)
+      else
+        // not at point
+        call language:message(l_sMessage,95)
+        call use:timerDialog(l_sMessage+toString("",nPoint+1),2)
+      endIf
+    elseIf cycleStatus:bSimulation
+      // STOP CYCLE
+      call stopCycle()
+      call use:nullKey(nKey)
+    endIf
+    //
+    //
+    use:bUseRefresh=true
+    //
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

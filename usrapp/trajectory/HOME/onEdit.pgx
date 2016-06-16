@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEdit" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // DEFINE YOUR ITEM
+  call getTrajType(saveData:sTrajTypeUsing)
+  // load the trajectory
+  call load(x_sItem,l_nResult)
+  if size(x_sItem)>1
+    // give back the path
+    l_sPath="Disk://trajectory/page_viewTraj"
+    x_sItem[1]=x_sItem
+    x_sItem=l_sPath
+    // init
+    tAppro={0,0,0,0,0,0}
+    tPointTo={0,0,0,0,0,0}
+    nZeta=0
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

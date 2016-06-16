@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="selectType" access="public">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nDefault" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // select the type of the process LIST
+  call use:clear(0,13)
+  call language:message(l_sMessage,191)
+  call use:typeCenter(13,l_sMessage,40,true)
+  call use:setSizeList(10,2,15,6)
+  // TODO message
+  call use:listcreate("")
+  call use:listadd(sType)
+  call getDefaultType(l_nDefault)
+  call use:selectNewField(l_nDefault,0,0)
+  // select the Item
+  do
+    l_nKey=get()
+    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    // search for a key
+  until l_nKey==270 or l_nKey==255
+  if l_nKey==270
+    call setDefaultType(l_nIndex)
+    use:bUseRefresh=true
+  endIf
+  //
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

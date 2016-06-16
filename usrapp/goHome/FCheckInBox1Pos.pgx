@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="FCheckInBox1Pos" access="public">
+    <Description><![CDATA[Pruefen ob Roboter innerhalb eines definierten Bereichs]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="t_tool" type="tool" xsi:type="element" />
+      <Parameter name="fr_frame" type="frame" xsi:type="element" />
+      <Parameter name="b_inArea" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nKeyNum" type="num" xsi:type="array" use="reference" />
+      <Parameter name="nTolKeyNum" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="tr_here" type="trsf" xsi:type="array" size="1" />
+      <Local name="p_here" type="point" xsi:type="array" size="1" />
+      <Local name="tr_NegPos" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_PosPos" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_BoxPos1" type="trsf" xsi:type="array" size="1" />
+      <Local name="tr_BoxPos2" type="trsf" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //Header
+  if false
+    //判断机器人是否属于所设定的空间盒子中
+    //Parameter:
+    //  p_BoxPos1: Position 1 (包括开始位置跟结束位置)
+    //  p_BoxPos2: Position 2 (包括开始位置跟结束位置)
+    //  b_inArea: 返回参数  true  : 机器人在矩形中
+    //                          false : 机器人属于非矩形中
+    //
+  endIf
+  //判断变量返回
+  b_inArea=true
+  p_here=here(t_tool,fr_frame)
+  tr_here=p_here.trsf
+  if (tr_here.x>(x_nKeyNum[3]+nTolKeyNum[3])) or (tr_here.y>(x_nKeyNum[4]+nTolKeyNum[4])) or (tr_here.z>(x_nKeyNum[5]+nTolKeyNum[5]))
+    b_inArea=false
+  endIf
+  if (tr_here.x<(x_nKeyNum[0]-nTolKeyNum[0])) or (tr_here.y<(x_nKeyNum[1]-nTolKeyNum[1])) or (tr_here.z<(x_nKeyNum[2]-nTolKeyNum[2]))
+    b_inArea=false
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

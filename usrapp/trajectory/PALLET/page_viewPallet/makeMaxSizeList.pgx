@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="makeMaxSizeList">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nResult" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sPalletName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSizePallet" type="num" xsi:type="array" size="4" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INIT
+  //
+  sPalletName=""
+  // make the list of the max size list of pallet
+  call pallet:getSize(l_nSize)
+  resize(sPalletName,1,max(1,l_nSize))
+  resize(nMax,1,max(1,l_nSize))
+  //
+  // build the list
+  //
+  for i=0 to l_nSize-1
+    call pallet:get(l_sPalletName,i)
+    if l_sPalletName!=""
+      call pallet:getSizePallet(l_sPalletName,l_nSizePallet)
+      nMax[i]=l_nSizePallet
+      sPalletName[i]=l_sPalletName
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

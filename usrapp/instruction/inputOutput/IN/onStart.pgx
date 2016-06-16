@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart" access="public">
+    <Description><![CDATA[check and put all the boolean as the status of BIO-MIO-MODBUS-FIELDBUS-ARMIO]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nModbusOut" type="num" xsi:type="array" size="1" />
+      <Local name="l_nFieldbusOut" type="num" xsi:type="array" size="1" />
+      <Local name="l_bChange" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if x_sItem=="init"
+    //
+    // DIGITAL INPUT
+    //
+    // set the default value
+    call saveInOut:setInput(0)
+//    // BIO
+//    call saveInOut:setInput(1)
+//    // BIO2 - MIO
+//    call saveInOut:setInput(2)
+//    // MODBUS
+//    call saveInOut:setInput(3)
+//    // USER
+//    call saveInOut:setInput(4)
+//    // REMIO
+    //    call saveInOut:setInput(5)
+    //.net
+    call saveInOut:setInput(6)
+    //
+    // SAVE
+    //
+    call save(l_nResult)
+    if l_nResult==0
+      logMsg("[KERNEL] SUPERVISOR>Input: Save Done")
+    else
+      logMsg("error "+toString("",l_nResult)+" saving the saveInputInput")
+      popUpMsg("error "+toString("",l_nResult)+" saving the saveInputInput")
+    endIf
+  endIf
+  resize(sKey,1,1)
+  sKey=""
+  if isDefined(saveInOut:dInput["usrIn0"])
+    append(sKey)
+    sKey[0]="usrIn0"
+  endIf
+  if isDefined(saveInOut:dInput["usrIn1"])
+    append(sKey)
+    sKey[1]="usrIn1"
+  endIf
+  // insert the fIn or usrIn if exist
+  if isDefined(saveInOut:dInput["fIn0"])
+    sKey[2]="fIn0"
+  endIf
+  if isDefined(saveInOut:dInput["fIn1"])
+    append(sKey)
+    sKey[3]="fIn1"
+  endIf
+  l_sKey=first(saveInOut:dInput)
+  i=size(sKey)-1
+  // 
+  // copy all
+  //
+  while l_sKey!=""
+    // use of number
+    if find(l_sKey,"fIn")==-1 and find(l_sKey,"usrIn")==-1
+      if !(sKey[0]=="" and i==0)
+        append(sKey)
+        i=i+1
+      endIf
+      sKey[i]=l_sKey
+    endIf
+    l_sKey=next(saveInOut:dInput[l_sKey])
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

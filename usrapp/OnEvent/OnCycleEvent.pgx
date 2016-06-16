@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="OnCycleEvent" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nMode" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // when the robot stop for any reason during the cycle
+  // it calls this procedure
+  //
+  // define the error-mode:
+  // -1 -> unknow event
+  // 0  -> hold release
+  // 1  -> emergency pressed
+  // 2  -> pause
+  // 3  -> restart from pause
+  // 4  -> end of cycle
+  // 5  -> stop cycle
+  // 6  -> robot is not in remote or local working mode during the cycle
+  // 7  -> disable Power during the cycle
+  // 8  -> normal end of the cycle process list
+  // 9  -> program, traj not loaded
+  // 10 -> escape , stop from simulation
+  // 11 -> Point out of range
+  // 12 -> Task Problem
+  // 13 -> Cycle Start
+  // 14 -> Program terminated
+  // 15 -> Clear the list
+  // 16 -> Reset all Pallet
+  // 17 -> Simulation Start
+  // 18 -> End of Simulation
+  // 19 -> Program started
+  // 20 -> Before the Home Strategy
+  // 21 -> End of Home Strategy
+  // 22 -> timeOut Warning
+  // 23 -> Tracking full
+  // 24 -> Tracking part out of windows
+  // 25 -> Tracking problem
+  // 26 -> the camera is not ONLINE
+  // 27 -> Vision photo not detect
+  switch x_nMode
+    case -1
+      // unknow event
+      logMsg("[KERNEL] OnEvent:Unknow event")
+    break
+    case 0
+      //hold release
+      logMsg("[KERNEL] OnEvent:Hold release")
+    break
+    case 1
+      //emergency pressed
+      logMsg("[KERNEL] OnEvent:Emergency press")
+    break
+    case 2
+      //pause
+      logMsg("[KERNEL] OnEvent:Pause cycle")
+    break
+    case 3
+      //restart
+      if cycleStatus:nWorkingMode==4 and !isPowered()
+        // PUT THE POWER ON
+        cycleStatus:bAutoON=true
+      endIf
+      logMsg("[KERNEL] OnEvent:Restart cycle")
+    break
+    case 4
+      //end of cycle
+      logMsg("[KERNEL] OnEvent:End of cycle")
+    break
+    case 5
+      //stop cycle
+      logMsg("[KERNEL] OnEvent:Stop cycle")
+    break
+    case 6
+      //not remote or local mode during Cycle
+      logMsg("[KERNEL] OnEvent:Changing working mode during cycle")
+    break
+    case 7
+      //lost the power during the Cycle
+      logMsg("[KERNEL] OnEvent:Lost power during cycle")
+      if saveData:bStopToPowerOff
+        call stopCycle()
+      else
+        // reset
+        call pauseCycle()
+      endIf
+    break
+    case 8
+      // end of cycle
+      logMsg("[KERNEL] OnEvent:Normal end of cycle process list")
+    break
+    case 9
+      //program, traj not loaded
+      logMsg("[KERNEL] OnEvent:Program or Traj not loaded")
+    break
+    case 10
+      //escape from simulation
+      logMsg("[KERNEL] OnEvent:Escape from simulation")
+    break
+    case 11
+      // Point out of range
+      logMsg("[KERNEL] OnEvent:Point out of range")
+      call language:message(l_sMessage,-5)
+      popUpMsg(l_sMessage)
+    break
+    case 12
+      // Task problem
+      logMsg("[KERNEL] OnEvent:Task Problem")
+    break
+    case 13
+      // Cycle Started
+      logMsg("[KERNEL] OnEvent:Start Cycle")
+    break
+    case 14
+      // Cycle program terminated
+      logMsg("[KERNEL] OnEvent:Program terminated")
+    break
+    case 15
+      // Clear the List
+      logMsg("[KERNEL] OnEvent:Clear the List")
+    break
+    case 16
+      // reset all pallet
+      logMsg("[KERNEL] reset all Pallet")
+    break
+    case 17
+      // start of simulation
+      logMsg("[KERNEL] OnEvent:Start of simulation")
+    break
+    case 18
+      // end of simulation
+      logMsg("[KERNEL] OnEvent:end of simulation")
+    break
+    case 19
+      // PROGRAM started
+      logMsg("[KERNEL] OnEvent:Program started.. ")
+    break
+    case 20
+      // Before Home Strategy
+      logMsg("[KERNEL] OnEvent:before home strategy")
+    break
+    case 21
+      // End Home Strategy
+      logMsg("[KERNEL] OnEvent:end of home strategy")
+    break
+    case 22
+      // timeOut Warning
+      call pauseCycle()
+      popUpMsg("TIME OUT waiting"+cycleStatus:sLastAction)
+      logMsg("[KERNEL] OnEvent:TIME OUT waiting"+cycleStatus:sLastAction)
+    break
+    case 23
+      // tracking Full
+      logMsg("[KERNEL] OnEvent:TRACKING buffer FULL")
+    break
+    case 24
+      //  Tracking part out of windows
+      logMsg("[KERNEL] OnEvent:TRACKING part out of windows")
+    break
+    case 25
+      // Tracking problem
+      logMsg("[KERNEL] OnEvent:TRACKING problem on the movingFrame state")
+      if saveData:bStopToPowerOff==false and cycleStatus:bCycle
+        stopMove()
+        call pauseCycle()
+      else
+        // stop the cycle
+        call stopCycle()
+      endIf
+    break
+    case 26
+      // The camera is not online
+      logMsg("[KERNEL] OnEvent:The camera is not ONLINE")
+      call pauseCycle()
+    break
+    case 27
+      // PHOTO not taken
+      logMsg("[KERNEL] OnEvent:Photo not taken")
+      call pauseCycle()
+    break
+  endSwitch
+  //
+  // SEND TO PLC
+  //
+  //
+  // SEND TO OPC
+  //
+end]]></Code>
+  </Program>
+</Programs>

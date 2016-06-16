@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_path" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sPath" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sFolders" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // make o recursive all the path
+  //
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sPath)
+  libList(x_sPath,sPath)
+  l_nSize=size(sPath)-1
+  if sPath!=""
+    for i=0 to l_nSize
+      if find(sPath[i],".")==-1
+        // compose
+        l_sPath=x_sPath
+        if x_sPath!=""
+          // deepest
+          x_sPath=x_sPath+"/"+sPath[i]
+        else
+          x_sPath=sPath[i]
+        endIf
+        //
+        // increase the x_sFolders
+        //
+        if x_sFolders!=""
+          insert(x_sFolders[size(x_sFolders)])
+        endIf
+        x_sFolders[size(x_sFolders)-1]=x_sPath
+        //
+        call memory_path(x_sPath,x_sFolders)
+        // refresh the global variable
+        l_sEmpty=""
+        call use:stringCopy(l_sEmpty,sPath)
+        libList(l_sPath,sPath)
+        x_sPath=l_sPath
+        //
+      endIf
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

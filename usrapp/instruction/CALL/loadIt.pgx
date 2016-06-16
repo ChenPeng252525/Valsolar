@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="loadIt">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nTime" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_bLoaded" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverride" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  l_nTime=clock()
+  // MUTEX IT
+  if !watch(bMutex==false,1)
+    bMutex=false
+    if saveData:bDebug
+      logMsg("[DEBUG] MEMORY: CALL:bMutex -> TRUE FAULT")
+    endIf
+  endIf
+  //
+  setMutex(bMutex)
+  // load in the memory the selected extCall
+  l_sPath="Disk://"
+  // MEMORY STRATEGY
+  // use 19 extCall to store the extCall load 
+  do
+    switch l_nId
+      case 0
+        if extCall0:libPath()==sCallTemp or extCall0:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall0:libPath()
+          if (l_sPath+x_sName)!=extCall0:libPath()
+            l_nResult=extCall0:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall0:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 1
+        if extCall1:libPath()==sCallTemp or extCall1:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall1:libPath()
+          if (l_sPath+x_sName)!=extCall1:libPath()
+            l_nResult=extCall1:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall1:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 2
+        if extCall2:libPath()==sCallTemp or extCall2:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall2:libPath()
+          if (l_sPath+x_sName)!=extCall2:libPath()
+            l_nResult=extCall2:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall2:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 3
+        if extCall3:libPath()==sCallTemp or extCall3:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall3:libPath()
+          if (l_sPath+x_sName)!=extCall3:libPath()
+            l_nResult=extCall3:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall3:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 4
+        if extCall4:libPath()==sCallTemp or extCall4:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall4:libPath()
+          if (l_sPath+x_sName)!=extCall4:libPath()
+            l_nResult=extCall4:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall4:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 5
+        if extCall5:libPath()==sCallTemp or extCall5:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall5:libPath()
+          if (l_sPath+x_sName)!=extCall5:libPath()
+            l_nResult=extCall5:libLoad(l_sPath+x_sName)
+          endIf  
+          if l_nResult==0
+            call extCall5:start()
+          endIf
+          
+          l_bLoaded=true
+        endIf
+      break   
+      case 6
+        if extCall6:libPath()==sCallTemp or extCall6:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall6:libPath()
+          if (l_sPath+x_sName)!=extCall6:libPath()
+            l_nResult=extCall6:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall6:start()
+          endIf
+          
+          l_bLoaded=true
+        endIf
+      break   
+      case 7
+        if extCall7:libPath()==sCallTemp or extCall7:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall7:libPath()
+          if (l_sPath+x_sName)!=extCall7:libPath()
+            l_nResult=extCall7:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall7:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 8
+        if extCall8:libPath()==sCallTemp or extCall8:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall8:libPath()
+          if (l_sPath+x_sName)!=extCall8:libPath()
+            l_nResult=extCall8:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall8:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 9
+        if extCall9:libPath()==sCallTemp or extCall9:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall9:libPath()
+          if (l_sPath+x_sName)!=extCall9:libPath()
+            l_nResult=extCall9:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall9:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 10
+        if extCall10:libPath()==sCallTemp or extCall10:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall10:libPath()
+          if (l_sPath+x_sName)!=extCall10:libPath()
+            l_nResult=extCall10:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall10:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break 
+      case 11
+        if extCall11:libPath()==sCallTemp or extCall11:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall11:libPath()
+          if (l_sPath+x_sName)!=extCall11:libPath()
+            l_nResult=extCall11:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall11:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break   
+      case 12
+        if extCall12:libPath()==sCallTemp or extCall12:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall12:libPath()
+          if (l_sPath+x_sName)!=extCall12:libPath()
+            l_nResult=extCall12:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall12:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 13
+        if extCall13:libPath()==sCallTemp or extCall13:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall13:libPath()
+          if (l_sPath+x_sName)!=extCall13:libPath()
+            l_nResult=extCall13:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall13:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 14
+        if extCall14:libPath()==sCallTemp or extCall14:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall14:libPath()
+          if (l_sPath+x_sName)!=extCall14:libPath()
+            l_nResult=extCall14:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall14:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 15
+        if extCall15:libPath()==sCallTemp or extCall15:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall15:libPath()
+          if (l_sPath+x_sName)!=extCall15:libPath()
+            l_nResult=extCall15:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall15:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 16
+        if extCall16:libPath()==sCallTemp or extCall16:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall16:libPath()
+          if (l_sPath+x_sName)!=extCall16:libPath()
+            l_nResult=extCall16:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall16:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 17
+        if extCall17:libPath()==sCallTemp or extCall17:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall17:libPath()
+          if (l_sPath+x_sName)!=extCall17:libPath()
+            l_nResult=extCall17:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall17:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 18
+        if extCall18:libPath()==sCallTemp or extCall18:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall18:libPath()
+          if (l_sPath+x_sName)!=extCall18:libPath()
+            l_nResult=extCall18:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall18:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break
+      case 19
+        if extCall19:libPath()==sCallTemp or extCall19:libPath()=="" or l_bOverride or (l_sPath+x_sName)==extCall19:libPath()
+          if (l_sPath+x_sName)!=extCall19:libPath()
+            l_nResult=extCall19:libLoad(l_sPath+x_sName)
+          endIf
+          if l_nResult==0
+            call extCall19:start()
+          endIf
+          l_bLoaded=true
+        endIf
+      break                   
+    endSwitch
+    //
+    if !l_bLoaded
+      if l_nId>=19
+        // check for the less use
+        l_nMin=nLoad
+        l_bOverride=true
+        for i=0 to 19
+          if nLoad[l_nId]<=l_nMin
+            l_nId=i
+          endIf
+        endFor
+      else
+        //increase
+        l_nId=l_nId+1
+      endIf
+    endIf
+    //
+    // exit
+    //
+    delay(0)
+  until l_bLoaded
+  //
+  // validate
+  //
+  if l_bOverride
+    nLoad[l_nId]=1
+  else
+    nLoad[l_nId]=nLoad[l_nId]+1
+  endIf
+  if l_nResult!=0
+    logMsg("[DEBUG] MEMORY:Charged "+x_sName+" error code: "+toString("",l_nResult))
+  endIf
+  // release
+  bMutex=false
+end]]></Code>
+  </Program>
+</Programs>

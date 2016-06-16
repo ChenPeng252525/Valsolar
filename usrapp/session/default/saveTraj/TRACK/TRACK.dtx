@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="tTraj" access="public" xsi:type="collection" type="Tracks" >
+      <Value key="w">
+        <Field name="fFrame" xsi:type="array" type="frame" size="1">
+          <Value key="0" x="711.850001" y="-407.745087" z="-259.307675" rx="0.000002" ry="0.000003" rz="89.854066" fatherId="world[0]" />
+        </Field>
+        <Field name="fMoving" xsi:type="array" type="frame" size="1">
+          <Value key="0" x="303.411201" fatherId="tTraj[&quot;w&quot;].fFrame[0]" />
+        </Field>
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="w" />
+        </Field>
+        <Field name="tData" xsi:type="array" type="TrajItem" size="3">
+          <Value key="0">
+            <Field name="nType" xsi:type="array" type="num" size="1">
+            </Field>
+            <Field name="pCircle" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="pPoint" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1">
+                  <Value key="0" value="TRACK ON" />
+                </Field>
+                <Field name="distance" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nStop" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTime" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="9999" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1">
+                </Field>
+              </Value>
+            </Field>
+          </Value>
+          <Value key="1">
+            <Field name="nType" xsi:type="array" type="num" size="1">
+            </Field>
+            <Field name="pCircle" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="pPoint" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1">
+                </Field>
+                <Field name="distance" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1">
+                  <Value key="0" value="1" />
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nStop" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTime" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" vel="450" tmax="1000" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1">
+                </Field>
+              </Value>
+            </Field>
+          </Value>
+          <Value key="2">
+            <Field name="nType" xsi:type="array" type="num" size="1">
+            </Field>
+            <Field name="pCircle" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="pPoint" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTraj[&quot;w&quot;].fMoving[0]" />
+            </Field>
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="comment" xsi:type="array" type="string" size="1">
+                  <Value key="0" value="TRACK OFF" />
+                </Field>
+                <Field name="distance" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="1">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                  <Value key="2">
+                    <Field name="sData" xsi:type="array" type="string" size="1">
+                    </Field>
+                    <Field name="sType" xsi:type="array" type="string" size="1">
+                    </Field>
+                  </Value>
+                </Field>
+                <Field name="moveType" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nStop" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nTime" xsi:type="array" type="num" size="1">
+                </Field>
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="9999" />
+                </Field>
+                <Field name="toStop" xsi:type="array" type="bool" size="1">
+                </Field>
+              </Value>
+            </Field>
+          </Value>
+        </Field>
+      </Value>
+    </Data>
+  </Datas>
+</Database>

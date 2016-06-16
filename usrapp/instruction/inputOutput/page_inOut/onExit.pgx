@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onExit" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSaveInOut" type="bool" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bsaveData" type="bool" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // SAVE IT
+  if x_bSaveInOut
+    call out:save(l_nResult)
+    if l_nResult!=0
+      call language:message(l_sMessage,-6)
+      popUpMsg(l_sMessage+toString("",l_nResult))
+      logMsg("[KERNEL] INTERFACE:Error saving Out code: "+toString("",l_nResult))
+    else
+    endIf
+    call in:save(l_nResult)
+    if l_nResult!=0
+      call language:message(l_sMessage,-6)
+      popUpMsg(l_sMessage+toString("",l_nResult))
+      logMsg("[KERNEL] INTERFACE:Error saving In code: "+toString("",l_nResult))
+    endIf
+    // save all the data
+    if x_bsaveData
+      l_nResult=saveData:libSave()
+      if l_nResult!=0
+        call language:message(l_sMessage,-6)
+        popUpMsg(l_sMessage+toString("",l_nResult))
+        logMsg("[KERNEL] INTERFACE:Error saving saveData code: "+toString("",l_nResult))
+      endIf
+    endIf
+  endIf
+  // clear the list
+  call use:listempty()
+end]]></Code>
+  </Program>
+</Programs>

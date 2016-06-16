@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndexCopy" type="num" xsi:type="element" use="reference" />
+      <Parameter name="x_nIndexPaste" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nLastType" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // use to add more elements from the typical one
+  //
+  // insert all the field
+  // 
+  l_pPoint=pEditPoint.tData[x_nIndexCopy].pPoint
+  l_nLastType=pEditPoint.tData[x_nIndexCopy].nType
+  if l_nLastType==0
+    l_nType=0
+  elseIf l_nLastType==2 or l_nLastType==1
+    l_nType=2
+  endIf
+  insert(pEditPoint.tData[x_nIndexPaste])
+  // set IT - link it
+  link(pEditPoint.tData[x_nIndexPaste].pPoint,pEditPoint.fFrame)
+  link(pEditPoint.tData[x_nIndexPaste].pCircle,pEditPoint.fFrame)
+  pEditPoint.tData[x_nIndexPaste].pPoint.trsf=l_pPoint.trsf
+  // set IT
+  pEditPoint.tData[x_nIndexPaste].nType=l_nType
+end]]></Code>
+  </Program>
+</Programs>

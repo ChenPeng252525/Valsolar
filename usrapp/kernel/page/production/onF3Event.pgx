@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF3Event" access="private" >
+    <Locals>
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[2]
+    // load the page Pallet
+    l_sEmpty=""
+    call loadPage("trajectory/PALLET/page_viewPallet",l_sEmpty)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

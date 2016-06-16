@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="checkZone" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_pPoints" type="point" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_tTool" type="tool" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nDimension" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bInside" type="bool" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // init the variable
+  x_bInside=false
+  // show the frame
+  switch x_nType
+    case 1
+      //
+      // BOX
+      //
+      //create the cube
+      call solid:create_cube(x_pPoints[0],x_pPoints[1],x_pPoints[2],x_nDimension)
+      // check the cube
+      call solid:check_cube(x_tTool,x_bInside)
+    break
+    case 2
+      //
+      // SPHERE
+      //
+      // create the sphere
+      call solid:create_sphere(x_pPoints,x_nDimension)
+      // check the cube
+      call solid:check_sphere(x_tTool,x_bInside)
+    break
+    case 3
+      //
+      // PLANE
+      //
+      //create the plane
+      call solid:create_plane(x_pPoints[0],x_pPoints[1],x_pPoints[2])
+      // check the cube
+      call solid:check_plane(x_tTool,x_bInside)
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

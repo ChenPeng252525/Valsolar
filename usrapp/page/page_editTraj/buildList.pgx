@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin  
+  call use:setSizeList(13,0,25,9) 
+  //建立对话款
+  call use:listcreate("") 
+//  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+//  call use:selectNewField(nSelected,nIndex,nView)
+  call listAdd("点属性 "+">取片点移动")
+  call listAdd("Appro "+" X  > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.x))
+  call listAdd("Appro "+" Y  > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.y))
+  call listAdd("Appro "+" Z  > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.z))
+  call listAdd("Appro "+" RX > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.rx))
+  call listAdd("Appro "+" RY > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.ry))
+  call listAdd("Appro "+" RZ > "+toString(".2",data:pPoinTest[data:nPage_Traj].trsf.rz))
+  call listAdd("速度 "+" > "+toString(".2",data:mNomSpeed.vel)+"%")
+  call listAdd("加速度 "+" > "+toString(".2",data:mNomSpeed.accel)+"%")
+  call listAdd("偏移方式  >Appro")
+  call listAdd("偏移对象  >摆正点")
+  call listAdd("移动方式  >直线")
+  call listAdd("停止  >[ ]")
+  call listAdd("混合  >[ ]")
+  call listAdd("输出提前 > 0mm")
+  call use:listadd(sList)
+ // nIndex=data:nPage_viewTraj
+  call use:selectNewField(nSelected,nIndex,nView)
+  call use:listupdate(0)
+end]]></Code>
+  </Program>
+</Programs>

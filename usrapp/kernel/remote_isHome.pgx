@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="remote_isHome" access="private" >
+    <Locals>
+      <Local name="l_jHere" type="joint" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if home was loaded
+  if (!cycleStatus:bHomeLoaded or jHome:libPath()=="" or find(jHome:libPath(),"template")!=-1) and saveData:bToReload==false
+    call remote_loadHome(l_nResult)
+  endIf
+  // ok home is in the ram
+  l_sItem="home"
+  l_nSize=size(jHome:tTraj[l_sItem].tData)-1
+  if l_nResult==0 and jHome:tTraj[l_sItem].tData[l_nSize].jJoint!={0,0,0,0,0,0}
+    // check if the the robot is nearby
+    if abs(herej()-jHome:tTraj[l_sItem].tData[l_nSize].jJoint)<{1,1,1,2,2,2}
+      // the robot is at home
+      cycleStatus:bIsHome=true
+    else
+      cycleStatus:bIsHome=false
+    endIf
+  else
+    cycleStatus:bIsHome=false
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

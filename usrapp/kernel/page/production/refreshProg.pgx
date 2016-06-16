@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshProg">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pProg" type="progItem" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTitle" type="string" xsi:type="array" size="1" />
+      <Local name="l_pProg" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // set the size of the windows
+  if !(cycleStatus:bTraj)
+    call use:setView(bLarge)
+  endIf
+  // Create the list
+  if bLarge
+    call use:type(2,0,sProgName)
+  else
+    call use:type(21,0,sProgName)
+  endIf
+  // fill IT
+  call use:listempty()
+  if sProgName!=""
+    l_nSize=size(x_pProg.iEvent)
+    for i=0 to l_nSize-1
+      l_nSize=size(x_pProg.iEvent)
+      // insert all
+      if i<=size(x_pProg.iEvent)-1
+        l_sData=x_pProg.iEvent[min(i,size(x_pProg.iEvent)-1)].sData
+        l_sEvent=x_pProg.iEvent[min(i,size(x_pProg.iEvent)-1)].sType
+        call saveInputOutput:replaceIO(l_sData,l_sEvent,l_sData)
+        l_sEvent=l_sEvent+" "+l_sData
+        l_sEvent=toString("2",i+1)+" "+l_sEvent
+        call use:listadd(l_sEvent)
+      else
+        return
+      endIf
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="HMI_setNewValue" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nValue" type="num" xsi:type="element" use="reference" />
+      <Parameter name="x_nMin" type="num" xsi:type="element" />
+      <Parameter name="x_nMax" type="num" xsi:type="element" />
+      <Parameter name="x_nX" type="num" xsi:type="element" />
+      <Parameter name="x_nY" type="num" xsi:type="element" />
+      <Parameter name="x_sItem" type="string" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bQuit" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  call use:clear(0,13)
+  do 
+    do
+      call use:setSizeList(x_nX,x_nY-2,23,1)
+      call use:listcreate("")
+      call use:type(35,13,"OK")
+      gotoxy(x_nX+1,x_nY-1)
+      put(x_sItem)
+      do 
+        nKey=get(x_nValue)
+      until nKey==270 or nKey==278
+      if x_nMin==0 and x_nMax==0
+        l_bOk=true
+      elseIf  x_nValue>=x_nMin and x_nValue<=x_nMax  
+          l_bOk=true
+      else
+        call language2:message(l_sMessage,38)
+        popUpMsg(l_sMessage)
+      endIf 
+      
+    until l_bOk
+    if nKey==278
+      l_bQuit=true
+    endIf 
+    call use:nullKey(nKey)
+  until l_bQuit
+end]]></Code>
+  </Program>
+</Programs>

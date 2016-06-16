@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="aEncoder" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01CurrPos" />
+    </Data>
+    <Data name="aEncoderLatch" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ModbusSrv-0\Modbus-Word\encoder" />
+    </Data>
+    <Data name="aEncoderSpeed" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ModbusSrv-0\Modbus-Word\encoder" />
+    </Data>
+    <Data name="e00Counts" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e00Counts" />
+    </Data>
+    <Data name="e00CountsMes" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e00CountsMes" />
+    </Data>
+    <Data name="e00CurrPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01CurrPos" />
+    </Data>
+    <Data name="e00LatchFilter" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e00LatchFilter" />
+    </Data>
+    <Data name="e00LatchPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01LatchPos" />
+    </Data>
+    <Data name="e00PrstPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e00PrstPos" />
+    </Data>
+    <Data name="e01CurrPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01CurrPos" />
+    </Data>
+    <Data name="e01LatchPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01LatchPos" />
+    </Data>
+    <Data name="enc_speed" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="ModbusSrv-0\Modbus-Word\speed" />
+    </Data>
+    <Data name="bAlreadyStart" access="public" xsi:type="array" type="bool" size="1" />
+    <Data name="bRemoveOnStop" access="public" xsi:type="array" type="bool" size="1">
+      <Value key="0" value="true" />
+    </Data>
+    <Data name="bResetOnStart" access="public" xsi:type="array" type="bool" size="1">
+      <Value key="0" value="true" />
+    </Data>
+    <Data name="bSimulate" access="public" xsi:type="array" type="bool" size="1" />
+    <Data name="bTrackLoad" access="public" xsi:type="array" type="bool" size="1" />
+    <Data name="bUseFrontUP" access="public" xsi:type="array" type="bool" size="1">
+      <Value key="0" value="true" />
+    </Data>
+    <Data name="MbIn" access="private" xsi:type="array" type="dio" size="8">
+      <Value key="0" link="ModbusSrv-0\Modbus-Bit\MbIn[0]" />
+    </Data>
+    <Data name="dEnableLatch" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01EnLatch" />
+    </Data>
+    <Data name="dLatchInput" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01LatchSig" />
+    </Data>
+    <Data name="e00CountsErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00CountsErr" />
+    </Data>
+    <Data name="e00EnLatch" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01EnLatch" />
+    </Data>
+    <Data name="e00EnPrst" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00EnPrst" />
+    </Data>
+    <Data name="e00HwErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00HwErr" />
+    </Data>
+    <Data name="e00Latch" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00Latch" />
+    </Data>
+    <Data name="e00LatchEdgFall" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00LatchEdgFall" />
+    </Data>
+    <Data name="e00LatchSig" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01LatchSig" />
+    </Data>
+    <Data name="e00OvsErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00OvsErr" />
+    </Data>
+    <Data name="e00PowerErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00PowerErr" />
+    </Data>
+    <Data name="e00RstErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e00RstErr" />
+    </Data>
+    <Data name="e01EnLatch" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01EnLatch" />
+    </Data>
+    <Data name="e01Latch" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01Latch" />
+    </Data>
+    <Data name="e01LatchSig" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01LatchSig" />
+    </Data>
+    <Data name="valve1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve1" />
+    </Data>
+    <Data name="mNomSpeed" access="public" xsi:type="array" type="mdesc" size="1">
+      <Value key="0" blend="off" />
+    </Data>
+    <Data name="nAcc" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="200" />
+    </Data>
+    <Data name="nENCSCALEFACTOR" access="public" xsi:type="array" type="num" size="1" />
+    <Data name="nFilterSize" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="50" />
+    </Data>
+    <Data name="nFilterTime" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="4" />
+    </Data>
+    <Data name="nIndexGun" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="1" />
+    </Data>
+    <Data name="nMAXCOUNT" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="65535" />
+    </Data>
+    <Data name="nOffsetDistance" access="public" xsi:type="array" type="num" size="1" />
+    <Data name="nOffsetLimit" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="500" />
+    </Data>
+    <Data name="nSensor2Win" access="public" xsi:type="array" type="num" size="1" />
+    <Data name="nSensorDelay" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="1" />
+    </Data>
+    <Data name="nSensorDist" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="100" />
+    </Data>
+    <Data name="nSensorPeriod" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="1" />
+    </Data>
+    <Data name="nSimulateSpeed" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="30" />
+    </Data>
+    <Data name="nStabTime" access="public" xsi:type="array" type="num" size="1" />
+    <Data name="nStackSize" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="6" />
+    </Data>
+    <Data name="nTimeOff" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="-1" />
+    </Data>
+    <Data name="nTrackSmooth" access="public" xsi:type="array" type="num" size="1">
+      <Value key="0" value="5" />
+    </Data>
+    <Data name="pWinConvPlane" access="public" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" x="768.558802" y="425.100094" z="-259.30763" rx="0.006936" ry="-179.488005" rz="0.33162" shoulder="lefty" elbow="epositive" wrist="wpositive" fatherId="world[0]" />
+    </Data>
+    <Data name="pWinDownLim" access="public" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" x="713.971282" y="425.100121" z="-259.307641" rx="0.007248" ry="-179.487322" rz="0.331196" shoulder="lefty" elbow="epositive" wrist="wpositive" fatherId="world[0]" />
+    </Data>
+    <Data name="pWinUpLim" access="public" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" x="711.850001" y="-407.745087" z="-259.307675" rx="0.00642" ry="-179.486136" rz="0.33201" shoulder="lefty" elbow="epositive" wrist="wpositive" fatherId="world[0]" />
+    </Data>
+    <Data name="tGun" access="public" xsi:type="array" type="tool" size="1">
+      <Value key="0" fatherId="flange[0]" ioLink="valve1" />
+    </Data>
+    <Data name="e01Counts" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01Counts" />
+    </Data>
+    <Data name="e01CountsErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01CountsErr" />
+    </Data>
+    <Data name="e01CountsMes" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01CountsMes" />
+    </Data>
+    <Data name="e01EnPrst" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01EnPrst" />
+    </Data>
+    <Data name="e01HwErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01HwErr" />
+    </Data>
+    <Data name="e01LatchEdgFall" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01LatchEdgFall" />
+    </Data>
+    <Data name="e01LatchFilter" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01LatchFilter" />
+    </Data>
+    <Data name="e01OvsErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01OvsErr" />
+    </Data>
+    <Data name="e01PowerErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01PowerErr" />
+    </Data>
+    <Data name="e01PrstPos" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="e01PrstPos" />
+    </Data>
+    <Data name="e01RstErr" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="e01RstErr" />
+    </Data>
+  </Datas>
+</Database>

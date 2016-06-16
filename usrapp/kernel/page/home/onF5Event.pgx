@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF5Event">
+    <Locals>
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[4]
+    // LOAD THE CYCLE PAGE
+    l_sPage="kernel/page/production"
+    call loadPage(l_sPage,l_sItem)
+    //
+    logMsg("[KERNEL] INTERFACE:PAGE Home Page")
+    //
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

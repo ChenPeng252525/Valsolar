@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="memory_startUp" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSearch" type="bool" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sChar" type="string" xsi:type="array" size="4" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT INSTRUCTION
+  call language:message(l_sMessage,18)
+  call use:type(2,3,l_sMessage)
+  l_sChar[0]="|"
+  l_sChar[1]="/"
+  l_sChar[2]="-"
+  l_sChar[3]="\"
+  l_nSize=size(saveData:sInstr[i])
+  // init all ?
+  if x_bSearch
+    l_sItem="init"
+  endIf
+  // TO BE COMPATIBLE...
+  for i=(l_nSize-1) to 0 step -1
+    // print to screen
+    call use:strfill(saveData:sInstr[i],7,l_sMessage)
+    call use:type(30,3,l_sChar[j]+" "+l_sMessage)
+    j=(j+1)%4
+    //get the path
+    call saveData:getPathInstr(saveData:sInstr[i],l_sPath)
+    if l_sPath==""
+      l_nResult=0
+    else
+      switch i
+        case 0
+          l_nResult=instr0:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr0:onStart(l_sItem)
+          endIf
+        break
+        case 1
+          l_nResult=instr1:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr1:onStart(l_sItem)
+          endIf
+        break
+        case 2
+          l_nResult=instr2:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr2:onStart(l_sItem)
+          endIf
+        break
+        case 3
+          l_nResult=instr3:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr3:onStart(l_sItem)
+          endIf
+        break
+        case 4
+          l_nResult=instr4:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr4:onStart(l_sItem)
+          endIf
+        break
+        case 5
+          l_nResult=instr5:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr5:onStart(l_sItem)
+          endIf
+        break
+        case 6
+          l_nResult=instr6:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr6:onStart(l_sItem)
+          endIf
+        break
+        case 7
+          l_nResult=instr7:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr7:onStart(l_sItem)
+          endIf
+        break
+        case 8
+          l_nResult=instr8:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr8:onStart(l_sItem)
+          endIf
+        break
+        case 9
+          l_nResult=instr9:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr9:onStart(l_sItem)
+          endIf
+        break
+        case 10
+          l_nResult=instr10:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr10:onStart(l_sItem)
+          endIf
+        break
+        case 11
+          l_nResult=instr11:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr11:onStart(l_sItem)
+          endIf
+        break
+        case 12
+          l_nResult=instr12:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr12:onStart(l_sItem)
+          endIf
+        break
+        case 13
+          l_nResult=instr13:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr13:onStart(l_sItem)
+          endIf
+        break
+        case 14
+          l_nResult=instr14:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr14:onStart(l_sItem)
+          endIf
+        break
+        case 15
+          l_nResult=instr15:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr15:onStart(l_sItem)
+          endIf
+        break
+        case 16
+          l_nResult=instr16:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr16:onStart(l_sItem)
+          endIf
+        break
+        case 17
+          l_nResult=instr17:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr17:onStart(l_sItem)
+          endIf
+        break
+        case 18
+          l_nResult=instr18:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr18:onStart(l_sItem)
+          endIf
+        break
+        case 19
+          l_nResult=instr19:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr19:onStart(l_sItem)
+          endIf
+        break
+        case 20
+          l_nResult=instr20:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr20:onStart(l_sItem)
+          endIf
+        break
+        case 21
+          l_nResult=instr21:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr21:onStart(l_sItem)
+          endIf
+        break
+        case 22
+          l_nResult=instr22:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr22:onStart(l_sItem)
+          endIf
+        break
+        case 23
+          l_nResult=instr23:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr23:onStart(l_sItem)
+          endIf
+        break
+        case 24
+          l_nResult=instr24:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr24:onStart(l_sItem)
+          endIf
+        break
+        case 25
+          l_nResult=instr25:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr25:onStart(l_sItem)
+          endIf
+        break
+        case 26
+          l_nResult=instr26:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr26:onStart(l_sItem)
+          endIf
+        break
+        case 27
+          l_nResult=instr27:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr27:onStart(l_sItem)
+          endIf
+        break
+        case 28
+          l_nResult=instr28:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr28:onStart(l_sItem)
+          endIf
+        break
+        case 29
+          l_nResult=instr29:libLoad(l_sPath)
+          logMsg("[KERNEL] MEMORY:result of "+l_sPath+" = "+toString("",l_nResult))
+          if l_nResult==0
+            call instr29:onStart(l_sItem)
+          endIf
+        break
+        default
+        break
+      endSwitch
+    endIf
+    // check for the result not allow to continue
+    if l_nResult!=0
+      popUpMsg("ERROR on "+l_sPath+" = "+toString("",l_nResult)+chr(10)+" STOP CYCLE !!!")
+      // make it crash
+      instr0:libLoad(l_sPath)
+      call instr0:onRun(l_sChar)
+    endIf
+    delay(0)
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_bUseFilter" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sPaste" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the type 
+  call getTrajType(x_sItem)
+  saveData:sTrajTypeUsing=x_sItem
+  cls()
+  // is a filter using ?? 
+  if saveData:sTrajFilter!=""
+    l_bUseFilter=true
+    call language:message(l_sMessage,64)
+    call use:type(0,1,l_sMessage+">ON")
+  else
+    // clean
+    call use:typeLen(0,1," ",use:nBottomX)
+  endIf
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  call use:setSizeList(19,0,19,11)
+  call use:setView(false)
+  call use:listcreate(x_sItem)
+  // take the coordinate....
+  l_nX=40-use:nBottomX-1
+  l_nY=use:nBottomY+1
+  // show the message
+  call language:message(l_sMessage,61)
+  call use:stringToArray(l_sMessage,sMenu)
+  call use:setMenu(sMenu,true,3)
+  // Build the list
+  call getSize(l_nSize)
+  for i=0 to l_nSize-1
+    call get(l_sEvent,i)
+    if l_sEvent!=""
+      //
+      // use the filter ?
+      //
+      // check if the bProcessList filter is active
+      //
+      l_bFound=true
+      if saveData:sTrajFilter!=""
+        l_bFound=find(l_sEvent,saveData:sTrajFilter)!=-1
+      endIf
+      // add  
+      if l_bFound
+        call use:listadd(l_sEvent)
+      endIf
+    endIf
+  endFor
+  call use:listupdate(0)
+  do
+    // get the item
+    l_nKey=get()
+    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    if l_nKey==271 and l_bUseFilter
+      // Build the list
+      call getSize(l_nSize)
+      // empty and rebuild
+      call use:listempty()
+      for i=0 to l_nSize-1
+        call get(l_sEvent,i)
+        if l_sEvent!=""
+          call use:listadd(l_sEvent)
+        endIf
+      endFor
+      // clean
+      call use:typeLen(0,1," ",use:nBottomX)
+      call use:typeMenu(1," ")
+      l_bUseFilter=false
+      call use:listupdate(0)
+    endIf
+        //
+  until l_nKey==270 or l_nKey==255 or l_nKey==278 or l_nKey==276
+  //
+  switch l_nKey
+    case 270
+      // save the name
+      l_sName=l_sEvent
+    break
+    case 276
+      // duplicate
+      // ask for the new
+      call language:message(l_sMessage,21)
+      call use:type(l_nX,l_nY,l_sMessage)
+      l_sName=l_sEvent
+      // read the new trajectory
+      call use:read(l_nX+len(l_sMessage),l_nY,l_sName,10,false)
+      if !use:bUseEscape
+        call duplicate(l_sEvent,l_sName,l_nResult)
+      endIf
+    break
+    case 278
+      call language:message(l_sMessage,21)
+      call use:type(l_nX,l_nY,l_sMessage)
+      // read the new trajectory
+      call use:read(l_nX+len(l_sMessage),l_nY,l_sName,10,false)
+      if !use:bUseEscape
+        // look if the items exist
+        call new(l_sName,l_nResult)
+        if l_nResult==-1
+          call language:message(l_sMessage,-2)
+          popUpMsg(l_sMessage)
+        endIf
+      endIf
+    break
+  endSwitch    
+  if l_nKey!=255
+    x_sItem=l_sName
+  else
+    x_sItem=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

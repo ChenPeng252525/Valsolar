@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOnActionLine" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_tPallet" type="TrajPallet" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=10
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  if cycleStatus:bCycle
+    use:nPage=use:nPage+3
+  endIf
+  // SET THE VIEW OF THE PAGE
+  call language2:page(l_sMenu,use:nPage)
+  //
+  // define the menu
+  call use:stringToArray(l_sMenu,sMenu)
+  // enable/disabel the F1 Button
+  l_bOnActionLine=false
+  call pallet:getSizeItem(false,l_nSize)
+  if nIndex>=0
+    i=find(sEvent,">")+1
+  endIf
+  call pallet:getPalletData(false,l_tPallet)
+//  if nIndex>=size(sList)-l_tPallet.nZ
+//    //
+//    l_nIndex=nIndex-size(sList)-l_tPallet.nZ
+//    if l_tPallet.sAction[l_nIndex]!=""
+//      l_bOnActionLine=true
+//    endIf
+//  endIf
+  // set the menu
+  if !bOnActionLine
+    sMenu[0]=""
+  endIf
+  call use:setMenu(sMenu,true,3)
+  call use:getMenu(sMenu,bButton)
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  call use:setSizeList(19,0,19,11)
+  call use:setView(bLarge)
+  //
+  call use:listcreate("PALLET "+sPalletName)
+  //
+end]]></Code>
+  </Program>
+</Programs>

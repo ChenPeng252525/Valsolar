@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF2Event">
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sFilter" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin 
+  // look if the bButton is enable
+  if bButton[1]
+    // check for the mode
+    if saveData:mode>1
+      //
+      // make a selection list
+      //
+      // 0) Filter by name
+      // 1) Generate a File description
+      // 2) Qty Measure
+      //
+      call use:clear(0,13)
+      call use:type(5,13,sMenu[1])
+      call use:setSizeList(4,8,30,2)
+      // reset
+      use:nView=0
+      call use:listcreate("")
+      // get the line
+      call language:message(l_sMessage,85)
+      // filter by name
+      l_sMessage=l_sMessage+" > "+saveData:sProgFilter
+      call use:listadd(l_sMessage)
+      // Generate a File decription
+      call language:message(l_sMessage,87)
+      call use:listadd(l_sMessage)
+      call use:listupdate(0)
+      // make the selection
+      do
+        nKey=get()
+        call use:listevent(nKey,l_nIndex,l_sEvent)
+      until nKey==255 or nKey==270
+      if nKey!=255
+        switch l_nIndex
+          case 0
+            // 0) Filter by name
+            call language:message(l_sMessage,85)
+            call use:timerDialog(l_sMessage+": ",0)
+            l_sFilter=saveData:sProgFilter
+            call use:read(20+(len(l_sMessage)/2)+1,5,l_sFilter,10,false)
+            if !use:bUseEscape
+              saveData:sProgFilter=l_sFilter
+            endIf
+          break
+          case 1
+            // 1) Generate a File description
+            call use:timerDialog("Scanning the program: "+sEvent+" to the file: "+sEvent+".txt # please wait...",0)
+            call prog:scan_prog(sEvent,sEvent)
+          break
+        endSwitch
+      endIf
+      // update
+      call buildList()
+    endIf 
+    // release and refresh
+    use:bUseRefresh=true
+    // release the key
+    call use:nullKey(nKey)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

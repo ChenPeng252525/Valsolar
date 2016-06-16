@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF2Event" access="private" >
+    <Locals>
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[1]
+    // tool selection
+    call loadPage("Disk://kernel/page/tool",l_sEmpty)
+    //
+    saveData:nFrameTool=saveData:nIndexTool
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

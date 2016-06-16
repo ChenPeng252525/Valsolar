@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="markTraj">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nResult" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_nTRAJ" type="num" xsi:type="array" size="1" />
+      <Local name="l_nJPOINT" type="num" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_bRefresh" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nView" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_bSelected" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSelected" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //********************get data list*********//
+  call use:stringCopy(l_sEmpty,sDataList)
+  call TRAJ:getSize(l_nTRAJ)
+  call JPOINT:getSize(l_nJPOINT)
+  for i=0 to l_nTRAJ-1
+    call TRAJ:get(l_sKey,i)
+    l_sMessage="TRAJ "+l_sKey
+    call dataListAdd(l_sMessage)
+  endFor
+  for i=0 to l_nJPOINT-1
+    call JPOINT:get(l_sKey,i)
+    l_sMessage="JPOINT "+l_sKey
+    call dataListAdd(l_sMessage)
+  endFor
+  l_bRefresh=true
+  do 
+    //******************************************//
+    //******************bulid list*****************//
+    for i=0 to size(sDataList)-1
+      l_sEvent=sDataList[i]
+      if l_sEvent!=""
+        l_bFound=true
+        // update the selected item
+        if l_sEvent==sEvent
+          nSelected=l_nCount
+        endIf
+        // add  
+        if l_bFound
+          l_nCount=l_nCount+1
+        endIf
+      endIf
+    endFor
+    do 
+      
+      if l_bRefresh==true
+        l_bRefresh=false 
+        cls()
+        // define your list size for default
+        call use:setSizeList(0,0,22,11)
+        call use:setView(false)
+        call use:listcreate("")
+        call use:listadd(sDataList)
+        call use:clear(0,13)
+        call language2:message(l_sMessage,5)
+        call use:type(1,13,l_sMessage)
+        call use:type(32,13,"#")
+        call use:type(37,13,"OK")
+        // refresh the list
+        call use:selectNewField(nSelected,nIndex,nView)
+        call refreshDynamic()
+      else
+        // refresh the Dynamic message
+        if abs(clock()-nRefresh)>nTime
+          call refreshDynamic()
+        endIf
+      endIf
+      nKey=getKey()
+      call use:listevent(nKey,nIndex,sEvent)
+      nView=use:nView
+      nSelected=nIndex
+      switch nKey 
+        case 277
+          if sEvent !=""
+            if left(sDataList[nIndex],1)!="#"
+              sDataList[nIndex]="# "+sDataList[nIndex]
+              l_bRefresh=true
+            else 
+              sDataList[nIndex]=right(sDataList[nIndex],len(sDataList[nIndex])-2)
+              l_bRefresh=true
+            endIf 
+          endIf 
+          call use:nullKey(nKey)
+        break 
+        case 278
+          l_bSelected=true
+          call use:nullKey(nKey)
+        break 
+      endSwitch 
+      delay(0)
+    until nKey==255  or l_bRefresh==true or l_bSelected==true 
+    if l_bSelected==true 
+      //**********************已经选择的部分**********************//
+      call use:stringCopy(l_sEmpty,sMarkList)
+      do 
+        l_bRefresh=false 
+        cls()
+        // create the list
+        call use:setSizeList(12,0,25,11)
+        call use:clear(0,13)
+        call language2:message(l_sMessage,8)
+        call use:type(31,13,l_sMessage)
+        call language2:message(l_sMessage,7)
+        call use:type(36,13,l_sMessage)
+        // get the value
+        
+        //add mark list
+        for i=0 to size(sDataList)-1
+          if left(sDataList[i],1)=="#"
+            call markListAdd(right(sDataList[i],len(sDataList[i])-2))
+          endIf 
+        endFor 
+        if sMarkList==""
+          l_nSelected=0
+        else 
+          l_nSelected=size(sMarkList)
+        endIf 
+        call language2:message(l_sMessage[0],52)
+        call language2:message(l_sMessage[1],53)
+        
+        call use:listcreate(l_sMessage[0]+toString("",l_nSelected)+l_sMessage[1])
+        //
+        for i=0 to size(sMarkList)-1
+          l_sItem=sMarkList[i]
+          call use:listadd(l_sItem)
+        endFor
+        
+        //////////bulid list
+        ////////////////////
+        // list update
+        call use:listupdate(min(nInsert,size(sMarkList)))
+        
+        // Select ???
+        do
+          nKey=get()
+          call use:listevent(nKey,nInsert,l_sItem)
+          // release the resource
+          if nKey==277 
+            l_bRefresh=true
+            l_bSelected=false
+            call use:nullKey(nKey)
+          endIf
+          if nKey==278
+            if sMarkList==""
+              call language2:message(l_sMessage,9)
+              popUpMsg(l_sMessage)
+              cls()
+              use:bUseRefresh=true
+              wait(getKey( )==-1)
+              x_nResult=-1
+              return
+            endIf 
+            call set:IsUseSameTool(sMarkList,l_bOk)
+            if l_bOk==false
+              call language2:message(l_sMessage,54)
+              popUpMsg(l_sMessage)
+              cls()
+              use:bUseRefresh=true
+               wait(getKey( )==-1)
+              x_nResult=-1
+              return
+            endIf 
+            cls()
+            use:bUseRefresh=true
+            x_nResult=0
+            call use:nullKey(nKey)
+            return
+          endIf
+        until nKey==255 or l_bRefresh
+        delay(0)
+      until nKey==255 or l_bRefresh
+      //*****************************************************************//
+    endIf 
+  until nKey==255
+  if nKey==255
+    x_nResult=-1
+  endIf 
+  // update
+  call use:nullKey(nKey)
+  use:bUseRefresh=true
+  //*******************************************//
+  
+end]]></Code>
+  </Program>
+</Programs>

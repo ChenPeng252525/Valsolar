@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF8Event">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[ begin
+  // look if the bButton is enable
+  if bButton[7]
+    //
+    call use:timerDialog("数据正在保存中....",1)
+    call cycle:save(l_nResult)
+    if l_nResult==0
+      call use:timerDialog("数据已经保存成功",1)
+    elseIf l_nResult!=0
+      call use:timerDialog("数据未保存成功",1)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.8.3" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="copy_it.pgx" />
+    <Program file="link_all.pgx" />
+    <Program file="link_it.pgx" />
+    <Program file="setMobile.pgx" />
+  </Programs>
+  <Database>
+    <Data file="TRACK.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="saveData" path="Disk://saveData/savedata.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="FrameItem" path="Disk://kernel/template/FrameItem/FrameItem.pjx" />
+  </Types>
+</Project>

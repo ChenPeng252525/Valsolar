@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_sHome" type="string" xsi:type="array" size="1" />
+      <Local name="l_nBest" type="num" xsi:type="array" size="3" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nJoint" type="num" xsi:type="array" size="1" />
+      <Local name="l_jHere" type="joint" xsi:type="array" size="1" />
+      <Local name="l_nDistance" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFoundHome" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nItem" type="num" xsi:type="array" size="1" />
+      <Local name="l_bZoneFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nJoint4" type="num" xsi:type="array" size="1" />
+      <Local name="l_nJoint5" type="num" xsi:type="array" size="1" />
+      <Local name="l_nJoint6" type="num" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_pConfig" type="point" xsi:type="array" size="1" />
+      <Local name="l_pCheck" type="point" xsi:type="array" size="1" />
+      <Local name="l_jCheck" type="joint" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // verify that exist a valid HOME:home
+  // do the last home strategy
+  call loadCycle("home",l_nResult)
+  if pt:tTraj[sTrajCycle].tData[0].jJoint!={0,0,0,0,0,0}
+    //
+    // inizialize the system
+    //
+    // reset Distance index home
+    l_nItem=-1
+    call use:numCopy(l_nItem,nDistance)
+    l_nItem=0
+    call use:numCopy(l_nItem,nCoeff)
+    call use:numCopy(l_nItem,nJoint)
+    call use:numCopy(l_nItem,nHome)
+    // refresh it
+    use:bUseRefresh=true
+    // set the start of HOMING
+    cycleStatus:bHoming=true
+    cycleStatus:bTraj=true
+    //
+    logMsg("HOMING STRATEGY> RUN ")
+    // take the TOOL use flange as template
+    l_tTool=flange
+    l_pHere=here(flange,world)
+    l_jHere=herej()
+    // take the size
+    call getSize(l_nSize)
+    // check for the ZONE
+    for i=0 to l_nSize-1
+      call get(l_sHome,i)
+      if l_sHome!=""
+        call loadCycle(l_sHome,l_nResult)
+        if l_nResult==0
+          pPoints[0]=pt:tTraj[sTrajCycle].pO
+          pPoints[1]=pt:tTraj[sTrajCycle].pX
+          pPoints[2]=pt:tTraj[sTrajCycle].pY
+          // HOME STRATEGY FOR THE ZONE
+          call checkZone(pPoints,l_tTool,pt:tTraj[sTrajCycle].nDimension,pt:tTraj[sTrajCycle].nZoneType,l_bInside)
+          // check the zone
+          if l_bInside
+            l_nDistance=distance(pPoints[0],here(l_tTool,world))
+            // check if it is the best
+            call orderZone(l_nDistance,pt:tTraj[sTrajCycle].nZoneType,i,l_nBest)
+            l_bZoneFound=true
+          endIf
+        endIf
+      endIf
+    endFor
+    if l_bZoneFound
+      // save the value to l_nBest
+      call selectZone(l_nBest)
+      // get the home trajectory
+      call get(l_sHome,l_nBest)
+      if l_sHome!=""
+        // execute the zone strategy
+        call loadCycle(l_sHome,l_nResult)
+        // execute the trajectory
+        if l_nResult==0
+          call makeTraj(0,l_sHome)
+        else
+          call language:message(l_sMessage,-7)
+          popUpMsg(l_sMessage+l_sHome+" ; "+toString("",l_nResult))
+          logMsg("error on loading "+l_sHome+" ; "+toString("",l_nResult))
+        endIf
+      endIf
+    else
+      l_nBest=l_nBest[1]=l_nBest[2]=0
+      // find the best point to proced
+      for i=0 to l_nSize-1
+        // all the traj
+        call get(l_sHome,i)
+        if l_sHome!=""
+          call loadCycle(l_sHome,l_nResult)
+          if l_nResult==0
+            // HOME STRATEGY FOR THE POINT....
+            l_bFoundHome=true
+            //
+            // STEP 1
+            //
+            // look for all the joint the best suitable
+            for j=0 to size(pt:tTraj[sTrajCycle].tData)-1
+              if pt:tTraj[sTrajCycle].nZoneType==0 or j>0
+                // check for the best distance
+                call getJointData(l_jJoint,l_tTool,true,j)
+                // check for the config if not put a big DISTANCE -> 100000
+                l_pConfig=jointToPoint(flange,world,l_jJoint)
+                if l_pHere.config!=l_pConfig.config and saveData:bUseHomeConfig
+                  logMsg("joint: "+toString("",j)+"of the HOME "+l_sHome+" different config ")
+                  l_nDistance=100000
+                else
+                  call scan_bestFit(flange,j,l_pCheck)
+                  if !pointToJoint(flange,l_jJoint,l_pCheck,l_jCheck)
+                    l_jCheck=l_jJoint
+                  endIf
+                  l_nDistance=distance(l_pCheck,l_pHere)
+                  l_nJoint4=(l_jHere.j4-l_jJoint.j4)*(l_jHere.j4-l_jJoint.j4)
+                  l_nJoint5=(l_jHere.j5-l_jJoint.j5)*(l_jHere.j5-l_jJoint.j5)
+                  l_nJoint6=(l_jHere.j6-l_jJoint.j6)*(l_jHere.j6-l_jJoint.j6)
+                  l_nJoint=sqrt(l_nJoint4+l_nJoint5+l_nJoint6)
+                endIf
+                l_nBest[2]=l_nDistance
+                l_nBest[1]=j
+                l_nBest[0]=i
+                call orderDistance(l_nBest,l_nJoint)
+              endIf
+            endFor
+          endIf
+        endIf
+        if l_nResult>0
+          logMsg("HOME on RUN> error on loading "+l_sHome+" : "+toString("",l_nResult))
+          return
+        endIf
+      endFor
+      // the point has been found
+      if l_bFoundHome
+        // find the best point
+        call select(l_nBest)
+        //
+        // best Joint Home Trajectory-> l_nBest[0]
+        // best Joint Home index     -> l_nBest[1]
+        //
+        call get(l_sHome,l_nBest[0])
+        call loadCycle(l_sHome,l_nResult)
+        // execute the trajectory
+        if l_nResult==0
+          call makeTraj(l_nBest[1],l_sHome)
+        else
+          call language:message(l_sMessage,-7)
+          popUpMsg(l_sMessage+l_sHome+" ; "+toString("",l_nResult))
+          logMsg("error on loading "+l_sHome+" ; "+toString("",l_nResult))
+        endIf
+      endIf
+    endIf
+    // execute the last HOME trajectory
+    if l_sHome!="home"
+      // do the last home strategy
+      call loadCycle("home",l_nResult)
+      // execute the trajectory
+      if l_nResult==0 and pt:tTraj[sTrajCycle].tData.jJoint!={0,0,0,0,0,0}
+        waitEndMove()
+        call makeTraj(0,"home")
+        //
+      endIf
+    endIf
+    waitEndMove()
+  else
+    call language:message(l_sMessage,169)
+    popUpMsg(l_sMessage+" HOME JOINT 0,0,0,0,0,0 ")
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

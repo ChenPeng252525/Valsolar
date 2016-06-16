@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[Italian message PALLET]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="cambia tutti gli avvicinamenti"
+    break
+    case 1
+      message="cambia tutti gli allontanamenti"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="Velocità"
+    break
+    case 3
+      message="Avvicina"
+    break
+    case 4
+      message="Allontana"
+    break
+    case 5
+      message="Avv Vel"
+    break
+    case 6
+      message="All Vel"
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="Punto di avvicinamento ..."
+    break
+    case 8
+      message="Punto di presa ..."
+    break
+    case 9
+      message="Punto di allontanamento ..."
+    break
+    case 10
+      message="Punto fuori ingombro ..."
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="posizione"
+    break
+    case 12
+      message="pos.  X  "
+    break
+    case 13
+      message="pos.  Y  "
+    break
+    case 14
+      message="pos.  Z  "
+    break
+    case 15
+      message="sul Piano"
+    break
+    case 16
+      message="Seleziona"
+    break
+    case 17
+      message="Premere F1 per selezionare un utensile#F8 per continuare con quello predefinito: "
+    break
+    case 18
+      message="Linee sull'asse X? "
+    break
+    case 19
+      message="Linee sull'asse Y? "
+    break
+    case 20
+      message="Linee sull'asse Z? "
+    break
+    case 21
+      message="Avvicinamento? [mm] "
+    break
+    case 22
+      message="Allontanamento? [mm] "
+    break
+    case 23
+      message="Velocità di avvicinamento? [mm/sec] "
+    break
+    case 24
+      message="Velocità di allontanamento? [mm/sec] "
+    break
+    case 25
+      message="Si vuole un movimento lineare sul punto? "
+    break
+    case 26
+      message="Inserire la prima istruzione,premere:#F1 per procedere oltre#F8 per selezionare l'istruzione"
+    break
+    case 27
+      message="Inserire la seconda istruzione,premere:#F1 per procedere oltre#F8 per selezionare l'istruzione"
+    break
+    case 28
+      message="Velocità? [%] "
+    break
+    case 29
+      message="Velocità? [mm/sec] "
+    break
+    case 30
+      message="- Edit x modificare il punto   "
+    break
+    case 31
+      message="Si vogliono validare le ultime modifiche ?"
+    break
+    case 32
+      message="Errore nel calcolo del frame,si prega di controllare i punti appresi..."
+    break
+    //
+    case 40
+      message="Avvicina"
+    break
+    case 41
+      message="Allontana"
+    break
+    case 42
+      message="riferimento tool e punto d'origine (z-)"
+    break
+    case 43
+      message="Tempo d'attesa"
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

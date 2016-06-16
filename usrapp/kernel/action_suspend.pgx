@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="action_suspend" access="private" >
+    <Code><![CDATA[begin
+  // suspend all the task action
+  if taskStatus("Cycle")!=-1
+    taskSuspend("Cycle")
+  endIf
+  if taskStatus("Action")!=-1
+    taskSuspend("Action")
+  endIf
+  //..
+
+end]]></Code>
+  </Program>
+</Programs>

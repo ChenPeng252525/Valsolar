@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English PALLET message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="Alle Approach ändern"
+    break
+    case 1
+      message="Alle Depart ändern"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="Geschw."
+    break
+    case 3
+      message="Appro"
+    break
+    case 4
+      message="Depart"
+    break
+    case 5
+      message="App Geschw."
+    break
+    case 6
+      message="Dep Geschw."
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="Lassen Sie Move-Hold los um zu dem Punkt zu fahren"
+    break
+    case 8
+      message="Lassen Sie Move-Hold los um vom Punkt wegzufahren"
+    break
+    case 9
+      message="Fahre zum Depart Punkt..."
+    break
+    case 10
+      message="Fahre zum Punkt über Palette... "
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="Position "
+    break
+    case 12
+      message="Pos.  X  "
+    break
+    case 13
+      message="Pos.  Y  "
+    break
+    case 14
+      message="Pos.  Z  "
+    break
+    case 15
+      message="bei Ebene "
+    break
+    case 16
+      message="Wähle"
+    break
+    case 17
+      message="Drücken Sie F1 um ein Tool zu wählen#F8 zum Fortfahren mit dem Standardtool: "
+    break
+    case 18
+      message="Wie viele Teile in X? "
+    break
+    case 19
+      message="Wie viele Teile in Y? "
+    break
+    case 20
+      message="Wie viele Teile in Z? "
+    break
+    case 21
+      message="Wie groß ist der Approach? [mm] "
+    break
+    case 22
+      message="Wie groß ist der Depart? [mm] "
+    break
+    case 23
+      message="Wie groß ist die Geschwindigkeit beim Approach? [mm/sec] "
+    break
+    case 24
+      message="Wie groß ist die Geschwindigkeit beim Depart? [mm/sec] "
+    break
+    case 25
+      message="Wollen Sie eine Linearbewegung zum Punkt? "
+    break
+    case 26
+      message="Fügen Sie die erste Anweisung ein:#F1 Anweisung auswählen#F2 setze TCP-> ON#F3 setze TCP-> OFF#F8 Ende..."
+    break
+    case 27
+      message="Fügen Sie die zweite Anweisung ein:#F1 Anweisung auswählen#F2 setze TCP-> ON#F3 setze TCP-> OFF#F8 Ende..."
+    break
+    case 28
+      message="Wie groß ist die Geschwindigkeit? [%]"
+    break
+    case 29
+      message="Wie groß ist die Geschwindigkeit? [mm/sec]"
+    break
+    case 30
+      message="- Edit zum Ändern des Punktes"
+    break
+    case 31
+      message="Wollen Sie die letze Änderung validieren?"
+    break
+    case 32
+      message="Fehler bei der Palettenberechnung - bitte prüfen Sie die Punkte"
+    break
+    //
+    case 40
+      message="Approach"
+    break
+    case 41
+      message="Depart"
+    break
+    case 42
+      message="Tool Koordinatensysten (z-)"
+    break
+    case 43
+      message="Stop Time"
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

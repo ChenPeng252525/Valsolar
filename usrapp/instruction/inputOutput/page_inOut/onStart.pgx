@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="bTest" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // logMsg
+  logMsg("[KERNEL] INTERFACE:PAGE Input Output")
+  //
+  sMode="OUT"
+  sId=""
+  nViewMode=0
+  // refresh all
+  call refreshStatic()
+  call buildList(0)
+  // record the old value....
+  call use:selectNewField(nSelected,nIndex,nView)
+  
+end]]></Code>
+  </Program>
+</Programs>

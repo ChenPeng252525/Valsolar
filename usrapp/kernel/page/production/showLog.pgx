@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="showLog" access="private" >
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // show the log items
+  setMutex(cycleStatus:bMutex)
+  // check the size
+  if size(cycleStatus:sLog)<size(useLog:sItems) or bShowInit==false
+    // create the list
+    call useLog:setSizeList(0,0,38,11)
+    call useLog:listcreate("action log")
+    nSelect=-1
+    bShowInit=true
+  elseIf use:bUseRefresh
+    // refresh the list
+    call useLog:listredraw(size(useLog:sItems))
+    use:bUseRefresh=false
+  endIf
+  // check if need to add value
+  l_nSize=sel(cycleStatus:sLog=="",0,size(cycleStatus:sLog))-sel(useLog:sItems=="",0,size(useLog:sItems))
+  if l_nSize!=0
+    // add the items
+    call useLog:listadd(cycleStatus:sLog[size(cycleStatus:sLog)-l_nSize])
+  endIf
+  //release
+  cycleStatus:bMutex=false
+  // refresh
+  // update the scrooling
+  call useLog:selectNewField(nSelect,nIndex,nView)
+  call useLog:listevent(nKey,nIndex,sLogAction)
+  // wait 5 sec
+  if nKey==-1 and clock()-nClockScroll>5
+    bUseAutoScroll=true
+  elseIf nKey!=-1
+    bUseAutoScroll=false
+    nClockScroll=clock()
+  endIf
+  if bUseAutoScroll
+    // update to the last item
+    nSelect=size(cycleStatus:sLog)-1
+  else
+    nSelect=nIndex
+  endIf
+  // update
+  nView=useLog:nView
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<TOPICSLIST>
+	<TOPIC Name = "TOPIC1_A" Card = "1" Channel = "0" Equipement = "0" RefreshPeriod = "200" Actif = "1">
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+		<MODULE Tag_name_root = "BLOCKA" IDModule = "DP_SLAVE" InputSize = "8" OutputSize = "8">
+			<ITEM Name = "BLOCKA_IX0" Syntaxe = "%I0" Offset = "0"/>
+			<ITEM Name = "BLOCKA_IX1" Syntaxe = "%I1" Offset = "1"/>
+			<ITEM Name = "BLOCKA_IX2" Syntaxe = "%I2" Offset = "2"/>
+			<ITEM Name = "BLOCKA_IX3" Syntaxe = "%I3" Offset = "3"/>
+			<ITEM Name = "BLOCKA_IX4" Syntaxe = "%I4" Offset = "4"/>
+			<ITEM Name = "BLOCKA_IX5" Syntaxe = "%I5" Offset = "5"/>
+			<ITEM Name = "BLOCKA_IX6" Syntaxe = "%I6" Offset = "6"/>
+			<ITEM Name = "BLOCKA_IX7" Syntaxe = "%I7" Offset = "7"/>
+			<ITEM Name = "BLOCKA_QX0" Syntaxe = "%Q0" Offset = "0"/>
+			<ITEM Name = "BLOCKA_QX1" Syntaxe = "%Q1" Offset = "1"/>
+			<ITEM Name = "BLOCKA_QX2" Syntaxe = "%Q2" Offset = "2"/>
+			<ITEM Name = "BLOCKA_QX3" Syntaxe = "%Q3" Offset = "3"/>
+			<ITEM Name = "BLOCKA_QX4" Syntaxe = "%Q4" Offset = "4"/>
+			<ITEM Name = "BLOCKA_QX5" Syntaxe = "%Q5" Offset = "5"/>
+			<ITEM Name = "BLOCKA_QX6" Syntaxe = "%Q6" Offset = "6"/>
+			<ITEM Name = "BLOCKA_QX7" Syntaxe = "%Q7" Offset = "7"/>
+=======
+		<MODULE Tag_name_root = "BLOCKA" IDModule = "DP_SLAVE" InputSize = "32" OutputSize = "32">
+			<ITEM Name = "BoatPos_11" Syntaxe = "%I0" Offset = "0"/>
+			<ITEM Name = "BoatPos_12" Syntaxe = "%I1" Offset = "1"/>
+			<ITEM Name = "BoatPos_13" Syntaxe = "%I2" Offset = "2"/>
+			<ITEM Name = "BoatPos_14" Syntaxe = "%I3" Offset = "3"/>
+			<ITEM Name = "BoatPos_15" Syntaxe = "%I4" Offset = "4"/>
+			<ITEM Name = "BoatPos_16" Syntaxe = "%I5" Offset = "5"/>
+			<ITEM Name = "BoatPos_21" Syntaxe = "%I8" Offset = "8"/>
+			<ITEM Name = "BoatPos_22" Syntaxe = "%I9" Offset = "9"/>
+			<ITEM Name = "BoatPos_23" Syntaxe = "%I10" Offset = "10"/>
+			<ITEM Name = "BoatPos_24" Syntaxe = "%I11" Offset = "11"/>
+			<ITEM Name = "BoatPos_25" Syntaxe = "%I12" Offset = "12"/>
+			<ITEM Name = "BoatPos_26" Syntaxe = "%I13" Offset = "13"/>
+			<ITEM Name = "Wiferin" Syntaxe = "%I16" Offset = "16"/>
+			<ITEM Name = "Wiferout" Syntaxe = "%I17" Offset = "17"/>
+			<ITEM Name = "BoatPos_21D" Syntaxe = "%Q0" Offset = "0"/>
+			<ITEM Name = "BoatPos_22D" Syntaxe = "%Q1" Offset = "1"/>
+			<ITEM Name = "BoatPos_23D" Syntaxe = "%Q2" Offset = "2"/>
+			<ITEM Name = "BoatPos_24D" Syntaxe = "%Q3" Offset = "3"/>
+			<ITEM Name = "BoatPos_25D" Syntaxe = "%Q4" Offset = "4"/>
+			<ITEM Name = "BoatPos_26D" Syntaxe = "%Q5" Offset = "5"/>
+>>>>>>> Valsolar
+		</MODULE>
+	</TOPIC>
+</TOPICSLIST>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF6Event">
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //设定对话框位置及尺寸大小
+  call use:setSizeList(15,9,15,2)
+  //建立对话款
+  call language2:message(l_sItem,61)
+  call use:listcreate(l_sItem)
+  //增加一栏数据
+   call language2:message(l_sItem,1)
+  call use:listadd(l_sItem)
+  //再增加一栏数据
+   call language2:message(l_sItem,2)
+  call use:listadd(l_sItem)
+  //更新光标选择位置
+    call use:listupdate(0)
+  //设置循环直至按ESC推出
+  do
+    nKey=get()
+    call use:listevent(nKey,nIndex,sEvent)
+    if nKey==270
+      if nIndex==0
+        save:nBoxType=1
+      else 
+        save:nBoxType=2
+      endIf 
+    endIf 
+  until nKey==255 or nKey==270
+  call use:nullKey(nKey)
+  call buildList() 
+  cls()
+  use:bUseRefresh=true
+  
+end]]></Code>
+  </Program>
+</Programs>

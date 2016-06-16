@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="start" access="public" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // set the language
+  call language:setLanguage(language:libPath()+"/"+saveData:language)
+  // check if the robot is calibrated
+  if isCalibrated()
+    // FIRST BOOT
+    if saveData:bInitAll
+      call inOut:resetAll()
+    endIf
+    // INIT
+    title("")
+    setTextMode(0)
+    userPage()
+    cls()
+    // SEARCH AND LOAD THE INSTRUCTION
+    call language:message(l_sMessage,13)
+    call use:strfill(l_sMessage,36,l_sMessage)
+    call use:type(0,13,l_sMessage)
+    do
+      delay(0.5)
+      call use:type(36+i,13,".")
+      i=(i+1)
+      l_nKey=getKey()
+    until i==4 or l_nKey==255
+    // clear the 13 line
+    call use:clear(0,13)
+    // look for the escape button
+    if l_nKey==255 or saveData:bInitAll
+      //  search for new instruction
+      call language:message(l_sMessage,14)
+      call use:type(2,1,l_sMessage)
+      taskCreate "BuildInstr",100,memory_instr(true)
+      saveData:bInitAll=false
+    else
+      // load in the memory the instruction
+      call language:message(l_sMessage,15)
+      call use:type(2,1,l_sMessage)
+      taskCreate "BuildInstr",100,memory_instr(false)
+    endIf
+    // wait all instruction all well build
+    do
+      delay(0.5)
+      call use:type(30+i,1,".    ")
+      i=(i+1)%5
+      if taskStatus("BuildInstr")>1
+        taskKill("BuildInstr")
+        bErrorLoading=true
+        logMsg("[KERNEL] SUPERVISOR: error on loading Instruction")
+        return
+      endIf
+    until taskStatus("BuildInstr")==-1
+    // init all the variable use to comunicate with the SuperV
+    cycleStatus:nToSuperV=-2
+    cycleStatus:nInterfaceToSV=-2
+    nRemoteID=-2
+    plc:nToSuperV=-2
+    // CYCLE INIT
+    call cycleStatus:init()
+    //
+    // TASK
+    //
+    // CUSTOM TASK
+    call OnEvent:OnStartup()
+    // INTERFACE
+    $jogPage(false)
+    interface:libLoad("kernel/page/home")
+    call use:type(1,6," Loading TASK Interface ")
+    taskCreate "Interface",60,interface:main()
+    wait(taskStatus("Interface")==1)
+    // REMOTE
+    call use:type(1,7," Loading TASK Remote ")
+    taskCreate "Remote",20,remote_it()
+    wait(taskStatus("Remote")==1)
+    // PLC
+    saveData:bPlc=true
+    if saveData:bPlc==true
+      call use:type(1,8," Loading TASK PLC ")
+      taskCreate "Plc",50,plc:Main()
+      wait(taskStatus("Plc")==1)
+    endIf
+    // START ALL
+    cycleStatus:nToSuperV=-1
+    cycleStatus:nInterfaceToSV=-1
+    nRemoteID=-1
+    plc:nToSuperV=-1
+    //
+    do
+      /////////////////////////////////////////////////////
+      // COMUNICATION between tha TASK
+      /////////////////////////////////////////////////////
+      // INTERFACE
+      call _interface()
+      // CYCLE
+      call _cycle()
+      // PLC
+      if saveData:bPlc
+        call _plc()
+      endIf
+      // REMOTE
+      call _remote()
+      //////////////////////
+      // CONTROL
+      //////////////////////
+      // TASK PROBLEM
+      call _taskControl()
+      // CONTROL
+      call _control()
+      //////////////////////
+      // OTHER
+      //////////////////////
+      // point step control
+      call _pointStep()
+      // CUSTOM control
+      call OnEvent:control()
+      // interface management
+      call _interfacePoint()
+      delay(0)
+      //
+    until bQuit
+  else
+    // ROBOT NOT CALIBRATED
+    call language:message(l_sMessage,16)
+    popUpMsg(l_sMessage)
+    bErrorLoading=true
+    return
+  endIf
+  // bye
+  call _kill()
+end]]></Code>
+  </Program>
+</Programs>

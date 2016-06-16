@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF7Event" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sId" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bSave" type="bool" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    // DELETE
+    //
+    if sMode=="IN" and find(sEvent,"usr")==-1 and find(sEvent,"fast")==-1
+      // compose the search "IN,l_sName"
+      call alreadyExist(x_sId,l_bFound)
+      // if not found
+      if !l_bFound
+        call language:message(l_sMessage,22)
+        // get the yes_no button Key
+        call language:getYesNo(l_sButton)
+        // ask the question
+        call use:yes_no(l_sMessage+sEvent,l_sButton,l_bYes)
+        if l_bYes
+          call in:setActive(false,x_sId)
+          logMsg("[KERNEL] INTERFACE:Disable the Input: "+l_sName)
+          x_bSave=true
+        endIf
+      endIf
+    elseIf sMode=="OUT" and find(sEvent,"valve")==-1 and find(sEvent,"fast")==-1
+      call alreadyExist(x_sId,l_bFound)
+      // if not found
+      if !l_bFound
+        call language:message(l_sMessage,22)
+        // get the yes_no button Key
+        call language:getYesNo(l_sButton)
+        // ask the question
+        call use:yes_no(l_sMessage+sEvent,l_sButton,l_bYes)
+        if l_bYes
+          call out:setActive(false,x_sId)
+          logMsg("[KERNEL] INTERFACE:Disable the Output: "+l_sName)
+          x_bSave=true
+        endIf
+      endIf
+    endIf
+    // scan the system
+    if l_nResult!=0
+      // show that the item already exist
+      call showExist(l_sName,sMessage)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="replaceIO" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sMode" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sReplace" type="string" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItemL" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItemR" type="string" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="5" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos2" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMode" type="string" xsi:type="array" size="5" />
+      <Local name="l_nPos_OR" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos_OUT" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos_AND" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos_IN" type="num" xsi:type="array" size="1" />
+      <Local name="l_sId" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nOperator" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sItem2" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init
+  x_sReplace=x_sItem
+  // go on
+  if x_sMode=="IF" or x_sMode=="PULSE"
+    if find(x_sItem,"IN ")!=-1
+      x_sMode="IN"
+    elseIf find(x_sItem,"OUT ")!=-1
+      x_sMode="OUT"
+    endIf
+  endIf
+  // scan to find IN or OUT
+  // look for all the data
+  if x_sMode=="IN" or x_sMode=="OUT"
+    l_sItemR=x_sItem
+    l_sData=l_sData[1]=l_sData[2]=l_sData[3]=l_sData[4]=""
+    while l_nPos!=-1
+      // scan all
+      l_nPos_AND=l_nPos_IN=l_nPos_OR=l_nPos_OUT=99
+      l_sMode[l_nCount]=x_sMode
+      l_nPos=find(l_sItemR,">")
+      if find(l_sItemR,"AND ")!=-1
+        l_nPos_AND=find(l_sItemR,"AND ")+4
+      endIf
+      if find(l_sItemR,"OR ")!=-1
+        l_nPos_OR=find(l_sItemR,"OR ")+3
+      endIf
+      if find(l_sItemR,"OUT ")!=-1
+        l_nPos_OUT=find(l_sItemR,"OUT ")+4
+      endIf
+      if find(l_sItemR,"IN ")!=-1
+        l_nPos_IN=find(l_sItemR,"IN ")+3
+      endIf
+      // find the nearest
+      l_nPos2=min(l_nPos_AND,min(l_nPos_OR,min(l_nPos_IN,min(l_nPos_OUT,90))))
+      // check for the mode
+      if l_nPos2==l_nPos_OUT
+        l_sMode[l_nCount]="OUT"
+      elseIf l_nPos2==l_nPos_IN
+        l_sMode[l_nCount]="IN"
+      endIf
+      if l_nPos!=-1
+        if find(left(l_sItemR,l_nPos),"EMAP ")==-1
+          if l_nPos2==-1 or l_nPos<l_nPos2
+            l_sData[l_nCount]=left(l_sItemR,l_nPos)
+          else
+            l_sData[l_nCount]=right(left(l_sItemR,l_nPos),l_nPos-l_nPos2)
+          endIf
+        endIf
+        l_sItemL=left(l_sItemR,l_nPos)
+        l_sItemR=right(l_sItemR,len(l_sItemR)-l_nPos-1)
+        // increase
+        l_nCount=l_nCount+1
+      endIf
+    endWhile
+    // replace
+    for i=0 to 4
+      l_sId=l_sData[i]
+      switch l_sMode[i]
+        case "IN"
+          if l_sData[i]!="" and isDefined(dInput[l_sId])
+            l_nPos=find(x_sReplace,l_sData[i])
+            x_sReplace=replace(x_sReplace,dInput[l_sId].sName,len(l_sData[i]),l_nPos)
+          endIf
+        break
+        case "OUT"
+          if l_sData[i]!="" and find(l_sData[i],"EMAP ")==-1 and isDefined(dOutput[l_sId])
+            l_nPos=find(x_sReplace,l_sData[i])
+            x_sReplace=replace(x_sReplace,dOutput[l_sId].sName,len(l_sData[i]),l_nPos)
+          endIf
+        break
+      endSwitch
+    endFor
+    // 
+  elseIf x_sMode=="NUM"
+    // replace the num tag
+    call decompose_num(x_sItem,l_sName,l_nOperator,l_nValue)
+    l_nPos=find(x_sItem,l_sName)
+    call getItem_num(l_sItem,l_sName)
+    if l_sItem!=""
+      x_sReplace=replace(x_sReplace,l_sItem,len(l_sName),l_nPos)
+    endIf
+  elseIf x_sMode=="WAIT"
+    // replace the WAIT tag
+    call decompose_wait(x_sItem,l_sName,l_nOperator,l_nValue)
+    l_nPos=find(x_sItem,l_sName)
+    call getItem_num(l_sItem,l_sName)
+    if l_sItem!=""
+      x_sReplace=replace(x_sReplace,l_sItem,len(l_sName),l_nPos)
+    endIf
+    // scan again
+    toNum(right(x_sItem,len(x_sItem)-l_nPos-2),l_nValue,l_bOk)
+    //    if !l_bOk
+    //      // found the value
+    //      l_sItem2=right(x_sItem,len(x_sItem)-l_nPos-len(sCondition[1]))
+    //      if size(x_sItem)>1
+    //        x_sItem[1]=l_sItem
+    //      endIf
+    //      for i=0 to l_nSize-1
+    //        // search it
+    //        call get_num(l_sItem,i)
+    //        if l_sItem==l_sItem2
+    //          l_nPos=find(x_sItem,sCondition[l_nOperator])
+    //          call getItem_num(l_sItem,l_sName)
+    //          if l_sItem!=""
+    //            x_sReplace=replace(x_sReplace,l_sItem,len(l_sName),l_nPos)
+    //          endIf
+    //        endIf
+    //      endFor
+    //    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

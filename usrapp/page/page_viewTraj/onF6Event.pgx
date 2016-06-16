@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF6Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nFound" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_nItem" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // look if the bButton is enable
+//  if bButton[5]
+//    //
+//    // DELETE
+//    //
+//    call language:message(l_sMessage,80)
+//    call language:getYesNo(l_sButton)
+//    // ask the yes_no question
+//    call use:yes_no(l_sMessage,l_sButton,l_bOk)
+//    if l_bOk
+//      // look for select one
+//      call trajType:getSizeItem(false,l_nSize)
+//      l_nFound=0
+//      for i=0 to (l_nSize-1)
+//        if l_nSize>1
+//          call trajType:getTrajItem(l_tTraj,i)
+//          if find(l_tTraj.comment,"#")!=-1
+//            l_nFound=-1
+//            // delete both normal + user
+//            call trajType:deleteItem(i)
+//            i=i-1
+//            l_nSize=l_nSize-1
+//          endIf
+//        endIf
+//      endFor
+//      if l_nFound==0 and l_nSize>1
+//        l_nItem=nIndex
+//        call trajType:deleteItem(nIndex)
+//        nIndex=max(nIndex-1,0)
+//      endIf
+//      x_bSave=true
+//    endIf
+//  endIf
+end]]></Code>
+  </Program>
+</Programs>

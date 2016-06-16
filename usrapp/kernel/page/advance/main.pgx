@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="main" access="public" >
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart()
+  // LOOP UNTIL nKey=255
+  do
+    call refresh()
+    nKey=getKey()
+    switch nKey
+      case 271
+        // GUN SELECTION
+        call onF1Event(l_bSave)
+      break
+      case 272
+        // LANGUAGE
+        call onF2Event(l_bSave)
+      break
+      case 273
+        //
+        call onF3Event()
+      break
+      case 274
+        //
+        call onF4Event()
+      break
+      case 275
+        //
+        call onF5Event()
+      break
+      case 276
+        // PLC
+        call onF6Event(l_bSave)
+      break
+      case 277
+        // PROFIILE
+        call onF7Event(l_bSave)
+      break
+      case 278
+        //
+        call onF8Event()
+      break
+      case 270
+        // NOTHING
+        call onEnterEvent()
+      break
+    endSwitch
+    //release the resource
+    delay(0)
+  until nKey==255
+  // on Exit
+  call onExit(l_bSave)
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF5Event">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[4]
+    //
+    // select/ unselect the items
+    //
+    call prog:selectItem(nIndex)
+    call prog:getSizeItem(l_nSize)
+    // go down
+    if nIndex<l_nSize-1
+      nSelected=nId+1
+    endIf
+    call buildList()
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

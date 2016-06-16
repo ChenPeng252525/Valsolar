@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Locals>
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_s" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  call use:findPos(sEvent,">",i)
+  i=i+1
+  if i!=-1
+    l_sEmpty=""
+    call use:listcursor(use:nView,false)
+    switch nIndex
+      case 0
+        popUpMsg(sEvent)
+      break
+      case 1
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.x,-400,400,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+      case 2
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.y,-400,400,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+      case 3
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.z,-400,400,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+      case 4
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.rx,-100,100,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+      case 5
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.ry,-100,100,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+      case 6
+        call use:changeValue(data:pPoinTest[data:nPage_Traj].trsf.rz,-100,100,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      break
+    endSwitch
+  endIf
+    // set data
+  call buildList()
+  // save it 
+  data:libSave()
+  
+  
+
+end]]></Code>
+  </Program>
+</Programs>

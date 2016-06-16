@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="copy_folder">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sPathCopy" type="string" xsi:type="element" />
+      <Parameter name="x_sPathPaste" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sPathCopy" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPathPaste" type="string" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // copy or not the x_sPathCopy to x_sPath
+  //
+  call use:timerDialog("Copying file: ##",0)
+  call use:stringCopy(l_sEmpty,sPathSession)
+  // all the folder are created
+  if x_sPathCopy==""
+    // copy from the template session
+    l_sPathCopy="Disk://kernel/template/session/"
+  else
+    // copy form the x_sPathCopy session name
+    l_sPathCopy="Disk://session/"+x_sPathCopy+"/"
+  endIf
+  // scan it
+  l_bCheck=libList(l_sPathCopy,sPathSession)
+  // copy form the x_sPathCopy session name
+  l_sPathPaste="Disk://session/"+x_sPathPaste+"/"
+  // start the copy
+  for i=0 to size(sPathSession)-1
+    // for all the directory found only one level...
+    l_sEmpty=""
+    call use:stringCopy(l_sEmpty,sDeeperSession)
+    // scan the folder
+    l_bCheck=libList(l_sPathCopy+sPathSession[i],sDeeperSession)
+    for j=0 to size(sDeeperSession)-1
+      // copy all the file
+      call use:typeLen(1,6,l_sPathCopy+sPathSession[i]+"/"+sDeeperSession[j],38)
+      call use:typeLen(1,7,l_sPathPaste+sPathSession[i]+"/"+sDeeperSession[j],38)
+      l_bCheck=$copy(l_sPathCopy+sPathSession[i]+"/"+sDeeperSession[j],l_sPathPaste+sPathSession[i]+"/"+sDeeperSession[j])
+      delay(0)
+    endFor
+    delay(0)
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

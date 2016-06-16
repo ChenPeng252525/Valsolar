@@ -1,0 +1,786 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //Chinese language__translated by QIAN Yong(y.qian@staubli.com)
+  //           
+  switch index
+    // USEFUL
+    case -20
+      // STKK modify
+      //message="Duplicate"
+      message="复制"
+    break
+    case -19
+      // STKK modify
+      //message="Delete"
+      message="删除"
+    break
+    case -18
+      // STKK modify
+      //message="New"
+      message="新建"
+    break
+    case -10
+      //message="Insert one USB in the controller..."
+      message="插入USB..."
+    break
+    case -9
+      //message="This will take several minutes"
+      message="操作需要几分钟"
+    break
+    case -8
+      //message="Wizard"
+      message="向导"
+    break
+    case -7
+      //message="Error on loading: "
+      message="载入错误: "
+    break
+    case -6
+      //message="Error on saving: "
+      message="保存错误: "
+    break
+    case -5
+      //message="Error point out of range !!!"
+      message="错误 点超出范围"
+    break
+    case -4
+      //message="Saving .... please wait"
+      message="正在保存....请稍等"
+    break
+    case -3
+      //message="The value that you have entered is invalid"
+      message="输入值无效"
+    break
+    case -2
+      //message="The name already exist, please change"
+      message="名称已经存在,请更换一个"
+    break
+    case -1
+      //message="Do you want to save your last change?" 
+      message="你要保存最后的更改吗?"
+    break
+    //Main page 0..9
+    case 0
+      //message=" Operator "
+      message="操作员"
+    break
+    case 1
+      //message=" Programmer "
+      message="程序员"
+    break
+    case 2
+      //message=" Integrator "
+      message="集成商"
+    break
+    case 3
+      //message="The cycle is going to STOP!!!"
+      message="循环即将停止"
+    break
+    case 4
+      // STKK modify
+      //message="Do you want EXIT from "+sValProduct+"?"
+      message="你要退出"+sValProduct+"吗?"
+    break
+    case 5
+      //message="Profile"
+      message="权限"
+    break
+    case 6
+      //message="Home Page"
+      message="首页"
+    break
+    // File manager
+    case 10
+      //message="Copying files: "
+      message="复制文件: "
+    break
+    case 11
+      //message="Do you want to override the file: "
+      message="你要覆盖这个文件吗: "
+    break
+    case 12
+      //message="CHECKING IN: "
+      message="检查中: "
+    break
+    // NOTE    0123456789012345678901234567890123456" maximum
+    case 13
+      //message="Press Escape to find new instruction"
+      message="按Esc键查找新指令"
+    break
+    case 14
+      //message="SEARCHING INSTRUCTION"
+      message="查找指令"
+    break
+    case 15
+      //message="LOADING INSTRUCTION"
+      message="载入指令"
+    break
+    case 16
+      //message="ROBOT NOT CALIBRATED"
+      message="机器人未校准"
+    break
+    case 17
+      // STKK modify
+      //message=sValProduct+" QUITTING...##PLEASE WAIT"
+      message="正在退出"+sValProduct+"...##请稍等"
+    break
+    case 18
+      //message="BUILD INSTRUCTION's LIST: "
+      message="创建指令列表: "
+    break
+    case 19
+      //message="LOADING ..."
+      message="载入..."
+    break
+    case 20
+      //message="LOADING PAGE"
+      message="载入..."
+    break
+    //Select program 20..29
+    case 21
+      //message="Name: "
+      message="名称: "
+    break
+    case 22
+      //message="Do you want to delete the program: "
+      message="你要删除这个程序吗: "
+    break
+    case 23
+      //message="Not possible to delete or rename: "
+      message="不可能删除或重命名: "
+    break
+    case 24
+      //message="First delete this program from the cycle process list"
+      message="首先从任务列表中删除这个程序"
+    break
+    case 25
+      //message="Production"
+      message="产品"
+    break
+    case 26
+      //message="Maintenance"
+      message="维护"
+    break
+    case 27
+      //message="Enter the number of cycle for this program: "
+      message="输入这个程序的循环次数: "
+    break
+    case 29
+      //message=" is in use in "
+      message="在使用中 "
+    break
+    //Set IN-OUT 30..39
+    case 30
+      //message="Select the type INPUT or OUTPUT"
+      message="选择输入或输出类型"
+    break
+    case 31
+      //message="ERROR!!! Input-Output NOT FOUND"
+      message="错误未发现输入-输出"
+    break
+    case 32
+      //message="Changing: "
+      message="更改: "
+    break
+    case 33
+      //message="Waiting: "
+      message="等待: "
+    break
+    case 34
+      //message="Select the range from 0 to "
+      message="选择范围从0到 "
+    break
+    case 35
+      //message="Select"
+      message="选择"
+    break
+    case 36
+      //message="Unselect"
+      message="未选"
+    break
+    case 37
+      //message="Enable"
+      message="有效"
+    break
+    case 38
+      //message="Disable"
+      message="无效"
+    break
+    case 39
+      //message="Select the identification model "
+      message="选择辨认模型"
+    break
+    case 40
+      //message="insert the state ON-OFF"
+      message="插入ON-OFF状态"
+    break
+    case 41
+      //message="Select an operator or press enter to validate"
+      message="选择操作员按回车确认"
+    break
+    // ADVANCE 50..60
+    case 50
+      //message="language"
+      message="语言"
+    break
+    case 51
+      message="rounding"
+    break
+    case 52
+      message="timeout"
+    break
+    case 53
+      message="multiSession"
+    break
+    case 54
+      message="displayCoord"
+    break
+    case 55
+      message="reloadProc.List"
+    break
+    case 56
+      message="Power OFF->STOP"
+    break
+    case 57
+      message="Show nested action"
+    break
+    // insert from the list
+    case 60
+      //0123456789012345678901234567890123456789
+      //message="Select the Program, <U to validate"
+      message="选择程序,回车确认"
+    break
+    case 61
+      //message=",,,,,Duplicate,,New"
+      //message="选择路径,回车确认"
+      message=",,,,,复制,,新建"
+    break
+    case 62
+      //message="Select the Input, Return to validate"
+      message="选择输入,回车确认"
+    break
+    case 63
+      //message="Select the Output, Return to validate"
+      message="选择输出,回车确认"
+    break
+    case 64
+      message="Filter"
+    break
+    case 65
+      //message="Select the item, <┘ to validate"
+      message="选择一个项目，按回车键确认"
+    break
+    case 66
+      //message="Select the Instruction, <U to validate"
+      message="选择指令,回车确认"
+    break
+    // PROCESS LIST 70..
+    case 70
+      //message="Process List"
+      message="任务列表"
+    break
+    case 71
+      //message="Processes"
+      message="任务"
+    break
+    case 72
+      //message="START LIST"
+      message="开始列表"
+    break
+    case 73
+      //message="PROCESS LIST"
+      message="任务列表"
+    break
+    case 74
+      //message="END LIST"
+      message="结束列表"
+    break
+    case 75
+      //message="RESET"
+      message="复位"
+    break
+    case 76
+      //message="Full Process List"
+      message="全部任务列表"
+    break
+    case 77
+      //message="Do you want to select as PROCESS LIST this program: "
+      message="想要选择这个程序作为一个任务列表: "
+    break
+    case 78
+      //message="Not possible to delete the process list in use during the cycle !!!"
+      message="无法删除在任务进程中使用的任务列表"
+    break
+    case 79
+      //message="The first program in the process List, the program will be delete!!!"
+      message="任务列表中的第一个程序将被删除"
+    break
+    //change Program 80..
+    case 80
+      //message="Do you want to delete the selection? "
+      message="你要删除这个选项吗? "
+    break
+    case 81
+      //message="Do you want to delete the trajectory? "
+      message="你要删除这个路径吗? "
+    break
+    case 84
+      //message="It's not possible to load this program "
+      message="无法载入这个程序"
+    break
+    case 85
+      //message="Filter by name"
+      message="按名称排序"
+    break
+    case 86
+      //message="Filter by process List"
+      message="按任务列表排序"
+    break
+    case 87
+      //message="Generate File"
+      message="生成一个文件"
+    break
+    // Production Page 90...
+    case 90
+      //message="Cycle time:"
+      message="周期时间:"
+    break
+    case 91
+      //message="No program into the processes list"
+      message="任务列表中没有程序"
+    break
+    case 92
+      //message="Put the robot in manual mode"
+      message="选择手动模式"
+    break
+    case 93
+      //message="ROBOT IS MOVING..."
+      message="机器人正在运动..."
+    break
+    case 94
+      //message="move to POINT : "
+      message="运动到点: "
+    break
+    case 95
+      //message="the ROBOT is NOT A POINT: "
+      message="机器人不是一个点: "
+    break
+    case 96
+      //message="Exporting the list to"
+      message="导出列表到"
+    break
+    case 97
+      //message="list has been created"
+      message="列表已经被创建"
+    break
+    case 98
+      //message="Start TIME"
+      message="开始时间"
+    break
+    case 99
+      //message="Duration"
+      message="时长"
+    break
+    // COUNTER
+    case 110
+      message="Select the OPERATOR"
+    break
+    case 111
+      message="Insert a value"
+    break
+    case 112
+      message="Do you want to insert an other COUNT"
+    break
+    // Tool 120..129
+    case 120
+      //message="Do you want to delete the tool with index: "
+      message="你要删除这个工具吗: "
+    break
+    case 121
+      //message="Reference Point Recorded.."
+      message="参考点已经记录.."
+    break
+    case 122
+      //message="Tool not calculated"
+      message="工具没有计算"
+    break
+    case 123
+      //message="Gun"
+      message="工具"
+    break  
+    case 124
+      //message="Gun"
+      message="工具"
+    break
+    case 125
+      //message="Do you want to save this reference Point?"
+      message="你要保存这个参考点吗?"
+    break
+    case 126
+      //message="Copy of: "
+      message="复制: "
+    break
+    case 127
+      //message="The select Gun, "
+      message="选择工具, "
+    break
+    case 128
+      //message=" doesn't exist in memory"
+      message="在内存中不存在"
+    break
+    case 129
+      //message="The change of these values will shift all the trajectories using this gun"
+      message="使用喷枪参数后所有轨迹将会按照喷枪参数进行相应的偏移"
+    break
+    //  TRAJECTORY 130..179
+    case 130
+      //message="- Move_Hold to continue"
+      message="- 按住 Move_Hold  继续"
+    break
+    case 131
+      //message="Do you want to record the intermediate position?"
+      message="想记录这个中间位置么?"
+    break
+    case 133
+      //message="it's not possible to delete the trajectory HOME>home"
+      message="无法删除HOME>home轨迹"
+    break
+    case 134
+      message="Align"
+    break
+    case 135
+      message="Before HOME"
+    break
+    case 136
+      message="After HOME"
+    break
+    case 140
+      //message="release the Joint_move to continue"
+      message="释放Joint_move才能继续"
+    break
+    case 141
+      //message="release the World_move to continue"
+      message="释放World_move才能继续"
+    break
+    case 142
+      //message="release the Tool_move to continue"
+      message="释放Tool_move才能继续"
+    break
+    case 143
+      //message="release the Point_move to continue"
+      message="释放Point_move才能继续"
+    break
+    case 144
+      //message="press RESTART to continue"
+      message="按下RESTART继续"
+    break
+    case 145
+      //message="connection movement !!!"
+      message="连接动作"
+    break
+    case 146
+      //message="Settling the power!!! please wait..."
+      message="正在上电，请稍候..."
+    break
+    case 147
+      message="Error the reference point is NOT taught !!!"
+    break
+    case 150
+      //message="Here"
+      message="记录"
+    break
+    case 151
+      //message="List"
+      message="列表"
+    break
+    case 152
+      //message="Approach"
+      message="接近"
+    break
+    case 153
+      //message="Teach"
+      message="示教"
+    break
+    case 154
+      //message="Transformation"
+      message="线性偏移"
+    break
+    case 157
+      //message="MoveType"
+      message="运动类型"
+    break
+    case 158
+      //message="Speed"
+      message="速度"
+    break
+    case 159
+      //message="Acceleration"
+      message="加速度"
+    break
+    case 160
+      //message="Record current position, are you sure?"
+      message="记录当前点,你确定吗?"
+    break
+    case 161
+      //message="Insert the speed, all the points that have the same speeed will be change, use"
+      message="插入速度,所有具有相同速度的点将被改变,#"
+    break
+    case 162
+      //message="Insert the accel, all the points that have the same accel will be change, use"
+      message="插入加速度,相同加速度的点的加速度都会被一起改变,#%"
+    break
+    case 163
+      //message=" OUT of RANGE "
+      message="超出范围"
+    break
+    case 164
+      //message="Joint"
+      message="关节"
+    break
+    case 165
+      //message="Linear"
+      message="直线"
+    break
+    case 166
+      //message="Circle"
+      message="圆弧"
+    break
+    case 167
+      //message="Edit"
+      message="编辑"
+    break
+    case 168
+      //message="- Edit to modify the point   "
+      message="按编辑修改此点   "
+    break
+    case 169
+      //message="ERROR! not valid coordinate"
+      message="错误!无效坐标"
+    break
+    case 170
+      //message="Do you want to delete the selected point?"
+      message="你要删除选中的点吗?"
+    break
+    case 171
+      //message="Delete the selected action?"
+      message="你要删除选择的动作吗?"
+    break
+    case 172
+      //message="Insert an other action?"
+      message="插入另一个动作吗?"
+    break
+    case 174
+      //message="Stop"
+      message="停止"
+    break
+    case 175
+      //message="Blend"
+      message="混合"
+    break
+    case 176
+      //message="Action: "
+      message="动作: "
+    break
+    case 177
+      //message="Anticipation" 
+      message="提前距离"
+    break
+    case 178
+      //message="Enter the blend, all the points that have the same blend will be change, use mm"
+      message="输入混合,所有具有同样混合的点将改变,#mm"
+    break
+    case 179
+      //message="Select the action for the GUN:#F1:     NONE    #F8: use GUN ON-OFF"
+      message="选择一个动作给工具:    #F1:      无     #F8:  使用工具 开-关"
+    break
+    // TABLE LIST 180..199
+    case 180
+      //message="Enter the index for the Origin Point"
+      message="为原点输入索引"
+    break
+    case 181
+      //message="Enter the index to set the X Axis"
+      message="输入索引设置X轴"
+    break
+    case 182
+      //message="Enter the index to set the Y Axis"
+      message="输入索引设置Y轴"
+    break
+    case 183
+      //message="ERROR!!!  Frame not calculate"
+      message="错误Frame未计算"
+    break
+    case 184
+      //message="NULL"
+      message="空"
+    break
+    case 185
+      //message="How many lines? "
+      message="多少行? "
+    break
+    case 186
+      //message="ERROR!!! changing the OFFSET related to world frame"
+      message="错误相对word frame改变OFFSET"
+    break
+    case 187
+      //message="The Frame is related to the trajectory"
+      message="Frame是相对路径的"
+    break
+    case 188
+      //message="The offset is related to world frame"
+      message="offset是相对world frame的"
+    break
+    case 189
+      //message="The TRSF VIEW is related to all points"
+      message="TRSF VIEW是相对所有点的"
+    break
+    case 190
+      //message="Point"
+      message="点"
+    break
+    case 191
+      //message="Select the type enter to validate"
+      message="选择类型回车确认"
+    break
+    case 192
+      //message="The modification is in tool Frame"
+      message="在工具Frame中修改"
+    break
+    case 193
+      //message="Point Recorded.."
+      message="点已经记录.."
+    break
+    case 194
+      //message="Go to the Origin Point#- Here to record the position"
+      message="运动到原点 #按记录保存此点"
+    break
+    case 195
+      //message="Go to the X axes Point#- Here to record the position"
+      message="运动到X轴点 #按记录保存此点"
+    break
+    case 196
+      //message="Go to the Y axes Point#- Here to record the position"
+      message="运动到Y轴点 #按记录保存此点"
+    break
+    case 197
+      //message="Go to the Z axes Point#- Here to record the position"
+      message="运动到Z轴点 #按记录保存此点"
+    break
+    case 198
+      //message="Origin"
+      message="原点"
+    break
+    case 199
+      //message="Axes"
+      message="轴"
+    break
+    // Other 200
+    case 200
+      //message="Set the robot in AUTOMATIC mode"
+      message="选择自动模式"
+    break
+    case 201
+      //message="Put the power ON"
+      message="给手臂上电"
+    break
+    case 202
+      //message="Set the robot in MANUAL mode"
+      message="选择手动模式"
+    break
+    case 203
+      //message="- Move_Hold to reach the point"
+      message="按Move_Hold运动到此点"
+    break
+    // Password
+    case 204
+      //message="please enter your password"
+      message="请输入你的密码"
+    break
+    case 205
+      //message="F5   Change Password"
+      message="F5  更改密码"
+    break
+    case 206
+      //message="CHANGE"
+      message="更改"
+    break
+    case 207
+      //message="Enter the new password "
+      message="输入新的密码"
+    break
+    case 208
+      //message="Confirm the new password to validate"
+      message="确认新的密码有效"
+    break
+    case 209
+      //message="the password has not been changed, the first password you entered is different from the second"
+      message="密码没有改变,第二次输入的密码与第一次不一致"
+    break
+    case 210
+      //message="only basic function"
+      message="只是基本功能"
+    break
+    case 211
+      //message="Programmer mode"
+      message="程序员模式"
+    break
+    case 212
+      //message="Integrator mode"
+      message="集成商模式"
+    break
+    case 213
+      //message="you are entering in "+sValProduct+" with "
+      message="你正在进入"+sValProduct
+    break
+    case 214
+      //message="Do you want to continue?"
+      message="你要继续吗?"
+    break
+    case 215
+      //message="Arrow keys to adjust, Return to validate"
+      message="用方向键调整,回车键确认"
+    break
+    // Warning
+    case 220
+      //message="the "+sValProduct+" interface is reloading "
+      message=sValProduct+"界面正在重新载入 "
+    break
+    case 221
+      //message="Do you want to reload the "+sValProduct+" interface? "
+      message="你要重新载入"+sValProduct+"界面吗? "
+    break
+    case 222
+      //message="EMERGENCY ACTIVATED !!!"
+      message="急停报警"
+    break
+    case 223
+      //message="The robot is not in HOME position  !!!"
+      message="机器人不在HOME点 "
+    break
+    case 224
+      message="Height"
+    break
+    case 225
+      message="The robot is in the Home Zone"
+    break
+    case 226
+      message="The robot is NOT in the Home Zone"
+    break
+    case 227
+      message="Do you want to recalculate all the points?#The position for all the points will stay the same,only the frame will be changed"
+    break
+    case 230
+      //message=" Time expired, please register !!!"
+      message=" 软件过期,请注册"
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

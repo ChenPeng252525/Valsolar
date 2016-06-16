@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="decompose_num" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_sName" type="string" use="reference" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nOperator" type="num" use="reference" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nValue" type="num" use="reference" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sItem2" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // decompose into Index-Operator-Value-Mode
+  //
+  for i=0 to size(sOperator)-1
+    // Operator
+    l_nPos=find(x_sItem,sOperator[i])
+    if l_nPos!=-1
+      x_nOperator=i
+      i=size(sOperator)-1
+    endIf
+  endFor
+  if l_nPos!=-1
+    // find the Index
+    call getSize_num(l_nSize)
+    for i=0 to l_nSize-1
+      // search it
+      call get_num(l_sItem,i)
+      if l_sItem==left(x_sItem,l_nPos)
+        x_sName=l_sItem
+        i=l_nSize-1
+      endIf
+    endFor
+    // get the value
+    if x_nOperator==1
+      // found the value
+      l_sItem2=right(x_sItem,len(x_sItem)-l_nPos-len(sOperator[1]))
+      if size(x_sItem)>1
+        x_sItem[1]=l_sItem
+      endIf
+      for i=0 to l_nSize-1
+        // search it
+        call get_num(l_sItem,i)
+        if l_sItem==l_sItem2
+          call getValue_num(x_nValue,l_sItem)
+          return
+        endIf
+      endFor
+    else
+      toNum(right(x_sItem,len(x_sItem)-l_nPos-2),x_nValue,l_bOk)
+    endIf
+  else
+    x_sName=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

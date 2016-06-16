@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="refreshStatic" access="private" >
+    <Locals>
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // CREATE THE LIST
+  // define your list size for default
+  //
+  cls()
+  call use:setSizeList(19,0,19,11)
+  call use:setView(bLarge)
+  //
+  switch nViewMode
+    case 0
+      call use:listcreate(" OUT ")
+    break
+    case 1
+      call use:listcreate(" IN ")
+    break
+    case 2
+      call use:listcreate("COUNT")
+    break
+  endSwitch
+  //
+
+end]]></Code>
+  </Program>
+</Programs>

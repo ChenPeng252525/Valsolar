@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="startCycle">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nPoint" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  // START
+  watch(cycleStatus:nInterfaceToSV==-1,5)
+  // get the question message
+  call language:message(l_sMessage,214)
+  call language:getYesNo(l_sButton)
+  // ask the yes_no question
+  call use:yes_no(l_sMessage,l_sButton,l_bOk)
+  if l_bOk
+    // reSTART??
+    call trajType:getSizeItem(false,l_nSize)
+    if nPoint==l_nSize-1
+      x_nPoint=nPoint=0
+    endIf
+    // compose with 2 element
+    cycleStatus:iToSuperV.sType=saveData:sTrajTypeUsing
+    cycleStatus:iToSuperV.sData=sTrajName+","+toString("",x_nPoint)
+    // send the command to the SuperV
+    cycleStatus:nInterfaceToSV=3
+    logMsg("[KERNEL] INTERFACE:Simulation of the item: "+saveData:sTrajTypeUsing+" "+sTrajName)
+    // wait the command has been receive
+    watch(cycleStatus:nInterfaceToSV==-1,5)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

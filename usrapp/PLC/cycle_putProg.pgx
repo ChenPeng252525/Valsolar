@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_putProg" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sName" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // insert one program at the end of the process List
+  // 0 -start list
+  // 1 -production list
+  // 2 -end list
+  //
+  if saveData:bDebug
+    logMsg("[KERNEL] PLC:Insert program: "+x_sName)
+  endIf
+  // check before if exist
+  call cycle_isFound(x_sName,l_bFound)
+  if l_bFound
+    call processList:insertCycle(-1,x_sName,1,0,x_nType)
+    // check to save or not in order to have the same process next boot
+    // call processList:save()
+  elseIf saveData:bDebug
+    ? "[KERNEL] PLC: "+x_sName+" not found in the program List"
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="pallet_getList" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the full pallet list, copy into sPalletName
+  call pallet:getSize(l_nSize)
+  if size(sPalletName)!=l_nSize
+    resize(sPalletName,1,l_nSize)
+  endIf
+  for i=0 to l_nSize-1
+    call pallet:get(l_sItem,i)
+    sPalletName[i]=l_sItem
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="setAllAccel" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nNewValue" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nOldValue" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // change all the accel(equal at newValue)to the newValue
+  //
+  if x_nNewValue!=x_nOldValue
+    call trajType:getSizeItem(false,l_nSize)
+    // scan it
+    for i=0 to (l_nSize-1)
+      // get it
+      call trajType:getTrajItem(l_tTraj,i)
+      // check if is OK
+      if l_tTraj.nom_speed.accel==x_nOldValue
+        l_tTraj.nom_speed.accel=l_tTraj.nom_speed.decel=x_nNewValue
+      endIf
+      // set IT
+      call trajType:setTrajItem(l_tTraj,i)
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

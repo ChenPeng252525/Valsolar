@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="addAction" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_aAction" type="ActionItem" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSizeAction" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // mutex it
+  setMutex(bActionMutex)
+  //
+  // insert a new action
+  //
+  if aAction.iInstr.sType!="null"
+    append(aAction)
+  endIf
+  // set the size
+  l_nSizeAction=size(aAction)-1
+  // copy it
+  aAction[l_nSizeAction]=x_aAction
+  // update the nMoveId...
+  l_nSize=size(tTrajCycle)-1
+  l_nIndex=min(x_aAction.nPointId,size(tTrajCycle[l_nSize].tSuper)-1)
+  tTrajCycle[l_nSize].tSuper[l_nIndex].nMoveId=x_aAction.nMoveId
+  // release
+  bActionMutex=false
+end]]></Code>
+  </Program>
+</Programs>

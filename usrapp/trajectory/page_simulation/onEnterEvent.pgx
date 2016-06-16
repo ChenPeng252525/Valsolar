@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Locals>
+      <Local name="l_nPoint" type="num" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  if !cycleStatus:bSimulation
+    call use:stringToArray(sTrajName+","+toString("",nPoint),sMessage)
+    // reload the traj
+    //call loadEditTraj(sTrajName)
+    //
+    call loadPage("Disk://trajectory/page_editTraj",sMessage)
+    // reload the traj
+    call loadEditTraj(sTrajName)
+    //
+    // ELEBORATE THE GIVE BACK
+    //
+    l_bOk=true
+    toNum(sMessage[1],l_nPoint,l_bOk)
+    call isAtPoint(l_nPoint,l_bInside)
+    if l_bInside
+      nPoint=l_nPoint
+    endIf
+    cls()
+    use:bUseRefresh=true
+    // reset the show status
+    bShowStatus=false
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

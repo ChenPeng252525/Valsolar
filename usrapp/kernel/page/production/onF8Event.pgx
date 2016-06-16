@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF8Event" access="private" >
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[7]
+    //
+    //
+    // TERMINATE CYCLE
+    //
+    if cycleStatus:bCycle and !cycleStatus:bEnding
+      logMsg("[KERNEL] INTERFACE:End cycle")
+      //
+      cycleStatus:bToEnd=true
+      call language:message(l_sMessage,3)
+      popUpMsg(l_sMessage)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

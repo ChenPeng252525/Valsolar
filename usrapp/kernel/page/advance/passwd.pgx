@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="passwd" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="sText" type="string" xsi:type="array" size="1" />
+      <Local name="sTempMessage" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="message" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // clean the screen
+  //
+  cls()
+  call language:message(message,204)
+  call use:timerDialog(message,0)
+  call use:type(2,8,">")
+  call use:read(3,8,sText,15,true)
+  //
+  // there are 3 difference kind of access
+  // mode 0   ->operator
+  // mode 1   ->programmer
+  // mode 2   ->integrator
+  // mode 3   ->toneage (Administrator)
+  //
+  saveData:mode=0
+  for i=0 to (size(saveData:passwd)-1)
+    if sText==saveData:passwd[i]
+      saveData:mode=i+1
+      call use:type(20,8,"...OK...")
+      logMsg("[KERNEL] INTERFACE:Set password to: "+sText)
+    endIf
+  endFor
+  if saveData:mode==0
+    logMsg("[KERNEL] INTERFACE:Set password to: Operator")
+  endIf
+  //
+  // It's possible to change the password
+  //
+  if saveData:mode>0 and saveData:mode<3
+    call language:message(message,205)
+    call use:type(0,10,message)
+    call language:message(message,206)
+    call use:typeMenu(5,message)
+    call use:typeMenu(8,"OK")
+    nKey=get()
+    if nKey==275
+      cls()
+      call language:message(message,207)
+      call use:timerDialog(message,0)
+      call use:type(2,8,">")
+      sText=""
+      call use:read(3,8,sText,15,true)
+      call language:message(message,208)
+      call use:timerDialog(message,0)
+      sTempMessage=""
+      call use:read(3,8,sTempMessage,15,true)
+      //
+      // look if the passwd already exist
+      //
+      if sText==sTempMessage and sText!=""
+        if saveData:passwd[0]!=sText and saveData:passwd[1]!=sText
+          saveData:passwd[saveData:mode-1]=sText
+        else
+          call language:message(message,-2)
+          popUpMsg(message)
+        endIf
+      else
+        call language:message(message,209)
+        popUpMsg(message)
+      endIf
+    endIf
+  endIf
+  //
+  //  Show your mode to access and set the Userpage
+  //
+  switch saveData:mode
+    case 0
+      call language:message(sText,210)
+    break
+    case 1
+      call language:message(sText,211)
+    break
+    case 2,3
+      call language:message(sText,212)
+    break
+  endSwitch
+  if saveData:mode<2
+    userPage(true)
+  else
+    userPage(false)
+  endIf
+  call language:message(message,213)
+  popUpMsg(message+sText)
+  // SAVE THE SETTING
+  x_bSave=true
+  //
+  nKey=255
+end]]></Code>
+  </Program>
+</Programs>

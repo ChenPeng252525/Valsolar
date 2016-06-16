@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.2.1" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="delete.pgx" />
+    <Program file="deleteAll.pgx" />
+    <Program file="getCycle.pgx" />
+    <Program file="getDefaultType.pgx" />
+    <Program file="getLoaded.pgx" />
+    <Program file="getLoop.pgx" />
+    <Program file="getPath.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="increase.pgx" />
+    <Program file="init.pgx" />
+    <Program file="insertCycle.pgx" />
+    <Program file="isFound.pgx" />
+    <Program file="loadProcessList.pgx" />
+    <Program file="loopMode.pgx" />
+    <Program file="makeFile.pgx" />
+    <Program file="save.pgx" />
+    <Program file="selectType.pgx" />
+    <Program file="setCycle.pgx" />
+    <Program file="setDefaultType.pgx" />
+    <Program file="setLoop.pgx" />
+  </Programs>
+  <Database>
+    <Data file="processList.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+    <Library alias="saveCycle" path="Disk://kernel/template/session/saveCycle/saveCycle.pjx" autoload="false" />
+    <Library alias="prog" path="Disk://instruction/PROG/PROG.pjx" />
+    <Library alias="OnEvent" path="Disk://OnEvent/OnEvent.pjx" />
+  </Libraries>
+</Project>

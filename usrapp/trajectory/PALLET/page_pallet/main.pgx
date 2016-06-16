@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart()
+  // LOOP UNTIL nKey=255
+  do
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    switch nKey
+      case 259
+        // TAB
+        bLarge=!bLarge
+        call use:setView(bLarge)
+      break
+      case 271
+        // VIEW PROG
+        call onF1Event(sAction)
+      break
+      case 272
+        // edit traj
+        call onF2Event(l_bSave)
+      break
+      case 273
+        call onF3Event()
+      break
+      case 274
+        call onF4Event()
+      break
+      case 275
+        // wizard
+        call onF5Event(l_bSave)
+      break
+      case 276
+        // back
+        call onF6Event(sPalletName)
+      break
+      case 277
+        // next
+        call onF7Event(sPalletName)
+      break
+      case 278
+        // reset
+        call onF8Event(sPalletName)
+      break
+      case 270
+        call onEnterEvent(sPalletName,l_bSave)
+      break
+      case 263
+        call onBackEvent(sPalletName,l_bSave)
+      break
+    endSwitch
+    // look for the exit
+    if nKey==255
+      // on Exit
+      call onExit(l_bSave)
+    endIf
+    // release
+    delay(0)
+  until bExit
+  // reset the key pressure
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

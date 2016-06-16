@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_isFound" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sProgName" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bFound" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  x_bFound=false
+  // verify if a program is in the program list
+  // libList(saveData:sPathProg[0],sProgList)
+  // check inside the program List
+  for i=0 to size(sProgList)-1
+    if sProgList[min(size(sProgList)-1,i)]==x_sProgName
+      x_bFound=true
+      return
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

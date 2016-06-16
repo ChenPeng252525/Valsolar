@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertIO">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSizeIn" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSizeOut" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sStatus" type="string" xsi:type="array" size="1" />
+      <Local name="l_bStatus" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSelect" type="num" xsi:type="array" size="1" />
+      <Local name="l_bInsert" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[
+begin
+  // create the list
+  call use:setSizeList(14,0,19,11)
+  call use:clear(0,13)
+  call language:message(l_sMessage,65)
+  call use:typeCenter(13,l_sMessage,40,true)
+  // get the value
+  call in:getSize(l_nSizeIn)
+  call out:getSize(l_nSizeOut)
+  switch nViewMode
+    case 0
+      //
+      // OUTPUT
+      //
+      call use:listcreate("")
+      for i=0 to l_nSizeOut-1
+        call out:get(l_sKey,i)
+        call out:getItem(l_sItem,l_sKey)
+        call out:isActive(l_bStatus,l_sKey)
+        if !l_bStatus
+          l_sMessage=l_sKey+"{"+l_sItem+"}"
+          call use:listadd(l_sMessage)
+          l_bInsert=true
+        endIf
+      endFor
+      // list update
+      call use:listupdate(min(nInsert,l_nSizeOut))
+    break
+    case 1
+      //
+      // INPUT
+      //
+      call use:listcreate("")
+      for i=0 to l_nSizeIn-1
+        call in:get(l_sKey,i)
+        call in:getItem(l_sItem,l_sKey)
+        call in:isActive(l_bStatus,l_sKey)
+        if !l_bStatus
+          l_sMessage=l_sKey+"{"+l_sItem+"}"
+          call use:listadd(l_sMessage)
+          l_bInsert=true
+        endIf
+      endFor
+      // list update
+      call use:listupdate(min(nInsert,l_nSizeIn))
+    break
+  endSwitch
+  if l_bInsert
+    // Select ???
+    do
+      nKey=get()
+      call use:listevent(nKey,nInsert,l_sItem)
+      // release the resource
+      if nKey==270 and l_sItem!=""
+        l_sItem=left(l_sItem,find(l_sItem,"{"))
+        switch nViewMode
+          case 0
+            // OUTPUT
+            call out:setActive(true,l_sItem)
+          break
+          case 1
+            // INPUT
+            call in:setActive(true,l_sItem)
+          break
+        endSwitch
+        // exit
+        return
+      endIf
+    until nKey==255
+  endIf
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

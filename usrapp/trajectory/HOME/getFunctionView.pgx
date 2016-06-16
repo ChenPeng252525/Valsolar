@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getFunctionView" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // define your message for the
+  // function KEY
+  //
+  // NOTE is an ARRAY[0..7]
+  //
+  // example:
+  // x_sName[1]="DEMO"
+  // active the F2 button
+  //
+  // define the @Link
+  // here
+  call language:message(l_sMessage,150)
+  x_sName[0]=l_sMessage
+  // x_sName[1]="@Link"
+    // ALIGN
+  call language:message(l_sMessage,134)
+  x_sName[1]=l_sMessage
+end]]></Code>
+  </Program>
+</Programs>

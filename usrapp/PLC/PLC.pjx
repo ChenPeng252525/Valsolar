@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3" >
+  <Parameters version="s7.8" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="Main.pgx" />
+    <Program file="_HomeWatchDog.pgx" />
+    <Program file="_resetProgram.pgx" />
+    <Program file="cycle_clearList.pgx" />
+    <Program file="cycle_end.pgx" />
+    <Program file="cycle_getList.pgx" />
+    <Program file="cycle_getLoop.pgx" />
+    <Program file="cycle_getProg.pgx" />
+    <Program file="cycle_getSize.pgx" />
+    <Program file="cycle_isFound.pgx" />
+    <Program file="cycle_isLock.pgx" />
+    <Program file="cycle_isPause.pgx" />
+    <Program file="cycle_isRun.pgx" />
+    <Program file="cycle_lock.pgx" />
+    <Program file="cycle_pause.pgx" />
+    <Program file="cycle_putProg.pgx" />
+    <Program file="cycle_resume.pgx" />
+    <Program file="cycle_searchPrg.pgx" />
+    <Program file="cycle_setLoop.pgx" />
+    <Program file="cycle_start.pgx" />
+    <Program file="cycle_stop.pgx" />
+    <Program file="cycle_unLock.pgx" />
+    <Program file="cycle_updateLst.pgx" />
+    <Program file="getJointData.pgx" />
+    <Program file="getPointData.pgx" />
+    <Program file="goHome.pgx" />
+    <Program file="isHome.pgx" />
+    <Program file="kill.pgx" />
+    <Program file="pallet_getList.pgx" />
+    <Program file="pallet_getPos.pgx" />
+    <Program file="pallet_reset.pgx" />
+    <Program file="pallet_resetAll.pgx" />
+    <Program file="pallet_setPos.pgx" />
+    <Program file="receive.pgx" />
+    <Program file="send.pgx" />
+    <Program file="session_change.pgx" />
+    <Program file="session_get.pgx" />
+    <Program file="session_search.pgx" />
+  </Programs>
+  <Database>
+    <Data file="PLC.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="cycleStatus" path="Disk://cycleStatus/cycleStatus.pjx" autoload="true" password="" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" autoload="true" password="" />
+    <Library alias="processList" path="Disk://kernel/processList/processList.pjx" autoload="true" password="" />
+    <Library alias="OnEvent" path="Disk://OnEvent/OnEvent.pjx" autoload="true" password="" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" autoload="true" password="" />
+    <Library alias="jt" path="Disk://kernel/template/session/saveTraj/JPOINT/JPOINT.pjx" autoload="true" password="" />
+    <Library alias="prog" path="Disk://instruction/PROG/PROG.pjx" autoload="true" password="" />
+    <Library alias="pallet" path="Disk://trajectory/PALLET/PALLET.pjx" autoload="true" password="" />
+    <Library alias="pt" path="Disk://kernel/template/session/saveTraj/POINT/POINT.pjx" autoload="true" password="" />
+    <Library alias="tt" path="Disk://kernel/template/session/saveTraj/TRAJ/TRAJ.pjx" autoload="true" password="" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" autoload="true" password="" />
+    <Library alias="gohome" path="Disk://goHome/goHome.pjx" autoload="true" password="" />
+  </Libraries>
+  <Types>
+    <Type name="TrajJoint" path="Disk://kernel/template/TrajJoint/TrajJoint.pjx" />
+    <Type name="TrajectoryItem" path="Disk://kernel/template/TrajectoryItem/TrajectoryItem.pjx" />
+    <Type name="TrajPointItem" path="Disk://kernel/template/TrajPointItem/TrajPointItem.pjx" />
+    <Type name="TrajItem" path="Disk://kernel/template/TrajItem/TrajItem.pjx" />
+    <Type name="FrameItem" path="Disk://kernel/template/FrameItem/FrameItem.pjx" />
+  </Types>
+</Project>

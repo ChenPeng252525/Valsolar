@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="computeFrame" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nNewFrame" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+    // recompute all the point into the new frame
+  for i=0 to size(pEditPoint.tData)-1
+    pEditPoint.tData[i].pPoint.trsf=position(pEditPoint.tData[i].pPoint,saveData:fFrameItem[x_nNewFrame].fFrame)
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

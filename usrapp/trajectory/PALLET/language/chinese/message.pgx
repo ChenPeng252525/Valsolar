@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English PALLET message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="改变所有的接近距离"
+    break
+    case 1
+      message="改变所有的离开距离"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="速度"
+    break
+    case 3
+      message="接近"
+    break
+    case 4
+      message="离开"
+    break
+    case 5
+      message="接近速度"
+    break
+    case 6
+      message="离开速度"
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="到达接近点..."
+    break
+    case 8
+      message="到达点..."
+    break
+    case 9
+      message="到达离开点..."
+    break
+    case 10
+      message="到达外部点区域 "
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="position "
+    break
+    case 12
+      message="点.  X  "
+    break
+    case 13
+      message="点.  Y  "
+    break
+    case 14
+      message="点.  Z  "
+    break
+    case 15
+	message="在层上"
+    break
+    case 16
+      message="选择"
+    break
+    case 17
+      message="按F1选择工具 按F8继续下一步: "
+    break
+    case 18
+      message="多少X行? "
+    break
+    case 19
+      message="多少Y行? "
+    break
+    case 20
+      message="多少Z行? "
+    break
+    case 21
+      message="接近距离是多少? [mm] "
+    break
+    case 22
+      message="离开距离是多少? [mm] "
+    break
+    case 23
+      message="接近速度是多少? [mm/sec] "
+    break
+    case 24
+      message="离开速度是多少? [mm/sec] "
+    break
+    case 25
+      message="你要沿直线运动到这个点吗? "
+    break
+    case 26
+      message="插入第一个指令,按:#F1继续without#F8选择指令"
+    break
+    case 27
+      message="插入第二个指令,按:#F1继续without#F8选择指令"
+    break
+    case 28
+      message="速度是多少? [%]"
+    break
+    case 29
+      message="速度是多少? [mm/sec]"
+    break
+    case 30
+      message="按编辑修改此点   "
+    break
+    case 31
+      message="Do you want to validate the last modification ?"
+    break
+    case 32
+      message="Error while computing the frame check your points again"
+    break
+    //
+    case 40
+      message="接近"
+    break
+    case 41
+      message="离开"
+    break
+    case 42
+      message="工具和点参考 (z-)"
+    break
+    case 43
+      message="Stop Time"
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

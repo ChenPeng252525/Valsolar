@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF3Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nActualProg" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bCancel" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[2]
+    if x_bSave
+      call language:message(l_sMessage,-1)
+      // get the yes_no button Key
+      call language:getYesNo(l_sButton)
+      // ask the question 
+      call use:yes_no_cancel(l_sMessage,l_sButton,l_bYes,l_bCancel)
+      if l_bYes
+        call saveIt(x_bSave)
+      endIf
+    endIf
+    // check if the cancel button has been pressed          
+    if !l_bCancel
+      l_sEmpty=""
+      call loadPage("Disk://instruction/inputOutput/page_inOut",l_sEmpty)
+      call prog:load(sProgram,i)
+      if i!=0
+        // show the error message
+        call language:message(l_sMessage,-7)
+        popUpMsg(l_sMessage+" PROG "+sProgram+", "+toString("",i))
+      endIf
+      // return to the page
+      logMsg("[KERNEL] INTERFACE:Page Edit Program: "+sProgram)
+      call buildList()
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

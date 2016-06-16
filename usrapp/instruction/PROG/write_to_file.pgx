@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="write_to_file" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nX" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nY" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sItem" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bCall" type="bool" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sFill" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // check the size
+  //
+  l_nSize=size(sWrite)-x_nY
+  if l_nSize<=0
+    for i=0 to abs(l_nSize)
+      // insert new Line
+      insert(sWrite[size(sWrite)])
+    endFor
+  endIf
+  //
+  // write in the line
+  //
+  // test if the len is ok
+  //
+  l_nSize=len(sWrite[x_nY])-x_nX
+  if l_nSize<=0
+    for i=0 to abs(l_nSize)
+      // insert white space if the item on the left is a PROG
+      sWrite[x_nY]=insert(sWrite[x_nY]," ",len(sWrite[x_nY]))
+    endFor
+    // insert the line
+    sWrite[x_nY]=replace(sWrite[x_nY],x_sItem,0,x_nX)
+  else
+    if x_bCall
+      //need to insert for all the line an empty string of nChar
+      for i=0 to size(sWrite)-1
+        call use:strfill(l_sFill,nChar+1,l_sFill)
+        //        if (mid(sWrite[i],1,x_nX+nChar)=="═")
+        //          call use:strfillchr(l_sFill,l_sFill,"═")
+        //          // line
+        //          sWrite[i]=insert(sWrite[i],l_sFill,x_nX+nChar+1)
+        //        else
+        // space
+        sWrite[i]=insert(sWrite[i],l_sFill,x_nX+nChar+1)
+        //       endIf
+      endFor
+    endIf
+    // replace the string
+    sWrite[x_nY]=replace(sWrite[x_nY],x_sItem,nChar+1,x_nX)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

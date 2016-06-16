@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onInsert" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  call selectType(l_sEvent)
+  // exit 
+  if l_sEvent==""
+    x_sItem=""
+    return
+  endIf
+  //
+  if x_sItem!="IF"
+    // compose the instruction
+    call make_NUM(l_sEvent)
+  else
+    // usine an IF
+    call make_if(l_sEvent)
+  endIf
+  // update 
+  x_sItem=l_sEvent
+end]]></Code>
+  </Program>
+</Programs>

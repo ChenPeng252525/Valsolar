@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onExit">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_fNewWorld" type="frame" xsi:type="array" size="1" />
+      <Local name="l_bCancel" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // saveIt
+//  if x_bSave
+//    call language:message(l_sMessage,-1)
+//    // get the yes_no button
+//    call language:getYesNo(l_sButton)
+//    // ask the question 
+//    call use:yes_no_cancel(l_sMessage,l_sButton,l_bYes,l_bCancel)
+//    if l_bYes
+//      call saveIt(x_bSave)
+//    else
+//      sItems[0]=""
+//    endIf
+//    // look for the cancel button to cancel
+//    bExit=!l_bCancel
+//  else
+//    // exit from the page
+//    bExit=true
+//  endIf
+//  // resetMotion
+//  if !cycleStatus:bCycle
+//    resetMotion()
+//  endIf
+//  // give back 
+//  // set the number
+//  if size(sItems)>1
+//    sItems[1]=toString("",nSelect)
+//  endIf
+//  // reset the show status
+//  bShowStatus=false
+//  //
+//  call tcp:getTool(tTool,saveData:nIndexTool)
+//  // give back the jog context
+//  saveData:nFrameActive=nBackupFrame
+//  fFather=saveData:fFrameItem[saveData:nFrameActive].fFrame
+//  $jogContext(tTool,fFather,0)
+end]]></Code>
+  </Program>
+</Programs>

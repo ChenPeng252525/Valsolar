@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF8Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bExit" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[7]
+    //
+    // EXIT or change Session
+    //
+    if saveData:bMultiSession and saveData:mode>=1
+      // init
+      use:nView=0
+      // ask to change session or quit valplast
+      call use:clear(0,13)
+      call use:typeMenu(8,"<-")
+      call use:setSizeList(30,9,8,2)
+      call use:listcreate("")
+      l_sItem="Quit"
+      call use:listadd(l_sItem)
+      l_sItem="Session"
+      call use:listadd(l_sItem)
+      call use:listupdate(0)
+      // loop for a response
+      do
+        // read a key
+        l_nKey=get()
+        call use:listevent(l_nKey,l_nIndex,l_sEvent)
+      until l_nKey==255 or l_nKey==270
+      //
+      if l_nKey!=255
+        switch l_nIndex
+          case 0
+            //quit
+            // clear the screen
+            cls()
+            // ask if the user want change the sesion
+            call language:message(l_sMessage,4)
+            // get the yes_no button Key
+            call language:getYesNo(l_sButton)
+            // ask the question
+            call use:yes_no(l_sMessage,l_sButton,x_bExit)
+          break
+          case 1
+            // change session
+            call changeSession()
+          break
+        endSwitch
+      endIf
+    elseIf saveData:bMultiSession and saveData:mode==0
+      call changeSession()
+    else
+      // ask if the user want change the sesion
+      call language:message(l_sMessage,4)
+      // get the yes_no button Key
+      call language:getYesNo(l_sButton)
+      // ask the question
+      call use:yes_no(l_sMessage,l_sButton,x_bExit)
+    endIf
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

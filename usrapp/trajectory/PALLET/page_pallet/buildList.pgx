@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_tPallet" type="TrajPallet" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // Build the list
+  call pallet:getSizeItem(false,l_nSize)
+  call pallet:getPalletPos(sPalletName,nPosition)
+  call pallet:getPalletData(false,l_tPallet)
+  // show it
+  call language2:message(l_sMessage,11)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  call listAdd(l_sMessage+"> "+toString("",nPosition+1)+"/"+toString("",l_nSize))
+  call language2:message(l_sMessage,12)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  call listAdd(l_sMessage+"> "+toString("",(nPosition%(l_tPallet.nX*l_tPallet.nY))%l_tPallet.nX+1)+"/"+toString("",l_tPallet.nX))
+  call language2:message(l_sMessage,13)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  call listAdd(l_sMessage+"> "+toString("",roundDown((nPosition%(l_tPallet.nX*l_tPallet.nY))/l_tPallet.nX)+1)+"/"+toString("",l_tPallet.nY))
+  call language2:message(l_sMessage,14)
+  call use:strfill(l_sMessage,9,l_sMessage)
+  call listAdd(l_sMessage+"> "+toString("",roundDown(nPosition/(l_tPallet.nX*l_tPallet.nY))+1)+"/"+toString("",l_tPallet.nZ))
+  // show the x_y_z distance offset
+  call listAdd("  dX     > "+toString(".1",l_tPallet.nDistanceXYZ[0]))
+  call listAdd("  dY     > "+toString(".1",l_tPallet.nDistanceXYZ[1]))
+  call listAdd("  dZ     > "+toString(".1",l_tPallet.nDistanceXYZ[2]))
+  l_nSize=0
+  for i=0 to size(l_tPallet.sAction)-1
+    l_sEvent=l_tPallet.sAction[i]
+    call language2:message(l_sMessage,15)
+    call use:strfill(l_sMessage,9,l_sMessage)
+    call listAdd(l_sMessage+toString("",i+1)+">"+l_sEvent)
+  endFor
+  // rebuild the list
+  call use:listempty()
+  call use:listadd(sList)
+end]]></Code>
+  </Program>
+</Programs>

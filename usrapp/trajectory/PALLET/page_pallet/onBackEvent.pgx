@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onBackEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_tPallet" type="TrajPallet" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nXYZ" type="num" xsi:type="array" size="3" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+      <Local name="y" type="num" xsi:type="array" size="1" />
+      <Local name="x" type="num" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_nZ" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  if nIndex>=0
+    call use:findPos(sEvent,">",i)
+    i=i+1
+  endIf
+  //
+  // update all the value
+  //
+  call pallet:getSizeItem(false,l_nSize)
+  call pallet:getPalletData(false,l_tPallet)
+  call pallet:getPalletPos(x_sName,l_nPos)
+  // make the default
+  if l_nSize>=1
+    // ORIGIN
+    call pallet:getPoint(l_pPoint,false,0)
+    fFather=tTrajPallet.fReference
+    pO.trsf=position(l_pPoint,fFather)
+    pOrigin.trsf=position(pO,l_tPallet.fFrame)
+  endIf
+  // clean the line
+  call use:listcursor(use:nView,false)
+  // swith the line
+  // use this
+  // l_nPos=(nX*nY)*(l_nZ-1)+(nX)*(l_nY-1)+(l_nX-1))
+  // call setPalletPos(x_sItem,(l_nSize[0]*l_nSize[2])*(l_nValue[3]-1)+(l_nSize[0])*(l_nValue[2]-1)+(l_nValue[1]-1))
+  l_nX=(l_nPos%(l_tPallet.nX*l_tPallet.nY))%l_tPallet.nX+1
+  l_nY=roundDown((l_nPos%(l_tPallet.nX*l_tPallet.nY))/l_tPallet.nX)+1
+  l_nZ=roundDown(l_nPos/(l_tPallet.nX*l_tPallet.nY))+1
+  switch nIndex
+    //
+    default
+      // plane line action
+      if nIndex>=7
+        l_tPallet.sAction[l_nIndex]=""
+        x_bSave=true
+      endIf
+    break
+  endSwitch
+  // update the position
+  if nIndex>=1 and nIndex<=3
+    l_nPos=(l_tPallet.nX*l_tPallet.nY)*(l_nZ-1)+(l_tPallet.nX)*(l_nY-1)+(l_nX-1)
+    call pallet:setPalletPos(x_sName,l_nPos)
+  endIf
+  // update all
+  if x_bSave
+    call pallet:setPalletData(l_tPallet)
+    call pallet:getPalletData(false,tTrajPallet)
+  endIf
+  // refresh it
+  call buildList()
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

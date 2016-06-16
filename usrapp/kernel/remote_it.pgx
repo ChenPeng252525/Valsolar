@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="remote_it" access="private" >
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bClock" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bEnd" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bTollerance" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nClock" type="num" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INIT 
+  //
+  // HOME
+  //
+  cycleStatus:bHomeLoaded=cycleStatus:bIsHome=false
+  saveData:bChangeIO=false
+  //
+  // the Start-stop-end_cycle
+  //
+  wait(nRemoteID==-1)
+  l_nClock=clock()
+  //
+  logMsg("[KERNEL] REMOTE:LOAD")
+
+  //
+  while true
+    //
+    // check HOME
+    //
+    call remote_isHome()
+    //
+    // check the IO CHANGE
+    //
+    if saveData:bChangeIO
+      // INPUT DETECTION
+      saveData:sInStart=saveData:sInEnd=saveData:sInStop=saveData:sInHome=""
+      for i=0 to size(bEdge)-1
+        bEdge[i]=false
+      endFor
+      // scan
+      l_sKey=first(inOut:dInput)
+      while l_sKey!=""
+        if inOut:dInput[l_sKey].bActive==true
+          if inOut:dInput[l_sKey].sName=="start"
+            saveData:sInStart=inOut:dInput[l_sKey].sID
+          elseIf inOut:dInput[l_sKey].sName=="stop"
+            saveData:sInStop=inOut:dInput[l_sKey].sID
+          elseIf inOut:dInput[l_sKey].sName=="end"
+            saveData:sInEnd=inOut:dInput[l_sKey].sID
+          elseIf inOut:dInput[l_sKey].sName=="home"
+            saveData:sInHome=inOut:dInput[l_sKey].sID
+          endIf
+        endIf
+        // next
+        l_sKey=next(inOut:dInput[l_sKey])
+        delay(0)
+      endWhile
+      // OUT DETECTION
+      saveData:sOutStart=saveData:sOutEnd=saveData:sOutStop=saveData:sOutHome=""
+      // scan
+      l_sKey=first(inOut:dOutput)
+      while l_sKey!=""
+        if inOut:dOutput[l_sKey].bActive==true
+          if inOut:dOutput[l_sKey].sName=="start"
+            saveData:sOutStart=inOut:dOutput[l_sKey].sID
+          elseIf inOut:dOutput[l_sKey].sName=="stop"
+            saveData:sOutStop=inOut:dOutput[l_sKey].sID
+          elseIf inOut:dOutput[l_sKey].sName=="end"
+            saveData:sOutEnd=inOut:dOutput[l_sKey].sID
+          elseIf inOut:dOutput[l_sKey].sName=="home"
+            saveData:sOutHome=inOut:dOutput[l_sKey].sID
+          endIf
+        endIf
+        // next
+        l_sKey=next(inOut:dOutput[l_sKey])
+        delay(0)
+      endWhile
+      saveData:bChangeIO=false
+    endIf
+    // working MODE REMOTE or emergency???
+    if workingMode()==4 or esStatus()==2
+      // check the tollerance
+      call cycleStatus:checkTollerance(l_bTollerance)
+      //
+      //  Define the Digital INPUT that is associate with
+      //  the START-STOP-END CYCLE-HOME
+      //
+      // START
+      //
+      if saveData:sInStart!="" and esStatus()!=2
+        if inOut:dInput[saveData:sInStart].dDio==true and inOut:dInput[saveData:sInStart].bActive and !bEdge[0]
+          // EDGE TO TRUE
+          bEdge[0]=true
+          // START ?
+          if (cycleStatus:bCycle==false and cycleStatus:bSimulation==false)
+            nRemoteID=0
+            watch(nRemoteID==-1,1)
+          elseIf cycleStatus:bPause
+            // restart
+            call OnEvent:resumeCycle()
+          else
+            // pause
+            call OnEvent:pauseCycle()
+          endIf
+          // refresh
+          use:bUseRefresh=true
+          // RESET EDGE
+        elseIf inOut:dInput[saveData:sInStart].dDio==false and inOut:dInput[saveData:sInStart].bActive and bEdge[0]
+          bEdge[0]=false
+        endIf
+      endIf
+      //
+      // STOP
+      //
+      if saveData:sInStop!=""
+        if inOut:dInput[saveData:sInStop].dDio==true and inOut:dInput[saveData:sInStop].bActive and !bEdge[1]
+          bEdge[1]=true
+          if cycleStatus:bCycle or cycleStatus:bSimulation
+            // stop bit
+            cycleStatus:bToStop=true
+            watch(cycleStatus:bToStop==false,1)
+            // refresh
+            use:bUseRefresh=true
+          endIf
+          // RESET EDGE
+        elseIf inOut:dInput[saveData:sInStop].dDio==false and inOut:dInput[saveData:sInStop].bActive and bEdge[1]
+          bEdge[1]=false
+        endIf
+      endIf
+      //
+      // END
+      //
+      if saveData:sInEnd!="" and esStatus()!=2
+        if inOut:dInput[saveData:sInEnd].dDio==true and inOut:dInput[saveData:sInEnd].bActive and !bEdge[2]
+          bEdge[2]=true
+          nRemoteID=2
+          watch(nRemoteID==-1,1)
+          // refresh
+          use:bUseRefresh=true
+          // RESET EDGE
+        elseIf inOut:dInput[saveData:sInEnd].dDio==false and inOut:dInput[saveData:sInEnd].bActive and bEdge[2]
+          bEdge[2]=false
+        endIf
+      endIf
+      //
+      // HOME
+      //
+      if saveData:sInHome!="" and esStatus()!=2
+        if inOut:dInput[saveData:sInHome].dDio==true and inOut:dInput[saveData:sInHome].bActive and !bEdge[3]
+          if cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+            //and !cycleStatus:bIsHome
+            cycleStatus:bHoming=true
+            bEdge[3]=true
+            // recharge the home strategy
+            nRemoteID=3
+            watch(nRemoteID==-1,1)
+            // refresh
+            use:bUseRefresh=true
+          endIf
+        elseIf inOut:dInput[saveData:sInHome].dDio==false and inOut:dInput[saveData:sInHome].bActive and bEdge[3]
+          // reset the edge and stop the cycle
+          bEdge[3]=false
+          if cycleStatus:bSimulation
+            // STOP BIT
+            cycleStatus:bToStop=true
+            watch(cycleStatus:bToStop==false,1)
+            // refresh
+            use:bUseRefresh=true
+          endIf
+        endIf
+      endIf
+      //
+      //  Search if a Input associated with a program has been actived
+      //
+      if esStatus()!=2
+        l_sKey=first(inOut:dInput)
+        while l_sKey!=""
+          if find(inOut:dInput[l_sKey].sName,"#")!=-1
+            if inOut:dInput[l_sKey].dDio==true and inOut:dInput[l_sKey].bActive and !bEdge[4]
+              if !cycleStatus:bCycle and !cycleStatus:bSimulation and cycleStatus:bIsHome
+                bEdge[4]=true
+                // take the problem name
+                l_sProg=inOut:dInput[l_sKey].sName
+                l_sPath=saveData:sPathProg[0]
+                sRemoteID=l_sProg
+                nRemoteID=4
+                wait(nRemoteID==-1)
+                // load the production page
+                cls()
+                popUpMsg("ROBOT IS GOING to :"+l_sProg)
+                call use:setView(false)
+                logMsg("[KERNEL] REMOTE:Insert the: "+l_sProg)
+                // refresh
+                use:bUseRefresh=true
+              endIf
+              // RESET EDGE
+            elseIf inOut:dInput[l_sKey].dDio==false and inOut:dInput[l_sKey].bActive and bEdge[4]
+              bEdge[4]=false
+            endIf
+          endIf
+          // next
+          l_sKey=next(inOut:dInput[l_sKey])
+        endWhile
+      endIf
+      //
+      //  Define the Digital OUTPUT that is associate with
+      //  the START-STOP-END CYCLE-HOME
+      //
+      // START
+      //
+      if saveData:sOutStart!="" and inOut:dOutput[saveData:sOutStart].bActive
+        if (cycleStatus:bCycle or cycleStatus:bSimulation) and !cycleStatus:bHoming and esStatus()!=2
+          if !cycleStatus:bPause
+            // put it ON on cyclying
+            inOut:dOutput[saveData:sOutStart].dDio=true
+            // check operator cmd
+          elseIf (!isPowered() and l_bTollerance) or isPowered()
+            //PULSE for PAUSE
+            inOut:dOutput[saveData:sOutStart].dDio=l_bClock
+          endIf
+        elseIf cycleStatus:bIsHome and esStatus()!=2
+          // pulse ready to START
+          inOut:dOutput[saveData:sOutStart].dDio=l_bClock
+        else
+          // no start need
+          inOut:dOutput[saveData:sOutStart].dDio=false
+        endIf
+      endIf
+      //
+      // STOP
+      //
+      if saveData:sOutStop!="" and inOut:dOutput[saveData:sOutStop].bActive
+        if esStatus()==2
+          // emergency enable
+          inOut:dOutput[saveData:sOutStop].dDio=l_bClock
+        elseIf (!cycleStatus:bCycle and !cycleStatus:bSimulation) and !cycleStatus:bIsHome
+          // put it ON no CYCLE
+          inOut:dOutput[saveData:sOutStop].dDio=true
+        else
+          // CYCLING
+          inOut:dOutput[saveData:sOutStop].dDio=false
+        endIf
+      endIf
+      //
+      // END
+      //
+      if saveData:sOutEnd!="" and inOut:dOutput[saveData:sOutEnd].bActive
+        if (cycleStatus:bCycle or cycleStatus:bSimulation) and esStatus()!=2
+          if (!isPowered() and !l_bTollerance)
+            // OPERATOR CMD
+            inOut:dOutput[saveData:sOutEnd].dDio=true
+          elseIf cycleStatus:bEnding
+            //PULSE for ENDING CYCLE
+            inOut:dOutput[saveData:sOutEnd].dDio=l_bClock
+          endIf
+        else
+          // NOT CYCLING
+          inOut:dOutput[saveData:sOutEnd].dDio=false
+        endIf
+      endIf
+      //
+      // HOME ???
+      //
+      if saveData:sOutHome!="" and inOut:dOutput[saveData:sOutHome].bActive and esStatus()!=2
+        if (cycleStatus:bCycle or cycleStatus:bSimulation)
+          // CYCLING  ->FALSE
+          inOut:dOutput[saveData:sOutHome].dDio=false
+        elseIf !cycleStatus:bIsHome
+          // NEED TO GO HOME
+          inOut:dOutput[saveData:sOutHome].dDio=l_bClock
+        else
+          // IS AT HOME
+          inOut:dOutput[saveData:sOutHome].dDio=true
+        endIf
+      elseIf esStatus()==2 and saveData:sOutHome!=""
+        // emergency active
+        inOut:dOutput[saveData:sOutHome].dDio=false
+      endIf
+      //
+      // PULSING TIME
+      //
+      if (clock()-l_nClock)>0.5
+        l_bClock=!l_bClock
+        l_nClock=clock()
+      endIf
+      //
+    else
+      //
+      // reset the light
+      //
+      call remote_rstLight()
+    endIf
+    // release the resource
+    delay(0)
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

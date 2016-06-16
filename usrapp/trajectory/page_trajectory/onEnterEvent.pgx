@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="2" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  if sEvent!=""
+    logMsg("Page trajectory trajtype "+trajType:libPath())
+    //
+    l_sItem=sEvent
+    call trajType:onEdit(l_sItem)
+    if find(l_sItem,"Disk://")!=-1 and l_nResult==0
+      // load the page
+      call loadPage(l_sItem,l_sItem[1])
+    endIf
+    // logMsg
+    logMsg("[KERNEL] INTERFACE:PAGE Edit trajectory")
+    //
+    call buildList()
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

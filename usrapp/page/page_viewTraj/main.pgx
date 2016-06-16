@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverRide" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart(l_bContinue)
+  // LOOP UNTIL nKey=255
+  do
+    
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    nSelected=nIndex
+		data:nPage_viewTraj=nIndex
+    
+    // DEFAULT FUNCTIONALITY
+    switch nKey
+      case 259
+        // TAB
+        bLarge=!bLarge
+        call use:setView(bLarge)
+      break
+      case 263
+        // backSpace rename
+        call onBackEvent(l_bSave)
+      break
+      case 32
+        // space to edit Action
+        call onSpaceEvent(l_bSave)
+      break
+      case 271
+        call onF1Event()
+      break
+      case 272
+        //
+        call onF2Event()
+      break
+      case 273
+        // 
+        call onF3Event(l_bContinue,l_bSave)
+      break
+      case 274
+        // 
+        call onF4Event(l_bSave)
+      break
+      case 275
+        // 
+        call onF5Event()
+      break
+      // 
+      case 276
+        call onF6Event(l_bSave)
+      break
+      case 277
+        // 
+        call onF7Event(l_bSave)
+      break
+      case 278
+        // 
+        call onF8Event(l_bSave)
+      break
+      case 270
+        // 
+        call onEnterEvent(l_bSave)
+      break
+    endSwitch
+    if workingMode()!=1 and workingMode()!=4
+      call use:timerDialog("请将控制器打到手动状态或者是远程自动状态！",0)
+      wait(workingMode()==1 or workingMode()==4)
+    endIf
+    if workingMode()==4
+     // call loadPage("page/page_production")
+      pub:libLoad("Disk://page/page_Production")
+      call pub:main()
+    endIf 
+    // release
+    delay(0)
+  until false
+  cls()
+  bExit=false
+end]]></Code>
+  </Program>
+</Programs>

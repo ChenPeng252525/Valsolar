@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nFrame" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    // paste it
+    l_nFrame=-1
+    for i=0 to size(sList)-1
+      if find(sList[i],"#")!=-1
+        l_nFrame=i
+      endIf
+    endFor
+    if l_nFrame!=-1
+      // paste it
+      if l_nFrame==0
+        saveData:fFrameItem[nFrame].fFrame.trsf={0,0,0,0,0,0}
+      else
+        saveData:fFrameItem[nFrame].pO.trsf=saveData:fFrameItem[l_nFrame].pO.trsf
+        saveData:fFrameItem[nFrame].pX.trsf=saveData:fFrameItem[l_nFrame].pX.trsf
+        saveData:fFrameItem[nFrame].pY.trsf=saveData:fFrameItem[l_nFrame].pY.trsf
+        saveData:fFrameItem[nFrame].fFrame.trsf=saveData:fFrameItem[l_nFrame].fFrame.trsf
+      endIf
+      call use:timerDialog("PASTE FRAME "+toString("",l_nFrame)+" to FRAME "+toString("",nFrame),3)
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

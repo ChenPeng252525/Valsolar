@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="_getP2PAngle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pHere" type="point" xsi:type="element" />
+      <Parameter name="x_pPoint" type="point" xsi:type="element" />
+      <Parameter name="x_nP2PMaxAng" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="14" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_nResult[0]=abs(x_pPoint.trsf.rx-x_pHere.trsf.rx)
+  l_nResult[1]=abs(x_pPoint.trsf.ry-x_pHere.trsf.ry)
+  l_nResult[2]=min(l_nResult[0],360-l_nResult[0])
+  l_nResult[3]=min(l_nResult[1],360-l_nResult[1])
+  x_nP2PMaxAng=(l_nResult[2]+l_nResult[3])
+end]]></Code>
+  </Program>
+</Programs>

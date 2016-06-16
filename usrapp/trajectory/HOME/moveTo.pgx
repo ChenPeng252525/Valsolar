@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="moveTo" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_mDesc" type="mdesc" xsi:type="element" />
+      <Parameter name="x_nMoveType" type="num" xsi:type="element" />
+      <Parameter name="x_bUnreached" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nMoveId" type="num" xsi:type="element" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_fFrame" type="frame" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_pMove" type="point" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_jMove" type="joint" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if x_bCycle
+    //
+    // go to the select Joint
+    //
+    // use the go to the defined type...
+    if x_nIndex==0 and pt:tTraj[sTrajCycle].nZoneType!=0
+      switch pt:tTraj[sTrajCycle].nZoneMove
+        // POINT TO
+        case 0
+          if x_nMoveType==0
+            x_nMoveId=movej(pt:tTraj[sTrajCycle].pPointMove,x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            x_nMoveId=movel(pt:tTraj[sTrajCycle].pPointMove,x_tTool,x_mDesc)
+          endIf
+        break
+        case 1
+          // APPRO use the real APPRO
+          call tcp:getTool(l_tTool,pt:tTraj[sTrajCycle].nIndexTool)
+          if x_nMoveType==0
+            x_nMoveId=movej(appro(here(l_tTool,world),pt:tTraj[sTrajCycle].pPointMove.trsf),x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            x_nMoveId=movel(appro(here(l_tTool,world),pt:tTraj[sTrajCycle].pPointMove.trsf),x_tTool,x_mDesc)
+          endIf
+        break
+        case 2
+          // Z VALUE
+          if pt:tTraj[sTrajCycle].fFrame.trsf!={0,0,0,0,0,0}
+            l_pHere=here(x_tTool,pt:tTraj[sTrajCycle].fFrame)
+            l_pHere.trsf.z=pt:tTraj[sTrajCycle].pPointMove.trsf.z
+            if x_nMoveType==0
+              x_nMoveId=movej(l_pHere,x_tTool,x_mDesc)
+            elseIf x_nMoveType==1
+              x_nMoveId=movel(l_pHere,x_tTool,x_mDesc)
+            endIf
+          endIf
+        break
+        case 3,4
+          // @POINT @JPOINT
+          call getJointData(l_jMove,l_tTool,x_bCycle,x_nIndex)
+          // MOVE
+          if x_nMoveType==0
+            x_nMoveId=movej(l_jMove,x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            l_pPoint=jointToPoint(x_tTool,world,l_jMove)
+            l_pPoint.config={ssame,esame,wsame}
+            x_nMoveId=movel(l_pPoint,x_tTool,x_mDesc)
+          endIf
+        break
+      endSwitch
+    else
+      // get the JOINT DATA
+      call getJointData(l_jMove,l_tTool,x_bCycle,x_nIndex)
+      // MOVE
+      if x_nMoveType==0
+        x_nMoveId=movej(l_jMove,l_tTool,x_mDesc)
+      elseIf x_nMoveType==1
+        l_pPoint=jointToPoint(l_tTool,world,l_jMove)
+        l_pPoint.config={ssame,esame,wsame}
+        x_nMoveId=movel(l_pPoint,l_tTool,x_mDesc)
+      endIf
+    endIf
+  else
+    //
+    // go to the select Joint
+    //
+    // use the go to the defined type...
+    if x_nIndex==0 and jEditPoint.nZoneType!=0
+      switch jEditPoint.nZoneMove
+        // POINT TO
+        case 0
+          if x_nMoveType==0
+            x_nMoveId=movej(jEditPoint.pPointMove,x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            x_nMoveId=movel(jEditPoint.pPointMove,x_tTool,x_mDesc)
+          endIf
+        break
+        case 1
+          // APPRO gat the tool taught
+          call tcp:getTool(l_tTool,jEditPoint.nIndexTool)
+          if x_nMoveType==0
+            x_nMoveId=movej(appro(here(l_tTool,world),jEditPoint.pPointMove.trsf),x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            x_nMoveId=movel(appro(here(l_tTool,world),jEditPoint.pPointMove.trsf),x_tTool,x_mDesc)
+          endIf
+        break
+        case 2
+          // Z VALUE
+          if jEditPoint.fFrame.trsf!={0,0,0,0,0,0}
+            l_pHere=here(x_tTool,jEditPoint.fFrame)
+            l_pHere.trsf.z=jEditPoint.pPointMove.trsf.z
+            if x_nMoveType==0
+              x_nMoveId=movej(l_pHere,x_tTool,x_mDesc)
+            elseIf x_nMoveType==1
+              x_nMoveId=movel(l_pHere,x_tTool,x_mDesc)
+            endIf
+          endIf
+        break
+        case 3,4
+          // get the JOINT DATA
+          call getJointData(l_jMove,l_tTool,x_bCycle,x_nIndex)
+          // MOVE
+          if x_nMoveType==0
+            x_nMoveId=movej(l_jMove,x_tTool,x_mDesc)
+          elseIf x_nMoveType==1
+            l_pPoint=jointToPoint(x_tTool,world,l_jMove)
+            l_pPoint.config={ssame,esame,wsame}
+            x_nMoveId=movel(l_pPoint,x_tTool,x_mDesc)
+          endIf
+        break
+      endSwitch
+    else
+      // get the JOINT DATA
+      call getJointData(l_jMove,l_tTool,x_bCycle,x_nIndex)
+      // MOVE
+      if x_nMoveType==0
+        x_nMoveId=movej(l_jMove,l_tTool,x_mDesc)
+      elseIf x_nMoveType==1
+        l_pPoint=jointToPoint(l_tTool,world,l_jMove)
+        l_pPoint.config={ssame,esame,wsame}
+        x_nMoveId=movel(l_pPoint,l_tTool,x_mDesc)
+      endIf
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

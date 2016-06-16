@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF2Event" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[1]
+    //
+    // CHANGE THE settings
+    //
+    setTextMode(1)
+    call use:type(0,4,"F2 "+sMenu[1])
+    setTextMode(0)
+    call settings()
+    use:bUseRefresh=true
+    x_bSave=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

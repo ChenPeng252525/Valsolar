@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="findMove" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_nMoveType" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_jHere" type="joint" xsi:type="array" size="1" />
+      <Local name="l_bUnreach" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // MOVE TO THE POINT
+  //
+  // get all the value that you need
+  call getSizeItem(false,l_nSize)
+  l_pHere=here(x_tTool,pEditPoint.fFrame)
+  // get the point and the circle point
+  call getPoint(pPoints,false,x_nIndex)
+  call getPoint(l_pPoint,false,x_nIndex)
+  pPoints[1].trsf=position(l_pPoint,pEditPoint.fFrame)
+  pPoints[2].trsf={0,0,0,0,0,0}
+  // take the moveType for the x_nIndex
+  l_nMoveType=x_nMoveType
+  // Set to JOINT for default
+  x_nMoveType=0
+  //
+  // LOOK FOR CIRCLE MOVE
+  //
+  if distance(l_pHere,pPoints[1])>1
+    if x_nIndex>0 and l_nMoveType==2
+      // FORWARD 
+      call getPoint(l_pPoint,false,x_nIndex-1)
+      pPoints.trsf=position(l_pPoint,pEditPoint.fFrame)
+      if distance(l_pHere,pPoints)<1
+        // move circular forward
+        x_nMoveType=2
+      else
+        // look if is it inside the traiectory
+        call checkPCircle(x_nIndex,here(x_tTool,pEditPoint.fFrame),l_nResult)
+        if l_nResult!=-1 and l_nResult!=0 and l_nResult!=1
+          // save the percentage inside the type
+          x_nMoveType=2+l_nResult
+        endIf
+      endIf
+    endIf
+    if x_nIndex<(l_nSize-1) and x_nMoveType==0
+      // BACKWARD 
+      l_nMoveType=pEditPoint.tData[x_nIndex+1].tSuper.moveType
+      if l_nMoveType==2
+        // get the point and the circle point
+        call getPoint(l_pPoint,false,x_nIndex+1)
+        pPoints.trsf=position(l_pPoint,pEditPoint.fFrame)
+        if distance(l_pHere,pPoints)<1
+          // move circular backward
+          x_nMoveType=-2
+        else
+          // look if is it inside the traiectory
+          call checkPCircle(x_nIndex+1,here(x_tTool,pEditPoint.fFrame),l_nResult)
+          if l_nResult!=-1 and l_nResult!=0 and l_nResult!=1
+            // save the percentage inside the type
+            x_nMoveType=-2-l_nResult
+          endIf
+        endIf
+      endIf
+    endIf
+  endIf
+  //
+  // NO CIRCLE
+  //
+  if abs(x_nMoveType)<2
+    l_nMoveType=pEditPoint.tData[x_nIndex].tSuper.moveType
+    //
+    // move forward 
+    //
+    if x_nIndex>0 and l_nMoveType==1
+      // get the point and the circle point
+      call getPoint(l_pPoint,false,x_nIndex-1)
+      pPoints.trsf=position(l_pPoint,pEditPoint.fFrame)
+      if distance(l_pHere,pPoints)<1
+        // set to linear
+        x_nMoveType=1
+      elseIf setFrame(pPoints,pPoints[1],pPoints[2],fSetFrame)==0
+        // check frame
+        l_pHere=here(x_tTool,fSetFrame)
+        pPoints[1].trsf=position(pPoints[1],fSetFrame)
+        if l_pHere.trsf.x>=0 and l_pHere.trsf.x<=pPoints[1].trsf.x and abs(l_pHere.trsf.y)<1 and abs(l_pHere.trsf.z)<1
+          // set to linear
+          x_nMoveType=1
+        endIf
+      endIf
+    endIf
+    //
+    // move back
+    //
+    if x_nIndex<(l_nSize-1) and x_nMoveType!=1
+      l_nMoveType=pEditPoint.tData[x_nIndex+1].tSuper.moveType
+      if l_nMoveType==1
+        // get the point and the circle point
+        call getPoint(l_pPoint,false,x_nIndex)
+        pPoints[1].trsf=position(l_pPoint,pEditPoint.fFrame)
+        // get the point and the circle point
+        call getPoint(l_pPoint,false,x_nIndex+1)
+        pPoints.trsf=position(l_pPoint,pEditPoint.fFrame)
+        if distance(l_pHere,pPoints)<1
+          // switch to linear
+          x_nMoveType=1
+        elseIf setFrame(pPoints,pPoints[1],pPoints[2],fSetFrame)==0
+          // check frame
+          l_pHere=here(x_tTool,fSetFrame)
+          pPoints[1].trsf=position(pPoints[1],fSetFrame)
+          if l_pHere.trsf.x>=0 and l_pHere.trsf.x<=pPoints[1].trsf.x and abs(l_pHere.trsf.y)<1 and abs(l_pHere.trsf.z)<1
+            // set to linear
+            x_nMoveType=1
+          endIf
+        endIf
+      endIf
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

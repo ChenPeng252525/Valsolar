@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="passwd">
+    <Locals>
+      <Local name="l_sText" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTemp" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  call language:message(l_sMessage,204)
+  call use:timerDialog(l_sMessage,0)
+  call use:type(2,8,">")
+  call use:read(3,8,l_sText,15,true)
+  //
+  // there are 3 difference kind of access
+  // mode 0   ->operator
+  // mode 1   ->programmer
+  // mode 2   ->integrator
+  // mode 3   ->toneage (Administrator)
+  //
+  saveData:mode=0
+  for i=0 to (size(saveData:passwd)-1)
+    if l_sText==saveData:passwd[i]
+      saveData:mode=i+1
+      call use:type(20,8,"...OK...")
+      delay(1)
+      logMsg("[KERNEL] INTERFACE:Set password to: "+l_sText)
+    endIf
+  endFor
+  if saveData:mode==0
+    logMsg("[KERNEL] INTERFACE:Set password to: Operator")
+  endIf
+  //
+  // It's possible to change the password
+  //
+  if saveData:mode>0 and saveData:mode<3
+    call language:message(l_sMessage,205)
+    call use:type(0,10,l_sMessage)
+    call language:message(l_sMessage,206)
+    call use:typeMenu(5,l_sMessage)
+    call use:typeMenu(8,"OK")
+    nKey=get()
+    if nKey==275
+      cls()
+      call language:message(l_sMessage,207)
+      call use:timerDialog(l_sMessage,0)
+      call use:type(2,8,">")
+      l_sText=""
+      call use:read(3,8,l_sText,15,true)
+      call language:message(l_sMessage,208)
+      call use:timerDialog(l_sMessage,0)
+      l_sTemp=""
+      call use:read(3,8,l_sTemp,15,true)
+      if l_sText==l_sTemp and l_sText!=""
+        saveData:passwd[saveData:mode-1]=l_sText
+      else
+        call language:message(l_sMessage,209)
+        popUpMsg(l_sMessage)
+      endIf
+    endIf
+  endIf
+  //
+  //  Show your mode to access and set the Userpage
+  //
+  switch saveData:mode
+    case 0
+      call language:message(l_sText,210)
+    break
+    case 1
+      call language:message(l_sText,211)
+    break
+    case 2,3
+      call language:message(l_sText,212)
+    break
+  endSwitch
+  if saveData:mode<2
+    userPage(true)
+  else
+    userPage(false)
+  endIf
+  call language:message(l_sMessage,213)
+  popUpMsg(l_sMessage+l_sText)
+  // SAVE THE SETTING
+  saveData:libSave()
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

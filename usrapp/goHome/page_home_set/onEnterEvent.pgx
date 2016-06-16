@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Locals>
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if sEvent!="" 
+    
+    if  save:nBoxType==1
+      set:bWizard=false 
+      call set:editSmlData(sEvent,l_nResult)
+      call language2:message(l_sMessage,4)
+      call use:timerDialog(l_sMessage,0)
+      call set:onSave() 
+    elseIf save:nBoxType==2
+      set:bWizard=false 
+      call set:editBigData(sEvent,l_nResult)
+      call language2:message(l_sMessage,4)
+      call use:timerDialog(l_sMessage,0)
+      call set:onSave() 
+    endIf 
+  endIf 
+end]]></Code>
+  </Program>
+</Programs>

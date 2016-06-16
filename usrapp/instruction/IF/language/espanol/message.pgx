@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English IF message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="Desea editar:"
+    break
+    case 1
+      message="< IF WIZARD >"
+    break
+    case 2
+      message="Seleccione el tipo de condición a verificar"
+    break
+    case 3
+      message="Seleccione la entrada"
+    break
+    case 4
+      message="Seleccione la salida"
+    break
+    case 5
+      message="Seleccione la entrada EMAP"
+    break
+    case 6
+      message="Seleccione la manera de ejecutar la instrucción"
+    break
+    case 7
+      message="Seleccione la instrucción a asociar a la :"
+    break
+    case 8
+      message="Seleccione de la lista: "
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="checkPoint.pgx" />
+    <Program file="compose.pgx" />
+    <Program file="delete.pgx" />
+    <Program file="findItem.pgx" />
+    <Program file="getInstr.pgx" />
+    <Program file="getName.pgx" />
+    <Program file="getSize.pgx" />
+    <Program file="getTool.pgx" />
+    <Program file="goToPoint.pgx" />
+    <Program file="here.pgx" />
+    <Program file="new.pgx" />
+    <Program file="save.pgx" />
+    <Program file="setInstr.pgx" />
+    <Program file="setName.pgx" />
+    <Program file="setTool.pgx" />
+  </Programs>
+  <Database>
+    <Data file="tool.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+    <Library alias="use" path="Disk://kernel/userPage/userPage.pjx" />
+    <Library alias="language" path="Disk://kernel/language/language.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+    <Type name="ToolItem" path="Disk://kernel/template/ToolItem/ToolItem.pjx" />
+    <Type name="TrajectoryItem" path="Disk://kernel/template/TrajectoryItem/TrajectoryItem.pjx" />
+  </Types>
+</Project>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="printToShow">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nScrool" type="num" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Print the instruction and the function KEY STEP
+  //
+  call use:typeLen(0,12,""+cycleStatus:sToShow,40)
+  //
+  // refresh the scroll bar in simulation
+  //
+  if cycleStatus:bSimulation
+    nMoveId=getMoveId()
+  endIf
+  if nMoveId>=1
+    call trajType:getSizeItem(false,l_nSize)
+    // normal point
+    call use:type(0,11,toString("2",nPoint)+" ")
+    call use:type(37,11,toString("2",nPoint+1)+" ")
+  else
+    // start Point
+    call use:type(0,11,toString("2",nPoint)+" ")  
+    call use:type(37,11,toString("2",nPoint+1)+" ")
+  endIf
+  // print the scroll
+  call isAtPoint(nPoint,l_bInside)
+  if l_bInside
+    l_nScrool=100
+  else
+    l_nScrool=abs(roundDown(nMoveId)-nMoveId)*100
+  endIf
+  call use:scroll(3,11,32,l_nScrool)
+  call language:message(l_sMessage,124)
+end]]></Code>
+  </Program>
+</Programs>

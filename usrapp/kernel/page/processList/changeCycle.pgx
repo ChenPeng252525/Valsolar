@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changeCycle" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_sEvent" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSwapTotal" type="num" xsi:type="array" size="3" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sSwapProg" type="string" xsi:type="array" size="3" />
+      <Local name="l_nTemp" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTempTotal" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTotal" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTempDone" type="num" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nDone" type="num" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  copy the first 3 item of the processes' list,
+  //  then l_bCheck if all it's OK
+  //
+  // check if the x_sEvent is not empty
+  if x_sEvent!=""
+    call processList:getDefaultType(l_nType)
+    //for i=0 to 2
+    call processList:getSize(l_nSize,l_nType)
+    //endFor
+    if l_nSize>2
+      l_nSize=3
+    endIf
+    // make a backup of the first 
+    l_sEmpty=""
+    l_nDone=0
+    for i=0 to l_nSize-1
+      call processList:getCycle(l_sSwapProg[i],l_nSwapTotal[i],l_nDone,i,l_nType)
+    endFor
+    // take the select one
+    call processList:getCycle(l_sEmpty,l_nTempTotal,l_nDone,x_nIndex,l_nType)
+    l_nTemp=l_nTempTotal
+    //
+    //  increase or Decrease the cicle to do1
+    //
+    i=find(x_sEvent,"/")
+    // clean the line
+    call use:listcursor(use:nView,false)
+    l_sEmpty=""
+    call use:changeValue(l_nTempTotal,1,999,i+40-use:nBottomX,x_nIndex+1,l_sEmpty)
+    l_bCheck=false
+    if l_nTempTotal!=l_nTemp
+      for i=0 to l_nSize-1
+        call processList:getCycle(l_sProg,l_sTotal,l_nDone,i,l_nType)
+        if l_nSwapTotal[i]==l_sTotal and l_sSwapProg[i]==l_sProg
+          l_bCheck=true
+        endIf
+      endFor
+    endIf
+    //
+    // Check if the robot has the same processes' list
+    //
+    if l_bCheck
+      //
+      //  Change the totalcycle only if it is mayor then the doneCycle
+      //
+      l_nZero=0
+      call processList:getCycle(l_sProg,l_nZero,l_nTempDone,x_nIndex,l_nType)
+      if l_nTempTotal!=l_nTemp and l_nTempTotal>l_nTempDone
+        call processList:setCycle(l_sProg,l_nTempTotal,l_nTempDone,x_nIndex,l_nType)
+      endIf
+    endIf
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

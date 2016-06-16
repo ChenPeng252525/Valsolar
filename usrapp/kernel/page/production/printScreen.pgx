@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="printScreen">
+    <Code><![CDATA[begin
+  if bLarge and bTraj
+    // print the screen... easy way
+    gotoxy(0,0)
+    //     0123456789012345678901234567890123456789
+    putln("┌   ───────────────┌   ────────────────┐")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("│                  │")
+    putln("└──────────────────")
+  elseIf bLarge
+    gotoxy(0,0)
+    putln("┌   ───────────────────────────────────┐")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("│                                      │")
+    putln("└──────────────────────────────────────┘")
+  elseIf !bLarge
+    // print the screen... easy way
+    gotoxy(19,0)
+    //    0123456789012345678901234567890123456789
+    putln("┌   ────────────────┐")
+    gotoxy(19,1)
+    putln("│                   │")
+    gotoxy(19,2) 
+    putln("│                   │")
+    gotoxy(19,3)
+    putln("│                   │")
+    gotoxy(19,4)
+    putln("│                   │")
+    gotoxy(19,5)
+    putln("│                   │")
+    gotoxy(19,6)
+    putln("│                   │")
+    gotoxy(19,7) 
+    putln("│                   │")
+    gotoxy(19,8)
+    putln("│                   │")
+    gotoxy(19,9)
+    putln("│                   │")
+    gotoxy(19,10)
+    putln("│                   │")
+    gotoxy(19,11)
+    putln("└───────────────────┘")
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshPoints">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTraj" type="Trajectory" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // create the list
+  call usePoint:type(21,0,x_tTraj.sID)
+  // get the size
+  call usePoint:listempty()
+  l_nSize=size(x_tTraj.tSuper)
+  for i=0 to l_nSize-1
+    // add..
+    l_sEvent=x_tTraj.tSuper[i].comment
+    l_sItem=toString("2",i+1)+" "+l_sEvent
+    nPointLine[i]=l_nIndex
+    call usePoint:listadd(l_sItem)
+    l_nIndex=l_nIndex+1
+    if saveData:bShowItem
+      // search for tCP ON OFF
+      if x_tTraj.tSuper[i].nTcpAction==1
+        l_sItem="  -TCP ON"
+      elseIf x_tTraj.tSuper[i].nTcpAction==2
+        l_sItem="  -TCP OFF"
+      endIf
+      if x_tTraj.tSuper[i].nTcpAction>0
+        call usePoint:listadd(l_sItem)
+        l_nIndex=l_nIndex+1
+      endIf
+      // scan the action...
+      for j=0 to size(x_tTraj.tSuper[i].iInstr)-1
+        if x_tTraj.tSuper[i].iInstr[j].sType!=""
+          l_sData=x_tTraj.tSuper[i].iInstr[j].sData
+          l_sType=x_tTraj.tSuper[i].iInstr[j].sType
+          call saveInputOutput:replaceIO(l_sData,l_sType,l_sData)
+          l_sItem=l_sType+" "+l_sData
+          l_sItem="  -"+l_sItem
+          call usePoint:listadd(l_sItem)
+          l_nIndex=l_nIndex+1
+        endIf        
+      endFor
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

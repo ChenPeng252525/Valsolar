@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF5Event">
+    <Locals>
+      <Local name="l_trOffset" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_bResult" type="bool" xsi:type="array" size="1" />
+      <Local name="l_trResult" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[4]
+    if nFrame>0
+      // compute using a trsf
+      call page_changeTrsf(l_trOffset,false,false,"COMPUTE","")
+      l_sMessage=" use this frame...#"
+      l_sMessage=l_sMessage+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.x)+","+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.y)+","+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.z)
+      l_sMessage=l_sMessage+","+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.rx)+","+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.ry)+","+toString("",saveData:fFrameItem[nFrame].fFrame.trsf.rz)
+      l_sMessage=l_sMessage+"#"+toString("",l_trOffset.x)+","+toString("",l_trOffset.y)+","+toString("",l_trOffset.z)+","+toString("",l_trOffset.rx)+","+toString("",l_trOffset.ry)+","+toString("",l_trOffset.rz)
+      l_trResult=saveData:fFrameItem[nFrame].fFrame.trsf*l_trOffset
+      l_sMessage=l_sMessage+"##"+toString("",l_trResult.x)+","+toString("",l_trResult.y)+","+toString("",l_trResult.z)+","+toString("",l_trResult.rx)+","+toString("",l_trResult.ry)+","+toString("",l_trResult.rz)
+      call language:getYesNo(l_sButton)
+      call use:yes_no(l_sMessage,l_sButton,l_bResult)
+      // check if is ok
+      if l_bResult
+        saveData:fFrameItem[nFrame].fFrame.trsf=l_trResult
+      endIf
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onSpaceEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sId" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bStatus" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sString" type="string" xsi:type="array" size="1" />
+      <Local name="l_nY" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  //
+  if nViewMode==0
+    call out:getStatus(l_bStatus,x_sId)
+    call out:setStatus(!l_bStatus,x_sId)
+    logMsg("[KERNEL] INTERFACE:Change the status ON/OFF of: "+sEvent)
+  elseIf nViewMode==2
+    if find(x_sId,"In")!=-1
+      // INPUT not allowed
+      return
+    else
+      l_nX=40-use:nBottomX+find(sEvent,"[")
+      call saveInOut:getValue_num(l_nValue,x_sId)
+      l_sString=toString("3",l_nValue)
+    endIf
+    // set IT
+    l_nY=nView+1
+    call use:read(l_nX,l_nY,l_sString,14,false)
+    // COUNT
+    toNum(l_sString,l_nValue,l_bOk)
+    if l_bOk
+      // set the value
+      call NUM:setValue(l_nValue,x_sId)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

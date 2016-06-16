@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF2Event">
+    <Locals>
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[1]
+    if cycleStatus:bSimulation
+      //
+      // ENABLE STEPPING
+      //
+      call trajType:getSizeItem(false,l_nSize)
+      if !bStepping and nPoint<(l_nSize-1) and taskStatus("stepping")==-1 and !isEmpty()
+        taskCreate "stepping",20,stepping()
+      endIf   
+    else
+      //
+      // go to actual POINT
+      //
+      if !cycleStatus:bCycle or !cycleStatus:bSimulation
+        call goTo(nPoint)
+      endIf
+    endIf
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_mDesc" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nMoveId" type="num" xsi:type="array" size="1" />
+      <Local name="l_sComment" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="Trajectory" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if find(x_sItem,"@HOME")!=-1
+    //load the home home
+    l_nResult=home:libLoad(saveData:sPathTraj+"HOME")
+    delay(0)
+    l_nIndex=size(home:tTraj["home"].tData)-1
+    l_mDesc=home:tTraj["home"].tData[l_nIndex].tSuper.nom_speed
+    l_jJoint=home:tTraj["home"].tData[l_nIndex].jJoint
+    // execute the movement
+    call moveTo(flange,l_mDesc,0,l_bUnreached,l_jJoint,l_nMoveId)
+    // show the comments
+    l_tTraj.tSuper=home:tTraj["home"].tData[l_nIndex].tSuper
+    l_tTraj.sID="JPOINT @HOME"
+    call cycleStatus:addTraj(l_tTraj)
+    wait(getMoveId()>=l_nMoveId-0.1 or isEmpty())
+  else
+    // execute check if need to reload
+    call loadCycle(x_sItem,l_nResult)
+    if l_nResult==0
+      // execute
+      call makeTraj(x_sItem)
+    else
+      popUpMsg("JOINT NOT DEFINE !!!")
+      cycleStatus:bToStop=false
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

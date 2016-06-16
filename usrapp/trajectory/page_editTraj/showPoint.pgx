@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="showPoint">
+    <Locals>
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_jHere" type="joint" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check for the @ position and the ! position
+  call trajType:getPoint(l_pPoint,false,nIndexItem)
+  call trajType:getTool(l_nIndexTool)
+  call tcp:getTool(l_tTool,l_nIndexTool)
+  l_pHere=here(l_tTool,fFather)
+  if isEmpty() and distance(l_pHere.trsf,position(l_pPoint,fFather))<0.1
+    call use:type(use:nTopX,use:nTopY+1,"@")
+  elseIf position(l_pPoint,fFather)=={0,0,0,0,0,0}
+    call use:type(use:nTopX,use:nTopY+1,"0")
+  elseIf distance(position(l_pPoint,fFather),l_pHere.trsf)<10
+    call use:type(use:nTopX,use:nTopY+1,"~")
+  elseIf !pointToJoint(l_tTool,l_jHere,l_pPoint,l_jHere)
+    call use:type(use:nTopX,use:nTopY+1,"!")
+  else
+    call use:type(use:nTopX,use:nTopY+1,"│")
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="HerePoint" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_fFrame" type="frame" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // take the point
+  //
+  jEditPoint.tData[x_nIndex].jJoint=herej()
+  resetMotion()
+end]]></Code>
+  </Program>
+</Programs>

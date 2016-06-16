@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="itemList">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sEvent" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sToto" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // USE this procedure to view the items
+  // list that you have already save
+  //
+  cls()
+  //
+  if x_sEvent=="PROG"
+    // Prog
+    l_sPath="Disk://instruction/PROG"
+  else
+    // other
+    l_sPath=x_sEvent
+    call getPath(l_sPath)
+  endIf
+  // reload the instruction
+  l_nResult=instruction:libLoad(l_sPath)
+  delay(0)
+  //
+  if l_nResult==0
+    //
+    call instruction:onInsert(x_sEvent)
+  else
+    popUpMsg("error loading "+x_sEvent+" "+l_sPath+" "+toString("",l_nResult))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

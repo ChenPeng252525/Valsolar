@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="InstrItem" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  if x_nIndex<=0
+    x_nIndex=0
+  else
+    insert(pEdit.iEvent[x_nIndex])
+  endIf
+  call setItem(x_sItem,x_nIndex)
+end]]></Code>
+  </Program>
+</Programs>

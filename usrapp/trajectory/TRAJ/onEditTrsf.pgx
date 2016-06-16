@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEditTrsf" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_nIndexItem" type="num" xsi:type="element" />
+      <Parameter name="x_sEvent" type="string" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMax" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nOldValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_nNewValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //  if $fileExists("changePoint.txt")
+  //    nFile=$fileOpen("changePoint.txt","a")
+  //  else
+  //    nFile=$fileOpen("changePoint.txt","w")
+  //  endIf 
+  // edit TRSF OF THE POINT
+  l_tTrsf=pEditPoint.tData[x_nIndexItem].pPoint.trsf
+  // find the >
+  call use:findPos(x_sEvent,">",i)
+  i=i+1
+  // find the line
+  if !cycleStatus:bCycle
+    l_nMin=l_nMax=0
+  else
+    switch x_nIndex
+      case 0
+        // x
+        l_nMin=l_tTrsf.x-10
+        l_nMax=l_tTrsf.x+10
+      break
+      case 1
+        // y
+        l_nMin=l_tTrsf.y-10
+        l_nMax=l_tTrsf.y+10
+      break
+      case 2
+        // z
+        l_nMin=l_tTrsf.z-10
+        l_nMax=l_tTrsf.z+10
+      break
+      case 3
+        // rx
+        l_nMin=l_tTrsf.rx-5
+        l_nMax=l_tTrsf.rx+5
+      break
+      case 4
+        // ry
+        l_nMin=l_tTrsf.ry-5
+        l_nMax=l_tTrsf.ry+5
+      break
+      case 5
+        // rz
+        l_nMin=l_tTrsf.rz-5
+        l_nMax=l_tTrsf.rz+5
+      break
+    endSwitch
+  endIf
+  // clean the line
+  call use:listcursor(use:nView,false)
+  // 
+  switch x_nIndex
+    case 0
+      //  x-value
+      l_nOldValue=l_tTrsf.x
+      call use:changeValue(l_tTrsf.x,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.x
+    break
+    case 1
+      //  y-value
+      l_nOldValue=l_tTrsf.y
+      call use:changeValue(l_tTrsf.y,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.y
+    break
+    case 2
+      //  z-value
+      l_nOldValue=l_tTrsf.z
+      call use:changeValue(l_tTrsf.z,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.z
+    break
+    case 3
+      //  rx-value
+      l_nOldValue=l_tTrsf.rx
+      call use:changeValue(l_tTrsf.rx,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.rx
+    break
+    case 4
+      //  ry-value
+      l_nOldValue=l_tTrsf.ry
+      call use:changeValue(l_tTrsf.ry,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.ry
+    break
+    case 5
+      //  rz-value
+      l_nOldValue=l_tTrsf.rz
+      call use:changeValue(l_tTrsf.rz,l_nMin,l_nMax,i+40-use:nBottomX,use:nView+1,l_sEmpty)
+      l_nNewValue=l_tTrsf.rz
+    break
+  endSwitch
+  // validate
+  if !use:bUseEscape
+    pEditPoint.tData[x_nIndexItem].pPoint.trsf=l_tTrsf
+    //    // save it into a file
+    //    if l_nNewValue!=l_nOldValue
+    //      l_sMessage=getDate(" %d %m %Y %H:%M:%S")
+    //      l_sMessage=l_sMessage+" Change TRAJ: "+ pEditPoint.sID+", index: "+toString(l_sEmpty,x_nIndexItem+1)+" , name: "+ pEditPoint.tData[x_nIndexItem].tSuper.comment+" , "+ x_sEvent+" to: "+toString(".3",l_nNewValue)
+    //      $fileSet(nFile,l_sMessage,1)
+    //    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

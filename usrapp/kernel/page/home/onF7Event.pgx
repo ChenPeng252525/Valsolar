@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Locals>
+      <Local name="local1" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    if saveData:mode==0
+      call passwd()
+      call use:nullKey(nKey)
+    else
+      l_sPage="Disk://kernel/page/advance"
+      call loadPage(l_sPage,l_sItem)
+      logMsg("[KERNEL] INTERFACE:PAGE Home Page")
+    endIf
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

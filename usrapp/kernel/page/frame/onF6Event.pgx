@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF6Event">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[5]
+    // mark
+    // deselect all
+    for i=0 to size(sList)-1
+      if find(sList[i],"#")!=-1
+        sList[i]=right(sList[i],len(sList[i])-1)
+      endIf
+    endFor
+    // select it
+    sList[nFrame]="#"+sList[nFrame]
+    nFrame=nFrame+1
+    use:nView=use:nView+1
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF1Event">
+    <Locals>
+      <Local name="l_nValue" type="num" xsi:type="array" size="4" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="4" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nMin" type="num" xsi:type="array" size="4" />
+      <Local name="l_nMax" type="num" xsi:type="array" size="4" />
+      <Local name="l_bLarge" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    //
+    if !bPage
+      // normal production page
+      if cycleStatus:bCycle==false
+        //and cycleStatus:bIsHome==false
+        //
+        if cycleStatus:nWorkingMode==1
+          if isPowered()==false
+            call language:message(l_sMessage,201)
+            call use:timerDialog(l_sMessage,0)
+            do
+              l_nKey=getKey()
+              if l_nKey==255 or cycleStatus:nWorkingMode!=1
+                return
+              endIf
+              delay(0)
+            until isPowered()
+          endIf
+          l_bLarge=bLarge
+          cls()
+          cycleStatus:bToHome=true
+          wait(cycleStatus:bToHome==false)
+          call simulation()
+          //
+          bLarge=l_bLarge
+        else
+          call language:message(l_sMessage,92)
+          call use:timerDialog(l_sMessage,2)
+        endIf
+      endIf
+    else
+      // export the file
+      call language:message(l_sMessage,96)
+      l_sMessage=l_sMessage+":# actionLog.txt file"
+      call use:timerDialog(l_sMessage,0)
+      nFile=$fileOpen("actionLog.txt","w")
+      $fileSet(nFile,cycleStatus:sLog,size(cycleStatus:sLog))
+      $fileClose(nFile)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

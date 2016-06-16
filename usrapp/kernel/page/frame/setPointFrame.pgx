@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="setPointFrame">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_trsfFrame" type="trsf" xsi:type="array" use="reference" />
+      <Parameter name="x_nFrame" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="8" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_bUnreachable" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sTcp" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Change the Frame associate to the Trajectory
+  //
+  cls()
+  l_nStep=0
+  l_sButton[0]=">>"
+  l_sButton[1]="<<"
+  //
+  // copY_frame from saveData
+  //
+  points[0].trsf=saveData:fFrameItem[x_nFrame].pO.trsf
+  points[1].trsf=saveData:fFrameItem[x_nFrame].pX.trsf
+  points[2].trsf=saveData:fFrameItem[x_nFrame].pY.trsf
+  //
+  call language:message(l_sMessage,167)
+  l_sButton[6]=l_sMessage
+  //
+  call language:message(l_sMessage,150)
+  l_sButton[7]=l_sMessage
+  call saveData:getTool(l_tTool,saveData:nFrameTool)
+  //
+  while l_nStep<10
+    //
+    //
+    resetMotion()
+    l_pHere=here(l_tTool,world)
+    //
+    switch l_nStep
+      case -1
+        return
+      break
+      case 0
+        // take the Origin
+        call checkPoint(points[0],points[0],l_bUnreachable,l_tTool,false)
+        //
+        call language:message(l_sMessage,194)
+        call language:message(l_sMessage[1],168)
+        l_sMessage=l_sMessage+"#"+l_sMessage[1]
+        if !l_bUnreachable and cycleStatus:nWorkingMode==1
+          call language:message(l_sMessage[1],203)
+          l_sMessage=l_sMessage+"#"+l_sMessage[1]
+          //
+          movej(points[0],l_tTool,nom_speed)
+        endIf
+        call use:questionDialog(l_sMessage,l_sButton,l_nResult)
+        if l_nResult==8
+          points[0]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,11,l_sMessage)
+        else
+          if l_nResult==7
+            call language:message(l_sMessage,198)
+            call page_changeTrsf(points[0].trsf,false,false,l_sMessage,"")
+          else
+            call use:clear(0,11)
+          endIf
+        endIf
+      break
+      case 1
+        //take the X pO_frameint
+        call checkPoint(points[1],l_pHere,l_bUnreachable,l_tTool,true)
+        //
+        call language:message(l_sMessage,195)
+        call language:message(l_sMessage[1],168)
+        l_sMessage=l_sMessage+"#"+l_sMessage[1]
+        if !l_bUnreachable and cycleStatus:nWorkingMode==1
+          call language:message(l_sMessage[1],203)
+          l_sMessage=l_sMessage+"#"+l_sMessage[1]
+          //
+          movel(points[1],l_tTool,nom_speed)
+        endIf
+        call use:questionDialog(l_sMessage,l_sButton,l_nResult)
+        if l_nResult==8
+          points[1]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,11,l_sMessage)
+        else
+          if l_nResult==7
+            call language:message(l_sMessage,199)
+            call page_changeTrsf(points[1].trsf,false,false,l_sMessage+" X","")
+          else
+            call use:clear(0,11)
+          endIf
+        endIf
+      break
+      case 2
+        // take the Y pO_frameint
+        call checkPoint(points[2],l_pHere,l_bUnreachable,l_tTool,true)
+        //
+        call language:message(l_sMessage,196)
+        call language:message(l_sMessage[1],168)
+        l_sMessage=l_sMessage+"#"+l_sMessage[1]
+        call language:message(l_sMessage[1],203)
+        if !l_bUnreachable and cycleStatus:nWorkingMode==1
+          call language:message(l_sMessage[1],203)
+          l_sMessage=l_sMessage+"#"+l_sMessage[1]
+          //
+          movel(points[2],l_tTool,nom_speed)
+        endIf
+        call use:questionDialog(l_sMessage,l_sButton,l_nResult)
+        if l_nResult==8
+          points[2]=here(l_tTool,world)
+          call language:message(l_sMessage,193)
+          call use:type(2,11,l_sMessage)
+        else
+          if l_nResult==7
+            call language:message(l_sMessage,199)
+            call page_changeTrsf(points[2].trsf,false,false,l_sMessage+" Y","")
+          else
+            call use:clear(0,11)
+          endIf
+        endIf
+      break
+      case 3
+        // set the frame
+        if setFrame(points[0],points[1],points[2],fSetFrame)==0
+          x_trsfFrame=fSetFrame.trsf
+          // copY_frame back to save DATA
+          saveData:fFrameItem[x_nFrame].pO.trsf=points[0].trsf
+          saveData:fFrameItem[x_nFrame].pX.trsf=points[1].trsf
+          saveData:fFrameItem[x_nFrame].pY.trsf=points[2].trsf
+          //
+        else
+          call language:message(l_sMessage,183)
+          popUpMsg(l_sMessage+toString("",setFrame(points[0],points[1],points[2],fSetFrame)))
+        endIf
+        return
+      break
+      //
+    endSwitch
+    // step control
+    if l_nResult==0 or l_nResult==1
+      l_nStep=l_nStep+1
+      cls()
+      delay(0)
+    else
+      if l_nResult==2
+        l_nStep=l_nStep-1
+      else
+        if l_nResult==-1
+          return
+        endIf
+      endIf
+    endIf
+  endWhile
+end
+]]></Code>
+  </Program>
+</Programs>

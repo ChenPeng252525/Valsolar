@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="findInWhichBox1">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sLodaBox1" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_nAngle" type="num" xsi:type="array" size="1" />
+      <Local name="l_nPointIndex" type="num" xsi:type="array" size="1" />
+      <Local name="m" type="num" xsi:type="array" size="1" />
+      <Local name="l_nShort" type="num" xsi:type="array" size="1" />
+      <Local name="l_bCondition" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+
+  //分析比较最可能的安全盒子
+  l_nSize=size(nInWhichBox)
+  resize(nShortP2PAngle,1,l_nSize)
+  resize(nShortP2PDists,1,l_nSize)
+  for k=0 to size(nShortP2PDists)-1
+    nShortP2PAngle[k]=9999
+    nShortP2PDists[k]=9999
+  endFor
+  for i=0 to size(nInWhichBox)-1
+   
+   
+      call getTrajTool(l_tTool,sml:box[sBox1[i]].nIndexGun )
+      l_pHere=here(l_tTool,world)
+      l_bCondition=false
+      for j=0 to size(sml:box[sBox1[i]].comment)-1
+        if left(sml:box[sBox1[i]].comment[j],1)=="#"
+          call _getP2PAngle(l_pHere,sml:box[sBox1[i]].pPointRx[j],l_nAngle)
+          if nShortP2PAngle[i]>l_nAngle and l_nAngle<=15
+            nShortP2PAngle[i]=l_nAngle
+            l_bCondition=true
+            l_nPointIndex=j
+          endIf
+        endIf
+      endFor
+      if l_bCondition
+        call _getP2PDistance(sml:box[sBox1[i]].pPointRx[l_nPointIndex],l_pHere,nShortP2PDists[i])
+      endIf
+   
+  endFor
+  l_nShort=99999
+  for m=0 to size(nShortP2PDists)-1
+    if nShortP2PDists[m]<l_nShort
+      l_nShort=nShortP2PDists[m]
+      x_sLodaBox1=sBox1[nInWhichBox[m]]
+    endIf
+
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

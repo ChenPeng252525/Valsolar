@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onFunctionView" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_sEvent" type="string" xsi:type="element" />
+      <Parameter name="x_nFunctionKey" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pAlign" type="point" xsi:type="array" size="1" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // do on Key action
+  //
+  // x_nIndex = actual index item
+  // x_sEvent = actual event item
+  //
+  switch x_nFunctionKey
+    case 271
+      // HERE POINT
+      if !cycleStatus:bCycle
+        call language:message(l_sMessage,160)
+        call language:getYesNo(l_sButton)
+        call use:yes_no(l_sMessage,l_sButton,l_bOk)
+        if l_bOk
+          call HerePoint(x_nIndex)
+        endIf
+      endIf
+    break
+    // F2 button
+    case 272
+      // ALIGN
+      if !cycleStatus:bCycle and !cycleStatus:bSimulation
+        resetMotion()
+        call getFrame(fSetFrame,false)
+        // tool
+        call tcp:getTool(l_tTool,pEditPoint.nIndexTool)
+        l_pAlign=here(l_tTool,world)
+        l_pAlign.trsf=align(l_pAlign.trsf,fSetFrame.trsf)
+        // check the align
+        if pointToJoint(l_tTool,herej(),l_pAlign,l_jJoint)
+          call language:message(l_sMessage,203)
+          call language:message(l_sMessage2,134)
+          l_sMessage=l_sMessage+" "+l_sMessage2+"..."
+          call use:timerDialog(l_sMessage,0)
+          movel(l_pAlign,l_tTool,mMdesc)
+          watch(isEmpty() or isKeyPressed(255),3)
+          if !isEmpty()
+            resetMotion()
+          endIf
+          delay(2)
+        endIf
+      endIf
+    break
+    // F3 button
+    case 273
+    break
+    // F4 button
+    case 274
+    break
+    // F5 button
+    case 275
+    break
+    // F6 button
+    case 276
+    break
+    // F7 button
+    case 277
+    break
+    // F8 button
+    case 278
+    break
+  endSwitch
+end]]></Code>
+  </Program>
+</Programs>

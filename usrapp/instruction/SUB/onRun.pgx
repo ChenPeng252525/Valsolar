@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nId" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOffset" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMoveId" type="num" xsi:type="array" size="1" />
+      <Local name="l_bToStop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_iInstr" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_pProgItem" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_nIdEvent" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // save the last item..
+  l_nIdEvent=cycleStatus:nEvent
+  l_pProgItem=cycleStatus:pCycleProg
+  // PROG NAME x_sItem
+  call loadCycle(x_sItem,l_nResult)
+  // continue
+  if l_nResult==0
+    // SET THE CALL SUB..
+    if isDefined(saveProg:pProg[x_sItem])
+      saveProg:pProg[x_sItem].sID="SUB "+x_sItem
+      l_nOffset=0
+      call cycleStatus:getLastId(l_nMoveId)
+      // print to screen define the pCycleProg
+      cycleStatus:pCycleProg=saveProg:pProg[x_sItem]
+      // execute all the action...
+      for i=0 to size(saveProg:pProg[x_sItem].iEvent)-1
+        l_iInstr=saveProg:pProg[x_sItem].iEvent[i]
+        //
+        // INSTRUCTION
+        //
+        if l_iInstr.sType!="" 
+          //refresh the cycleStatus
+          l_sEvent=l_iInstr.sType+" "+l_iInstr.sData
+          ? "ACTION RUNNING,"+l_sEvent+",ID="+toString(".3",getMoveId())+","+toString(".3",clock()-cycleStatus:nTime)+",MoveID="+toString("",l_nMoveId)+",Dist="+toString(".2",l_nOffset)
+          call cycleStatus:printLog("  -"+l_sEvent)
+          cycleStatus:sToShow=l_sEvent
+          cycleStatus:sLastAction=l_sEvent
+          cycleStatus:nEvent=i
+          //
+          // RUN THE ACTION
+          //
+          call saveData:getPathInstr(l_iInstr.sType,l_sPath)
+          instruction:libLoad(l_sPath)
+          delay(0)
+          call instruction:onRun(l_iInstr.sData)
+        else
+          l_bToStop=true
+        endIf
+      endFor
+      // reinizialize
+      cycleStatus:nEvent=l_nIdEvent
+      cycleStatus:pCycleProg=l_pProgItem
+      use:bUseRefresh=true
+    else
+      l_bToStop=true
+    endIf
+  else
+    l_bToStop=true
+  endIf
+  // check the error...
+  if l_bToStop
+    // error message
+    popUpMsg("SUB not FOUND")
+    cycleStatus:bToStop=true
+    watch(cycleStatus:bToStop==false,1)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

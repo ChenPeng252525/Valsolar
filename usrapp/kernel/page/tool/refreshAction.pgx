@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshAction">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_iAction" type="InstrItem" xsi:type="array" use="reference" />
+      <Parameter name="x_nDistance" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sTitle" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sAction" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // INSTRUCTION
+  //
+  cls()
+  // create a menu to edit the action
+  call use:setSizeList(5,3,30,4)
+  call use:setView(false)
+  // show the title
+  call tcp:getSize(l_nSize)
+  call language:message(l_sMessage,124)
+  l_sTitle=l_sMessage+toString("3",nIndexTool)+"/"+toString("",l_nSize-1)
+  call tcp:getName(l_sMessage,nIndexTool)
+  l_sTitle=l_sTitle+" "+l_sMessage
+  call use:listcreate(l_sTitle)
+  // get the action string
+  call language:message(l_sMessage,176)
+  // insert all the 3 action
+  for i=0 to 2
+    l_sAction=l_sMessage+toString("",i+1)+"> "+x_iAction[i].sType+" "+x_iAction[i].sData
+    call use:listadd(l_sAction)
+  endFor
+  call language:message(l_sMessage,177)
+  l_sMessage=l_sMessage+"> "+toString("",x_nDistance)+" mm"
+  call use:listadd(l_sMessage)
+  // show it
+  call use:clear(0,13)
+  call use:typeMenu(8,"OK")
+  use:nView=x_nIndex
+  call use:listupdate(0)
+  //
+end]]></Code>
+  </Program>
+</Programs>

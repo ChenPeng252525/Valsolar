@@ -1,0 +1,3455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="MbAnaIn" access="public" xsi:type="array" type="aio" size="4">
+      <Value key="0" link="ModbusSrv-0\Modbus-Word\MbAnaIn[0]" />
+      <Value key="1" link="ModbusSrv-0\Modbus-Word\MbAnaIn[1]" />
+      <Value key="2" link="ModbusSrv-0\Modbus-Word\MbAnaIn[2]" />
+      <Value key="3" link="ModbusSrv-0\Modbus-Word\MbAnaIn[3]" />
+    </Data>
+    <Data name="MbAnaOut" access="public" xsi:type="array" type="aio" size="4">
+      <Value key="0" link="ModbusSrv-0\Modbus-Word\MbAnaOut[0]" />
+      <Value key="1" link="ModbusSrv-0\Modbus-Word\MbAnaOut[1]" />
+      <Value key="2" link="ModbusSrv-0\Modbus-Word\MbAnaOut[2]" />
+      <Value key="3" link="ModbusSrv-0\Modbus-Word\MbAnaOut[3]" />
+    </Data>
+    <Data name="aNull" access="private" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="aUser" access="public" xsi:type="array" type="aio" size="10">
+    </Data>
+    <Data name="aio_in" access="public" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="aio_out" access="public" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="cAin0" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="Can-Aio\%IB7" />
+    </Data>
+    <Data name="cAin1" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="Can-Aio\%IB23" />
+    </Data>
+    <Data name="cAin2" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="Can-Aio\%IB39" />
+    </Data>
+    <Data name="cAin3" access="public" xsi:type="array" type="aio" size="1">
+      <Value key="0" link="Can-Aio\%IB55" />
+    </Data>
+    <Data name="cAout0" access="private" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="cAout1" access="private" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="cAout2" access="private" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="cAout3" access="private" xsi:type="array" type="aio" size="1">
+    </Data>
+    <Data name="aCount" access="public" xsi:type="collection" type="aioItem" >
+    </Data>
+    <Data name="aInput" access="public" xsi:type="collection" type="aioItem" >
+    </Data>
+    <Data name="aOutput" access="public" xsi:type="collection" type="aioItem" >
+    </Data>
+    <Data name="bArmIO" access="public" xsi:type="array" type="bool" size="1">
+    </Data>
+    <Data name="bBio" access="public" xsi:type="array" type="bool" size="1">
+    </Data>
+    <Data name="bCS8" access="public" xsi:type="array" type="bool" size="1">
+    </Data>
+    <Data name="bMio" access="public" xsi:type="array" type="bool" size="1">
+    </Data>
+    <Data name="cCount" access="public" xsi:type="collection" type="countItem" >
+      <Value key="num0">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num0" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num0" />
+        </Field>
+      </Value>
+      <Value key="num1">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num1" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num1" />
+        </Field>
+      </Value>
+      <Value key="num2">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num2" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num2" />
+        </Field>
+      </Value>
+      <Value key="num3">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num3" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num3" />
+        </Field>
+      </Value>
+      <Value key="num4">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num4" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num4" />
+        </Field>
+      </Value>
+      <Value key="num5">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num5" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num5" />
+        </Field>
+      </Value>
+      <Value key="num6">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num6" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num6" />
+        </Field>
+      </Value>
+      <Value key="num7">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num7" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num7" />
+        </Field>
+      </Value>
+      <Value key="num8">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num8" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num8" />
+        </Field>
+      </Value>
+      <Value key="num9">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="nCount" xsi:type="array" type="num" size="1">
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num9" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="num9" />
+        </Field>
+      </Value>
+    </Data>
+    <Data name="MbIn" access="public" xsi:type="array" type="dio" size="100">
+      <Value key="0" link="ModbusSrv-0\Modbus-Bit\MbIn[0]" />
+      <Value key="1" link="ModbusSrv-0\Modbus-Bit\MbIn[1]" />
+      <Value key="2" link="ModbusSrv-0\Modbus-Bit\MbIn[2]" />
+      <Value key="3" link="ModbusSrv-0\Modbus-Bit\MbIn[3]" />
+      <Value key="4" link="ModbusSrv-0\Modbus-Bit\MbIn[4]" />
+      <Value key="5" link="ModbusSrv-0\Modbus-Bit\MbIn[5]" />
+      <Value key="6" link="ModbusSrv-0\Modbus-Bit\MbIn[6]" />
+      <Value key="7" link="ModbusSrv-0\Modbus-Bit\MbIn[7]" />
+      <Value key="8" link="ModbusSrv-0\Modbus-Bit\MbIn[8]" />
+      <Value key="9" link="ModbusSrv-0\Modbus-Bit\MbIn[9]" />
+      <Value key="10" link="ModbusSrv-0\Modbus-Bit\MbIn[10]" />
+      <Value key="11" link="ModbusSrv-0\Modbus-Bit\MbIn[11]" />
+      <Value key="12" link="ModbusSrv-0\Modbus-Bit\MbIn[12]" />
+      <Value key="13" link="ModbusSrv-0\Modbus-Bit\MbIn[13]" />
+      <Value key="14" link="ModbusSrv-0\Modbus-Bit\MbIn[14]" />
+      <Value key="15" link="ModbusSrv-0\Modbus-Bit\MbIn[15]" />
+      <Value key="16" link="ModbusSrv-0\Modbus-Bit\MbIn[16]" />
+      <Value key="17" link="ModbusSrv-0\Modbus-Bit\MbIn[17]" />
+      <Value key="18" link="ModbusSrv-0\Modbus-Bit\MbIn[18]" />
+      <Value key="19" link="ModbusSrv-0\Modbus-Bit\MbIn[19]" />
+      <Value key="20" link="ModbusSrv-0\Modbus-Bit\MbIn[20]" />
+      <Value key="21" link="ModbusSrv-0\Modbus-Bit\MbIn[21]" />
+      <Value key="22" link="ModbusSrv-0\Modbus-Bit\MbIn[22]" />
+      <Value key="23" link="ModbusSrv-0\Modbus-Bit\MbIn[23]" />
+      <Value key="24" link="ModbusSrv-0\Modbus-Bit\MbIn[24]" />
+      <Value key="25" link="ModbusSrv-0\Modbus-Bit\MbIn[25]" />
+      <Value key="26" link="ModbusSrv-0\Modbus-Bit\MbIn[26]" />
+      <Value key="27" link="ModbusSrv-0\Modbus-Bit\MbIn[27]" />
+      <Value key="28" link="ModbusSrv-0\Modbus-Bit\MbIn[28]" />
+      <Value key="29" link="ModbusSrv-0\Modbus-Bit\MbIn[29]" />
+      <Value key="30" link="ModbusSrv-0\Modbus-Bit\MbIn[30]" />
+      <Value key="31" link="ModbusSrv-0\Modbus-Bit\MbIn[31]" />
+      <Value key="32" link="ModbusSrv-0\Modbus-Bit\MbIn[32]" />
+      <Value key="33" link="ModbusSrv-0\Modbus-Bit\MbIn[33]" />
+      <Value key="34" link="ModbusSrv-0\Modbus-Bit\MbIn[34]" />
+      <Value key="35" link="ModbusSrv-0\Modbus-Bit\MbIn[35]" />
+      <Value key="36" link="ModbusSrv-0\Modbus-Bit\MbIn[36]" />
+      <Value key="37" link="ModbusSrv-0\Modbus-Bit\MbIn[37]" />
+      <Value key="38" link="ModbusSrv-0\Modbus-Bit\MbIn[38]" />
+      <Value key="39" link="ModbusSrv-0\Modbus-Bit\MbIn[39]" />
+      <Value key="40" link="ModbusSrv-0\Modbus-Bit\MbIn[40]" />
+      <Value key="41" link="ModbusSrv-0\Modbus-Bit\MbIn[41]" />
+      <Value key="42" link="ModbusSrv-0\Modbus-Bit\MbIn[42]" />
+      <Value key="43" link="ModbusSrv-0\Modbus-Bit\MbIn[43]" />
+      <Value key="44" link="ModbusSrv-0\Modbus-Bit\MbIn[44]" />
+      <Value key="45" link="ModbusSrv-0\Modbus-Bit\MbIn[45]" />
+      <Value key="46" link="ModbusSrv-0\Modbus-Bit\MbIn[46]" />
+      <Value key="47" link="ModbusSrv-0\Modbus-Bit\MbIn[47]" />
+      <Value key="48" link="ModbusSrv-0\Modbus-Bit\MbIn[48]" />
+      <Value key="49" link="ModbusSrv-0\Modbus-Bit\MbIn[49]" />
+      <Value key="50" link="ModbusSrv-0\Modbus-Bit\MbIn[50]" />
+      <Value key="51" link="ModbusSrv-0\Modbus-Bit\MbIn[51]" />
+      <Value key="52" link="ModbusSrv-0\Modbus-Bit\MbIn[52]" />
+      <Value key="53" link="ModbusSrv-0\Modbus-Bit\MbIn[53]" />
+      <Value key="54" link="ModbusSrv-0\Modbus-Bit\MbIn[54]" />
+      <Value key="55" link="ModbusSrv-0\Modbus-Bit\MbIn[55]" />
+      <Value key="56" link="ModbusSrv-0\Modbus-Bit\MbIn[56]" />
+      <Value key="57" link="ModbusSrv-0\Modbus-Bit\MbIn[57]" />
+      <Value key="58" link="ModbusSrv-0\Modbus-Bit\MbIn[58]" />
+      <Value key="59" link="ModbusSrv-0\Modbus-Bit\MbIn[59]" />
+      <Value key="60" link="ModbusSrv-0\Modbus-Bit\MbIn[60]" />
+      <Value key="61" link="ModbusSrv-0\Modbus-Bit\MbIn[61]" />
+      <Value key="62" link="ModbusSrv-0\Modbus-Bit\MbIn[62]" />
+      <Value key="63" link="ModbusSrv-0\Modbus-Bit\MbIn[63]" />
+      <Value key="64" link="ModbusSrv-0\Modbus-Bit\MbIn[64]" />
+      <Value key="65" link="ModbusSrv-0\Modbus-Bit\MbIn[65]" />
+      <Value key="66" link="ModbusSrv-0\Modbus-Bit\MbIn[66]" />
+      <Value key="67" link="ModbusSrv-0\Modbus-Bit\MbIn[67]" />
+      <Value key="68" link="ModbusSrv-0\Modbus-Bit\MbIn[68]" />
+      <Value key="69" link="ModbusSrv-0\Modbus-Bit\MbIn[69]" />
+      <Value key="70" link="ModbusSrv-0\Modbus-Bit\MbIn[70]" />
+      <Value key="71" link="ModbusSrv-0\Modbus-Bit\MbIn[71]" />
+      <Value key="72" link="ModbusSrv-0\Modbus-Bit\MbIn[72]" />
+      <Value key="73" link="ModbusSrv-0\Modbus-Bit\MbIn[73]" />
+      <Value key="74" link="ModbusSrv-0\Modbus-Bit\MbIn[74]" />
+      <Value key="75" link="ModbusSrv-0\Modbus-Bit\MbIn[75]" />
+      <Value key="76" link="ModbusSrv-0\Modbus-Bit\MbIn[76]" />
+      <Value key="77" link="ModbusSrv-0\Modbus-Bit\MbIn[77]" />
+      <Value key="78" link="ModbusSrv-0\Modbus-Bit\MbIn[78]" />
+      <Value key="79" link="ModbusSrv-0\Modbus-Bit\MbIn[79]" />
+      <Value key="80" link="ModbusSrv-0\Modbus-Bit\MbIn[80]" />
+      <Value key="81" link="ModbusSrv-0\Modbus-Bit\MbIn[81]" />
+      <Value key="82" link="ModbusSrv-0\Modbus-Bit\MbIn[82]" />
+      <Value key="83" link="ModbusSrv-0\Modbus-Bit\MbIn[83]" />
+      <Value key="84" link="ModbusSrv-0\Modbus-Bit\MbIn[84]" />
+      <Value key="85" link="ModbusSrv-0\Modbus-Bit\MbIn[85]" />
+      <Value key="86" link="ModbusSrv-0\Modbus-Bit\MbIn[86]" />
+      <Value key="87" link="ModbusSrv-0\Modbus-Bit\MbIn[87]" />
+      <Value key="88" link="ModbusSrv-0\Modbus-Bit\MbIn[88]" />
+      <Value key="89" link="ModbusSrv-0\Modbus-Bit\MbIn[89]" />
+      <Value key="90" link="ModbusSrv-0\Modbus-Bit\MbIn[90]" />
+      <Value key="91" link="ModbusSrv-0\Modbus-Bit\MbIn[91]" />
+      <Value key="92" link="ModbusSrv-0\Modbus-Bit\MbIn[92]" />
+      <Value key="93" link="ModbusSrv-0\Modbus-Bit\MbIn[93]" />
+      <Value key="94" link="ModbusSrv-0\Modbus-Bit\MbIn[94]" />
+      <Value key="95" link="ModbusSrv-0\Modbus-Bit\MbIn[95]" />
+      <Value key="96" link="ModbusSrv-0\Modbus-Bit\MbIn[96]" />
+      <Value key="97" link="ModbusSrv-0\Modbus-Bit\MbIn[97]" />
+      <Value key="98" link="ModbusSrv-0\Modbus-Bit\MbIn[98]" />
+      <Value key="99" link="ModbusSrv-0\Modbus-Bit\MbIn[99]" />
+    </Data>
+    <Data name="MbOut" access="public" xsi:type="array" type="dio" size="100">
+      <Value key="0" link="ModbusSrv-0\Modbus-Bit\MbOut[0]" />
+      <Value key="1" link="ModbusSrv-0\Modbus-Bit\MbOut[1]" />
+      <Value key="2" link="ModbusSrv-0\Modbus-Bit\MbOut[2]" />
+      <Value key="3" link="ModbusSrv-0\Modbus-Bit\MbOut[3]" />
+      <Value key="4" link="ModbusSrv-0\Modbus-Bit\MbOut[4]" />
+      <Value key="5" link="ModbusSrv-0\Modbus-Bit\MbOut[5]" />
+      <Value key="6" link="ModbusSrv-0\Modbus-Bit\MbOut[6]" />
+      <Value key="7" link="ModbusSrv-0\Modbus-Bit\MbOut[7]" />
+      <Value key="8" link="ModbusSrv-0\Modbus-Bit\MbOut[8]" />
+      <Value key="9" link="ModbusSrv-0\Modbus-Bit\MbOut[9]" />
+      <Value key="10" link="ModbusSrv-0\Modbus-Bit\MbOut[10]" />
+      <Value key="11" link="ModbusSrv-0\Modbus-Bit\MbOut[11]" />
+      <Value key="12" link="ModbusSrv-0\Modbus-Bit\MbOut[12]" />
+      <Value key="13" link="ModbusSrv-0\Modbus-Bit\MbOut[13]" />
+      <Value key="14" link="ModbusSrv-0\Modbus-Bit\MbOut[14]" />
+      <Value key="15" link="ModbusSrv-0\Modbus-Bit\MbOut[15]" />
+      <Value key="16" link="ModbusSrv-0\Modbus-Bit\MbOut[16]" />
+      <Value key="17" link="ModbusSrv-0\Modbus-Bit\MbOut[17]" />
+      <Value key="18" link="ModbusSrv-0\Modbus-Bit\MbOut[18]" />
+      <Value key="19" link="ModbusSrv-0\Modbus-Bit\MbOut[19]" />
+      <Value key="20" link="ModbusSrv-0\Modbus-Bit\MbOut[20]" />
+      <Value key="21" link="ModbusSrv-0\Modbus-Bit\MbOut[21]" />
+      <Value key="22" link="ModbusSrv-0\Modbus-Bit\MbOut[22]" />
+      <Value key="23" link="ModbusSrv-0\Modbus-Bit\MbOut[23]" />
+      <Value key="24" link="ModbusSrv-0\Modbus-Bit\MbOut[24]" />
+      <Value key="25" link="ModbusSrv-0\Modbus-Bit\MbOut[25]" />
+      <Value key="26" link="ModbusSrv-0\Modbus-Bit\MbOut[26]" />
+      <Value key="27" link="ModbusSrv-0\Modbus-Bit\MbOut[27]" />
+      <Value key="28" link="ModbusSrv-0\Modbus-Bit\MbOut[28]" />
+      <Value key="29" link="ModbusSrv-0\Modbus-Bit\MbOut[29]" />
+      <Value key="30" link="ModbusSrv-0\Modbus-Bit\MbOut[30]" />
+      <Value key="31" link="ModbusSrv-0\Modbus-Bit\MbOut[31]" />
+      <Value key="32" link="ModbusSrv-0\Modbus-Bit\MbOut[32]" />
+      <Value key="33" link="ModbusSrv-0\Modbus-Bit\MbOut[33]" />
+      <Value key="34" link="ModbusSrv-0\Modbus-Bit\MbOut[34]" />
+      <Value key="35" link="ModbusSrv-0\Modbus-Bit\MbOut[35]" />
+      <Value key="36" link="ModbusSrv-0\Modbus-Bit\MbOut[36]" />
+      <Value key="37" link="ModbusSrv-0\Modbus-Bit\MbOut[37]" />
+      <Value key="38" link="ModbusSrv-0\Modbus-Bit\MbOut[38]" />
+      <Value key="39" link="ModbusSrv-0\Modbus-Bit\MbOut[39]" />
+      <Value key="40" link="ModbusSrv-0\Modbus-Bit\MbOut[40]" />
+      <Value key="41" link="ModbusSrv-0\Modbus-Bit\MbOut[41]" />
+      <Value key="42" link="ModbusSrv-0\Modbus-Bit\MbOut[42]" />
+      <Value key="43" link="ModbusSrv-0\Modbus-Bit\MbOut[43]" />
+      <Value key="44" link="ModbusSrv-0\Modbus-Bit\MbOut[44]" />
+      <Value key="45" link="ModbusSrv-0\Modbus-Bit\MbOut[45]" />
+      <Value key="46" link="ModbusSrv-0\Modbus-Bit\MbOut[46]" />
+      <Value key="47" link="ModbusSrv-0\Modbus-Bit\MbOut[47]" />
+      <Value key="48" link="ModbusSrv-0\Modbus-Bit\MbOut[48]" />
+      <Value key="49" link="ModbusSrv-0\Modbus-Bit\MbOut[49]" />
+      <Value key="50" link="ModbusSrv-0\Modbus-Bit\MbOut[50]" />
+      <Value key="51" link="ModbusSrv-0\Modbus-Bit\MbOut[51]" />
+      <Value key="52" link="ModbusSrv-0\Modbus-Bit\MbOut[52]" />
+      <Value key="53" link="ModbusSrv-0\Modbus-Bit\MbOut[53]" />
+      <Value key="54" link="ModbusSrv-0\Modbus-Bit\MbOut[54]" />
+      <Value key="55" link="ModbusSrv-0\Modbus-Bit\MbOut[55]" />
+      <Value key="56" link="ModbusSrv-0\Modbus-Bit\MbOut[56]" />
+      <Value key="57" link="ModbusSrv-0\Modbus-Bit\MbOut[57]" />
+      <Value key="58" link="ModbusSrv-0\Modbus-Bit\MbOut[58]" />
+      <Value key="59" link="ModbusSrv-0\Modbus-Bit\MbOut[59]" />
+      <Value key="60" link="ModbusSrv-0\Modbus-Bit\MbOut[60]" />
+      <Value key="61" link="ModbusSrv-0\Modbus-Bit\MbOut[61]" />
+      <Value key="62" link="ModbusSrv-0\Modbus-Bit\MbOut[62]" />
+      <Value key="63" link="ModbusSrv-0\Modbus-Bit\MbOut[63]" />
+      <Value key="64" link="ModbusSrv-0\Modbus-Bit\MbOut[64]" />
+      <Value key="65" link="ModbusSrv-0\Modbus-Bit\MbOut[65]" />
+      <Value key="66" link="ModbusSrv-0\Modbus-Bit\MbOut[66]" />
+      <Value key="67" link="ModbusSrv-0\Modbus-Bit\MbOut[67]" />
+      <Value key="68" link="ModbusSrv-0\Modbus-Bit\MbOut[68]" />
+      <Value key="69" link="ModbusSrv-0\Modbus-Bit\MbOut[69]" />
+      <Value key="70" link="ModbusSrv-0\Modbus-Bit\MbOut[70]" />
+      <Value key="71" link="ModbusSrv-0\Modbus-Bit\MbOut[71]" />
+      <Value key="72" link="ModbusSrv-0\Modbus-Bit\MbOut[72]" />
+      <Value key="73" link="ModbusSrv-0\Modbus-Bit\MbOut[73]" />
+      <Value key="74" link="ModbusSrv-0\Modbus-Bit\MbOut[74]" />
+      <Value key="75" link="ModbusSrv-0\Modbus-Bit\MbOut[75]" />
+      <Value key="76" link="ModbusSrv-0\Modbus-Bit\MbOut[76]" />
+      <Value key="77" link="ModbusSrv-0\Modbus-Bit\MbOut[77]" />
+      <Value key="78" link="ModbusSrv-0\Modbus-Bit\MbOut[78]" />
+      <Value key="79" link="ModbusSrv-0\Modbus-Bit\MbOut[79]" />
+      <Value key="80" link="ModbusSrv-0\Modbus-Bit\MbOut[80]" />
+      <Value key="81" link="ModbusSrv-0\Modbus-Bit\MbOut[81]" />
+      <Value key="82" link="ModbusSrv-0\Modbus-Bit\MbOut[82]" />
+      <Value key="83" link="ModbusSrv-0\Modbus-Bit\MbOut[83]" />
+      <Value key="84" link="ModbusSrv-0\Modbus-Bit\MbOut[84]" />
+      <Value key="85" link="ModbusSrv-0\Modbus-Bit\MbOut[85]" />
+      <Value key="86" link="ModbusSrv-0\Modbus-Bit\MbOut[86]" />
+      <Value key="87" link="ModbusSrv-0\Modbus-Bit\MbOut[87]" />
+      <Value key="88" link="ModbusSrv-0\Modbus-Bit\MbOut[88]" />
+      <Value key="89" link="ModbusSrv-0\Modbus-Bit\MbOut[89]" />
+      <Value key="90" link="ModbusSrv-0\Modbus-Bit\MbOut[90]" />
+      <Value key="91" link="ModbusSrv-0\Modbus-Bit\MbOut[91]" />
+      <Value key="92" link="ModbusSrv-0\Modbus-Bit\MbOut[92]" />
+      <Value key="93" link="ModbusSrv-0\Modbus-Bit\MbOut[93]" />
+      <Value key="94" link="ModbusSrv-0\Modbus-Bit\MbOut[94]" />
+      <Value key="95" link="ModbusSrv-0\Modbus-Bit\MbOut[95]" />
+      <Value key="96" link="ModbusSrv-0\Modbus-Bit\MbOut[96]" />
+      <Value key="97" link="ModbusSrv-0\Modbus-Bit\MbOut[97]" />
+      <Value key="98" link="ModbusSrv-0\Modbus-Bit\MbOut[98]" />
+      <Value key="99" link="ModbusSrv-0\Modbus-Bit\MbOut[99]" />
+    </Data>
+    <Data name="NetIn0" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I0" />
+    </Data>
+    <Data name="NetIn1" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I1" />
+    </Data>
+    <Data name="NetIn10" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I10" />
+    </Data>
+    <Data name="NetIn11" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I11" />
+    </Data>
+    <Data name="NetIn12" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I12" />
+    </Data>
+    <Data name="NetIn13" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I13" />
+    </Data>
+    <Data name="NetIn14" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I14" />
+    </Data>
+    <Data name="NetIn15" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I15" />
+    </Data>
+    <Data name="NetIn16" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I16" />
+    </Data>
+    <Data name="NetIn17" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I17" />
+    </Data>
+    <Data name="NetIn18" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I18" />
+    </Data>
+    <Data name="NetIn19" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I19" />
+    </Data>
+    <Data name="NetIn2" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I2" />
+    </Data>
+    <Data name="NetIn20" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I20" />
+    </Data>
+    <Data name="NetIn21" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I21" />
+    </Data>
+    <Data name="NetIn22" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I22" />
+    </Data>
+    <Data name="NetIn23" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I23" />
+    </Data>
+    <Data name="NetIn24" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I24" />
+    </Data>
+    <Data name="NetIn25" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I25" />
+    </Data>
+    <Data name="NetIn26" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I26" />
+    </Data>
+    <Data name="NetIn27" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I27" />
+    </Data>
+    <Data name="NetIn28" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I28" />
+    </Data>
+    <Data name="NetIn29" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I29" />
+    </Data>
+    <Data name="NetIn3" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I3" />
+    </Data>
+    <Data name="NetIn30" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I30" />
+    </Data>
+    <Data name="NetIn31" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I31" />
+    </Data>
+    <Data name="NetIn32" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I32" />
+    </Data>
+    <Data name="NetIn33" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I33" />
+    </Data>
+    <Data name="NetIn34" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I34" />
+    </Data>
+    <Data name="NetIn35" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I35" />
+    </Data>
+    <Data name="NetIn36" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I36" />
+    </Data>
+    <Data name="NetIn37" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I37" />
+    </Data>
+    <Data name="NetIn38" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I38" />
+    </Data>
+    <Data name="NetIn39" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I39" />
+    </Data>
+    <Data name="NetIn4" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I4" />
+    </Data>
+    <Data name="NetIn40" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I40" />
+    </Data>
+    <Data name="NetIn41" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I41" />
+    </Data>
+    <Data name="NetIn42" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I42" />
+    </Data>
+    <Data name="NetIn43" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I43" />
+    </Data>
+    <Data name="NetIn44" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I44" />
+    </Data>
+    <Data name="NetIn45" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I45" />
+    </Data>
+    <Data name="NetIn46" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I46" />
+    </Data>
+    <Data name="NetIn47" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I47" />
+    </Data>
+    <Data name="NetIn48" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I48" />
+    </Data>
+    <Data name="NetIn49" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I49" />
+    </Data>
+    <Data name="NetIn5" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I5" />
+    </Data>
+    <Data name="NetIn50" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I50" />
+    </Data>
+    <Data name="NetIn51" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I51" />
+    </Data>
+    <Data name="NetIn52" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I52" />
+    </Data>
+    <Data name="NetIn53" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I53" />
+    </Data>
+    <Data name="NetIn54" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I54" />
+    </Data>
+    <Data name="NetIn55" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I55" />
+    </Data>
+    <Data name="NetIn56" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I56" />
+    </Data>
+    <Data name="NetIn57" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I57" />
+    </Data>
+    <Data name="NetIn58" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I58" />
+    </Data>
+    <Data name="NetIn59" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I59" />
+    </Data>
+    <Data name="NetIn6" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I6" />
+    </Data>
+    <Data name="NetIn60" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I60" />
+    </Data>
+    <Data name="NetIn61" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I61" />
+    </Data>
+    <Data name="NetIn62" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I62" />
+    </Data>
+    <Data name="NetIn63" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I63" />
+    </Data>
+    <Data name="NetIn7" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I7" />
+    </Data>
+    <Data name="NetIn8" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I8" />
+    </Data>
+    <Data name="NetIn9" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I9" />
+    </Data>
+    <Data name="NetOut0" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q0" />
+    </Data>
+    <Data name="NetOut1" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q1" />
+    </Data>
+    <Data name="NetOut10" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q10" />
+    </Data>
+    <Data name="NetOut11" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q11" />
+    </Data>
+    <Data name="NetOut12" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q12" />
+    </Data>
+    <Data name="NetOut13" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q13" />
+    </Data>
+    <Data name="NetOut14" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q14" />
+    </Data>
+    <Data name="NetOut15" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q15" />
+    </Data>
+    <Data name="NetOut16" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q16" />
+    </Data>
+    <Data name="NetOut17" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q17" />
+    </Data>
+    <Data name="NetOut18" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q18" />
+    </Data>
+    <Data name="NetOut19" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q19" />
+    </Data>
+    <Data name="NetOut2" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q2" />
+    </Data>
+    <Data name="NetOut20" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q20" />
+    </Data>
+    <Data name="NetOut21" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q21" />
+    </Data>
+    <Data name="NetOut22" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q22" />
+    </Data>
+    <Data name="NetOut23" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q23" />
+    </Data>
+    <Data name="NetOut24" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q24" />
+    </Data>
+    <Data name="NetOut25" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q25" />
+    </Data>
+    <Data name="NetOut26" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q26" />
+    </Data>
+    <Data name="NetOut27" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q27" />
+    </Data>
+    <Data name="NetOut28" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q28" />
+    </Data>
+    <Data name="NetOut29" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q29" />
+    </Data>
+    <Data name="NetOut3" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q3" />
+    </Data>
+    <Data name="NetOut30" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q30" />
+    </Data>
+    <Data name="NetOut31" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q31" />
+    </Data>
+    <Data name="NetOut32" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q32" />
+    </Data>
+    <Data name="NetOut33" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q33" />
+    </Data>
+    <Data name="NetOut34" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q34" />
+    </Data>
+    <Data name="NetOut35" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q35" />
+    </Data>
+    <Data name="NetOut36" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q36" />
+    </Data>
+    <Data name="NetOut37" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q37" />
+    </Data>
+    <Data name="NetOut38" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q38" />
+    </Data>
+    <Data name="NetOut39" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q39" />
+    </Data>
+    <Data name="NetOut4" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q4" />
+    </Data>
+    <Data name="NetOut40" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q40" />
+    </Data>
+    <Data name="NetOut41" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q41" />
+    </Data>
+    <Data name="NetOut42" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q42" />
+    </Data>
+    <Data name="NetOut43" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q43" />
+    </Data>
+    <Data name="NetOut44" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q44" />
+    </Data>
+    <Data name="NetOut45" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q45" />
+    </Data>
+    <Data name="NetOut46" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q46" />
+    </Data>
+    <Data name="NetOut47" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q47" />
+    </Data>
+    <Data name="NetOut48" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q48" />
+    </Data>
+    <Data name="NetOut49" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q49" />
+    </Data>
+    <Data name="NetOut5" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q5" />
+    </Data>
+    <Data name="NetOut50" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q50" />
+    </Data>
+    <Data name="NetOut51" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q51" />
+    </Data>
+    <Data name="NetOut52" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q52" />
+    </Data>
+    <Data name="NetOut53" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q53" />
+    </Data>
+    <Data name="NetOut54" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q54" />
+    </Data>
+    <Data name="NetOut55" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q55" />
+    </Data>
+    <Data name="NetOut56" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q56" />
+    </Data>
+    <Data name="NetOut57" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q57" />
+    </Data>
+    <Data name="NetOut58" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q58" />
+    </Data>
+    <Data name="NetOut59" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q59" />
+    </Data>
+    <Data name="NetOut6" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q6" />
+    </Data>
+    <Data name="NetOut60" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q60" />
+    </Data>
+    <Data name="NetOut61" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q61" />
+    </Data>
+    <Data name="NetOut62" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q62" />
+    </Data>
+    <Data name="NetOut63" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q63" />
+    </Data>
+    <Data name="NetOut7" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q7" />
+    </Data>
+    <Data name="NetOut8" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q8" />
+    </Data>
+    <Data name="NetOut9" access="private" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q9" />
+    </Data>
+    <Data name="b2In0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I0" />
+    </Data>
+    <Data name="b2In1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I1" />
+    </Data>
+    <Data name="b2In10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I10" />
+    </Data>
+    <Data name="b2In11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I11" />
+    </Data>
+    <Data name="b2In12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I12" />
+    </Data>
+    <Data name="b2In13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I13" />
+    </Data>
+    <Data name="b2In14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I14" />
+    </Data>
+    <Data name="b2In15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I15" />
+    </Data>
+    <Data name="b2In2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I2" />
+    </Data>
+    <Data name="b2In3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I3" />
+    </Data>
+    <Data name="b2In4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I4" />
+    </Data>
+    <Data name="b2In5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I5" />
+    </Data>
+    <Data name="b2In6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I6" />
+    </Data>
+    <Data name="b2In7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I7" />
+    </Data>
+    <Data name="b2In8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I8" />
+    </Data>
+    <Data name="b2In9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%I9" />
+    </Data>
+    <Data name="b2Out0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q0" />
+    </Data>
+    <Data name="b2Out1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q1" />
+    </Data>
+    <Data name="b2Out10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q10" />
+    </Data>
+    <Data name="b2Out11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q11" />
+    </Data>
+    <Data name="b2Out12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q12" />
+    </Data>
+    <Data name="b2Out13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q13" />
+    </Data>
+    <Data name="b2Out14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q14" />
+    </Data>
+    <Data name="b2Out15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q15" />
+    </Data>
+    <Data name="b2Out2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q2" />
+    </Data>
+    <Data name="b2Out3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q3" />
+    </Data>
+    <Data name="b2Out4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q4" />
+    </Data>
+    <Data name="b2Out5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q5" />
+    </Data>
+    <Data name="b2Out6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q6" />
+    </Data>
+    <Data name="b2Out7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q7" />
+    </Data>
+    <Data name="b2Out8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q8" />
+    </Data>
+    <Data name="b2Out9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-2\%Q9" />
+    </Data>
+    <Data name="bIn0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I0" />
+    </Data>
+    <Data name="bIn1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I1" />
+    </Data>
+    <Data name="bIn10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I10" />
+    </Data>
+    <Data name="bIn11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I11" />
+    </Data>
+    <Data name="bIn12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I12" />
+    </Data>
+    <Data name="bIn13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I13" />
+    </Data>
+    <Data name="bIn14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I14" />
+    </Data>
+    <Data name="bIn15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I15" />
+    </Data>
+    <Data name="bIn2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I2" />
+    </Data>
+    <Data name="bIn3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I3" />
+    </Data>
+    <Data name="bIn4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I4" />
+    </Data>
+    <Data name="bIn5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I5" />
+    </Data>
+    <Data name="bIn6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I6" />
+    </Data>
+    <Data name="bIn7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I7" />
+    </Data>
+    <Data name="bIn8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I8" />
+    </Data>
+    <Data name="bIn9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%I9" />
+    </Data>
+    <Data name="bOut0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q0" />
+    </Data>
+    <Data name="bOut1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q1" />
+    </Data>
+    <Data name="bOut10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q10" />
+    </Data>
+    <Data name="bOut11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q11" />
+    </Data>
+    <Data name="bOut12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q12" />
+    </Data>
+    <Data name="bOut13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q13" />
+    </Data>
+    <Data name="bOut14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q14" />
+    </Data>
+    <Data name="bOut15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q15" />
+    </Data>
+    <Data name="bOut2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q2" />
+    </Data>
+    <Data name="bOut3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q3" />
+    </Data>
+    <Data name="bOut4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q4" />
+    </Data>
+    <Data name="bOut5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q5" />
+    </Data>
+    <Data name="bOut6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q6" />
+    </Data>
+    <Data name="bOut7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q7" />
+    </Data>
+    <Data name="bOut8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q8" />
+    </Data>
+    <Data name="bOut9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="BasicIO-1\%Q9" />
+    </Data>
+    <Data name="cDin0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I0" />
+    </Data>
+    <Data name="cDin1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I1" />
+    </Data>
+    <Data name="cDin2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I2" />
+    </Data>
+    <Data name="cDin3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I3" />
+    </Data>
+    <Data name="cDin4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I4" />
+    </Data>
+    <Data name="cDin5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I5" />
+    </Data>
+    <Data name="cDin6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I6" />
+    </Data>
+    <Data name="cDin7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%I7" />
+    </Data>
+    <Data name="cDout0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q0" />
+    </Data>
+    <Data name="cDout1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q1" />
+    </Data>
+    <Data name="cDout2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q2" />
+    </Data>
+    <Data name="cDout3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q3" />
+    </Data>
+    <Data name="cDout4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q4" />
+    </Data>
+    <Data name="cDout5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q5" />
+    </Data>
+    <Data name="cDout6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q6" />
+    </Data>
+    <Data name="cDout7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="Can-Dio\%Q7" />
+    </Data>
+    <Data name="dInUser" access="public" xsi:type="array" type="dio" size="1">
+    </Data>
+    <Data name="dNull" access="private" xsi:type="array" type="dio" size="1">
+    </Data>
+    <Data name="dOutUser" access="public" xsi:type="array" type="dio" size="1">
+    </Data>
+    <Data name="fIn0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="fIn0" />
+    </Data>
+    <Data name="fIn1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="fIn1" />
+    </Data>
+    <Data name="fOut0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="fOut0" />
+    </Data>
+    <Data name="mIn0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I0" />
+    </Data>
+    <Data name="mIn1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I1" />
+    </Data>
+    <Data name="mIn10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I10" />
+    </Data>
+    <Data name="mIn11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I11" />
+    </Data>
+    <Data name="mIn12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I12" />
+    </Data>
+    <Data name="mIn13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I13" />
+    </Data>
+    <Data name="mIn14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I14" />
+    </Data>
+    <Data name="mIn15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I15" />
+    </Data>
+    <Data name="mIn16" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I16" />
+    </Data>
+    <Data name="mIn17" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I17" />
+    </Data>
+    <Data name="mIn18" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I18" />
+    </Data>
+    <Data name="mIn19" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I19" />
+    </Data>
+    <Data name="mIn2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I2" />
+    </Data>
+    <Data name="mIn20" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I20" />
+    </Data>
+    <Data name="mIn21" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I21" />
+    </Data>
+    <Data name="mIn22" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I22" />
+    </Data>
+    <Data name="mIn23" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I23" />
+    </Data>
+    <Data name="mIn24" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I24" />
+    </Data>
+    <Data name="mIn25" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I25" />
+    </Data>
+    <Data name="mIn26" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I26" />
+    </Data>
+    <Data name="mIn27" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I27" />
+    </Data>
+    <Data name="mIn28" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I28" />
+    </Data>
+    <Data name="mIn29" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I29" />
+    </Data>
+    <Data name="mIn3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I3" />
+    </Data>
+    <Data name="mIn30" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I30" />
+    </Data>
+    <Data name="mIn31" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I31" />
+    </Data>
+    <Data name="mIn4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I4" />
+    </Data>
+    <Data name="mIn5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I5" />
+    </Data>
+    <Data name="mIn6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I6" />
+    </Data>
+    <Data name="mIn7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I7" />
+    </Data>
+    <Data name="mIn8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I8" />
+    </Data>
+    <Data name="mIn9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%I9" />
+    </Data>
+    <Data name="mOut0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q0" />
+    </Data>
+    <Data name="mOut1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q1" />
+    </Data>
+    <Data name="mOut10" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q10" />
+    </Data>
+    <Data name="mOut11" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q11" />
+    </Data>
+    <Data name="mOut12" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q12" />
+    </Data>
+    <Data name="mOut13" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q13" />
+    </Data>
+    <Data name="mOut14" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q14" />
+    </Data>
+    <Data name="mOut15" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q15" />
+    </Data>
+    <Data name="mOut16" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q16" />
+    </Data>
+    <Data name="mOut17" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q17" />
+    </Data>
+    <Data name="mOut18" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q18" />
+    </Data>
+    <Data name="mOut19" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q19" />
+    </Data>
+    <Data name="mOut2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q2" />
+    </Data>
+    <Data name="mOut20" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q20" />
+    </Data>
+    <Data name="mOut21" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q21" />
+    </Data>
+    <Data name="mOut22" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q22" />
+    </Data>
+    <Data name="mOut23" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q23" />
+    </Data>
+    <Data name="mOut24" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q24" />
+    </Data>
+    <Data name="mOut25" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q25" />
+    </Data>
+    <Data name="mOut26" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q26" />
+    </Data>
+    <Data name="mOut27" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q27" />
+    </Data>
+    <Data name="mOut28" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q28" />
+    </Data>
+    <Data name="mOut29" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q29" />
+    </Data>
+    <Data name="mOut3" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q3" />
+    </Data>
+    <Data name="mOut30" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q30" />
+    </Data>
+    <Data name="mOut31" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q31" />
+    </Data>
+    <Data name="mOut4" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q4" />
+    </Data>
+    <Data name="mOut5" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q5" />
+    </Data>
+    <Data name="mOut6" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q6" />
+    </Data>
+    <Data name="mOut7" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q7" />
+    </Data>
+    <Data name="mOut8" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q8" />
+    </Data>
+    <Data name="mOut9" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="ModuleIO\%Q9" />
+    </Data>
+    <Data name="usrIn0" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="usrIn0" />
+    </Data>
+    <Data name="usrIn1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="usrIn1" />
+    </Data>
+    <Data name="valve1" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve1" />
+    </Data>
+    <Data name="valve2" access="public" xsi:type="array" type="dio" size="1">
+      <Value key="0" link="valve2" />
+    </Data>
+    <Data name="dInput" access="public" xsi:type="collection" type="dioItem" >
+      <Value key="NetIn00">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I0" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn00" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn00" />
+        </Field>
+      </Value>
+      <Value key="NetIn01">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I1" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn01" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn01" />
+        </Field>
+      </Value>
+      <Value key="NetIn02">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I2" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn02" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn02" />
+        </Field>
+      </Value>
+      <Value key="NetIn03">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I3" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn03" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn03" />
+        </Field>
+      </Value>
+      <Value key="NetIn04">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I4" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn04" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn04" />
+        </Field>
+      </Value>
+      <Value key="NetIn05">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I5" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn05" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn05" />
+        </Field>
+      </Value>
+      <Value key="NetIn06">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I6" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn06" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn06" />
+        </Field>
+      </Value>
+      <Value key="NetIn07">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I7" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn07" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn07" />
+        </Field>
+      </Value>
+      <Value key="NetIn08">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I8" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn08" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn08" />
+        </Field>
+      </Value>
+      <Value key="NetIn09">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I9" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn09" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn09" />
+        </Field>
+      </Value>
+      <Value key="NetIn10">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I10" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn10" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn10" />
+        </Field>
+      </Value>
+      <Value key="NetIn11">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I11" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn11" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn11" />
+        </Field>
+      </Value>
+      <Value key="NetIn12">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I12" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn12" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn12" />
+        </Field>
+      </Value>
+      <Value key="NetIn13">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I13" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn13" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn13" />
+        </Field>
+      </Value>
+      <Value key="NetIn14">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I14" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn14" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn14" />
+        </Field>
+      </Value>
+      <Value key="NetIn15">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I15" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn15" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn15" />
+        </Field>
+      </Value>
+      <Value key="NetIn16">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I16" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn16" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn16" />
+        </Field>
+      </Value>
+      <Value key="NetIn17">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I17" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn17" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn17" />
+        </Field>
+      </Value>
+      <Value key="NetIn18">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I18" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn18" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn18" />
+        </Field>
+      </Value>
+      <Value key="NetIn19">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I19" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn19" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn19" />
+        </Field>
+      </Value>
+      <Value key="NetIn20">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I20" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn20" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn20" />
+        </Field>
+      </Value>
+      <Value key="NetIn21">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I21" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn21" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn21" />
+        </Field>
+      </Value>
+      <Value key="NetIn22">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I22" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn22" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn22" />
+        </Field>
+      </Value>
+      <Value key="NetIn23">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I23" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn23" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn23" />
+        </Field>
+      </Value>
+      <Value key="NetIn24">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I24" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn24" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn24" />
+        </Field>
+      </Value>
+      <Value key="NetIn25">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I25" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn25" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn25" />
+        </Field>
+      </Value>
+      <Value key="NetIn26">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I26" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn26" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn26" />
+        </Field>
+      </Value>
+      <Value key="NetIn27">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I27" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn27" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn27" />
+        </Field>
+      </Value>
+      <Value key="NetIn28">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I28" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn28" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn28" />
+        </Field>
+      </Value>
+      <Value key="NetIn29">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I29" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn29" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn29" />
+        </Field>
+      </Value>
+      <Value key="NetIn30">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I30" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn30" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn30" />
+        </Field>
+      </Value>
+      <Value key="NetIn31">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I31" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn31" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn31" />
+        </Field>
+      </Value>
+      <Value key="NetIn32">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I32" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn32" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn32" />
+        </Field>
+      </Value>
+      <Value key="NetIn33">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I33" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn33" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn33" />
+        </Field>
+      </Value>
+      <Value key="NetIn34">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I34" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn34" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn34" />
+        </Field>
+      </Value>
+      <Value key="NetIn35">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I35" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn35" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn35" />
+        </Field>
+      </Value>
+      <Value key="NetIn36">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I36" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn36" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn36" />
+        </Field>
+      </Value>
+      <Value key="NetIn37">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I37" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn37" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn37" />
+        </Field>
+      </Value>
+      <Value key="NetIn38">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I38" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn38" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn38" />
+        </Field>
+      </Value>
+      <Value key="NetIn39">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I39" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn39" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn39" />
+        </Field>
+      </Value>
+      <Value key="NetIn40">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I40" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn40" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn40" />
+        </Field>
+      </Value>
+      <Value key="NetIn41">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I41" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn41" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn41" />
+        </Field>
+      </Value>
+      <Value key="NetIn42">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I42" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn42" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn42" />
+        </Field>
+      </Value>
+      <Value key="NetIn43">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I43" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn43" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn43" />
+        </Field>
+      </Value>
+      <Value key="NetIn44">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I44" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn44" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn44" />
+        </Field>
+      </Value>
+      <Value key="NetIn45">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I45" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn45" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn45" />
+        </Field>
+      </Value>
+      <Value key="NetIn46">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I46" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn46" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn46" />
+        </Field>
+      </Value>
+      <Value key="NetIn47">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I47" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn47" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn47" />
+        </Field>
+      </Value>
+      <Value key="NetIn48">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I48" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn48" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn48" />
+        </Field>
+      </Value>
+      <Value key="NetIn49">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I49" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn49" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn49" />
+        </Field>
+      </Value>
+      <Value key="NetIn50">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I50" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn50" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn50" />
+        </Field>
+      </Value>
+      <Value key="NetIn51">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I51" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn51" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn51" />
+        </Field>
+      </Value>
+      <Value key="NetIn52">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I52" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn52" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn52" />
+        </Field>
+      </Value>
+      <Value key="NetIn53">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I53" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn53" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn53" />
+        </Field>
+      </Value>
+      <Value key="NetIn54">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I54" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn54" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn54" />
+        </Field>
+      </Value>
+      <Value key="NetIn55">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I55" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn55" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn55" />
+        </Field>
+      </Value>
+      <Value key="NetIn56">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I56" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn56" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn56" />
+        </Field>
+      </Value>
+      <Value key="NetIn57">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I57" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn57" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn57" />
+        </Field>
+      </Value>
+      <Value key="NetIn58">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I58" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn58" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn58" />
+        </Field>
+      </Value>
+      <Value key="NetIn59">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I59" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn59" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn59" />
+        </Field>
+      </Value>
+      <Value key="NetIn60">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I60" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn60" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn60" />
+        </Field>
+      </Value>
+      <Value key="NetIn61">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I61" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn61" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn61" />
+        </Field>
+      </Value>
+      <Value key="NetIn62">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I62" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn62" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn62" />
+        </Field>
+      </Value>
+      <Value key="NetIn63">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%I63" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn63" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetIn63" />
+        </Field>
+      </Value>
+      <Value key="fIn0">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="fIn0" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fIn0" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fIn0" />
+        </Field>
+      </Value>
+      <Value key="fIn1">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="fIn1" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fIn1" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fIn1" />
+        </Field>
+      </Value>
+      <Value key="usrIn0">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="usrIn0" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="usrIn0" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="usrIn0" />
+        </Field>
+      </Value>
+      <Value key="usrIn1">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="usrIn1" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="usrIn1" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="usrIn1" />
+        </Field>
+      </Value>
+    </Data>
+    <Data name="dOutput" access="public" xsi:type="collection" type="dioItem" >
+      <Value key="NetOut00">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q0" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut00" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut00" />
+        </Field>
+      </Value>
+      <Value key="NetOut01">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q1" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut01" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut01" />
+        </Field>
+      </Value>
+      <Value key="NetOut02">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q2" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut02" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut02" />
+        </Field>
+      </Value>
+      <Value key="NetOut03">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q3" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut03" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut03" />
+        </Field>
+      </Value>
+      <Value key="NetOut04">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q4" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut04" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut04" />
+        </Field>
+      </Value>
+      <Value key="NetOut05">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q5" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut05" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut05" />
+        </Field>
+      </Value>
+      <Value key="NetOut06">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q6" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut06" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut06" />
+        </Field>
+      </Value>
+      <Value key="NetOut07">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q7" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut07" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut07" />
+        </Field>
+      </Value>
+      <Value key="NetOut08">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q8" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut08" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut08" />
+        </Field>
+      </Value>
+      <Value key="NetOut09">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q9" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut09" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut09" />
+        </Field>
+      </Value>
+      <Value key="NetOut10">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q10" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut10" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut10" />
+        </Field>
+      </Value>
+      <Value key="NetOut11">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q11" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut11" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut11" />
+        </Field>
+      </Value>
+      <Value key="NetOut12">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q12" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut12" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut12" />
+        </Field>
+      </Value>
+      <Value key="NetOut13">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q13" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut13" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut13" />
+        </Field>
+      </Value>
+      <Value key="NetOut14">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q14" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut14" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut14" />
+        </Field>
+      </Value>
+      <Value key="NetOut15">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q15" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut15" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut15" />
+        </Field>
+      </Value>
+      <Value key="NetOut16">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q16" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut16" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut16" />
+        </Field>
+      </Value>
+      <Value key="NetOut17">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q17" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut17" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut17" />
+        </Field>
+      </Value>
+      <Value key="NetOut18">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q18" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut18" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut18" />
+        </Field>
+      </Value>
+      <Value key="NetOut19">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q19" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut19" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut19" />
+        </Field>
+      </Value>
+      <Value key="NetOut20">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q20" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut20" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut20" />
+        </Field>
+      </Value>
+      <Value key="NetOut21">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q21" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut21" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut21" />
+        </Field>
+      </Value>
+      <Value key="NetOut22">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q22" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut22" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut22" />
+        </Field>
+      </Value>
+      <Value key="NetOut23">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q23" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut23" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut23" />
+        </Field>
+      </Value>
+      <Value key="NetOut24">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q24" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut24" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut24" />
+        </Field>
+      </Value>
+      <Value key="NetOut25">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q25" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut25" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut25" />
+        </Field>
+      </Value>
+      <Value key="NetOut26">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q26" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut26" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut26" />
+        </Field>
+      </Value>
+      <Value key="NetOut27">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q27" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut27" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut27" />
+        </Field>
+      </Value>
+      <Value key="NetOut28">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q28" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut28" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut28" />
+        </Field>
+      </Value>
+      <Value key="NetOut29">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q29" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut29" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut29" />
+        </Field>
+      </Value>
+      <Value key="NetOut30">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q30" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut30" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut30" />
+        </Field>
+      </Value>
+      <Value key="NetOut31">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q31" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut31" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut31" />
+        </Field>
+      </Value>
+      <Value key="NetOut32">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q32" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut32" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut32" />
+        </Field>
+      </Value>
+      <Value key="NetOut33">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q33" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut33" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut33" />
+        </Field>
+      </Value>
+      <Value key="NetOut34">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q34" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut34" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut34" />
+        </Field>
+      </Value>
+      <Value key="NetOut35">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q35" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut35" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut35" />
+        </Field>
+      </Value>
+      <Value key="NetOut36">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q36" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut36" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut36" />
+        </Field>
+      </Value>
+      <Value key="NetOut37">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q37" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut37" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut37" />
+        </Field>
+      </Value>
+      <Value key="NetOut38">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q38" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut38" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut38" />
+        </Field>
+      </Value>
+      <Value key="NetOut39">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q39" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut39" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut39" />
+        </Field>
+      </Value>
+      <Value key="NetOut40">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q40" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut40" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut40" />
+        </Field>
+      </Value>
+      <Value key="NetOut41">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q41" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut41" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut41" />
+        </Field>
+      </Value>
+      <Value key="NetOut42">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q42" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut42" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut42" />
+        </Field>
+      </Value>
+      <Value key="NetOut43">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q43" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut43" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut43" />
+        </Field>
+      </Value>
+      <Value key="NetOut44">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q44" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut44" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut44" />
+        </Field>
+      </Value>
+      <Value key="NetOut45">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q45" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut45" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut45" />
+        </Field>
+      </Value>
+      <Value key="NetOut46">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q46" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut46" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut46" />
+        </Field>
+      </Value>
+      <Value key="NetOut47">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q47" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut47" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut47" />
+        </Field>
+      </Value>
+      <Value key="NetOut48">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q48" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut48" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut48" />
+        </Field>
+      </Value>
+      <Value key="NetOut49">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q49" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut49" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut49" />
+        </Field>
+      </Value>
+      <Value key="NetOut50">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q50" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut50" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut50" />
+        </Field>
+      </Value>
+      <Value key="NetOut51">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q51" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut51" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut51" />
+        </Field>
+      </Value>
+      <Value key="NetOut52">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q52" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut52" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut52" />
+        </Field>
+      </Value>
+      <Value key="NetOut53">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q53" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut53" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut53" />
+        </Field>
+      </Value>
+      <Value key="NetOut54">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q54" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut54" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut54" />
+        </Field>
+      </Value>
+      <Value key="NetOut55">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q55" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut55" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut55" />
+        </Field>
+      </Value>
+      <Value key="NetOut56">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q56" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut56" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut56" />
+        </Field>
+      </Value>
+      <Value key="NetOut57">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q57" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut57" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut57" />
+        </Field>
+      </Value>
+      <Value key="NetOut58">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q58" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut58" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut58" />
+        </Field>
+      </Value>
+      <Value key="NetOut59">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q59" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut59" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut59" />
+        </Field>
+      </Value>
+      <Value key="NetOut60">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q60" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut60" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut60" />
+        </Field>
+      </Value>
+      <Value key="NetOut61">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q61" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut61" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut61" />
+        </Field>
+      </Value>
+      <Value key="NetOut62">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q62" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut62" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut62" />
+        </Field>
+      </Value>
+      <Value key="NetOut63">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="ApplicomIO-1\TOPIC1_A-BLOCKA\%Q63" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut63" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="NetOut63" />
+        </Field>
+      </Value>
+      <Value key="fOut0">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="fOut0" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fOut0" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="fOut0" />
+        </Field>
+      </Value>
+      <Value key="valve1">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="valve1" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="valve1" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="valve1" />
+        </Field>
+      </Value>
+      <Value key="valve2">
+        <Field name="bActive" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="bEnable" xsi:type="array" type="bool" size="1">
+          <Value key="0" value="true" />
+        </Field>
+        <Field name="dDio" xsi:type="array" type="dio" size="1">
+          <Value key="0" link="valve2" />
+        </Field>
+        <Field name="sID" xsi:type="array" type="string" size="1">
+          <Value key="0" value="valve2" />
+        </Field>
+        <Field name="sName" xsi:type="array" type="string" size="1">
+          <Value key="0" value="valve2" />
+        </Field>
+      </Value>
+    </Data>
+    <Data name="nCounter" access="public" xsi:type="array" type="num" size="10">
+    </Data>
+    <Data name="sCondition" access="public" xsi:type="array" type="string" size="6">
+      <Value key="0" value="!=" />
+      <Value key="1" value="&gt;=" />
+      <Value key="2" value="&gt; " />
+      <Value key="3" value="&lt; " />
+      <Value key="4" value="&lt;=" />
+      <Value key="5" value="==" />
+    </Data>
+    <Data name="sOperator" access="public" xsi:type="array" type="string" size="4">
+      <Value key="0" value="= " />
+      <Value key="1" value="=NUM " />
+      <Value key="2" value="+1" />
+      <Value key="3" value="-1" />
+    </Data>
+  </Datas>
+</Database>

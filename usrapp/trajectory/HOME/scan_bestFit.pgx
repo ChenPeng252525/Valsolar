@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="scan_bestFit">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+      <Parameter name="x_pBestFit" type="point" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bPrevious" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bNext" type="bool" xsi:type="array" size="1" />
+      <Local name="l_pCheck" type="point" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistanceNext" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistancePrev" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStopPrev" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStopNext" type="num" xsi:type="array" size="1" />
+      <Local name="i_from" type="num" xsi:type="array" size="1" />
+      <Local name="i_to" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_jResult" type="joint" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="3" />
+    </Locals>
+    <Code><![CDATA[begin
+  // save the point
+  // pBestFit [0] -> previous
+  // pBestFit [1] -> actual
+  // pBestFit [2] -> next
+  // scan all
+  call getSizeItem(true,l_nSize)
+  l_nDistanceNext=10000
+  l_nDistancePrev=10000
+  call getMoveType(l_nMoveType,x_nIndex,true)
+  // search the three point
+  if x_nIndex>0
+    l_bPrevious=true
+    call getJointData(l_jJoint[0],x_tTool,true,x_nIndex-1)
+    x_tTool=flange
+    pBestFit[0]=jointToPoint(x_tTool,world,l_jJoint[0])
+  endIf
+  if x_nIndex<l_nSize-1 and l_nSize>1
+    l_bNext=true
+    call getJointData(l_jJoint[2],x_tTool,true,x_nIndex+1)
+    pBestFit[2]=jointToPoint(x_tTool,world,l_jJoint[2])
+  endIf
+  call getJointData(l_jJoint[1],x_tTool,true,x_nIndex)
+  pBestFit[1]=jointToPoint(x_tTool,world,l_jJoint[1])
+  // look if the next point if is better
+  if l_bNext
+    if setFrame(pBestFit[1],pBestFit[2],pNull,fFrame)==0
+      pCheck=here(x_tTool,fFrame)
+      if pCheck.trsf.x>=0
+        // scan it
+        l_pCheck=pBestFit[1]
+        l_pHere=here(x_tTool,world)
+        // check the nearest point
+        for i=0 to 0.4 step 0.1
+          if l_nMoveType==0
+            call interpolateJ(l_jJoint[1],l_jJoint[2],i,l_jResult,l_bOk)
+            l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+          else
+            l_pCheck.trsf=interpolateL(pBestFit[1].trsf,pBestFit[2].trsf,i)
+            l_bOk=true
+          endIf
+          if l_nDistanceNext>=distance(l_pCheck,l_pHere) and l_bOk
+            l_nDistanceNext=distance(l_pCheck,l_pHere)
+            //save the value
+            l_nStopNext=i
+          endIf
+        endFor
+        // closer search
+        i_from=(max(l_nStopNext-0.05,0))
+        i_to=(min(l_nStopNext+0.05,1))
+        for i=i_from to i_to step 0.01
+          if l_nMoveType==0
+            call interpolateJ(l_jJoint[1],l_jJoint[2],i,l_jResult,l_bOk)
+            l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+          else
+            l_pCheck.trsf=interpolateL(pBestFit[1].trsf,pBestFit[2].trsf,i)
+            l_bOk=true
+          endIf
+          if l_nDistanceNext>=distance(l_pCheck,l_pHere) and l_bOk
+            l_nDistanceNext=distance(l_pCheck,l_pHere)
+            //save the value
+            l_nStopNext=i
+          endIf
+        endFor
+      endIf
+    endIf
+  endIf
+  // look if there is a previous point
+  if l_bPrevious
+    if setFrame(pBestFit[0],pBestFit[1],pNull,fFrame)==0
+      pCheck=here(x_tTool,fFrame)
+      // scan it
+      if pCheck.trsf.x>=0
+        // scan it
+        l_pCheck=pBestFit[1]
+        l_pHere=here(x_tTool,world)
+        // check the nearest point
+        for i=0.6 to 1 step 0.1
+          if l_nMoveType==0
+            call interpolateJ(l_jJoint[0],l_jJoint[1],i,l_jResult,l_bOk)
+            l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+          else
+            l_pCheck.trsf=interpolateL(pBestFit[0].trsf,pBestFit[1].trsf,i)
+            l_bOk=true
+          endIf
+          if l_nDistancePrev>=distance(l_pCheck,l_pHere)
+            l_nDistancePrev=distance(l_pCheck,l_pHere)
+            //save the value
+            l_nStopPrev=i
+          endIf
+        endFor
+        // closer search
+        i_from=(max(l_nStopPrev-0.05,0))
+        i_to=(min(l_nStopPrev+0.05,1))
+        for i=i_from to i_to step 0.01
+          if l_nMoveType==0
+            call interpolateJ(l_jJoint[0],l_jJoint[1],i,l_jResult,l_bOk)
+            l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+          else
+            l_pCheck.trsf=interpolateL(pBestFit[0].trsf,pBestFit[1].trsf,i)
+            l_bOk=true
+          endIf
+          if l_nDistancePrev>=distance(l_pCheck,l_pHere)
+            l_nDistancePrev=distance(l_pCheck,l_pHere)
+            //save the value
+            l_nStopPrev=i
+          endIf
+        endFor
+      endIf
+    endIf
+  endIf
+  // go to an approach POINT
+  if l_nStopNext!=0 or l_nStopPrev!=0
+    if l_nDistanceNext<l_nDistancePrev
+      if l_nMoveType==0
+        call interpolateJ(l_jJoint[1],l_jJoint[2],l_nStopNext,l_jResult,l_bOk)
+        l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+      else
+        l_pCheck.trsf=interpolateL(pBestFit[1].trsf,pBestFit[2].trsf,l_nStopNext)
+      endIf
+    else
+      if l_nMoveType==0
+        call interpolateJ(l_jJoint[0],l_jJoint[1],l_nStopPrev,l_jResult,l_bOk)
+        l_pCheck=jointToPoint(x_tTool,world,l_jResult)
+      else
+        ? l_nStopPrev
+        l_pCheck.trsf=interpolateL(pBestFit[0].trsf,pBestFit[1].trsf,l_nStopPrev)
+      endIf
+    endIf
+    // save it
+    x_pBestFit=l_pCheck
+  else
+    // return the default
+    x_pBestFit=pBestFit[1]
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

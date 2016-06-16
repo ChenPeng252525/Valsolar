@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Locals>
+      <Local name="l_sSwap" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[6]
+    //
+    // delete a Trajectory
+    //
+    call deleteItem(l_bYes)
+    if l_bYes
+      call trajType:delete(sEvent,l_nResult)
+      if l_nResult==0
+        logMsg("[KERNEL] INTERFACE:Delete the trajectory: "+saveData:sTrajTypeUsing+" "+sEvent)
+        call buildList()
+      else
+        popUpMsg("error code: "+toString("",l_nResult))
+        logMsg("[KERNEL] INTERFACE:Delete the trajectory: "+saveData:sTrajTypeUsing+" "+sEvent+"error code: "+toString("",l_nResult))
+      endIf
+    endIf
+  endIf
+end   ]]></Code>
+  </Program>
+</Programs>

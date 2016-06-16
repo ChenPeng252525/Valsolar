@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="goHome" access="private" >
+    <Code><![CDATA[begin
+  // go to HOME
+  // check if the robot is not in cycle
+  if !(cycleStatus:bCycle or cycleStatus:bSimulation)
+    cycleStatus:bToHome=true
+    watch(cycleStatus:bToHome==false,3)
+    // wait end of HOME
+    watch(cycleStatus:bIsHome,3)
+    waitEndMove()
+    watch(cycleStatus:bSimulation==false,3)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

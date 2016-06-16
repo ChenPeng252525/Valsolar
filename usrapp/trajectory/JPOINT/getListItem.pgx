@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getListItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="6" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //
+  // define the item to show in the edit page Traj
+  // customize an array and copy to x_sItem...
+  //
+  // see other traj as example
+  l_sItem[0]=("Joint 1 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j1))
+  l_sItem[1]=("Joint 2 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j2))
+  l_sItem[2]=("Joint 3 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j3))
+  l_sItem[3]=("Joint 4 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j4))
+  l_sItem[4]=("Joint 5 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j5))
+  l_sItem[5]=("Joint 6 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j6))
+  call use:stringCopy(l_sItem,x_sItem)
+end]]></Code>
+  </Program>
+</Programs>

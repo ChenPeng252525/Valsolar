@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_simul" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_iEvent" type="InstrItem" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nLoading" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_pProg" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // reset the recording
+  resetMotion()
+  // set the program
+  l_sItem=x_iEvent.sType+" "+x_iEvent.sData
+  // check if the timer simulation has to be done
+  if cycleStatus:nWorkingMode!=1
+    // check the workingMode
+    call cycle_autoON(l_bContinue)
+  else
+    l_bContinue=true
+  endIf
+  // init the time..
+  cycleStatus:nTime=clock()
+  if l_bContinue
+    // INIT
+    call cycle_version()
+    // check compatibility
+    if cycleStatus:nToSuperV!=4
+      // do the request
+      if cycleStatus:bHoming
+        // before HOME strategy 
+        // get the program
+        call prog:getProgItem(l_pProg,"HOME1")
+        // for simulation large screen
+        use:bUseRefresh=true
+        wait(cycleStatus:nWorkingStatus==0)
+        logMsg("[KERNEL] SIMULATION:Execute the program: HOME1")
+        // run it
+        call cycle_run(l_pProg)
+        // wait the end
+        call cycle_waitEmpty()
+        // onCycleEvent
+        call OnEvent:OnCycleEvent(20)
+      endIf
+      // is a PROGRAM 
+      if x_iEvent.sType=="PROG"
+        // for simulation large screen
+        use:bUseRefresh=true
+        wait(cycleStatus:nWorkingStatus==0)
+        // cycleEvent Simulation Started
+        call OnEvent:OnCycleEvent(17)
+        logMsg("[KERNEL] SIMULATION:Execute the program: "+x_iEvent.sData)
+        // load it
+        call prog:loadCycle(x_iEvent.sData,l_nLoading)
+        if l_nLoading!=0
+          // program not found...
+          popUpMsg("program not found")
+          return
+        endIf
+        // run it
+        call prog:getProgItem(pProg,x_iEvent.sData)
+        // check if not empty
+        if pProg.iEvent.sType!=""
+          call cycle_run(pProg)
+        endIf
+      else
+        // IS AN EVENT
+        if x_iEvent.sType!=""
+          l_pProg.sID="simul"
+          l_pProg.iEvent=x_iEvent
+          // refresh
+          use:bUseRefresh=true
+          wait(cycleStatus:nWorkingStatus==0)
+          if !cycleStatus:bHoming
+            // cycleEvent Simulation Started
+            call OnEvent:OnCycleEvent(17)
+          endIf
+          // run it
+          call cycle_run(l_pProg)
+        endIf
+      endIf
+      // ENDING
+      if cycleStatus:bHoming
+        // get the program
+        call prog:getProgItem(l_pProg,"HOME2")
+        // for simulation large screen
+        use:bUseRefresh=true
+        wait(cycleStatus:nWorkingStatus==0)
+        logMsg("[KERNEL] SIMULATION:Execute the program: HOME2")
+        // run it
+        call cycle_run(l_pProg)
+        // wait the end
+        call cycle_waitEmpty()
+        // end of Home simulation
+        call OnEvent:OnCycleEvent(21)
+      else
+        // wait the end
+        call cycle_waitEmpty()
+        if saveData:bDebug
+          ? "End of Simulation: "+l_sItem
+        endIf
+        call OnEvent:OnCycleEvent(18)
+      endIf
+      // End of all
+      call memory_onEnd()
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

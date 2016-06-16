@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refresh">
+    <Description><![CDATA[// page refresh]]></Description>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check the page
+  if !bPage
+    if !bShowMessage
+      if (nKey>=270 and nKey<=278)or abs(clock()-nRefresh)>nTime or use:bUseRefresh
+        if (nKey>=270 and nKey<=278)or use:bUseRefresh
+          cls()
+        endIf
+        // refresh the static message
+        use:bUseRefresh=true
+        call refreshStatic()
+        call refreshDynamic()
+        // update the clock
+        nRefresh=clock()
+      else
+        // refresh the Dynamic message
+        call refreshDynamic()
+      endIf
+    endIf
+    // print the message
+    call showMessage()
+  else
+    call showLog()
+  endIf
+  call printToShow()
+end
+
+]]></Code>
+  </Program>
+</Programs>

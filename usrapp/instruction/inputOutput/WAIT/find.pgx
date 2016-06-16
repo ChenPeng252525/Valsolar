@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="find" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_bFound" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOperator" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  // REMOVE THE COUNT
+  x_sItem=right(x_sItem,len(x_sItem)-len("WAIT "))
+  // look inside
+  x_bFound=isDefined(saveInOut:cCount[x_sItem])
+  if !x_bFound
+    x_bFound=isDefined(saveInOut:aCount[x_sItem])
+  endIf   
+end]]></Code>
+  </Program>
+</Programs>

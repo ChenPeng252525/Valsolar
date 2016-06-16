@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getListItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem4" type="string" xsi:type="array" size="4" />
+      <Local name="l_sZoneType" type="string" xsi:type="array" size="1" />
+      <Local name="l_sZoneMove" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem7" type="string" xsi:type="array" size="7" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="6" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // define the item to show in the edit page Traj
+  // customize an array and copy to x_sItem...
+  //
+  // see other traj as example
+  l_sItem[0]=l_sItem7[0]=("Joint 1 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j1))
+  l_sItem[1]=l_sItem7[1]=("Joint 2 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j2))
+  l_sItem[2]=l_sItem7[2]=("Joint 3 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j3))
+  l_sItem[3]=l_sItem7[3]=("Joint 4 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j4))
+  l_sItem[4]=l_sItem7[4]=("Joint 5 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j5))
+  l_sItem[5]=l_sItem7[5]=("Joint 6 > "+toString(".2",jEditPoint.tData[x_nIndex].jJoint.j6))
+  call use:stringCopy(l_sItem,x_sItem)
+  switch x_nIndex
+    case 0
+      // add_on for the zone definition
+      switch jEditPoint.nZoneType
+        case 1
+          l_sZoneType=" > Box"
+        break
+        case 2
+          l_sZoneType=" > Sphere"
+        break
+        case 3
+          l_sZoneType=" > Plane"
+        break
+        default
+          l_sZoneType=" > "
+        break
+      endSwitch
+      // show only the necessary
+      if jEditPoint.nZoneType[x_nIndex]==0
+        l_sItem7[6]=("Zone "+l_sZoneType)
+        call use:stringCopy(l_sItem7,x_sItem)
+      else
+        // only the move type
+        l_sItem4[0]=("Zone "+l_sZoneType)
+        switch jEditPoint.nZoneMove
+          case 0
+            l_sZoneMove="Point"
+          break
+          case 1
+            l_sZoneMove="Appro"
+          break
+          case 2
+            l_sZoneMove="Z Value"
+          break
+          case 3
+            l_sZoneMove="@Point"
+          break
+          case 4
+            l_sZoneMove="@JPoint"
+          break
+        endSwitch
+        l_sItem4[1]="  └───>[EDIT] "
+        l_sItem4[2]=("MoveTO > "+l_sZoneMove)
+        if (jEditPoint.nZoneMove==3 or jEditPoint.nZoneMove==4) and find(jEditPoint.tData.tSuper.comment,"@")!=-1
+          l_sItem4[3]="  └> "+jEditPoint.tData.tSuper.comment
+        else
+          l_sItem4[3]="  └───>[EDIT] "
+        endIf
+        // insert all
+        call use:stringCopy(l_sItem4,x_sItem)
+      endIf
+    break
+    default
+      // insert only the coordinate
+      call use:stringCopy(l_sItem,x_sItem)
+    break
+  endSwitch
+  // save the actual index
+  nIndex=x_nIndex
+end]]></Code>
+  </Program>
+</Programs>

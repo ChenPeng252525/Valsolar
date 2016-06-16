@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getTime" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nTime" type="num" xsi:type="array" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // get the time DATA
+  if x_bCycle
+    // get the time DATA
+    x_nTime=pt:tTraj[sTrajCycle].tData[x_nIndex].tSuper.nTime
+  else
+    // get the time DATA
+    x_nTime=pEditPoint.tData[x_nIndex].tSuper.nTime
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="showStatus">
+    <Locals>
+      <Local name="l_jHere" type="joint" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // show an dialog box with
+  // the current Joint/cartesian position
+  //
+  call tcp:getTool(l_tTool,saveData:nFrameTool)
+  if cycleStatus:nWorkingStatus>1 and cycleStatus:nWorkingStatus<5 and cycleStatus:nWorkingMode==1
+    // set a timer of x second then the message disappear ..
+    if !bTrigger
+      nClockStatus=clock()
+      bTrigger=true
+      bShowStatus=true
+    endIf
+    if clock()-nClockStatus<saveData:nTimeDialog
+      if cycleStatus:nWorkingStatus==2
+        l_jHere=herej()
+        l_sMessage="J1:"+toString("7.1",l_jHere.j1)
+        l_sMessage=l_sMessage+"  J2:"+toString("7.1",l_jHere.j2)
+        l_sMessage=l_sMessage+"  J3:"+toString("7.1",l_jHere.j3)+"#"
+        l_sMessage=l_sMessage+"J4:"+toString("7.1",l_jHere.j4)
+        l_sMessage=l_sMessage+"  J5:"+toString("7.1",l_jHere.j5)
+        l_sMessage=l_sMessage+"  J6:"+toString("7.1",l_jHere.j6)
+      else
+        l_pHere=here(l_tTool,fSetFrame)
+        l_sMessage="X :"+toString("7.1",l_pHere.trsf.x)
+        l_sMessage=l_sMessage+"  Y :"+toString("7.1",l_pHere.trsf.y)
+        l_sMessage=l_sMessage+"  Z :"+toString("7.1",l_pHere.trsf.z)+"#"
+        l_sMessage=l_sMessage+"RX:"+toString("7.1",l_pHere.trsf.rx)
+        l_sMessage=l_sMessage+"  RY:"+toString("7.1",l_pHere.trsf.ry)
+        l_sMessage=l_sMessage+"  RZ:"+toString("7.1",l_pHere.trsf.rz)
+      endIf
+      call use:timerDialog(l_sMessage,3)
+    else
+      // disable it
+      bShowStatus=false
+      bTrigger=false
+    endIf
+  else
+    // reset it
+    if bTrigger
+      resetMotion()
+    endIf
+    bTrigger=false
+    bShowStatus=false
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="insert_dIn" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bActive" type="bool" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_dDio" type="dio" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // insert a new IO
+  if isDefined(dInput[x_sItem])==false and ioStatus(x_dDio)>=0
+    insert(dInput[x_sItem])
+    dInput[x_sItem].bActive=x_bActive
+    dInput[x_sItem].sID=x_sItem
+    dInput[x_sItem].sName=x_sItem
+    dioLink(dInput[x_sItem].dDio,x_dDio)
+    dInput[x_sItem].bEnable=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="printList" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nType" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nX" type="num" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="3" />
+      <Local name="l_nDone" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTotal" type="num" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  l_nZero=0
+  call use:getListPosition(l_nX,l_nZero)
+  // get the size
+  call processList:getSize(l_nSize,x_nType)
+  // resize it
+  if l_nSize!=0
+    l_nSize=l_nSize-1
+  endIf
+  // print the process start LIST
+  for i=cycleStatus:nProg to min(l_nSize-cycleStatus:nProg,1)
+    call processList:getCycle(l_sProg,l_nTotal,l_nDone,i,x_nType)
+    if l_sProg!=""
+      if i==cycleStatus:nProg
+        setTextMode(1)
+      endIf
+      call use:strfill(l_sProg,10,l_sProg)
+      l_sProg=l_sProg+"["+toString("1",l_nDone)+"/"+toString("1",l_nTotal)+"]"
+      call use:type(0,i+1,l_sProg)
+      setTextMode(0)
+      call use:typeLen(len(l_sProg),i+1,"",l_nX-1-len(l_sProg))
+      l_nIndex=l_nIndex+1
+    endIf
+  endFor
+  // write the empty space
+  if l_nIndex<2
+    for i=l_nIndex to 1
+      // empty Line
+      call use:typeLen(0,i+1,"",l_nX-1)
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="goTo">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sActualTraj" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nIndexTool" type="num" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bSamePoint" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTcpAction" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nZero" type="num" xsi:type="array" size="1" />
+      <Local name="l_tItem" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // clean the movement
+  if !isEmpty() 
+    resetMotion()
+  endIf
+  // get the tcp
+  call trajType:getTool(l_nIndexTool)
+  call saveData:getTool(l_tTool,l_nIndexTool)
+  // get the trajType
+  call trajType:getTrajItem(l_tItem,x_nIndex)
+  // set the blend to off
+  l_tItem.nom_speed.blend=off
+  // AUTO ON
+  if cycleStatus:nWorkingMode!=1
+    // put the auto ON
+    cycleStatus:bAutoON=true
+    if watch(cycleStatus:bAutoON==false,3)
+      l_bContinue=true
+    endIf
+  else
+    l_bContinue=true
+  endIf
+  if l_bContinue
+    //
+    cls()
+    // goTO
+    call trajType:goTo(l_tTool,l_tItem.nom_speed,l_tItem.moveType,l_bUnreached,x_nIndex)
+    if l_bUnreached
+      // ERROR POINT NOT REACHABLE
+      call language:message(l_sMessage,-5)
+      call use:timerDialog(l_sMessage,1)
+    else
+      // GO ON
+      do
+        // refresh the scroll bar
+        nMoveId=getMoveId()
+        call use:type(0,11,toString("2",nPoint+1)+" ")
+        call use:type(37,11,toString("2",x_nIndex+1)+" ")
+        call use:scroll(3,11,32,abs(roundDown(nMoveId)-nMoveId)*100)
+        // move to the point
+        bMoveToPoint=true
+        call use:typeMenu(7,"STOP")
+        call showMessage()
+        if !bShowMessage
+          call language:message(l_sMessage,94)
+          call use:timerDialog(l_sMessage+toString("",x_nIndex+1),0)
+        endIf
+        //
+        nKey=getKey()
+        delay(0)
+      until (isEmpty() or nKey==255 or nKey==277)
+    endIf
+    //
+    //look if the robot has moved
+    call isAtPoint(nPoint,l_bInside)
+    //DEBUT MODIF A VALIDER
+    call trajType:getSizeItem(false,l_nSize)
+    if nPoint<l_nSize-1
+      call isAtPoint(nPoint+1,l_bSamePoint)
+    endIf
+    //FIN MODIF A VALIDER (+ le or l_bSamePoint)
+    if !l_bInside and nPoint<x_nIndex or l_bSamePoint
+      //update the nPoint
+      nPoint=x_nIndex
+    else
+      // back position
+      call isAtPoint(x_nIndex,l_bInside)
+      if l_bInside and nPoint>x_nIndex
+        // update the point
+        nPoint=x_nIndex
+      endIf
+    endIf
+    resetMotion()
+    //
+    use:bUseRefresh=true
+    // clean
+    bMoveToPoint=false
+    call use:nullKey(nKey)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

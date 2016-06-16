@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="tSuper" access="public" xsi:type="array" type="TrajectoryItem" size="1">
+      <Value key="0">
+        <Field name="distance" xsi:type="array" type="num" size="1" />
+        <Field name="moveType" xsi:type="array" type="num" size="1" />
+        <Field name="nTime" xsi:type="array" type="num" size="1" />
+        <Field name="nStop" xsi:type="array" type="num" size="1" />
+        <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+        <Field name="comment" xsi:type="array" type="string" size="1" />
+        <Field name="toStop" xsi:type="array" type="bool" size="1" />
+        <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+          <Value key="0" vel="450" tmax="1000" />
+        </Field>
+        <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+          <Value key="0">
+            <Field name="sType" xsi:type="array" type="string" size="1" />
+            <Field name="sData" xsi:type="array" type="string" size="1" />
+          </Value>
+          <Value key="1">
+            <Field name="sType" xsi:type="array" type="string" size="1" />
+            <Field name="sData" xsi:type="array" type="string" size="1" />
+          </Value>
+          <Value key="2">
+            <Field name="sType" xsi:type="array" type="string" size="1" />
+            <Field name="sData" xsi:type="array" type="string" size="1" />
+          </Value>
+        </Field>
+        <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+      </Value>
+    </Data>
+    <Data name="sID" access="public" xsi:type="array" type="string" size="1" />
+    <Data name="nId" access="public" xsi:type="array" type="num" size="1" />
+  </Datas>
+</Database>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="BackBoxType" access="public">
+    <Code><![CDATA[begin
+  if nBoxType>1
+    nBoxType=nBoxType-1
+  else 
+    nBoxType=2
+  endIf 
+end]]></Code>
+  </Program>
+</Programs>

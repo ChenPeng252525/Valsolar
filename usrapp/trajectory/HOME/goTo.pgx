@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="goTo" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_mDesc" type="mdesc" xsi:type="element" />
+      <Parameter name="x_nMoveType" type="num" xsi:type="element" />
+      <Parameter name="x_bUnreached" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="temp_mdesc" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_ZoneFrame" type="frame" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDimension" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nMoveId" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // check for the zone
+  if (jEditPoint.nZoneType!=0 and x_nIndex==0) or find(jEditPoint.tData[x_nIndex].tSuper.comment,"@")!=-1
+    // take the tool
+    // use flange
+    l_tTool=flange
+    //call tcp:getTool(l_tTool,jEditPoint.nIndexTool)
+    // take the three points
+    pPoints[0]=jEditPoint.pO
+    pPoints[1]=jEditPoint.pX
+    pPoints[2]=jEditPoint.pY
+    // take the distance
+    l_nDimension=jEditPoint.nDimension
+    //take the type
+    l_nType=jEditPoint.nZoneType
+    // check the frame type-2 CIRCLE
+    if setFrame(pPoints[0],pPoints[1],pPoints[2],fSetFrame)==0 or l_nType==2
+      call checkZone(pPoints,l_tTool,l_nDimension,l_nType,l_bCheck)
+      // show the result
+      if l_bCheck
+        // inside the zone
+        call language:message(l_sMessage,225)
+        // move TO
+        call moveTo(l_tTool,x_mDesc,x_nMoveType,x_bUnreached,x_nIndex,l_nMoveId,false)
+      elseIf find(jEditPoint.tData[x_nIndex].tSuper.comment,"@")!=-1
+        // link POINT
+        // look for the moveType
+        call findMove(x_nIndex,l_tTool,x_nMoveType)
+        call moveTo(l_tTool,x_mDesc,x_nMoveType,x_bUnreached,x_nIndex,l_nMoveId,false)
+      else
+        //outside the zone
+        call language:message(l_sMessage,226)
+      endIf
+    elseIf find(jEditPoint.tData[x_nIndex].tSuper.comment,"@")!=-1
+      // found a @POINT-JPOINT
+      call moveTo(l_tTool,x_mDesc,x_nMoveType,x_bUnreached,x_nIndex,l_nMoveId,false)
+    else
+      // frame not define
+      call language:message(l_sMessage,183)
+      call use:timerDialog(l_sMessage,3)
+    endIf
+  elseIf isInRange(jEditPoint.tData[x_nIndex].jJoint)
+    // look for the moveType
+    call findMove(x_nIndex,x_tTool,x_nMoveType)
+    // execute the movement
+    switch x_nMoveType
+      case 0
+        // JOINT MOVE
+        // go to the select Joint
+        movej(jEditPoint.tData[x_nIndex].jJoint,x_tTool,x_mDesc)
+      break
+      case 1
+        // LINEAR MOVE
+        movel(jointToPoint(x_tTool,world,jEditPoint.tData[x_nIndex].jJoint),x_tTool,x_mDesc)
+      break
+      default
+      break
+    endSwitch
+  else
+    x_bUnreached=true
+  endIf
+  // save the actual index
+  nIndex=x_nIndex
+end]]></Code>
+  </Program>
+</Programs>

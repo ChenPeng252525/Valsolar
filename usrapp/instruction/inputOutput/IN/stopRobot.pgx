@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="stopRobot">
+    <Code><![CDATA[begin
+  // mutex the motion status
+  setMutex(cycleStatus:bMotionToken)
+  cycleStatus:bWait=true
+  stopMove()
+  // check that the robot has been stopped
+  if watch(cycleStatus:bMoveStopped==true,10)==false
+    popUpMsg("error stopping the robot using an INPUT ")
+    logMsg("error stopping the robot using an INPUT ")
+    wait(cycleStatus:bMoveStopped==true)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

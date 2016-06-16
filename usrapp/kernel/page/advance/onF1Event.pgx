@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF1Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sParameter" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    //
+    // TOOL / FRAME SELECTION
+    //
+    call use:setSizeList(0,9,10,2)
+    call use:listcreate("")
+    // TOOL
+    call language:message(l_sItem,124)
+    call use:listadd(l_sItem)
+    l_sItem="FRAME"
+    call use:listadd(l_sItem)
+    call use:listupdate(0)
+    // get the key
+    do
+      l_nKey=get()
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    until l_nKey==270 or l_nKey==255
+    // check the Enter key pressure
+    if l_nKey==270
+      switch l_nIndex
+        case 0
+          // Select the tool
+          l_sPage="Disk://kernel/page/tool"
+          call loadPage(l_sPage,l_sItem)
+        break
+        case 1
+          // Select the Frame
+          l_sPage="Disk://kernel/page/frame"
+          call loadPage(l_sPage,l_sItem)
+        break
+      endSwitch
+    endIf
+    logMsg("[KERNEL] INTERFACE:PAGE Advance")
+    x_bSave=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

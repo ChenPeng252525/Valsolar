@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English PALLET message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="change all the approach"
+    break
+    case 1
+      message="change all the depart"
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 2
+      message="Speed"
+    break
+    case 3
+      message="Approach"
+    break
+    case 4
+      message="Depart"
+    break
+    case 5
+      message="App Speed"
+    break
+    case 6
+      message="Dep Speed"
+    break
+    // NOTE USE MAXIMUN 9 CHAR END
+    //         012345678
+    case 7
+      message="Get at the POINT approach..."
+    break
+    case 8
+      message="Get at the POINT..."
+    break
+    case 9
+      message="Get at the POINT depart..."
+    break
+    case 10
+      message="Get at outside zone point "
+    break
+    // NOTE USE MAXIMUN 9 CHAR
+    //         012345678
+    case 11
+      message="position "
+    break
+    case 12
+      message="pos.  X  "
+    break
+    case 13
+      message="pos.  Y  "
+    break
+    case 14
+      message="pos.  Z  "
+    break
+    case 15
+      message="on Layer "
+    break
+    case 16
+      message="Select"
+    break
+    case 17
+      message="Press F1 to select the Tool#F8 to continue with the default one: "
+    break
+    case 18
+      message="How many X lines? "
+    break
+    case 19
+      message="How many Y lines? "
+    break
+    case 20
+      message="How many Z lines? "
+    break
+    case 21
+      message="How much is the approach? [mm] "
+    break
+    case 22
+      message="How much is the depart? [mm] "
+    break
+    case 23
+      message="How much is the speed approach? [mm/sec] "
+    break
+    case 24
+      message="How much is the speed depart? [mm/sec] "
+    break
+    case 25
+      message="Do you want a linear move to the point? "
+    break
+    case 26
+      message="Insert the first Instruction,press:#F1 select the instruction#F2 set TCP-> ON #F3 set TCP-> OFF#F8 to END..."
+    break
+    case 27
+      message="Insert the second Instruction,press:#F1 to continue without#F8 to select"
+    break
+    case 28
+      message="How much is the speed? [%]"
+    break
+    case 29
+      message="How much is the speed? [mm/sec]"
+    break
+    case 30
+      message="- Edit to modify the point   "
+    break
+    case 31
+      message="Do you want to validate the last modification ?"
+    break
+    case 32
+      message="Error while computing the frame check your points again"
+    break
+    //
+    case 40
+      message="Approach"
+    break
+    case 41
+      message="Depart"
+    break
+    case 42
+      message="tool and point reference (z-)"
+    break
+    case 43
+      message="Stop Time"
+    break
+  endSwitch
+end
+
+]]></Code>
+  </Program>
+</Programs>

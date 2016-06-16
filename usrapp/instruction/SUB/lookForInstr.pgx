@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="lookForInstr" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItemToFind" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_bFound" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init
+  x_bFound=false
+  // look for deep scan or not
+  if size(x_sItemToFind)>1
+    // find which instruction is
+    l_nPos=find(x_sItem,x_sItemToFind)
+    if l_nPos!=-1
+      // look if the find give a correct answer
+      // look before and after
+      if l_nPos==0 or (asc(x_sItem,l_nPos-1)<65 or asc(x_sItem,l_nPos-1)>90)
+        // continue
+        /// OK check for the instruction now
+        l_nPos=find(x_sItem,x_sItemToFind[1])
+        // look if before is empty
+        if asc(x_sItem,l_nPos-1)==32 and l_nPos!=-1
+          x_bFound=true
+        endIf
+      endIf
+    endIf
+  else
+    // NORMAL SEARCH
+    if x_sItem==x_sItemToFind
+      x_bFound=true
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

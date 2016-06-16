@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="make_NUM">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // = =NUM +1 -1
+  //
+  // display the actual item
+  call use:type(2,12,x_sItem)
+  // Select the operator
+  call language:message(l_sMessage,110)
+  call use:questionDialog(l_sMessage,saveInOut:sOperator,i)
+  if i!=-1
+    // compose the istruction
+    call use:type(2,12,x_sItem+saveInOut:sOperator[i-1])
+    // modify the value
+    if i==1
+      // modify the actual item
+      call language:message(l_sMessage,111)
+      call use:changeValue(l_nValue,-10000,10000,4+len(x_sItem),12,l_sEmpty)
+      x_sItem=x_sItem+saveInOut:sOperator[i-1]+toString("",l_nValue)
+    elseIf i==2
+      // select a new value
+      call selectType(l_sItem)
+      if l_sItem!=""
+        x_sItem=x_sItem+"=NUM "+l_sItem
+      else
+        x_sItem=""
+      endIf
+    elseIf i>2
+      // use the + - 1
+      x_sItem=x_sItem+saveInOut:sOperator[i-1]
+    else
+      // escape -> return
+    endIf
+  endIf
+  // validate
+  if use:bUseEscape
+    x_sItem=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

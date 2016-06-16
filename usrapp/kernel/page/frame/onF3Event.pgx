@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF3Event">
+    <Locals>
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[2]
+    //
+    // get the tool
+    call tcp:getTool(tTool,saveData:nFrameTool)
+    if nFrame>0
+      call use:timerDialog("Frame "+sEvent+" actived",3)
+      fSetFrame.trsf=saveData:fFrameItem[nFrame].fFrame.trsf
+    else
+      call use:timerDialog("WORLD Frame actived",3)
+      fSetFrame=world
+    endIf
+    $jogContext(tTool,fSetFrame,0)
+    // save the  actual frame
+    saveData:nFrameActive=nFrame
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="reset" access="public">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // scan it
+  l_sKey=first(pt:tTraj)
+  while l_sKey!=""
+    if l_sKey!=""
+      pt:tTraj[l_sKey].nIndex=0
+    endIf
+    l_sKey=next(pt:tTraj[l_sKey])
+  endWhile
+  // exit
+end]]></Code>
+  </Program>
+</Programs>

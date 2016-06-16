@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="buildList">
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_iEvent" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSizeItem" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="k" type="num" xsi:type="array" size="1" />
+      <Local name="l_pProg" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_sData" type="string" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT the list
+  l_sEmpty=""
+  call use:stringCopy(l_sEmpty,sList)
+  // add the items
+  call prog:getSizeItem(l_nSize)
+  for i=0 to (l_nSize-1)
+    call prog:getItem(l_iEvent,i)
+    if l_iEvent.sType!=""
+      l_sData=l_iEvent.sData
+      l_sType=l_iEvent.sType
+      call saveInputOutput:replaceIO(l_sData,l_sType,l_sData)
+      call listAdd(toString("2",i+1)+" "+l_sType+" "+l_sData)
+      if find(l_iEvent.sType,"#")!=-1
+        l_iEvent.sType=right(l_iEvent.sType,len(l_iEvent.sType)-1)
+      endIf
+      // show the name of IN OUT NUM
+      if saveData:bShowItem and find(l_iEvent.sData,"@")==-1
+        // get inside the trajectory field
+        call saveData:getPathInstr(l_iEvent.sType,l_sPath)
+        // TRAJECTORY
+        if TrajItem:libLoad(l_sPath)==0
+          delay(0)
+          // scan for the action
+          call TrajItem:load(l_iEvent.sData,l_nResult)
+          if l_nResult==0
+            call TrajItem:getSizeItem(false,l_nSizeItem)
+            // patch for the PALLET
+            if find(TrajItem:libPath(),"PALLET")!=-1
+              l_nSizeItem=1
+            endIf
+            // scan for the TCP
+            for j=0 to l_nSizeItem-1
+              call TrajItem:getTrajItem(l_tTraj,j)
+              // scan for the TCP
+              if l_tTraj.nTcpAction==1
+                call listAdd("  -TCP ON ")
+              elseIf l_tTraj.nTcpAction==2
+                call listAdd("  -TCP OFF ")
+              endIf
+              for k=0 to size(l_tTraj.iInstr)-1
+                if l_tTraj.iInstr[k].sType!=""
+                  l_sData=l_tTraj.iInstr[k].sData
+                  l_sType=l_tTraj.iInstr[k].sType
+                  call saveInputOutput:replaceIO(l_sData,l_sType,l_sData)
+                  call listAdd("   -"+l_sType+" "+l_sData)
+                endIf
+              endFor
+            endFor
+          endIf
+        elseIf l_iEvent.sType=="SUB"
+          // SUB
+          call sub:load(l_iEvent.sData,l_nResult)
+          if l_nResult==0
+            call sub:getProgItem(l_pProg,l_iEvent.sData)
+            l_nSizeItem=size(l_pProg.iEvent)
+            for j=0 to l_nSizeItem-1
+              if l_pProg.iEvent[j].sType!=""
+                l_sData=l_pProg.iEvent[j].sData
+                l_sType=l_pProg.iEvent[j].sType
+                call saveInputOutput:replaceIO(l_sData,l_sType,l_sData)
+                call listAdd("  -"+l_sType+" "+l_sData)
+              endIf
+            endFor
+          endIf
+        endIf
+      endIf
+    else
+      // delete empty space
+      call prog:deleteItem(i,l_nResult)
+      // recovery
+      call prog:getSizeItem(l_nSize)
+      i=i-1
+    endIf
+  endFor
+  //
+  use:bUseRefresh=true
+end]]></Code>
+  </Program>
+</Programs>

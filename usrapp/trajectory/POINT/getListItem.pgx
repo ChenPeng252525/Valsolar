@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="getListItem" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nIndex" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_tTrsf" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="6" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // define the item to show in the edit page Traj
+  // customize an array and copy to x_sItem...
+  //
+  // see other traj as example
+  // 0 > appro
+  // 1 > point
+  // 2 > depart
+  // take it
+  switch pEditPoint.tData[x_nIndex].nType
+    case 0
+      l_sEvent="appro  "
+    break
+    case 1
+      l_sEvent="coord  "
+    break
+    case 2
+      l_sEvent="depart "
+    break
+  endSwitch
+  l_tTrsf=pEditPoint.tData[x_nIndex].pPoint.trsf
+  // show them
+  l_sItem[0]=(l_sEvent+" X > "+toString(".2",l_tTrsf.x))
+  l_sItem[1]=(l_sEvent+" Y > "+toString(".2",l_tTrsf.y))
+  l_sItem[2]=(l_sEvent+" Z > "+toString(".2",l_tTrsf.z))
+  l_sItem[3]=(l_sEvent+"RX > "+toString(".2",l_tTrsf.rx))
+  l_sItem[4]=(l_sEvent+"RY > "+toString(".2",l_tTrsf.ry))
+  l_sItem[5]=(l_sEvent+"RZ > "+toString(".2",l_tTrsf.rz))
+  // look for intermediate point
+  call use:stringCopy(l_sItem,x_sItem)
+end]]></Code>
+  </Program>
+</Programs>

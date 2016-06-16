@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="message" access="public">
+    <Description><![CDATA[English IF message]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="message" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // lenght of message
+  //
+  switch index
+    case 0
+      message="你要进入:"
+    break
+    case 1
+      message="< IF 向导 >"
+    break
+    case 2
+      message="选择条件类型"
+    break
+    case 3
+      message="选择输入"
+    break
+    case 4
+      message="选择输出"
+    break
+    case 5
+      message="选择EMAP输入"
+    break
+    case 6
+      message="选择运行指令的方式"
+    break
+    case 7
+      message="选择指令来关联:"
+    break
+    case 8
+      message="从列表中选择: "
+    break
+  endSwitch
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

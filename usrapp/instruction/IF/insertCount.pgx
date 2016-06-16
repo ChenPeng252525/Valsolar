@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertCount" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSizeList" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItemList" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nMode" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  x_sItem=""
+  // COUNT
+  call NUM:getSize(l_nSizeList)
+  l_sItem="NUM "
+  l_nSize=0
+  //
+  // create the list
+  //
+  call use:setSizeList(21,0,17,10)
+  call use:listcreate(l_sItem)
+  // insert in the list
+  for i=0 to l_nSizeList-1
+    call NUM:get(l_sItemList,i)
+    call NUM:isActive(l_bActive,l_sItemList)
+    if l_bActive
+      call use:listadd(l_sItemList)
+    endIf
+  endFor
+  call use:listredraw(0)
+  // display the actual item
+  call use:type(2,12,l_sItem)
+  call use:clear(0,13)
+  call language:message(l_sMessage,63)
+  call use:typeCenter(13,l_sMessage,40,true)
+  do
+    // get the key
+    l_nKey=get()
+    // get one input from the list
+    call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    if l_nKey==255
+      return
+    endIf
+  until l_nKey==270
+  // check if an item has been selected
+  if l_sEvent==""
+    return
+  endIf
+  // compose the instruction
+  x_sItem=l_sItem+l_sEvent
+  // display the actual item
+  call use:type(2,12,x_sItem)
+  // Select the operator
+  call language:message(l_sMessage,110)
+  call use:questionDialog(l_sMessage,saveInOut:sOperator,i)
+  // compose the istruction
+  if i>=1 and i<=size(saveInOut:sOperator)
+    x_sItem=x_sItem+saveInOut:sOperator[i-1]
+  else
+    // escape
+    x_sItem=""
+    return
+  endIf
+  // modify the actual item
+  call use:type(2,12,x_sItem)
+  // insert a value
+  call language:message(l_sMessage,112)
+  // get the yes_no button Key
+  call language:getYesNo(l_sButton)
+  // ask the question
+  call use:yes_no(l_sMessage,l_sButton,l_bYes)
+  // check it
+  if l_bYes
+    //
+    // reuse the operator
+    //
+    // create the list
+    call NUM:getSize(l_nSizeList)
+    call getType(l_sItem)
+    call use:setSizeList(21,0,17,10)
+    call use:listcreate(l_sItem)
+    // insert in the list
+    for i=0 to l_nSizeList-1
+      call NUM:get(l_sItemList,i)
+      call NUM:isActive(l_bActive,l_sItemList)
+      if l_bActive
+        call use:listadd(l_sItemList)
+      endIf
+    endFor
+    call use:listredraw(0)
+    do
+      // get the key
+      l_nKey=get()
+      // get one input from the list
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+      if l_nKey==255
+        return
+      endIf
+    until l_nKey==270
+    // check if an item has been selected
+    if l_sEvent==""
+      x_sItem=""
+      return
+    else
+      x_sItem=x_sItem+"NUM "+ l_sEvent
+    endIf
+  else
+    // use a value
+    call use:changeValue(l_nValue,-10000,10000,2+len(x_sItem),12,l_sEmpty)
+    x_sItem=x_sItem+toString("",l_nValue)
+  endIf
+  // validate
+  if use:bUseEscape
+    x_sItem=""
+  endIf
+  // 
+end]]></Code>
+  </Program>
+</Programs>

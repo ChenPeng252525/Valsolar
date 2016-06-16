@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="check_cylinder" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_bCheck" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_pNewOrigin" type="point" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // CHECK IF THE TOOL IS INSIDE
+  //
+  x_bCheck=false
+  //
+  if bCreate_cylind
+    l_pPoint=here(x_tTool,fCube)
+    // check if inside
+    if l_pPoint.trsf.z>=-0.1 and l_pPoint.trsf.z<=nDistanceZ_cyl
+      // inside the cylinder
+      l_pNewOrigin=compose(pOrigin_cylind,world,{0,0,l_pPoint.trsf.z,0,0,0})
+      if distance(l_pNewOrigin,l_pPoint)<=nRadius_cyl
+        // is inside
+        x_bCheck=true
+      endIf
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

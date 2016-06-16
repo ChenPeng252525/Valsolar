@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Data/2">
+  <Datas>
+    <Data name="tTrajPallet" access="private" xsi:type="array" type="TrajPallet" size="1">
+      <Value key="0">
+        <Field name="tData" xsi:type="array" type="TrajPointItem" size="1">
+          <Value key="0">
+            <Field name="tSuper" xsi:type="array" type="TrajectoryItem" size="1">
+              <Value key="0">
+                <Field name="distance" xsi:type="array" type="num" size="1" />
+                <Field name="moveType" xsi:type="array" type="num" size="1" />
+                <Field name="nTime" xsi:type="array" type="num" size="1" />
+                <Field name="nStop" xsi:type="array" type="num" size="1" />
+                <Field name="nTcpAction" xsi:type="array" type="num" size="1" />
+                <Field name="comment" xsi:type="array" type="string" size="1" />
+                <Field name="toStop" xsi:type="array" type="bool" size="1" />
+                <Field name="nom_speed" xsi:type="array" type="mdesc" size="1">
+                  <Value key="0" tmax="300" rmax="9999" leave="30" reach="30" />
+                </Field>
+                <Field name="iInstr" xsi:type="array" type="InstrItem" size="3">
+                  <Value key="0">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="1">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                  <Value key="2">
+                    <Field name="sType" xsi:type="array" type="string" size="1" />
+                    <Field name="sData" xsi:type="array" type="string" size="1" />
+                  </Value>
+                </Field>
+                <Field name="nMoveId" xsi:type="array" type="num" size="1" />
+              </Value>
+            </Field>
+            <Field name="pPoint" xsi:type="array" type="pointRx" size="1">
+              <Value key="0" fatherId="tTrajPallet[0].fFrame[0]" />
+            </Field>
+            <Field name="nType" xsi:type="array" type="num" size="1" />
+          </Value>
+        </Field>
+        <Field name="fFrame" xsi:type="array" type="frame" size="1">
+          <Value key="0" fatherId="tTrajPallet[0].fReference[0]" />
+        </Field>
+        <Field name="nIndexTool" xsi:type="array" type="num" size="1" />
+        <Field name="sID" xsi:type="array" type="string" size="1" />
+        <Field name="trAppro" xsi:type="array" type="trsf" size="2">
+          <Value key="0" z="-50" />
+          <Value key="1" z="-50" />
+        </Field>
+        <Field name="trDepart" xsi:type="array" type="trsf" size="2">
+          <Value key="0" z="-50" />
+          <Value key="1" z="-50" />
+        </Field>
+        <Field name="nX" xsi:type="array" type="num" size="1">
+          <Value key="0" value="1" />
+        </Field>
+        <Field name="nY" xsi:type="array" type="num" size="1">
+          <Value key="0" value="1" />
+        </Field>
+        <Field name="nZ" xsi:type="array" type="num" size="1">
+          <Value key="0" value="1" />
+        </Field>
+        <Field name="nIndex" xsi:type="array" type="num" size="1">
+          <Value key="0" value="1" />
+        </Field>
+        <Field name="nDistanceXYZ" xsi:type="array" type="num" size="3">
+          <Value key="0" value="1" />
+          <Value key="1" value="1" />
+          <Value key="2" value="1" />
+        </Field>
+        <Field name="sAction" xsi:type="array" type="string" size="1" />
+        <Field name="pO" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="tTrajPallet[0].fReference[0]" />
+        </Field>
+        <Field name="pX" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="tTrajPallet[0].fReference[0]" />
+        </Field>
+        <Field name="pY" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="tTrajPallet[0].fReference[0]" />
+        </Field>
+        <Field name="pZ" xsi:type="array" type="pointRx" size="1">
+          <Value key="0" fatherId="tTrajPallet[0].fReference[0]" />
+        </Field>
+        <Field name="nSpeedApproach" xsi:type="array" type="num" size="1">
+          <Value key="0" value="300" />
+        </Field>
+        <Field name="nSpeedDepart" xsi:type="array" type="num" size="1">
+          <Value key="0" value="300" />
+        </Field>
+        <Field name="nIndexFrame" xsi:type="array" type="num" size="1" />
+        <Field name="fReference" xsi:type="array" type="frame" size="1">
+          <Value key="0" fatherId="world[0]" />
+        </Field>
+      </Value>
+    </Data>
+    <Data name="bButton" access="private" xsi:type="array" type="bool" size="8">
+      <Value key="1" value="true" />
+      <Value key="4" value="true" />
+      <Value key="5" value="true" />
+      <Value key="6" value="true" />
+      <Value key="7" value="true" />
+    </Data>
+    <Data name="bExit" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="bLarge" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="bOnActionLine" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="bToSave" access="private" xsi:type="array" type="bool" size="1" />
+    <Data name="nIndex" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nKey" access="private" xsi:type="array" type="num" size="1">
+      <Value key="0" value="-1" />
+    </Data>
+    <Data name="nPosition" access="private" xsi:type="array" type="num" size="1">
+      <Value key="0" value="1" />
+    </Data>
+    <Data name="nRefresh" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="nTime" access="private" xsi:type="array" type="num" size="1">
+      <Value key="0" value="2" />
+    </Data>
+    <Data name="pNull" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="pO" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="pOrigin" access="private" xsi:type="array" type="pointRx" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+    <Data name="sAction" access="private" xsi:type="array" type="string" size="1" />
+    <Data name="sEvent" access="private" xsi:type="array" type="string" size="1">
+      <Value key="0" value="on Layer 1&gt;" />
+    </Data>
+    <Data name="sItems" access="public" xsi:type="array" type="string" size="1">
+      <Value key="0" value="test" />
+    </Data>
+    <Data name="sList" access="private" xsi:type="array" type="string" size="8">
+      <Value key="0" value="position &gt; 2/1" />
+      <Value key="1" value="pos.  X  &gt; 1/1" />
+      <Value key="2" value="pos.  Y  &gt; 1/1" />
+      <Value key="3" value="pos.  Z  &gt; 2/1" />
+      <Value key="4" value="  dX     &gt; 1  " />
+      <Value key="5" value="  dY     &gt; 1  " />
+      <Value key="6" value="  dZ     &gt; 1  " />
+      <Value key="7" value="on Layer 1&gt;" />
+    </Data>
+    <Data name="sMenu" access="private" xsi:type="array" type="string" size="8">
+      <Value key="1" value="Edit Pallet" />
+      <Value key="4" value="Wizard" />
+      <Value key="5" value="Reset" />
+      <Value key="6" value="Back" />
+      <Value key="7" value="Next" />
+    </Data>
+    <Data name="sPalletName" access="private" xsi:type="array" type="string" size="1">
+      <Value key="0" value="test" />
+    </Data>
+    <Data name="nView" access="private" xsi:type="array" type="num" size="1" />
+    <Data name="fFather" access="private" xsi:type="array" type="frame" size="1">
+      <Value key="0" fatherId="world[0]" />
+    </Data>
+  </Datas>
+</Database>

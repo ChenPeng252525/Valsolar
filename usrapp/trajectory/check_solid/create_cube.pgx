@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="create_cube" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_pOrigin" type="point" xsi:type="element" />
+      <Parameter name="x_pPointX" type="point" xsi:type="element" />
+      <Parameter name="x_pPointY" type="point" xsi:type="element" />
+      <Parameter name="x_nDistanceZ" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_trsfCopy" type="trsf" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // build the cube
+  // Origin
+  if setFrame(x_pOrigin,x_pPointX,x_pPointY,fCube)==0
+    bCreate_cube=true
+  endIf
+  // Distance x y z
+  // X AXES
+  l_pPoint.trsf=position(x_pPointX,fCube)
+  nDistanceX_cube=l_pPoint.trsf.x
+  // Y AXES
+  l_pPoint.trsf=position(x_pPointY,fCube)
+  nDistanceY_cube=l_pPoint.trsf.y
+  // Z distance
+  nDistanceZ_cube=x_nDistanceZ
+end]]></Code>
+  </Program>
+</Programs>

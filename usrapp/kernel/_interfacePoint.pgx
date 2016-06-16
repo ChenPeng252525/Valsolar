@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_interfacePoint" access="private" >
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // acces to the point interface
+  //
+  if isKeyPressed(289) and (taskStatus("Point")==-1 or taskStatus("Point")>1)
+    if (use:nPage>=100000 and use:nPage<=100009) or (use:nPage>=10000 and use:nPage<=10009)
+      // TODO
+      l_sMessage="Please exit from the page editor before enter in page POINT...."
+      popUpMsg(l_sMessage)
+      delay(3)
+    else
+      // SUSPEND THE TASK INTERFACE
+      taskKill("Point")
+      taskSuspend("Interface")
+      // POINT INTERFACE
+      taskCreate "Point",50,point_interface:main()
+      bTaskPoint=true
+      use:bUseRefresh=true
+    endIf
+  elseIf (taskStatus("Interface")==0 and taskStatus("Point")==-1) and bTaskPoint
+    // TASK RESUME
+    bTaskPoint=false
+    taskResume("Interface",0)
+    use:bUseRefresh=true
+  endIf
+  // release
+  delay(0)
+end]]></Code>
+  </Program>
+</Programs>

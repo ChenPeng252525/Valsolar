@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Locals>
+      <Local name="l_bSave" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bOverRide" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  call onStart(l_bContinue)
+  if l_bContinue
+    // LOOP UNTIL nKey=255
+    do
+      // GOTO
+      call goTo(nIndex,l_bUnreached)
+      if l_bUnreached
+        // show the message out of range
+        call language:message(l_sMessage,-5)
+        call use:timerDialog(l_sMessage,1)
+        l_bUnreached=false
+      endIf
+      //
+      call refresh()
+      nKey=getKey()
+      call use:listevent(nKey,nIndex,sEvent)
+      nView=use:nView
+      nSelect=nIndex
+      //
+      // OVERRIDE NORMAL FUNCTIONALITY-> POLYMORPHISM
+      //
+      if nKey>=271 and nKey<=278
+        if sMenuUser[nKey-271]!=""
+          call trajType:onFunctionView(nIndex,sEvent,nKey)
+          l_bOverRide=true
+          call buildList()
+          l_bSave=true
+        endIf
+      endIf
+      if !l_bOverRide
+        // DEFAULT FUNCTIONALITY
+        switch nKey
+          case 259
+            // TAB
+            bLarge=!bLarge
+            call use:setView(bLarge)
+          break
+          case 263
+            // backSpace rename
+            call onBackEvent(l_bSave)
+          break
+          case 32
+            // space to edit Action
+            call onSpaceEvent(l_bSave)
+          break
+          case 271
+            call onF1Event()
+          break
+          case 272
+            //
+            call onF2Event()
+          break
+          case 273
+            // GUN SELECTION
+            call onF3Event(l_bContinue,l_bSave)
+          break
+          case 274
+            // PASTE
+            call onF4Event(l_bSave)
+          break
+          case 275
+            // MARK
+            call onF5Event()
+          break
+          // DELETE
+          case 276
+            call onF6Event(l_bSave)
+          break
+          case 277
+            // INSERT
+            call onF7Event(l_bSave)
+          break
+          case 278
+            // SAVE
+            call onF8Event(l_bSave)
+          break
+          case 270
+            // GO TO EDIT TRAJ
+            call onEnterEvent(l_bSave)
+          break
+        endSwitch
+        // release the resource
+      endIf
+      l_bOverRide=false
+      // check the index
+      call trajType:getSizeItem(false,l_nSize)
+      if nIndex>=l_nSize
+        // refresh
+        nIndex=nSelect=l_nSize-1
+        nView=0
+        use:bUseRefresh=true
+      endIf
+      //
+      if nKey==255 or !l_bContinue
+        // on Exit
+        call onExit(l_bSave)
+      endIf
+      // release
+      delay(0)
+    until bExit
+  endIf
+  // reset the bit
+  bExit=false
+end]]></Code>
+  </Program>
+</Programs>

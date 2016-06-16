@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF1Event">
+    <Locals>
+      <Local name="l_NoBox" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bStop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sDynamicStu" type="string" xsi:type="array" size="3" />
+      <Local name="l_n" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    if cycleStatus:bIsHome
+       call language2:message(l_sMessage,58)
+       popUpMsg(l_sMessage)
+      return 
+    endIf 
+    call set:_IsUseingBox(l_NoBox)
+    if l_NoBox==true
+           call language2:message(l_sMessage,59)
+       popUpMsg(l_sMessage)
+      return 
+    endIf 
+    if workingMode( )==1 and !cycleStatus:bCycle  and !cycleStatus:bIsHome and !l_NoBox 
+      //      call use:timerDialog("请选择夹爪号,默认为1",2)
+      //      call _setToolType() 
+      taskCreate "GOHOME",100,set:GOHOME() 
+      wait(taskStatus("GOHOME")==1)
+      cls()
+      
+      cycleStatus:bHoming=true 
+      l_sDynamicStu[0]=">"
+      l_sDynamicStu[1]=">>"
+      l_sDynamicStu[2]=">>>"
+      set:sHomingStatus=""
+      do
+        // set the menu
+        //call use:setMenu(sMenu,true,-1)
+        call use:type(32,13,"STOP ")
+        nKey=getKey()
+        // REFRESH
+        if nKey==277
+          stopMove() 
+          taskKill("GOHOME")
+          wait(taskStatus("GOHOME")==-1)
+          resetMotion( )
+          l_bStop=true 
+        endIf 
+          call language2:message(l_sMessage,60)
+        call use:timerDialog(l_sMessage+l_sDynamicStu[l_n]+"#"+set:sHomingStatus,0.5)
+        if l_n==2
+          l_n=0
+        else 
+          l_n=l_n+1
+        endIf 
+        delay(0.3)
+      until l_bStop or  cycleStatus:bHoming==false  or cycleStatus:bIsHome 
+      cycleStatus:bHoming=false 
+      use:bUseRefresh =true 
+      cls() 
+    endIf 
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

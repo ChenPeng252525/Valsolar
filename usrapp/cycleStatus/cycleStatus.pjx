@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.5" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="addAction.pgx" />
+    <Program file="addActionTime.pgx" />
+    <Program file="addTraj.pgx" />
+    <Program file="checkTollerance.pgx" />
+    <Program file="getAction.pgx" />
+    <Program file="getLastId.pgx" />
+    <Program file="getSizeAction.pgx" />
+    <Program file="getTraj.pgx" />
+    <Program file="init.pgx" />
+    <Program file="init_logAction.pgx" />
+    <Program file="isActionEmpty.pgx" />
+    <Program file="printLog.pgx" />
+    <Program file="putInstr_Traj.pgx" />
+    <Program file="recordPowerDown.pgx" />
+    <Program file="removeAction.pgx" />
+    <Program file="removeAllInstr.pgx" />
+    <Program file="removeTraj.pgx" />
+  </Programs>
+  <Database>
+    <Data file="cycleStatus.dtx" />
+  </Database>
+  <Libraries>
+    <Library alias="tcp" path="Disk://kernel/tool/tool.pjx" />
+    <Library alias="saveData" path="Disk://saveData/saveData.pjx" />
+  </Libraries>
+  <Types>
+    <Type name="TrajectoryItem" path="Disk://kernel/template/TrajectoryItem/TrajectoryItem.pjx" />
+    <Type name="ActionItem" path="Disk://kernel/template/ActionItem/ActionItem.pjx" />
+    <Type name="InstrItem" path="Disk://kernel/template/InstrItem/InstrItem.pjx" />
+    <Type name="progItem" path="Disk://kernel/template/progItem/progItem.pjx" />
+    <Type name="Trajectory" path="Disk://kernel/template/Trajectory/Trajectory.pjx" />
+  </Types>
+</Project>

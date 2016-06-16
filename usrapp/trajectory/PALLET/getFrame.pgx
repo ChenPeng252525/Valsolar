@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="getFrame" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_fFrame" type="frame" xsi:type="array" use="reference" />
+      <Parameter name="x_bCycle" type="bool" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  if x_bCycle
+    x_fFrame.trsf=position(pt:tTraj[sTrajCycle].fFrame,world)
+  else
+    // update the frame
+    x_fFrame.trsf=position(pEditPoint.fFrame,world)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_cycle" access="private" >
+    <Locals>
+      <Local name="bActive" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bTollerance" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  bActive=false
+  //
+  // STOP CYCLE
+  //
+  if cycleStatus:bToStop
+    stopMove()
+    if cycleStatus:bCycle
+      call _stopCycle()
+    else
+      // SIMULATION
+      if cycleStatus:bSimulation
+        call _stopSimul()
+      endIf
+    endIf
+    //  RESET
+    cycleStatus:bToStop=false
+    cycleStatus:nToSuperV=-1
+    //
+    // HOMING
+    //
+  elseIf cycleStatus:bToHome
+    cycleStatus:bToHome=false
+    if watch(cycleStatus:bSimulation==false and cycleStatus:bCycle==false,3)
+      cycleStatus:sTraj=""
+      cycleStatus:iToSuperV.sType="HOME"
+      cycleStatus:iToSuperV.sData="simul"
+      call _startSimul(cycleStatus:iToSuperV)
+    endIf
+    //
+    // END CYCLE
+    //
+  elseIf cycleStatus:bToEnd==true
+    cycleStatus:bToEnd=false
+    // end the cycle
+    if cycleStatus:bCycle and !cycleStatus:bEnding and esStatus()!=2
+      logMsg("[KERNEL] CYCLE:Ending Cycle")
+      cycleStatus:bEnding=true
+      call OnEvent:OnCycleEvent(4)
+    endIf
+    //
+    // START CYCLE
+    //
+  elseIf cycleStatus:bToStart==true
+    cycleStatus:bToStart=false
+    if taskStatus("Cycle")==-1
+      call _startCycle()
+      logMsg("[KERNEL] SUPERVISOR:Cycle>Start cycle")
+    endIf
+    // 
+    // PAUSE / RESUME
+    //
+  elseIf cycleStatus:bToPause
+    cycleStatus:bToPause=false
+    // PAUSE
+    if !cycleStatus:bPause
+      // pause the robot
+      cycleStatus:bPause=true
+      // stop the motion
+      stopMove()
+      if isPowered()
+        call cycleStatus:recordPowerDown()
+      endIf
+      logMsg("[KERNEL] CYCLE:Pause the cycle")
+      // onEvent
+      call OnEvent:OnCycleEvent(2)
+      // resume the cycle after a pause
+    elseIf cycleStatus:bPause==true and cycleStatus:bMoveStopped==true and esStatus()!=2
+      // check the tollerance if not do nothing
+      call cycleStatus:checkTollerance(l_bTollerance)
+      if (!isPowered() and !l_bTollerance and (cycleStatus:nWorkingMode==4 or cycleStatus:nWorkingMode==3))
+        logMsg("[KERNEL] CYCLE:Error on Tollerance check during RESTART")
+      else
+        logMsg("[KERNEL] CYCLE:Restart the cycle")
+        // on Event 
+        call OnEvent:OnCycleEvent(3)
+        // restart, reset the bit for the pause
+        cycleStatus:bPause=false
+      endIf
+    endIf
+  else
+    // check the auto_ON
+    if cycleStatus:bAutoON
+      cycleStatus:bAutoON=false
+      call cycle_autoON(l_bContinue)
+    endIf
+    // SWITCH
+    switch cycleStatus:nToSuperV
+      case 0
+        //
+      break
+      case 1
+        //
+      break
+      case 2
+        //
+      break
+      case 3
+        //
+      break
+      case 4
+        // OUT OF TIME
+        call language:message(l_sMessage,230)
+        popUpMsg(l_sMessage)
+        if cycleStatus:bCycle
+          //STOP CYCLE
+          call _stopCycle()
+        else
+          if cycleStatus:bSimulation
+            // STOP SIMULATION
+            call _stopSimul()
+          endIf
+        endIf
+        bActive=true
+      break
+      case 6
+        // PAUSE CYCLE
+        call OnEvent:pauseCycle()
+        bActive=true
+      break
+      case 7
+        // RESUME CYCLE
+        call OnEvent:resumeCycle()
+        bActive=true
+      break
+      default
+      break
+    endSwitch
+  endIf
+  // release
+  if bActive
+    cycleStatus:nToSuperV=-1
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

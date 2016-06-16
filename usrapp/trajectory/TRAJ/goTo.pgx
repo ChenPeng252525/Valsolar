@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="goTo" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_tTool" type="tool" xsi:type="element" />
+      <Parameter name="x_mDesc" type="mdesc" xsi:type="element" />
+      <Parameter name="x_nMoveType" type="num" xsi:type="element" />
+      <Parameter name="x_bUnreached" type="bool" xsi:type="array" use="reference" />
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_pTrsf" type="point" xsi:type="array" size="1" />
+      <Local name="l_bInside" type="bool" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_mSpeed" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_jJoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="2" />
+      <Local name="l_bUnreach" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the moveType
+  call findMove(x_nIndex,x_tTool,x_nMoveType)
+  if isEmpty()
+    // get the POINT
+    call getPoint(l_pPoint,false,x_nIndex)
+    pToGo=l_pPoint
+    pToGo[1]=l_pPoint[1]
+    l_pHere=here(x_tTool,pEditPoint.fFrame)
+    // step by step motion
+    if x_nMoveType==0
+      // or is not in range
+      movej(pToGo,x_tTool,x_mDesc)
+    elseIf x_nMoveType==1
+      movel(pToGo,x_tTool,x_mDesc)
+    elseIf x_nMoveType>2
+      // inside the trajectory
+      // take the percentage arcInterpo
+      call getPoint(l_pPoint,false,x_nIndex-1)
+      call isReachable(pToGo,x_tTool,l_bUnreach)
+      if !l_bUnreach and pointToJoint(x_tTool,herej(),l_pPoint,l_jJoint)
+        pToGo[1].trsf=interpolateC(position(l_pPoint,pEditPoint.fFrame),pToGo[1].trsf,pToGo.trsf,(1-(2-x_nMoveType))/2)
+      endIf
+    elseIf x_nMoveType<=-2
+      // move circular backward
+      call getPoint(l_pPoint,false,x_nIndex+1)
+      call isReachable(l_pPoint,x_tTool,l_bUnreach)
+      if !l_bUnreach
+        // look for percentage value need
+        if x_nMoveType==-2
+          pToGo[1].trsf=position(l_pPoint[1],pEditPoint.fFrame)
+        else
+          pToGo[1].trsf=interpolateC(pToGo.trsf,position(l_pPoint[1],pEditPoint.fFrame),position(l_pPoint,pEditPoint.fFrame),(abs(x_nMoveType+2))/2)
+        endIf
+      endIf
+    endIf
+    if l_bUnreach
+      // get the message point is not reachable
+      call language:message(l_sMessage,-5)
+      call use:type(0,12,"!!! "+l_sMessage)
+    elseIf x_nMoveType!=0 and x_nMoveType!=1
+      // CIRCULAR MOVE
+      movec(pToGo[1],pToGo,x_tTool,x_mDesc)  
+    endIf
+  endIf
+end
+]]></Code>
+  </Program>
+</Programs>

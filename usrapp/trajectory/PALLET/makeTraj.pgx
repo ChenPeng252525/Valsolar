@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="makeTraj" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nDistance" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_nMoveId" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_sType" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_aAction" type="ActionItem" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nomSpeed" type="mdesc" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // take the TOOL
+  call tcp:getTool(l_tTool,pt:tTraj[sTrajCycle].nIndexTool)
+  // the maximum size
+  call getSizeItem(true,l_nSize)
+  //
+  // for all of my traj cyclePoints move the robot
+  //
+  // one element
+  resize(tTraj.tSuper,1,1)
+  tTraj.tSuper=pt:tTraj[sTrajCycle].tData[pt:tTraj[sTrajCycle].nIndex].tSuper
+  tTraj.tSuper.comment="["+toString("2",pt:tTraj[sTrajCycle].nIndex+1)+"/"+toString("2",size(pt:tTraj[sTrajCycle].tData))+"] "+tTraj.tSuper.comment
+  tTraj.sID="PALLET "+pt:tTraj[sTrajCycle].sID
+  call cycleStatus:addTraj(tTraj)
+  //
+  // get the point info
+  //
+  l_nIndex=pt:tTraj[sTrajCycle].nIndex
+  l_tTraj=pt:tTraj[sTrajCycle].tData[l_nIndex].tSuper
+  call getPoint(l_pPoint,true,l_nIndex)
+  //
+  // put the move in the stack
+  //
+  // go to the appro
+  for i=0 to size(pt:tTraj[sTrajCycle].trAppro)-1
+    if l_tTraj.moveType==0 and i==0
+      // or is not in range
+      movej(appro(l_pPoint,pt:tTraj[sTrajCycle].trAppro[i]),l_tTool,l_tTraj.nom_speed)
+    elseIf i==0
+      movel(appro(l_pPoint,pt:tTraj[sTrajCycle].trAppro[i]),l_tTool,l_tTraj.nom_speed)
+    elseIf i>0 and pt:tTraj[sTrajCycle].trAppro[i]!=pt:tTraj[sTrajCycle].trAppro[i-1]
+      l_nomSpeed=l_tTraj.nom_speed
+      l_nomSpeed.tvel=pt:tTraj[sTrajCycle].nSpeedApproach
+      l_nomSpeed.leave=l_nomSpeed.reach=5
+      movel(appro(l_pPoint,pt:tTraj[sTrajCycle].trAppro[i]),l_tTool,l_nomSpeed)
+    endIf
+  endFor
+  //
+  // get the distance in percentage
+  call getDistance(l_tTool,l_nDistance,true,l_nIndex)
+  //
+  // give to the traj library the percentage distance
+  //
+  if l_tTraj.toStop
+    l_tTraj.nom_speed.blend=off
+  endIf
+  // send the action information to cycle
+  l_tTraj.nom_speed.tvel=pt:tTraj[sTrajCycle].nSpeedDepart
+  l_nMoveId=movel(l_pPoint,l_tTool,l_tTraj.nom_speed)
+  l_aAction.nDistance=l_nDistance
+  l_aAction.nPointId=0
+  l_aAction.nMoveId=l_nMoveId
+  l_aAction.sIdTraj="PALLET "+pt:tTraj[sTrajCycle].sID
+  call cycleStatus:putInstr_Traj(l_aAction,l_tTraj,pt:tTraj[sTrajCycle].nIndexTool,1)
+  // there is a waitEndMove 
+  if l_tTraj.toStop
+    waitEndMove()
+    delay(l_tTraj.nStop)
+    // wait all the action has been done
+    wait(cycleStatus:bActionRunning==false)
+  endIf
+  // update
+  l_tTraj=pt:tTraj[sTrajCycle].tData[l_nIndex].tSuper
+  //  depart
+  for i=0 to size(pt:tTraj[sTrajCycle].trDepart)-1
+    l_nomSpeed=l_tTraj.nom_speed
+    l_nomSpeed.tvel=pt:tTraj[sTrajCycle].nSpeedDepart
+    if pt:tTraj[sTrajCycle].trDepart[0]!=pt:tTraj[sTrajCycle].trDepart[1]
+      l_nomSpeed.leave=l_nomSpeed.reach=5
+    endIf
+    movel(appro(l_pPoint,pt:tTraj[sTrajCycle].trDepart[i]),l_tTool,l_nomSpeed)
+  endFor
+  // calculate the offset
+  l_nDistance=distance(l_pPoint,appro(l_pPoint,pt:tTraj[sTrajCycle].trDepart[i-1]))
+  // use a 10 % of tollerance
+  if l_nDistance!=0
+    l_nDistance=1-l_tTraj.nom_speed.leave/l_nDistance-0.1
+  else
+    l_nDistance=1-0.1
+  endIf
+  //
+  // ACTION AFTER MOVE
+  //
+  call loadAction(x_sItem,l_nDistance)
+end]]></Code>
+  </Program>
+</Programs>

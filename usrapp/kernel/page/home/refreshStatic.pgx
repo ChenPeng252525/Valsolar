@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="2" />
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="l_sSession" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the HOME page
+  //
+  use:nPage=10
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  // is on Cycle
+  if cycleStatus:bCycle
+    use:nPage=use:nPage+3
+  endIf
+  //
+  l_sMessage=sVersion
+  if saveData:language!="japanese"
+    // SET THE VIEW OF THE PAGE
+    call language:page(l_sMessage,use:nPage)
+    // define the menu
+    call use:stringToArray(l_sMessage,sMenu)
+  else
+    // japanese use the array for the menu
+    call language:page(sMenu8,use:nPage)
+    call use:stringCopy(sMenu8,sMenu)
+  endIf
+  // set the menu
+  call use:setMenu(sMenu,false,3)
+  call use:getMenu(sMenu,bButton)
+  // set the F8 message as <-
+  if saveData:mode==0 and !saveData:bMultiSession
+    call use:typeMenu(8," ")
+    bButton[7]=false
+  elseIf cycleStatus:bCycle==false and cycleStatus:bSimulation==false
+    call use:typeMenu(8," <-")
+  elseIf cycleStatus:bCycle==true or cycleStatus:bSimulation==true
+    call use:typeMenu(8," ")
+  endIf
+  //
+  // show the profile
+  //
+  call language:message(l_sMessage,5)
+  call language:message(l_sMessage[1],limit(saveData:mode,0,2))
+  l_sMessage=l_sMessage+":"+l_sMessage[1]
+  call use:type(0,0,l_sMessage)
+  //
+  // show the session name
+  //
+  call saveData:getSession(l_sSession)
+  if l_sSession!=""
+    // start on the right
+    l_sSession="Session: "+l_sSession
+    call use:type(40-len(l_sSession),1,l_sSession)
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

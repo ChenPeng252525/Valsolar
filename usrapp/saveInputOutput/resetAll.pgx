@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="resetAll" access="public">
+    <Locals>
+      <Local name="l_sKey" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // init all the IN OUT
+  //
+  // aCOUNT
+  l_sKey=first(aCount)
+  while l_sKey!=""
+    delete(aCount[l_sKey])
+    l_sKey=first(aCount)
+  endWhile
+  // aINPUT
+  l_sKey=first(aInput)
+  while l_sKey!=""
+    delete(aInput[l_sKey])
+    l_sKey=first(aInput)
+  endWhile
+  // aOUTPUT
+  l_sKey=first(aOutput)
+  while l_sKey!=""
+    delete(aOutput[l_sKey])
+    l_sKey=first(aOutput)
+  endWhile
+  // dINPUT
+  l_sKey=first(dInput)
+  while l_sKey!=""
+    delete(dInput[l_sKey])
+    l_sKey=first(dInput)
+  endWhile
+  // dOUTPUT
+  l_sKey=first(dOutput)
+  while l_sKey!=""
+    delete(dOutput[l_sKey])
+    l_sKey=first(dOutput)
+  endWhile
+  // USER IO
+  // DIO
+  resize(dInUser,1,1)
+  dioLink(dInUser,dNull)
+  resize(dOutUser,1,1)
+  dioLink(dOutUser,dNull)
+  resize(aUser,1,10)
+  // AIO
+  for i=0 to 9
+    aioLink(aUser[i],aNull)
+  endFor
+  // save it
+  libSave()
+end]]></Code>
+  </Program>
+</Programs>

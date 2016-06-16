@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_run" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_pProgram" type="progItem" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nClock" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_pProg" type="progItem" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // START 
+  //
+  cycleStatus:nEvent=0
+  cycleStatus:nPoint=0
+  // refresh
+  cycleStatus:pCycleProg=l_pProg=x_pProgram
+  // check the cycle
+  if cycleStatus:bCycle
+    // print the actual program
+    call cycleStatus:printLog("[PROG "+l_pProg.sID+"]")
+  endIf
+  l_nSize=size(l_pProg.iEvent)
+  for i=0 to l_nSize-1
+    // wait pause false before doing the next instruction
+    wait(cycleStatus:bPause==false and isPowered() and cycleStatus:nWorkingStatus==0)
+    if l_pProg.iEvent[i].sType!=""
+      l_sEvent=l_pProg.iEvent[i].sType+" "+l_pProg.iEvent[i].sData
+      if saveData:bDebug
+        ? "ACTION READ,"+l_sEvent+",ID="+toString(".3",getMoveId())+","+toString(".3",clock()-cycleStatus:nTime)
+      endIf
+      call cycle_doEvent(l_pProg.iEvent[i],i)
+      // JUMP CALL USED
+      call cycle_isCallUse()
+      // GOTO USED
+      if cycleStatus:bGOTO
+        // terminate this and run the GOTO
+        i=l_nSize-1
+      endIf
+    endIf
+  endFor
+  // GOTO ...
+  if cycleStatus:bGOTO
+    // INIT
+    cycleStatus:bGOTO=false
+    call action_wait()
+    if cycleStatus:iToSuperV.sType=="PROG"
+      // run the GOTO FOR PROG
+      call prog:getProgItem(l_pProg,cycleStatus:iToSuperV.sData)
+      //use:bUseRefresh=true
+      call cycle_run(l_pProg)
+    else
+      call cycle_doEvent(cycleStatus:iToSuperV,0)
+      // JUMP CALL USED
+      call cycle_isCallUse()
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

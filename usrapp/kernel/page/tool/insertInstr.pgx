@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="insertInstr">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_iItem" type="InstrItem" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // TODO
+  call use:setSizeList(14,0,10,11)
+  call use:setView(false)
+  call use:listcreate("Select")
+  // insert the action on Point
+  call use:listadd(saveData:sInstrOnPoint)
+  call use:listupdate(0)
+  // SELECT THE ITEM
+  do
+    i=get()
+    call use:listevent(i,l_nIndex,l_sItem)
+  until i==255 or i==270
+  // copy
+  x_iItem.sType=l_sItem
+  // define it
+  if x_iItem.sType!="" and i==270
+    // load the instruction
+    call saveData:getPathInstr(x_iItem.sType,l_sPath)
+    // load the instruction
+    events:libLoad(l_sPath)
+    delay(0)
+    call events:onInsert(x_iItem.sData)
+    // insert the item
+    return
+  endIf
+  // NOT GOOD
+  x_iItem.sType=""
+  x_iItem.sData=""
+end]]></Code>
+  </Program>
+</Programs>

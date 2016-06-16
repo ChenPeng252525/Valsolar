@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onRun" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="l_sCondition" type="string" xsi:type="array" size="1" />
+      <Local name="l_bCheck" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nType" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOperator" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  if find(x_sItem," GOTO")!=-1
+    l_nType=0
+    l_nPos=find(x_sItem," GOTO")
+  else
+    if find(x_sItem," CALL")!=-1
+      l_nType=1
+      l_nPos=find(x_sItem," CALL")
+    endIf
+  endIf
+  // BUILD THE LINE
+  l_sCondition=left(x_sItem,l_nPos)
+  l_sItem=right(x_sItem,len(x_sItem)-l_nPos-len(" GOTO "))
+  l_nPos=find(l_sItem," ")
+  cycleStatus:sToShow=l_sItem
+  // Decompose to iToSuperV
+  if l_nPos!=-1
+    cycleStatus:iToSuperV.sType=left(l_sItem,l_nPos)
+    cycleStatus:iToSuperV.sData=right(l_sItem,len(l_sItem)-l_nPos-1)
+  endIf    
+  // search the Input or Output*
+  if find(left(l_sCondition,4),"IN ")!=-1
+    // DISABLE THE INPUT LINE
+    l_sCondition=right(l_sCondition,len(l_sCondition)-len(" IN"))
+  elseIf find(left(l_sCondition,4),"OUT ")!=-1
+    l_sCondition=right(l_sCondition,len(l_sCondition)-len(" OUT"))
+    l_nType=l_nType+10
+    //      elseIf find(left(l_sCondition,8),"EMAP IN ")!=-1
+    //        l_sCondition=right(l_sCondition,len(l_sCondition)-len(" EMAP IN"))
+    //        l_nType=l_nType+20
+    //      endIf
+  elseIf find(left(l_sCondition,6),"NUM ")!=-1
+    l_sCondition=right(l_sCondition,len(l_sCondition)-len(" NUM"))
+    l_nType=l_nType+30
+  endIf
+  //
+  switch l_nType
+    // GOTO INPUT
+    case 0
+      call checkIn(l_sCondition,l_bCheck)
+      if l_bCheck
+        // SET THE GOTO..
+        cycleStatus:bGOTO=true
+      endIf
+    break
+    // CALL INPUT
+    case 1
+      call checkIn(l_sCondition,l_bCheck)
+      if l_bCheck
+        // SET THE CALL..
+        cycleStatus:bCALL=true
+      endIf
+    break
+    // GOTO OUTPUT
+    case 10
+      call checkOut(l_sCondition,l_bCheck)
+      if l_bCheck
+        // SET THE GOTO..
+        cycleStatus:bGOTO=true
+      endIf
+    break
+    // CALL OUTPUT
+    case 11
+      call checkOut(l_sCondition,l_bCheck)
+      if l_bCheck
+        // SET THE CALL..
+        cycleStatus:bCALL=true
+      endIf
+    break
+    //    // GOTO EMAP IN
+    //    case 20
+    //      call checkEmapIn(l_sCondition,l_bCheck)
+    //      if l_bCheck
+    //        // SET THE GOTO..
+    //        cycleStatus:bGOTO=true
+    //      endIf
+    //    break
+    //    // CALL EMAP IN
+    //    case 21
+    //      call checkEmapIn(l_sCondition,l_bCheck)
+    //      if l_bCheck
+    //        // SET THE CALL..
+    //        cycleStatus:bCALL=true
+    //      endIf
+    //    break
+    // GOTO NUM
+    case 30
+      //...  
+      call saveInOut:decompose_wait(l_sCondition,l_sItem,l_nOperator,l_nValue)
+      call NUM:condition(l_nOperator,l_nValue,l_sItem,l_bCheck)
+      if l_bCheck
+        // SET THE GOTO..
+        cycleStatus:bGOTO=true
+      endIf
+    break
+    // CALL NUM
+    case 31
+      //...
+      call saveInOut:decompose_wait(l_sCondition,l_sItem,l_nOperator,l_nValue)
+      call NUM:condition(l_nOperator,l_nValue,l_sItem,l_bCheck)
+      if l_bCheck
+        // SET THE CALL..
+        cycleStatus:bCALL=true
+      endIf
+    break
+  endSwitch
+  // OK
+  if l_bCheck
+    // show the string
+    use:bUseRefresh=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

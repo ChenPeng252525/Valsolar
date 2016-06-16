@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="language" access="private" >
+    <Locals>
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  //  Select and change the language
+  //
+  call use:clear(0,13)
+  call use:setView(false)
+  // scan it
+  libList(language:libPath(),sMessage)
+  // clean
+  for i=0 to size(sMessage)-1
+    if find(sMessage[i],".")!=-1
+      delete(sMessage[i])
+      i=i-1
+    endIf
+  endFor
+  call language:message(l_sMessage,50)
+  call use:setSizeList(19,0,19,11)
+  call use:listcreate(l_sMessage)
+  // show it
+  for i=0 to (size(sMessage)-1)
+    l_sEvent=sMessage[i]
+    call use:listadd(l_sEvent)
+    if saveData:language==sMessage[i]
+      l_nIndex=i
+    endIf
+  endFor
+  // update the list
+  use:nView=l_nIndex
+  call use:listupdate(0)
+  // scan for a button
+  do
+    i=get()
+    call use:listevent(i,l_nIndex,l_sEvent)
+  until i==270 or i==255
+  if (i==270) and l_nIndex!=-1
+    saveData:language=l_sEvent
+    logMsg("[KERNEL] INTERFACE:Change language to "+l_sEvent)
+    // set the language
+    call language:setLanguage(language:libPath()+"/"+saveData:language)
+  else
+    call use:nullKey(i)
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

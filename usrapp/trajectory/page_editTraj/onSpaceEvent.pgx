@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onSpaceEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="3" />
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="l_bYes" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sAction" type="string" xsi:type="array" size="3" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+      <Local name="l_bStop" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  l_nIndex=nIndex-nUserItem
+  if (nIndex-nUserItem)>0
+    //
+    //  There are 7 fields,
+    //
+    //
+    call trajType:getTrajItem(l_tTraj,nIndexItem)
+    switch l_nIndex
+      case 0
+        //
+        //  comment for the point
+        //
+      break
+      case 1
+        //
+        //  change the movetype
+        //
+      break
+      case 2
+        //
+        //  change the speed
+        //
+      break
+      case 3
+        //
+        //  change the acceleration
+        //
+      break
+      case 4
+        //
+        //  put a stop, after the robot reach to the point
+        //
+        l_tTraj.toStop=!l_tTraj.toStop
+      break
+      case 5
+        //
+        //  set the blend (joint/off) for the point
+        //
+        if l_tTraj.nom_speed.blend==off
+          l_tTraj.nom_speed.blend=joint
+        else
+          l_tTraj.nom_speed.blend=off
+        endIf
+      break
+      case 6
+        //
+        // set TCP ON/OFF
+        //
+        if l_tTraj.nTcpAction!=0
+          l_tTraj.nTcpAction=-l_tTraj.nTcpAction
+        else
+          // ON by default
+          l_tTraj.nTcpAction=1
+        endIf
+      break
+      case 7,8,9
+        //
+        //  Insert the instruction
+        //
+      break
+      case 10
+        //
+        //  set the distance from the point where the call will be actived
+        //
+      break
+    endSwitch
+    //set and exit
+    call trajType:setTrajItem(l_tTraj,nIndexItem)
+    x_bSave=true
+    call buildList()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="HerePoint" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" />
+    </Parameters>
+    <Locals>
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+      <Local name="l_pHere" type="point" xsi:type="array" size="1" />
+      <Local name="l_fFrame" type="frame" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // take the point
+  //
+  // frame
+  call getFrame(fSetFrame,false)
+  // tool
+  call tcp:getTool(l_tTool,pEditPoint.nIndexTool)
+  // here
+  l_pHere=here(l_tTool,fSetFrame)
+  resetMotion()
+  // check the index
+  if pEditPoint.tData[x_nIndex].nType==1
+    // save the trsf
+    pEditPoint.tData[x_nIndex].pPoint.trsf=l_pHere.trsf
+  else
+    // search for the index of the point
+    call getSizeItem(false,l_nSize)
+    for i=0 to l_nSize-1
+      if pEditPoint.tData[i].nType==1
+        // save and exit
+        l_nIndex=i
+        i=l_nSize
+      endIf
+    endFor
+    if pEditPoint.tData[l_nIndex].pPoint.trsf!={0,0,0,0,0,0}
+      // compute the approch
+      pEditPoint.tData[x_nIndex].pPoint.trsf=!pEditPoint.tData[l_nIndex].pPoint.trsf*l_pHere.trsf
+    else
+      // point not taught
+      call language:message(l_sMessage,147)
+      popUpMsg(l_sMessage)
+    endIf
+  endIf
+  // check the moveType to save the config
+  if pEditPoint.tData[x_nIndex].tSuper.moveType==0
+    pEditPoint.tData[x_nIndex].pPoint.config=l_pHere.config
+  else
+    pEditPoint.tData[x_nIndex].pPoint.config={ssame,esame,wfree}
+  endIf
+  // to be save
+  
+end]]></Code>
+  </Program>
+</Programs>

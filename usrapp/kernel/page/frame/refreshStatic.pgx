@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMenu" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=150
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  // SET THE VIEW OF THE PAGE
+  call language:page(l_sMenu,use:nPage)
+  // define the menu
+  call use:stringToArray(l_sMenu,sMenu)
+  call use:setMenu(sMenu,true,3)
+  call use:getMenu(sMenu,bButton)
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  call use:setSizeList(20,0,18,11)
+  call use:setView(bLarge)
+  //
+  call use:listcreate("")
+  //
+  call use:listadd(sList)
+  //
+  // refresh the cursor
+  use:nView=nView
+  // refresh the list
+  call use:listupdate(0)
+  // show the tool
+  call language:message(l_sMessage,124)
+  call tcp:getName(l_sName,saveData:nFrameTool)
+  call use:type(0,0,l_sMessage+">"+toString("",saveData:nFrameTool)+" "+saveData:tData[saveData:nFrameTool].name)
+  // show the frame
+  call use:type(0,1,"Frame>"+toString("",saveData:nFrameActive)+" "+saveData:fFrameItem[saveData:nFrameActive].sName)
+end]]></Code>
+  </Program>
+</Programs>

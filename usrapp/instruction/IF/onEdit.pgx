@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onEdit" access="public" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_bContinue" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sProg" type="string" xsi:type="array" size="1" />
+      <Local name="l_nPos" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // compose the string
+  //
+  call language2:getLanguage(l_sPath)
+  if l_sPath!=language2:libPath()+"/"+saveData:language
+    // set language
+    call language2:setLanguage(language2:libPath()+"/"+saveData:language)
+  endIf
+  //
+  l_nPos=find(x_sItem,"PROG")
+  call getType(l_sItem)
+  if size(x_sItem)>1
+    if l_nPos!=-1
+      call language2:message(l_sMessage,0)
+      l_sProg=right(x_sItem,len(x_sItem)-l_nPos)
+      // get the yes_no button Key
+      call language:getYesNo(l_sButton)
+      // ask the question 
+      call use:yes_no(l_sItem+" "+x_sItem+"##"+l_sMessage+"#"+l_sProg,l_sButton,l_bContinue)
+      if l_bContinue
+        x_sItem="Disk://instruction/PROG/page_viewInstr"
+        x_sItem[1]=right(l_sProg,len(l_sProg)-len("PROG>"))
+      endIf
+    else
+      popUpMsg(l_sItem+" "+x_sItem)
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,54 @@
++---------------------------------------------------------------+
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+| Configuration listing for board 1  channel 0                  |
++---------------------------------------------------------------+
+| COMPANY = Molex
+| DATE    = Thursday, May 26, 2016 At 09:32
+| VERSION = 3.0.0
+| CONFIGURATION NAME = 20160525_DALIANGEER
+=======
+| Configuration listing for board 1  channel 0                |
++---------------------------------------------------------------+
+| COMPANY = Molex
+| DATE    = Tuesday, September 02, 2014 At 10:50
+| VERSION = 4.0 Build 20
+| CONFIGURATION NAME = BJHC
+>>>>>>> Valsolar
+| BOARD LOCATION = LAN TCP/IP
++---------------------------------------------------------------+
+-----------------------------------------------------------------
+Master configuration
+-----------------------------------------------------------------
+  
+  >> General Configuration :
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+     Baud Rate                          = 1.5                      Mbits/s   
+     TS : Profibus Address of this Stati= 5                                  
+=======
+     Baud Rate                          = 12                       Mbits/s   
+     TS : Profibus Address of this Stati= 8                                  
+>>>>>>> Valsolar
+-----------------------------------------------------------------
+Device  000
+-----------------------------------------------------------------
+  Local DP Slave
+  
+  >> applicom information :
+     Applicom Number                    = 000                                
+     Active Configuration               = Active Equipment                   
+<<<<<<< c1d3b523e4b6648af0a208836be5edef179e8568
+     Equipment Name                     = TOPIC1_A                           
+     Comment                            =                                    
+  
+  >> Network Configuration :
+     Number of input bytes              = 24                                 
+     Number of output bytes             = 24                                 
+=======
+     Equipment Name                     = EQUIPMENT                          
+     Comment                            =                                    
+  
+  >> Network Configuration :
+     Number of input bytes              = 20                                 
+     Number of output bytes             = 20                                 
+>>>>>>> Valsolar
+     Data Format                        = Big Endian (Motorola)              

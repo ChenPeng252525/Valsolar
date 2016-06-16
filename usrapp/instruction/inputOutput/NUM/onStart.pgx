@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sItem" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  // ANALOGIC VALUE
+  //
+  // default use the COUNTER
+  call saveInOut:setOutput(10)
+  call saveInOut:setInput(10)
+  // MODBUS
+  call saveInOut:setOutput(11)
+  call saveInOut:setInput(11)
+  // USER
+  call saveInOut:setOutput(12)
+  call saveInOut:setInput(12)
+  // REMIO
+  call saveInOut:setOutput(13)
+  call saveInOut:setInput(13)
+  // Other
+  call saveInOut:setOutput(14)
+  call saveInOut:setInput(14)
+end]]></Code>
+  </Program>
+</Programs>

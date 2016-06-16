@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="_plc" access="private" >
+    <Locals>
+      <Local name="bActive" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // PLC
+  bActive=false
+  switch plc:nToSuperV
+    case 0
+      //
+      // Start Cycle
+      //
+      if taskStatus("Cycle")==-1
+        cycleStatus:bToStart=true
+      endIf
+      bActive=true
+    break
+  endSwitch
+  //
+  if bActive
+    plc:nToSuperV=-1
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

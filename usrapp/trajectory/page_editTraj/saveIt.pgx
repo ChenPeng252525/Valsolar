@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="saveIt" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_sResult" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // unselect ALL
+  call unSelectItem()
+  // do the onSave trajtype
+  l_sResult=""
+  call trajType:onSave(l_sResult)
+  //
+  if l_nResult==0
+    logMsg("[KERNEL] INTERFACE:Save the trajectory "+saveData:sTrajTypeUsing+": "+sTrajName)
+    x_bSave=false
+    call language:message(l_sMessage,-4)
+    call use:timerDialog(l_sMessage,1)
+  else
+    popUpMsg("Save code error "+toString("",l_nResult))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

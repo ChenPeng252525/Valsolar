@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="settings">
+    <Locals>
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // set the items
+  call use:clear(0,13)
+  // show the items
+  do
+    // build the list
+    call use:setSizeList(16,3,22,8)
+    call use:listcreate("")
+    // language
+    call language:message(l_sMessage,50)
+    l_sMessage=l_sMessage+"> "+saveData:language
+    call use:listadd(l_sMessage)
+    // rounding
+//    call language:message(l_sMessage,51)
+//    l_sMessage=l_sMessage+"> "+toString("",saveData:nRound)+"%"
+//    call use:listadd(l_sMessage)
+//    // timeOut
+//    call language:message(l_sMessage,52)
+//    if saveData:nTimeOut>0
+//      l_sItem="[x]"+l_sMessage+"> "+toString("",saveData:nTimeOut)+" sec."
+//    else
+//      l_sItem="[ ]"+l_sMessage+">     "
+//    endIf
+//    call use:listadd(l_sItem)
+//    // multiSession
+//    call use:showBoolStatus(saveData:bMultiSession,l_sItem)
+//    call language:message(l_sMessage,53)
+//    l_sMessage=l_sItem+l_sMessage
+//    call use:listadd(l_sMessage)
+//    // Reload the last saved process List
+//    call language:message(l_sMessage,55)
+//    call use:showBoolStatus(saveData:bReloadList,l_sItem)
+//    l_sMessage=l_sItem+l_sMessage
+//    call use:listadd(l_sMessage)
+//    // set the timer Dialog joint/Frame status
+//    call language:message(l_sMessage,54)
+//    if saveData:nTimeDialog>0
+//      l_sItem="[x]"+l_sMessage+"> "+toString("",saveData:nTimeDialog)+" sec."
+//    else
+//      l_sItem="[ ]"+l_sMessage+">     "
+//    endIf
+//    call use:listadd(l_sItem)
+//    // add the stop on power Off
+//    call language:message(l_sMessage,56)
+//    call use:showBoolStatus(saveData:bStopToPowerOff,l_sItem)
+//    l_sMessage=l_sItem+l_sMessage
+//    call use:listadd(l_sMessage)
+//    // show nested data
+//    call use:showBoolStatus(saveData:bShowItem,l_sItem)
+//    call language:message(l_sMessage,57)
+//    l_sMessage=l_sItem+l_sMessage
+//    call use:listadd(l_sMessage)
+    // refresh the list
+    call use:listupdate(0)
+    nKey=get()
+    call use:listevent(nKey,l_nIndex,l_sEvent)
+    switch nKey
+      // ENTER KEY
+      case 270
+        call use:findPos(l_sEvent,">",i)
+        // list cursor to false
+        call use:listcursor(l_nIndex,false)
+        // switch it
+        switch l_nIndex
+          case 0
+            // change the language
+            call language()
+            return
+          break
+          case 1
+            // change the rounding correction
+            l_sEmpty=""
+            call use:changeValue(saveData:nRound,0,100,use:nTopX+i+2+1,use:nTopY+l_nIndex+1,l_sEmpty)
+          break
+          case 2
+            // change the timeout event
+            l_sEmpty=""
+            call use:changeValue(saveData:nTimeOut,0,999,use:nTopX+i+2+1,use:nTopY+l_nIndex+1,l_sEmpty)
+          break
+          case 3
+            // change the multisession
+            saveData:bMultiSession=!saveData:bMultiSession
+          break
+          case 4
+            // change the multi processList
+            saveData:bReloadList=!saveData:bReloadList
+          break
+          case 5
+            // change the timeout event
+            l_sEmpty=""
+            call use:changeValue(saveData:nTimeDialog,0,999,use:nTopX+i+2+1,use:nTopY+l_nIndex+1,l_sEmpty)
+          break
+          case 6
+            // STOP on Lost Power OFF
+            saveData:bStopToPowerOff=!saveData:bStopToPowerOff
+          break
+          case 7
+            // show nested element
+            saveData:bShowItem=!saveData:bShowItem
+          break
+        endSwitch
+      break
+      // SPACE KEY
+      case 32
+        switch l_nIndex
+          case 2
+            // time Out
+            saveData:nTimeOut=-saveData:nTimeOut
+          break
+          case 3
+            // change the multisession
+            saveData:bMultiSession=!saveData:bMultiSession
+          break
+          case 4
+            // change the multi processList
+            saveData:bReloadList=!saveData:bReloadList
+          break
+          case 5
+            // time Out
+            saveData:nTimeDialog=-saveData:nTimeDialog
+          break
+          case 6
+            // STOP on Lost Power OFF
+            saveData:bStopToPowerOff=!saveData:bStopToPowerOff
+          break
+          case 7
+            // show nested element
+            saveData:bShowItem=!saveData:bShowItem
+          break
+        endSwitch
+      break
+    endSwitch
+  until nKey==255
+  // release
+  call use:nullKey(nKey)
+end]]></Code>
+  </Program>
+</Programs>

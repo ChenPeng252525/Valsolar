@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onStart" access="private" >
+    <Code><![CDATA[begin
+  call language2:setLanguage(language2:libPath()+"/"+saveData:language)
+  if save:nBoxType<1 or save:nBoxType>2
+    save:nBoxType=1
+  endIf
+  // reset the Key pressure
+  call use:nullKey(nKey)
+  //bulidList
+  call buildList()
+end]]></Code>
+  </Program>
+</Programs>

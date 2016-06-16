@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="cycle_searchPrg" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nProg" type="num" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_sProgName" type="string" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_bFound" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nChar" type="num" xsi:type="array" size="1" />
+      <Local name="l_nProg" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // init
+  x_bFound=false
+  x_sProgName=""
+  //
+  // get the list
+  //
+  // libList(saveData:sPathProg[0],sProgList)
+  //
+  // search the program from a number:
+  //
+  // "number+space+name"
+  //
+  // 01 MyPart
+  // 10 YourPart
+  //
+  for i=0 to size(sProgList)-1
+    if sProgList[i]!=""
+      toNum(sProgList[i],l_nProg,l_bOk)
+      if l_bOk and l_nProg==x_nProg
+        x_sProgName=sProgList[i]
+        x_bFound=true
+        i=size(sProgList)-1
+      endIf
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

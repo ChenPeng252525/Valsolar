@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="deleteItem" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nIndex" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // delete the selected item
+  if pEditPoint.tData[x_nIndex].nType!=1 and size(pEditPoint.tData)>3
+    // delete all the field
+    delete(pEditPoint.tData[x_nIndex])
+  else
+    // not possible to delete the point
+    if  pEditPoint.tData[x_nIndex].nType!=1
+      pEditPoint.tData[x_nIndex].pPoint.trsf={0,0,0,0,0,0}
+    endIf
+    x_nIndex=-1
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

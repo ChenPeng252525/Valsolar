@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="stopCycle" access="public">
+    <Code><![CDATA[begin
+  if cycleStatus:bCycle or cycleStatus:bSimulation
+    // CYCLE MOTION
+    stopMove()
+    logMsg("[KERNEL] CYCLE:Stop the cycle ")
+    // enable the bit to stop the cycle
+    cycleStatus:bToStop=true
+    watch(cycleStatus:bToStop==false,1)
+  endIf
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

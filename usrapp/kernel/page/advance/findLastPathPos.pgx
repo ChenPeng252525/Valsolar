@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="findLastPathPos" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sPath" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_nPos" type="num" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nPos" type="num" xsi:type="array" size="2" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // get the trajType
+  l_sPath=x_sPath
+  x_nPos=0
+  do
+    l_nPos=find(l_sPath,"/")
+    if l_nPos==-1
+      l_nPos=find(l_sPath,"\")
+    endIf
+    if l_nPos!=-1
+      x_nPos=x_nPos+l_nPos+1
+      l_nPos[1]=l_nPos
+      l_sPath=right(l_sPath,len(l_sPath)-l_nPos-1)
+    endIf
+  until l_nPos==-1
+  // came back one
+  x_nPos=x_nPos-l_nPos[1]-1
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF7Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_mDesc" type="mdesc" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_bStop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nTcpAction" type="num" xsi:type="array" size="1" />
+      <Local name="l_nItem" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nDone" type="num" xsi:type="array" size="1" />
+      <Local name="l_nStop" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // look if the bButton is enable
+//  if bButton[6]
+//    //
+//    // insert the user one
+//    l_nItem=nIndex
+//    call trajType:insertItem(nIndex,nIndex+1)
+//    // empty one
+//    l_sEmpty=""
+//    l_bStop=false
+//    l_nDone=0
+//    call trajType:getTrajItem(l_tTraj,nIndex)
+//    call trajType:setTrajItem(l_tTraj,nIndex+1)
+//    x_bSave=true
+//    nSelect=nSelect+1
+//  endIf
+end]]></Code>
+  </Program>
+</Programs>

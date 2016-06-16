@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="onF1Event" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_sItem" type="string" use="value" xsi:type="element" dimensions="1" />
+      <Parameter name="x_bSave" type="bool" use="reference" xsi:type="array" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bChange" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bStatus" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[0]
+    if sMode=="OUT"
+      // OUTPUT
+      call out:isEnable(l_bStatus,x_sItem)
+      call out:setEnable(!l_bStatus,x_sItem)
+      logMsg("[KERNEL] INTERFACE:Change the active status of: "+x_sItem)
+    elseIf sMode=="IN"
+      // INPUT
+      call in:isEnable(l_bStatus,x_sItem)
+      call in:setEnable(!l_bStatus,x_sItem)
+      logMsg("[KERNEL] INTERFACE:Change the active status of: "+x_sItem)
+    endIf
+    // save it
+    x_bSave=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

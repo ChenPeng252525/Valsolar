@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onEnterEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  call use:stringToArray(sTrajName+","+toString("",nIndex),sMessage)
+  // update all
+  
+  call loadPage("Disk://trajectory/page_editTraj",sMessage)
+  // ELEBORATE THE GIVE BACK
+  //
+  if sMessage[0]=="saved"
+    sItems[0]="saved"
+    x_bSave=false
+  endIf
+  l_bOk=true
+  toNum(sMessage[1],nSelect,l_bOk)
+  // reset the show status
+  bShowStatus=false
+end
+]]></Code>
+  </Program>
+</Programs>

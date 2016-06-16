@@ -1,0 +1,706 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="editSmlData" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_nResult" type="num" xsi:type="element" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nStep" type="num" xsi:type="array" size="1" />
+      <Local name="l_sButton" type="string" xsi:type="array" size="2" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nCount" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_bUnreached" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_bResult" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="6" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+      <Local name="l_bSelected" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sMountMsg" type="string" xsi:type="array" size="1" />
+      <Local name="l_sMessage1" type="string" xsi:type="array" size="3" />
+      <Local name="l_sMessage2" type="string" xsi:type="array" size="2" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_jPoint" type="joint" xsi:type="array" size="1" />
+      <Local name="l_bPoint" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTool" type="tool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  l_nStep=0
+  call getTrajTool(tTool,sml:box[x_sName].nIndexGun)
+  if bWizard==true
+    call mark_All_Item(x_sName) 
+    call compteBox1Value(x_sName,sml:box[x_sName].nKeySafeNum)
+    sml:box[x_sName].nToSafePtType=1
+    sml:box[x_sName].nToolType=1
+    call initToSafePt(x_sName)
+    //初始推荐值
+    if !sml:box[x_sName].bMountOnWall
+      //地装推荐值为最大Z值
+      sml:box[x_sName].nToSafeFrmZ=roundUp( sml:box[x_sName].nKeySafeNum[5])
+      sml:box[x_sName].nRe_Tool_Z_WrdZ=roundUp( sml:box[x_sName].nKeySafeNum[5])
+    else
+      sml:box[x_sName].nToSafeFrmZ=roundUp( sml:box[x_sName].nKeySafeNum[2])
+      sml:box[x_sName].nRe_Tool_Z_WrdZ=roundUp( sml:box[x_sName].nKeySafeNum[2])
+    endIf
+    sml:box[x_sName].jToHome[size(sml:box[x_sName].jToHome)-1]=jHome:tTraj["home"].tData.jJoint[size(jHome:tTraj["home"].tData)-1]
+  endIf 
+  bSelected=false 
+  // WIZARD
+  while l_nStep<10
+    switch l_nStep
+      case -1
+        x_nResult=-1
+        return
+      break
+      case 0
+        if !cycleStatus:bCycle 
+          resetMotion( )
+        endIf 
+        cls()
+        l_bSelected=false 
+        l_bOk=false 
+        call language2:message(sMessage,27)
+        title(sMessage)
+        do 
+          do
+            call language2:message(sMessage,11)
+            l_sButton[0]=sMessage
+            call use:type(0,13,sMessage)
+            call language2:message(sMessage,12)
+            l_sButton[1]=sMessage
+            call use:type(5,13,sMessage)
+            call use:type(30,13,"<<")
+            call use:type(35,13,">>")
+            call language2:message(sMessage,26)
+            call use:type(1,1,sMessage+l_sButton[sel(sml:box[x_sName].bMountOnWall,1,0)])
+            call language2:message(sMessage,10)
+            call use:timerDialog(sMessage,0)
+            nKey=get( )
+            if nKey==278
+              l_bOk=true
+              l_nStep=l_nStep+1
+              l_bSelected=true 
+            elseIf nKey==277
+              x_nResult=-1
+              call use:nullKey(nKey)
+              return 
+            elseIf nKey==271
+              l_bOk=true
+              sml:box[x_sName].bMountOnWall=false
+            elseIf nKey==272
+              l_bOk=true 
+              sml:box[x_sName].bMountOnWall=true
+            endIf 
+            delay(0)
+          until l_bOk 
+        until l_bSelected
+        call use:nullKey(nKey)
+      break 
+      case 1
+        //******************************************//
+        call language2:message(sMessage,28)
+        title(sMessage)
+        bRefresh=true
+        nIndex=0
+        if !cycleStatus:bCycle 
+          resetMotion( )
+        endIf 
+        do 
+          call goTo(sml:box[x_sName].pPointRx[nIndex],nIndex,l_bUnreached,x_sName,0)
+          if l_bUnreached 
+            // show the message out of range
+            call language2:message(sMessage,51)
+            call use:timerDialog(sMessage,1)
+            l_bUnreached=false
+            cls()
+            bRefresh=true
+          endIf
+          if bRefresh==true
+            
+            bRefresh=false 
+            //******************bulid list*****************//
+            l_sEmpty=""
+            call use:stringCopy(l_sEmpty,sList)
+            // Build the list
+            call getSizeItem(x_sName,l_nSize,0)
+            for i=0 to l_nSize-1
+              l_sInstruction=toString("2",i+1)+" "+sml:box[x_sName].comment[i]
+              call listAdd(l_sInstruction)
+              
+            endFor
+            cls()
+            //set menu
+            call language2:page(sMessage,302)
+            call use:stringToArray(sMessage,sMenu)
+            call use:setMenu(sMenu,true,3)
+            // define your list size for default
+            call use:setSizeList(16,0,22,11)
+            call use:setView(false)
+            call getListTitle(sTitle)
+            call use:listcreate(x_sName)
+            call use:listadd(sList)
+            // refresh the list
+            call use:selectNewField(nSelected,nIndex,nView)
+            
+          else
+            
+          endIf
+          nKey=getKey()
+          call use:listevent(nKey,nIndex,sEvent)
+          nView=use:nView
+          nSelected=nIndex
+          switch nKey 
+            case 271
+              if sEvent!=""
+                call markItem(nIndex,x_sName)
+                nSelected=nIndex+1
+                bRefresh=true
+              endIf 
+              call use:nullKey(nKey)
+            break 
+            case 272
+              if sEvent!=""
+                call mark_All_Item(x_sName) 
+                bRefresh=true
+              endIf 
+              call use:nullKey(nKey)
+            break 
+            case 273
+              if sEvent!=""
+                call reveMarkItem(x_sName)
+                bRefresh=true
+              endIf 
+              call use:nullKey(nKey)
+            break 
+            case 277
+              l_nStep=0
+              bSelected=true
+              call use:nullKey(nKey)
+            break 
+            case 278
+              call language:getYesNo(l_sButton)
+              call language2:message(sMessage,24)
+              call use:yes_no(sMessage,l_sButton,l_bResult)
+              if l_bResult==true
+                l_nStep=2
+                bSelected=true
+              else 
+                bRefresh=true
+              endIf 
+              call use:nullKey(nKey)
+            break 
+          endSwitch 
+          
+          delay(0)
+        until  bSelected==true 
+        bSelected=false 
+      break
+      case 2
+        if !cycleStatus:bCycle
+          resetMotion()
+        endIf
+        cls()
+        call language2:message(sMessage,29)
+        title(sMessage)
+        call use:type(30,13,"<<")
+        call use:type(35,13,">>")
+        nIndex=0
+        use:nView=0
+        call compteBox1Value(x_sName,sml:box[x_sName].nKeySafeNum)
+        do
+          call use:setSizeList(20,2,18,6)
+          call use:setView(false)
+          call language2:message(sMessage,13)
+          call use:listcreate(sMessage)
+          call language2:message(sMessage,21)
+          l_sMessage[0]=sMessage+"X:"+toString(".3",sml:box[x_sName].nKeySafeNum[0])+" mm"
+          l_sMessage[1]=sMessage+"Y:"+toString(".3",sml:box[x_sName].nKeySafeNum[1])+" mm"
+          l_sMessage[2]=sMessage+"Z:"+toString(".3",sml:box[x_sName].nKeySafeNum[2])+" mm"
+          call language2:message(sMessage,20)
+          l_sMessage[3]=sMessage+"X:"+toString(".3",sml:box[x_sName].nKeySafeNum[3])+" mm"
+          l_sMessage[4]=sMessage+"Y:"+toString(".3",sml:box[x_sName].nKeySafeNum[4])+" mm"
+          l_sMessage[5]=sMessage+"Z:"+toString(".3",sml:box[x_sName].nKeySafeNum[5])+" mm"
+          call use:listadd(l_sMessage)
+          call use:listupdate(0)
+          i=get()
+          call use:listevent(i,nIndex,l_sEmpty)
+          use:nView=nIndex
+          if nIndex!=nOldLine
+            nOldLine=nIndex
+          endIf
+          delay(0)
+        until i==278 or i==277
+        switch i
+          case 278
+            l_nStep= l_nStep+1
+            wait(getKey()==-1)
+          break
+          case 277
+            l_nStep= l_nStep-1
+            wait(getKey()==-1)
+          break
+        endSwitch
+      break
+      case 3
+        if !cycleStatus:bCycle
+          resetMotion()
+        endIf
+        cls()
+        call language2:message(sMessage,30)
+        title(sMessage)
+        call use:type(30,13,"<<")
+        call use:type(35,13,">>")
+        nIndex=0
+        use:nView=0
+        do
+          call use:setSizeList(20,2,18,6)
+          call use:setView(false)
+          call language2:message(sMessage,14)
+          call use:listcreate(sMessage)
+          call language2:message(sMessage,22)
+          l_sMessage[0]=sMessage+"X:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[0])+" mm"
+          l_sMessage[1]=sMessage+"Y:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[1])+" mm"
+          l_sMessage[2]=sMessage+"Z:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[2])+" mm"
+          call language2:message(sMessage,23)
+          l_sMessage[3]=sMessage+"X:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[3])+" mm"
+          l_sMessage[4]=sMessage+"Y:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[4])+" mm"
+          l_sMessage[5]=sMessage+"Z:"+toString(".3",sml:box[x_sName].nTolKeySafeNum[5])+" mm"
+          call use:listadd(l_sMessage)
+          call use:listupdate(0)
+          i=get()
+          call use:listevent(i,nIndex,l_sEmpty)
+          use:nView=nIndex
+          if nIndex!=nOldLine
+            nOldLine=nIndex
+          endIf
+          if i==270
+            call language2:message(sMessage,25)
+            call HMI_setNewValue(sml:box[x_sName].nTolKeySafeNum[nIndex],0,0,0,13,sMessage)
+            cls()
+            use:bUseRefresh=true
+            call use:type(30,13,"<<")
+            call use:type(35,13,">>")
+          endIf
+          delay(0)
+        until i==278 or i==277
+        switch i
+          case 278
+            l_nStep= l_nStep+1
+            wait(getKey()==-1)
+          break
+          case 277
+            l_nStep= l_nStep-1
+            wait(getKey()==-1)
+          break
+        endSwitch
+      break 
+      case 4
+        if !cycleStatus:bCycle
+          resetMotion()
+        endIf
+        call language2:message(sMessage,31)
+        title(sMessage)
+        cls()
+        call use:type(30,13,"<<")
+        call use:type(35,13,">>")
+        nIndex=0
+        use:nView=0
+        do
+          call use:type(30,13,"<<")
+          call use:type(35,13,">>")
+          call use:setSizeList(5,2,33,3)
+          call use:setView(false)
+          call language2:message(sMessage,16)
+          call use:listcreate(sMessage)
+          if sml:box[x_sName].bMountOnWall==false
+            call language2:message(sMessage,11)
+          else
+            call language2:message(sMessage,12)
+          endIf
+          l_sMountMsg=" "+sMessage
+          call language2:message(sMessage,34)
+          if sml:box[x_sName].nToSafePtType==1
+            l_sMessage1[0]="@ "+sMessage+toString("",sml:box[x_sName].nToSafeFrmZ)+" mm"+l_sMountMsg
+          else
+            l_sMessage1[0]=sMessage+toString("",sml:box[x_sName].nToSafeFrmZ)+" mm"+l_sMountMsg
+          endIf
+          if sml:box[x_sName].nToSafePtType==2
+            if !sml:box[x_sName].bReverse_Tool_Z==true 
+              call language2:message(sMessage,35)
+              l_sMessage1[1]="@ "+sMessage+toString("",sml:box[x_sName].nRe_Tool_Z_Dits)+" mm"
+            else
+              call language2:message(sMessage,36)
+              l_sMessage1[1]="@ "+sMessage+toString("",sml:box[x_sName].nRe_Tool_Z_WrdZ)+" mm"
+            endIf
+          else
+            if !sml:box[x_sName].bReverse_Tool_Z
+              call language2:message(sMessage,35)
+              l_sMessage1[1]=sMessage+toString("",sml:box[x_sName].nRe_Tool_Z_Dits)+" mm"
+            else
+              call language2:message(sMessage,36)
+              l_sMessage1[1]=sMessage+toString("",sml:box[x_sName].nRe_Tool_Z_WrdZ)+" mm"
+            endIf
+          endIf
+          call language2:message(sMessage,19)
+          if sml:box[x_sName].nToSafePtType==3
+            l_sMessage1[2]="@ "+sMessage
+          else
+            l_sMessage1[2]=sMessage
+          endIf
+          call use:listadd(l_sMessage1)
+          call use:listupdate(0)
+          i=get()
+          call use:listevent(i,nIndex,l_sEmpty)
+          use:nView=nIndex
+          if nIndex!=nOldLine
+            nOldLine=nIndex
+          endIf
+          if i==270
+            sml:box[x_sName].nToSafePtType=nIndex+1
+            if sml:box[x_sName].nToSafePtType==1
+              call language2:message(sMessage,25)
+              call HMI_setNewValue(sml:box[x_sName].nToSafeFrmZ,0,0,0,13,sMessage)
+            endIf
+            if sml:box[x_sName].nToSafePtType==2
+              do
+                call use:setSizeList(3,2,26,2)
+                call use:setView(false)
+                call use:listcreate("")
+                call language2:message(sMessage,35)
+                l_sMessage2[0]=sMessage
+                call language2:message(sMessage,36)
+                l_sMessage2[1]=sMessage
+                call use:listadd(l_sMessage2)
+                call use:listupdate(0)
+                nKey=get()
+                call use:listevent(nKey,nIndex,l_sEvent)
+                switch nKey
+                  case 270
+                    /////////////////////////////
+                    if nIndex==0
+                      sml:box[x_sName].bReverse_Tool_Z=false
+                    else
+                      sml:box[x_sName].bReverse_Tool_Z=true
+                    endIf
+                  break
+                endSwitch
+              until nKey==270
+              if nIndex==0
+                call language2:message(sMessage,25)
+                call HMI_setNewValue(sml:box[x_sName].nRe_Tool_Z_Dits,0,0,0,13,sMessage)
+              else
+                call language2:message(sMessage,25)
+                call HMI_setNewValue(sml:box[x_sName].nRe_Tool_Z_WrdZ,0,0,0,13,sMessage)
+              endIf
+            endIf
+            cls()
+          endIf
+          delay(0)
+        until i==278 or i==277
+        switch i
+          case 278
+            if sml:box[x_sName].nToSafePtType==3
+              l_nStep=l_nStep+1
+            else
+              l_nStep=l_nStep+2
+            endIf
+            wait(getKey()==-1)
+          break
+          case 277
+            l_nStep=l_nStep-1
+            wait(getKey()==-1)
+          break
+        endSwitch
+      break 
+      case 5
+        if !cycleStatus:bCycle 
+          resetMotion( )
+        endIf 
+        cls()
+        call language2:message(sMessage,31)
+        title(sMessage+"-1")
+        call language2:message(sMessage,37)
+        call HMI_setNewValue(sml:box[x_sName].nToolType,1,2,0,13,sMessage)
+        delay(0)
+        call use:nullKey(nKey)
+        call language2:message(sMessage,31)
+        title(sMessage+"-2")
+        //******************************************//
+        bRefresh=true
+        bSelected=false 
+        nIndex=0
+        do 
+          do
+            call goTo(sml:box[x_sName].pToSafePt[nIndex],nIndex,l_bUnreached,x_sName,0)
+            if l_bUnreached 
+              // show the message out of range
+              call language2:message(sMessage,51)
+              call use:timerDialog(sMessage,1)
+              l_bUnreached=false
+              cls()
+              bRefresh=true
+            endIf
+            if bRefresh==true
+              
+              bRefresh=false 
+              //******************bulid list*****************//
+              l_sEmpty=""
+              call use:stringCopy(l_sEmpty,sList)
+              // Build the list
+              call getSizeItem(x_sName,l_nSize,1)
+              for i=0 to l_nSize-1
+                call language2:message(sMessage,39)
+                call language2:message(l_sItem,45)
+                l_sInstruction=toString("2",i+1)+" "+sMessage+" "+l_sItem
+                call listAdd(l_sInstruction)
+                l_sEvent=sList[i]
+                if l_sEvent!=""
+                  l_bFound=true
+                  // update the selected item
+                  if l_sEvent==sEvent
+                    // nSelected=l_nCount
+                  endIf
+                  // add  
+                  if l_bFound
+                    l_nCount=l_nCount+1
+                  endIf
+                endIf
+              endFor
+              cls()
+              // define your list size for default
+              call use:setSizeList(16,0,22,11)
+              call use:setView(false)
+              call language2:message(sMessage,42)
+              call use:listcreate(sMessage)
+              call use:listadd(sList)
+              call language2:page(sMessage,303)
+              call use:stringToArray(sMessage,sMenu)
+              call use:setMenu(sMenu,true,3)
+              // refresh the list
+              call use:selectNewField(nSelected,nIndex,nView)
+              
+            else
+              
+            endIf
+            nKey=getKey()
+            call use:listevent(nKey,nIndex,sEvent)
+            nView=use:nView
+            nSelected=nIndex
+            switch nKey 
+              case 271
+                call language:getYesNo(l_sButton)
+                call language2:message(sMessage,40)
+                call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                if l_bResult==true
+                  sml:box[x_sName].pToSafePt[nIndex]=here(tTool,world)
+                endIf 
+                bRefresh=true
+                call use:nullKey(nKey)
+              break 
+              case 272
+                if sEvent!=""
+                  l_pPoint=sml:box[x_sName].pToSafePt[nIndex]
+                  insert(sml:box[x_sName].pToSafePt[nIndex+1])
+                  sml:box[x_sName].pToSafePt[nIndex+1]=l_pPoint
+                  bRefresh=true
+                  nSelected=nIndex+1
+                endIf 
+                call use:nullKey(nKey)
+              break 
+              case 273
+                if size(sml:box[x_sName].pToSafePt)>1 
+                  call language:getYesNo(l_sButton)
+                  call language2:message(sMessage,41)
+                  call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                  if l_bResult==true
+                    delete(sml:box[x_sName].pToSafePt[nIndex])
+                    if nIndex>0
+                      nIndex=nIndex-1
+                      nSelected=nIndex-1
+                    endIf 
+                  endIf 
+                  bRefresh=true
+                endIf 
+                call use:nullKey(nKey)
+              break 
+              case 277
+                l_nStep=l_nStep-1
+                bRefresh=true 
+                bSelected=true
+                call use:nullKey(nKey)
+              break 
+              case 278
+                l_nStep=l_nStep+1
+                bRefresh=true 
+                bSelected=true 
+                call use:nullKey(nKey)
+              break 
+            endSwitch 
+            delay(0)
+          until  bRefresh==true 
+        until  bSelected==true 
+        bSelected=false 
+      break
+      case 6
+        if !cycleStatus:bCycle 
+          resetMotion( )
+        endIf 
+        cls()
+        call use:nullKey(nKey)
+        call language2:message(sMessage,32)
+        title(sMessage)
+        //******************************************//
+        bRefresh=true
+        bSelected=false 
+        nIndex=0
+        do 
+          do
+            if sml:box[x_sName].bMoveJHomeJoint[nIndex]
+              l_nMoveType=1
+            else
+              l_nMoveType=0
+            endIf 
+            call getTrajTool(l_tTool,sml:box[x_sName].nIndexGun)
+            call J_goTo(sml:box[x_sName].jToHome[nIndex],nIndex,l_bUnreached,x_sName,l_nMoveType,l_tTool)
+            if l_bUnreached 
+              // show the message out of range
+              call language2:message(sMessage,51)
+              call use:timerDialog(sMessage,1)
+              l_bUnreached=false
+              cls()
+              bRefresh=true
+            endIf
+            if bRefresh==true
+              
+              bRefresh=false 
+              //******************bulid list*****************//
+              l_sEmpty=""
+              call use:stringCopy(l_sEmpty,sList)
+              // Build the list
+              call getSizeItem(x_sName,l_nSize,2)
+              for i=0 to l_nSize-1
+                if sml:box[x_sName].bMoveJHomeJoint[i]
+                  call language2:message(l_sItem,46)
+                else 
+                  call language2:message(l_sItem,45)
+                endIf 
+                call language2:message(sMessage,44)
+                l_sInstruction=toString("2",i+1)+" "+sMessage+" "+l_sItem
+                call listAdd(l_sInstruction)
+                l_sEvent=sList[i]
+                if l_sEvent!=""
+                  l_bFound=true
+                  // update the selected item
+                  if l_sEvent==sEvent
+                    // nSelected=l_nCount
+                  endIf
+                  // add  
+                  if l_bFound
+                    l_nCount=l_nCount+1
+                  endIf
+                endIf
+              endFor
+              cls()
+              // define your list size for default
+              call use:setSizeList(16,0,22,11)
+              call use:setView(false)
+              call language2:message(sMessage,43)
+              call use:listcreate(sMessage)
+              call use:listadd(sList)
+              call language2:page(sMessage,304)
+              call use:stringToArray(sMessage,sMenu)
+              call use:setMenu(sMenu,true,3)
+              // refresh the list
+              call use:selectNewField(nSelected,nIndex,nView)
+              
+            else
+              
+            endIf
+            nKey=getKey()
+            call use:listevent(nKey,nIndex,sEvent)
+            nView=use:nView
+            nSelected=nIndex
+            switch nKey 
+              case 271
+                call language:getYesNo(l_sButton)
+                call language2:message(sMessage,47)
+                call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                if l_bResult==true
+                  sml:box[x_sName].jToHome[nIndex]=herej()
+                endIf 
+                bRefresh=true
+                call use:nullKey(nKey)
+              break 
+              case 272
+                l_jPoint=sml:box[x_sName].jToHome[nIndex]
+                l_bPoint=sml:box[x_sName].bMoveJHomeJoint[nIndex]
+                insert(sml:box[x_sName].jToHome[nIndex+1])
+                insert(sml:box[x_sName].bMoveJHomeJoint[nIndex+1])
+                sml:box[x_sName].jToHome[nIndex+1]=l_jPoint
+                sml:box[x_sName].bMoveJHomeJoint[nIndex+1]=l_bPoint
+                bRefresh=true
+                nSelected=nIndex+1
+                call use:nullKey(nKey)
+              break 
+              case 273
+                if size(sml:box[x_sName].jToHome)>1 
+                  call language:getYesNo(l_sButton)
+                  call language2:message(sMessage,48)
+                  call use:yes_no(sMessage+"?",l_sButton,l_bResult)
+                  if l_bResult==true
+                    delete(sml:box[x_sName].jToHome[nIndex])
+                    delete(sml:box[x_sName].bMoveJHomeJoint[nIndex])
+                    if nIndex>0
+                      nIndex=nIndex-1
+                      nSelected=nIndex-1
+                    endIf 
+                  endIf 
+                  bRefresh=true
+                endIf 
+                call use:nullKey(nKey)
+              break 
+              case 274
+                sml:box[x_sName].bMoveJHomeJoint[nIndex]=!sml:box[x_sName].bMoveJHomeJoint[nIndex]
+                bRefresh=true
+                call use:nullKey(nKey)
+              break 
+              case 277
+                if sml:box[x_sName].nToSafePtType==3
+                  l_nStep=l_nStep-1
+                else 
+                  l_nStep=l_nStep-2
+                endIf 
+                bRefresh=true 
+                bSelected=true
+                call use:nullKey(nKey)
+              break 
+              case 278
+                
+                bRefresh=true 
+                bSelected=true 
+                call use:nullKey(nKey)
+                x_nResult=0
+                if !cycleStatus:bCycle 
+                  resetMotion( )
+                endIf 
+                return  
+              break 
+            endSwitch 
+            delay(0)
+          until  bRefresh==true 
+        until  bSelected==true 
+        bSelected=false 
+      break 
+    endSwitch 
+    delay(0)
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>

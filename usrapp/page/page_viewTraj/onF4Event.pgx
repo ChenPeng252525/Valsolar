@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF4Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nTemp" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+//  // look if the bButton is enable
+//  if bButton[3]
+//    //
+//    // paste
+//    //
+//    call trajType:getSizeItem(false,l_nSize)
+//    l_nTemp=nIndex+1
+//    for i=0 to (l_nSize-1)
+//      call trajType:getTrajItem(l_tTraj,i)
+//      if find(l_tTraj.comment,"#")!=-1
+//        // insert user value
+//        call trajType:insertItem(i,l_nTemp)
+//        if i==-1
+//          return
+//        else
+//          // overWrite
+//          l_tTraj.comment=right(l_tTraj.comment,len(l_tTraj.comment)-1)
+//          call trajType:setTrajItem(l_tTraj,l_nTemp)
+//          if l_nTemp<=i
+//            i=i+1
+//          endIf
+//          l_nTemp=l_nTemp+1
+//          l_nSize=l_nSize+1
+//        endIf
+//      endIf
+//    endFor
+//    // unselect ALL
+//    call unSelectItem()
+//    x_bSave=true
+//  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onBackEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // rename
+  //
+  call trajType:getTrajItem(l_tTraj,nIndex)
+  if l_tTraj.comment!=""
+    i=find(sEvent,l_tTraj.comment)
+  else
+    i=len(toString("",nIndex))+3
+  endIf
+  if i!=-1
+    // clean the line
+    call use:listcursor(use:nView,false)
+    // read the name
+    call use:read(40-use:nBottomX+i-1,nView+1,l_tTraj.comment,10,false)
+    call trajType:setTrajItem(l_tTraj,nIndex)
+    call buildList()
+    x_bSave=true
+  endIf
+end
+
+]]></Code>
+  </Program>
+</Programs>

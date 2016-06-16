@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF5Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sId" type="string" xsi:type="element" />
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="lKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_bFound" type="bool" xsi:type="array" size="1" />
+      <Local name="l_sEmpty" type="string" xsi:type="array" size="1" />
+      <Local name="l_sName" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[4]
+    //
+    if sMode=="OUT"
+      //
+      // OUTPUT FUNCTION
+      //
+      call out:getItem(l_sName,x_sId)
+      if l_sName!="start" and l_sName!="stop" and l_sName!="end" and l_sName!="home"
+        call use:setSizeList(10,1,15,9)
+        call use:listcreate("")
+        l_sItem="start"
+        call use:listadd(l_sItem)
+        l_sItem="stop"
+        call use:listadd(l_sItem)
+        l_sItem="end"
+        call use:listadd(l_sItem)
+        l_sItem="home"
+        call use:listadd(l_sItem)
+        call use:listupdate(0)
+        call use:clear(0,13)
+        do
+          lKey=get()
+          call use:listevent(lKey,i,l_sItem)
+        until lKey==255 or lKey==270
+        if lKey==270
+          // LOOK IF EXIST
+          call out:find(l_sItem,l_bFound)
+          if !l_bFound
+            call out:setItem(l_sItem,x_sId)
+            x_bSave=true
+          endIf
+          if l_bFound
+            // ALREADY EXIST
+            call language:message(l_sMessage,-2)
+            popUpMsg(l_sMessage)
+          endIf
+        else
+          // release the Key
+          call use:nullKey(lKey)
+        endIf
+      else
+        // restore the old_Name
+        call out:setItem(x_sId,x_sId)
+        x_bSave=true
+      endIf
+    elseIf sMode=="IN"
+      //
+      // INPUT FUNCTION
+      //
+      call in:getItem(l_sName,x_sId)
+      if find(sEvent,"#")==-1 and l_sName!="start" and l_sName!="stop" and l_sName!="end" and l_sName!="home"
+        call use:setSizeList(10,1,15,9)
+        call use:listcreate("")
+        call prog:getSize(l_nSize)
+        l_sItem=" ---PROG ---------- "
+        call use:listadd(l_sItem)
+        for i=0 to l_nSize-1
+          call prog:get(l_sItem,i)
+          if l_sItem!="" and find(l_sItem,"#")!=-1
+            call use:listadd(l_sItem)
+          endIf
+        endFor
+        l_sItem=" ------------------ "
+        call use:listadd(l_sItem)
+        l_sItem="start"
+        call use:listadd(l_sItem)
+        l_sItem="stop"
+        call use:listadd(l_sItem)
+        l_sItem="end"
+        call use:listadd(l_sItem)
+        l_sItem="home"
+        call use:listadd(l_sItem)
+        //
+        call use:listupdate(0)
+        call language:message(l_sMessage,60)
+        call use:type(1,13,l_sMessage)
+        do
+          lKey=get()
+          call use:listevent(lKey,i,l_sItem)
+        until lKey==255 or lKey==270
+        if lKey==270 and find(l_sItem,"------")==-1
+          if l_sItem!="start" and l_sItem!="stop" and l_sItem!="end" and l_sItem!="home"
+            logMsg("[KERNEL] INTERFACE:Associate the program: "+l_sItem+" to: "+sEvent)
+          endIf
+          // LOOK IF EXIST
+          call in:find(l_sItem,l_bFound)
+          if !l_bFound
+            call in:setItem(l_sItem,x_sId)
+            x_bSave=true
+          endIf
+          if l_bFound
+            // ALREADY EXIST
+            call language:message(l_sMessage,-2)
+            popUpMsg(l_sMessage)
+          endIf
+        else
+          // release the Key
+          call use:nullKey(lKey)
+        endIf
+      else
+        // restore the old_Name
+        call in:setItem(x_sId,x_sId)
+        x_bSave=true
+      endIf
+    endIf
+  endIf
+  // check if to reload all
+  if x_bSave
+    saveData:bChangeIO=true
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="main" access="public">
+    <Code><![CDATA[begin
+  // INIT
+  call onStart()
+  // LOOP UNTIL nKey=255
+  do
+    call refresh()
+    nKey=getKey()
+    call use:listevent(nKey,nIndex,sEvent)
+    nView=use:nView
+    switch nKey
+      case 259
+        // TAB
+        bLarge=!bLarge
+        call use:setView(bLarge)
+      break
+      case 264
+        // left
+        call onLeftEvent()
+      break
+      case 268
+        // right
+        call onRightEvent()
+      break
+      case 271
+        call onF1Event()
+      break
+      case 272
+        // set LOOP
+        call onF2Event()
+      break
+      case 273
+        call onF3Event()
+      break
+      case 274
+        call onF4Event()
+      break
+      case 275
+        call onF5Event()
+      break
+      case 276
+        call onF6Event()
+      break
+      case 277
+        // DELETE
+        call onF7Event()
+      break
+      case 278
+        // INSERT
+        call onF8Event()
+      break
+      case 270
+        // CHANGE THE NUMBER OF CYCLE
+        call onEnterEvent()
+      break
+    endSwitch
+    // release the resource
+    delay(0)
+  until nKey==255
+  // on Exit
+  call onExit()
+end
+
+      ]]></Code>
+  </Program>
+</Programs>

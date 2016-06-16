@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_bType" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // SET THE PAGE NUMBER
+  use:nPage=1000
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  if cycleStatus:bCycle
+    use:nPage=use:nPage+3
+  endIf
+  // load the menu page
+  if saveData:language!="japanese"
+    // SET THE VIEW OF THE PAGE
+    call language:page(l_sMessage,use:nPage)
+    l_bType=true
+    // define the menu
+    call use:stringToArray(l_sMessage,sMenu)
+  else
+    // japanese use the array for the menu
+    call language:page(sMenu8,use:nPage)
+    l_bType=false
+    call use:stringCopy(sMenu8,sMenu) 
+  endIf
+  //
+  call use:setMenu(sMenu,l_bType,3)
+  call use:getMenu(sMenu,bButton)
+  bButton[1]=true
+  //
+  // CREATE THE LIST
+  //
+  // define your list size for default
+  call use:setSizeList(19,0,19,11)
+  call use:setView(bLarge)
+  //
+  call use:listcreate(saveData:sProgTypeUsing+" "+sProgram)
+  call use:listadd(sList)
+  //
+  // refresh
+  call use:selectNewField(nSelected,nId,nView)
+  nSelected=-1
+end]]></Code>
+  </Program>
+</Programs>

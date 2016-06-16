@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onStart">
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_bOk" type="bool" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // INIT
+  sTrajName=sItems
+  nView=0
+  nIndex=0
+  bExit=false
+  link(fFather,world)
+  call trajType:getFrame(fFather,false)
+  // set the index
+  l_bOk=true
+  if size(sItems)>1 and sItems[1]!=""
+    toNum(sItems[1],nIndexItem,l_bOk)
+  else
+    nIndexItem=0
+  endIf
+  // empty the userMenu
+  for i=0 to size(sMenuUser)-1
+    sMenuUser[i]=""
+  endFor
+  // load the traj type
+  call loadEditTraj(sItems)
+  //endIf
+  //
+  // logMsg
+  logMsg("[KERNEL] INTERFACE:PAGE Edit TRAJ")
+  // reset the Key pressure
+  call use:nullKey(nKey)
+  // define the list
+  call buildList()
+  //
+end]]></Code>
+  </Program>
+</Programs>

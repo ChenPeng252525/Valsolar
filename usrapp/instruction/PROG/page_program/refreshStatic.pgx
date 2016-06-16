@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="refreshStatic">
+    <Locals>
+      <Local name="l_nSelected" type="num" xsi:type="array" size="1" />
+      <Local name="l_nSize" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_nLocal" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  cls()
+  //
+  // set the view of the page..
+  //
+  // set small x_nView
+  call use:setView(false)
+  // SET THE PAGE NUMBER
+  use:nPage=100
+  // USE <>PROFILE for <>PAGE
+  use:nPage=use:nPage+abs(limit(saveData:mode,0,2)-2)
+  //
+  if cycleStatus:bCycle
+    use:nPage=use:nPage+3
+  endIf
+  // load the menu page
+  if saveData:language!="japanese"
+    // SET THE VIEW OF THE PAGE
+    call language:page(l_sMessage,use:nPage)
+    // define the menu
+    call use:stringToArray(l_sMessage,sMenu)
+  else
+    // japanese use the array for the menu
+    call language:page(sMenu8,use:nPage)
+    call use:stringCopy(sMenu8,sMenu)
+  endIf
+  if saveData:language!="japanese"
+    call use:setMenu(sMenu,true,3)
+  else
+    call use:setMenu(sMenu,false,3)
+  endIf
+  call use:getMenu(sMenu,bButton)
+  // use ON / OFF for the active gun
+  bButton[2]=true
+  call use:typeMenu(3,"")
+  //
+  call use:setSizeList(19,0,19,11)
+  //
+  // BUILD THE LIST
+  //
+  switch nProgID
+    case 0
+      call language:message(l_sMessage,25)
+    break
+    case 1
+      l_sMessage="SUB-PROG"
+    break
+    case 2
+      call language:message(l_sMessage,26)
+    break
+  endSwitch
+  call use:listcreate(l_sMessage)
+  call use:listadd(sList)
+  call use:selectNewField(nSelected,nIndex,nView)
+  nSelected=-1
+  // is a filter using ?? 
+  call language:message(l_sMessage,64)
+  if saveData:sProgFilter!=""
+    call use:type(0,1,l_sMessage+">"+saveData:sProgFilter)
+  else
+    call use:typeLen(0,1,"",len(l_sMessage+">"+saveData:sProgFilter))
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onF5Event">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="l_sMessage" type="string" xsi:type="array" size="1" />
+      <Local name="l_nActual" type="num" xsi:type="array" size="1" />
+      <Local name="l_nOldValue" type="num" xsi:type="array" size="1" />
+      <Local name="l_nMoveType" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+      <Local name="l_sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="l_tTraj" type="TrajectoryItem" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // look if the bButton is enable
+  if bButton[4]
+    //
+    // build a little List to select speed accel blend 
+    //
+    call use:clear(0,13)
+    call use:type(21,13,sMenu[4])
+    call use:setSizeList(17,8,12,3)
+    call use:listcreate("")
+    // speed
+    call language:message(l_sMessage,158)
+    call use:listadd(l_sMessage)
+    // accel
+    call language:message(l_sMessage,159)
+    call use:listadd(l_sMessage)
+    // blend
+    call language:message(l_sMessage,175)
+    call use:listadd(l_sMessage)
+    //
+    call use:listupdate(0)
+    do
+      l_nKey=get()
+      call use:listevent(l_nKey,l_nIndex,l_sEvent)
+    until l_nKey==270 or l_nKey==255
+    if l_nKey==270
+      // get the traj Item
+      call trajType:getTrajItem(l_tTraj,nIndexItem)
+      // switch case
+      switch l_nIndex
+        case 0
+          //
+          // change the speed
+          //
+          call language:message(l_sMessage,161)
+          switch l_tTraj.moveType
+            case 0
+              // JOINT
+              l_nActual=l_nOldValue=l_tTraj.nom_speed.vel
+              call use:insertDialog(l_sMessage+" %",l_nActual,1,400)
+            break
+            case 1,2
+              //LINEAR CIRCULAR
+              l_nActual=l_nOldValue=l_tTraj.nom_speed.tvel
+              call use:insertDialog(l_sMessage+" mm/sec ",l_nActual,1,6000)
+            break
+          endSwitch
+          call setAllSpeed(l_nActual,l_nOldValue)
+          logMsg("[VALTRAJ] INTERFACE:Change all speed from: "+toString("",l_nOldValue)+" to: "+toString("",l_nActual))
+        break
+        case 1
+          //
+          // CHANGE ALL THE ACCEL
+          //
+          call language:message(l_sMessage,162)
+          l_nActual=l_nOldValue=l_tTraj.nom_speed.accel
+          call use:insertDialog(l_sMessage,l_nActual,1,800)
+          call setAllAccel(l_nActual,l_nOldValue)
+          logMsg("[VALTRAJ] INTERFACE:Change all accel from: "+toString("",l_nOldValue)+" to: "+toString("",l_nActual))
+        break
+        case 2
+          //
+          // CHANGE ALL THE BLEND
+          //
+          call language:message(l_sMessage,178)
+          l_nActual=l_nOldValue=l_tTraj.nom_speed.leave
+          call use:insertDialog(l_sMessage,l_nActual,-1,400)
+          call setAllBlend(l_nActual,l_nOldValue)
+          logMsg("[VALTRAJ] INTERFACE:Change all blend from: "+toString("",l_nOldValue)+" to: "+toString("",l_nActual))
+        break
+      endSwitch
+      // save and return
+      x_bSave=true
+      call buildList()
+    endIf
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="onBackEvent">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bSave" type="bool" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="l_sItem" type="string" xsi:type="array" size="1" />
+      <Local name="l_sInstruction" type="string" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nChar" type="num" xsi:type="array" size="1" />
+      <Local name="l_nResult" type="num" xsi:type="array" size="1" />
+      <Local name="l_iInstr" type="InstrItem" xsi:type="array" size="1" />
+      <Local name="l_sPath" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // NB sEvent is the selected
+  // element in the LIST
+  //
+  // get the item
+  call prog:getItem(l_iInstr,nIndex)
+  // find the instruction to load
+  call saveData:getPathInstr(l_iInstr.sType,l_sPath)
+  j=events:libLoad(l_sPath)
+  delay(0)
+  if j==0
+    // cal the onInsert function
+    call events:onInsert(l_iInstr.sData)
+    // insert the item
+    if l_iInstr.sData!=""
+      call prog:insertItem(l_iInstr,nIndex)
+      if nIndex>0
+        call prog:deleteItem(nIndex+1,l_nResult)
+      endIf
+      x_bSave=true
+      logMsg("[KERNEL] INTERFACE:Insert new item: "+l_sItem)
+      i=size(saveData:sInstr)-1
+    endIf
+    call buildList()
+    //
+  else
+    popUpMsg("Loading event "+l_sInstruction+" error CODE "+toString("",j))
+  endIf
+  //
+end]]></Code>
+  </Program>
+</Programs>

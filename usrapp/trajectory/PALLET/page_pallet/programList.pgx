@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="programList">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sEvent" type="string" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="nSize" type="num" xsi:type="array" size="1" />
+      <Local name="sEvent" type="string" xsi:type="array" size="1" />
+      <Local name="lKey" type="num" xsi:type="array" size="1" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+      <Local name="message" type="string" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // USE this procedure to view Prog
+  // that you have already saved
+  //
+  cls()
+  call use:setView(false)
+  //
+  // Prog
+  //
+  call use:listcreate("PROG ")
+  // set the path to prog pallet
+  //
+  call prog:getSize(nSize)
+  // refresh the list
+  for i=0 to nSize-1
+    call prog:get(sEvent,i)
+    if sEvent!=""
+      call use:listadd(sEvent)
+    endIf
+  endFor
+  call use:listupdate(0)
+  call language:message(message,60)
+  call use:typeLen(0,13,message,40)
+  call language:message(message,-19)
+  message=" F7: "+message
+  call use:type(0,9,message)
+  do
+    lKey=get()
+    call use:listevent(lKey,i,x_sEvent)
+  until lKey==270 or lKey==255 or lKey==277
+  if lKey==277
+    x_sEvent=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

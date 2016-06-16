@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="changeOffset" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_nOffset" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="x" type="num" xsi:type="array" size="1" />
+      <Local name="y" type="num" xsi:type="array" size="1" />
+      <Local name="z" type="num" xsi:type="array" size="1" />
+      <Local name="l_pPoint" type="point" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // build the pallet
+  //
+  // compute
+  for z=0 to pEditPoint.nZ-1
+    for y=0 to pEditPoint.nY-1
+      for x=0 to pEditPoint.nX-1
+        // set all the points
+        l_pPoint=pEditPoint.tData[l_nIndex].pPoint
+        l_pPoint.trsf.x=l_pPoint.trsf.x+x_nOffset*x
+        l_pPoint.trsf.y=l_pPoint.trsf.y+x_nOffset[1]*y
+        l_pPoint.trsf.z=l_pPoint.trsf.z+x_nOffset[2]*z
+        pEditPoint.tData[l_nIndex].pPoint=l_pPoint
+        l_nIndex=l_nIndex+1
+      endFor
+    endFor
+  endFor
+  //
+end]]></Code>
+  </Program>
+</Programs>

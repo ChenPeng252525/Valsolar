@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="isActive" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_bActive" type="bool" xsi:type="element" use="reference" />
+      <Parameter name="x_sItem" type="string" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  // check it
+  if isDefined(saveInOut:cCount[x_sItem])
+    x_bActive=saveInOut:cCount[x_sItem].bActive
+  elseIf isDefined(saveInOut:aCount[x_sItem])
+    x_bActive=(ioStatus(saveInOut:aCount[x_sItem].aAio)>=0)
+  else
+    // not found
+    // toDO 
+    popUpMsg("value not found: "+x_sItem)
+    x_sItem=""
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

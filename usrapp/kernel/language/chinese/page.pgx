@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="page" access="public">
+    <Description><![CDATA[set all the page]]></Description>
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="menuname" type="string" xsi:type="array" use="reference" />
+      <Parameter name="index" type="num" xsi:type="element" />
+    </Parameters>
+    <Code><![CDATA[begin
+  //
+  //  PAGE
+  //
+  //,,,,,,,,,,,,,,,,,,,,,,,
+  //  PAINT
+  //,,,,,,,,,,,,,,,,,,,,,,,
+  //
+  //  HOME PAGE
+  //  Chinese language__translated by QIAN Yong(y.qian@staubli.com)
+  //
+  if index>=10 and index<=19
+    //title ("< Home Page > "+menuname)
+    title ("< 大连戈尔 > "+menuname)
+  endIf
+  //  SELECT PROGRAM
+  if index>=100 and index<=109
+    //title ("< Select Program >")
+    title ("< 选择程序 >")
+  endIf
+  //  SET IN,OUT
+  if index>=110 and index<=119
+    //title ("< Input / Output Editor >")
+    title ("< 输入 / 输出编辑器 >")
+  endIf
+  //  MAINTENANCE
+  if index>=130 and index<=139
+    //title ("< Maintenance >")
+    title ("< 维护页面 >")
+  endIf
+  // ADVANCE
+  if index>=140 and index<=149
+    //title ("< Advance >")
+    title ("< 高级选项 >")
+  endIf
+  // EDIT PROGRAM
+  if index>=1000 and index<=1009
+    //title ("< Program Editor >")
+    title ("< 程序编辑器 >")
+  endIf
+  // SELECT TRAJ
+  if index>=1010 and index<=1019
+    //title ("< Select Trajectory >")
+    title ("< 选择喷涂路径 >")
+  endIf
+  // PROCES LIST
+  if index>=1020 and index<=1029
+    //title ("< Process List >")
+    title ("< 任务列表 >")
+  endIf
+  if index>=1030 and index<=1039
+    title("< Set Process List >")
+  endIf
+  // SET Tool
+  if index>=1400 and index <=1409
+    //title ("< Tool Definition >")
+    title ("< 工具参数定义 >")
+  endIf
+  // EDIT TRAJ
+  if index>=10000 and index<=10009
+    //title ("< Traj Editor >")
+    title ("< 喷涂路径编辑器>")
+  endIf
+  // VIEW LIST OF PROG ITEM
+  if index>=10010 and index<=10019
+    //title ("< Program Viewer >")
+    title ("< 程序视图 >")
+  endIf
+  // EDIT POINT
+  if index>=100000 and index<=100009
+    //title ("< Point Editor >")
+    title ("<喷涂路径点编辑器>")
+  endIf
+  // SELECT Tool
+  if index>=100010 and index<=100019
+    //title ("< Tool Selection >")
+    title ("< 选择工具 >")
+  endIf
+  // TABLE
+  if index>=1000000 and index<=1000009
+    //title ("< Point List >")
+    title ("<喷涂路径点列表>")
+  endIf
+  //,,,,,,,,,,,,,,,,,,,,
+  //  CYCLE
+  //,,,,,,,,,,,,,,,,,,,,
+  if index>=20 and index<=29
+    //title ("< Production Page >")
+    title ("< 生产页面 >")
+  endIf
+  if index>=200 and index<=209
+    //title ("< Simulation >")
+    title ("< 喷涂路径模拟 >")
+  endIf
+  if index>=210 and index<=219
+    //title ("< Stepping Simulation >")
+    title ("< 喷涂路径单步模拟 >")
+  endIf
+  //
+  //  MENU
+  // 
+  menuname=""
+  //,,,,,,,,,,,,,,,,,,,,
+  //  KERNEL
+  //,,,,,,,,,,,,,,,,,,,,
+  switch index
+    //
+    //  HOME PAGE
+    //
+    case 12
+      //  Operator
+      menuname="维护,,,,生产页面,,密码,Session"
+    break
+    case 11
+      //  Programmer
+      menuname="程序菜单,路径菜单,输入/输出编辑器,,生产页面,,高级,退出"
+    break
+    case 10
+      //  Integrator
+      menuname="程序菜单,路径菜单,输入/输出编辑器,自动回零设置,生产页面,,高级,退出"
+    break
+    // On Cycle
+    case 15
+      //  Operator
+      menuname="Maintenance,,,,PRODUCTION PAGE,,Password,"
+    break
+    case 14
+      //  Programmer
+      menuname="Program Menu,Trajectory Menu,Input/Output Editor,,PRODUCTION PAGE,,Advance,"
+    break
+    case 13
+      //  Integrator
+      menuname="Program Menu,Trajectory Menu,Input/Output Editor,,PRODUCTION PAGE,,Advance,"
+    break
+    //
+    //  SELECT PROGRAM
+    //
+    case 102
+      // Operator
+      menuname="模拟,,,"
+    break
+    case 101
+      // Programmer
+      menuname="模拟,,,USB,类型,复制,删除,新建"
+    break
+    case 100
+      // Integrator
+      menuname="模拟,Option,,USB,类型,复制,删除,新建"
+    break
+    // IN PRODUCTION
+    case 105
+      // Operator
+      menuname=",,,"
+    break
+    // In production
+    case 104
+      // Programmer
+      menuname=",,,USB,类型,复制,,新建"
+    break
+    case 103
+      // Integrator
+      menuname=",Option,,USB,类型,复制,,新建"
+    break
+    //
+    //  SET INPUT,OUTPUT
+    //
+    case 111,112
+      // Operator,Programmer
+      menuname=""
+    break
+    case 110
+      // Integrator
+      menuname=",,,,,,删除,新建"
+    break
+    //
+    //  SET ADVANCE
+    //
+    // integrator
+    case 140
+      menuname="工具,语言,恢复/备份,,,Plc,权限,"
+    break
+    // programmer
+    case 141
+      menuname="工具,语言,恢复/备份,,,Plc,权限,"
+    break
+    // ON Cycle
+    // integrator
+    case 143
+      menuname="Tool,Settings,Restore / Backup,,,Plc,Profile,"
+    break
+    // programmer
+    case 144
+      menuname="Tool,,Restore / Backup,,,Plc,Profile,"
+    break
+    //
+    // Frame page
+    //
+    // integrator
+    case 150
+      menuname="Teach,Tool,Execute,Align,Compute,Mark,Paste,"
+    break
+    // programmer
+    case 151
+      menuname="Teach,Tool,Execute,Align,Compute,Mark,Paste,"
+    break
+    // operator
+    case 152
+      menuname=",,Execute,,,,,"
+    break
+    // on cycle
+    // integrator
+    case 153
+      menuname=""
+    break
+    // programmer
+    case 154
+      menuname=""
+    break
+    // operator
+    case 155
+      menuname=""
+    break
+    //
+    //  EDIT PROGRAM
+    //
+    // Integrator programmer
+    case 1000,1001
+      menuname="模拟,,I/O,粘贴,标记,删除,插入,保存"
+    break
+    // Production
+    case 1003,1004
+      menuname=",,I/O,粘贴,标记,删除,插入,保存"
+    break
+    //
+    //  SELECT TRAJ
+    //
+    // integrator/programmer
+    case 1010
+      menuname="模拟,Option,,USB,类型,复制,删除,新建"
+    break
+    // programmer
+    case 1011
+      menuname="Simulation,,,USB File Manager,Type,Duplicate,Delete,New"
+    break
+    // cycle
+    // integrator/operator
+    case 1013
+      menuname=",Option,,USB,类型,复制,删除,新建"
+    break
+    // programmer
+    case 1014
+      menuname=",,,USB File Manager,Type,Duplicate,Delete,New"
+    break
+    //
+    //  PROCESS LIST
+    //
+    case 1020,1021,1022,1023,1024,1025
+      menuname="循环,显示,Export List,,类型,清空,删除,插入"
+    break
+    //
+    // SET PROCESS LIST
+    // 
+    case 1032
+      // Operator
+      menuname="Select"
+    break
+    case 1031
+      // Programmer
+      menuname="Select,,,,,Duplicate,Delete,New"
+    break
+    case 1030
+      // Integrator
+      menuname="Select,,,,,Duplicate,Delete,New"
+    break
+    // IN PRODUCTION
+    case 1035
+      menuname=""
+    break
+    // Operator
+    case 1034
+      // Programmer
+      menuname=",,,,,Duplicate,,New"
+    break
+    case 1033
+      // Integrator
+      menuname=",,,,,Duplicate,,New"
+    break
+    //
+    // POINT INTERFACE
+    //
+    // Integrator
+    case 1040,1043
+      menuname="Simulation,Align,,,,,,New"
+    break
+    // Programmer
+    case 1041,1044
+      menuname="Simulation,Align,,,,,,New"
+    break
+    // Operator
+    case 1042,1045
+      menuname="Simulation,Align,,,,,,New"
+    break
+    //
+    //  SELECT TOOL
+    //
+    // integrator
+    case 1400,1401
+      menuname=",,,计算,运动,复制,删除,新建"
+    break
+    // in production
+    case 1403,1404
+      menuname=",,,,,复制,,新建"
+    break
+    case 1406,1407
+      //this is for the reference tool
+      menuname=",,记录,,运动,,,新建"
+    break
+    // in production
+    case 1409,1410
+      //this is for the reference tool
+      menuname=",,,,,,,新建"
+    break
+    //
+    //  EDIT TRAJ
+    //
+    case 10000,10001
+      menuname="工具,,改名,粘贴,标记,删除,插入,保存"
+    break
+    // On cycle
+    case 10003,10004
+      menuname="工具,,改名,粘贴,标记,删除,插入,保存"
+    break
+    //
+    //  VIEW PROGRAM ITEM
+    //
+    // Integrator programmer
+    case 10010,10011
+      menuname="模拟"
+    break
+    // Production
+    case 10013,10014
+      menuname=""
+    break
+    //
+    //  EDIT POINT
+    //
+    case 100000,100001
+      menuname=",,,混合,速度,删除,插入,保存"
+    break
+    // on Cycle
+    case 100003,100004
+      menuname=",,,混合,速度,删除,插入,保存"
+    break
+    //
+    //  SET TOOL
+    //
+    case 100010,100011
+      menuname="编辑工具"
+    break
+    // On Cycle
+    case 100013,100014
+      menuname=""
+    break
+    //
+    // CYCLE
+    //
+    case 20,21
+      // page PRODUCTION
+      menuname="HOME,,,"
+    break
+    case 22
+      // page PRODUCTION
+      menuname="HOME,,"
+    break
+    // On Cycle
+    case 23,24
+      // page PRODUCTION
+      menuname=",,,"
+    break
+    case 25
+      // page PRODUCTION Operator
+      menuname=",,"
+    break
+    //
+    case 200
+      // PAGE SIMULATION
+      menuname=",,,,,,停止"
+    break
+    case 210,211
+      // STEP SIMULATION
+      menuname="上步,当前,下步,,,,开始"
+    break
+  endSwitch
+end
+
+]]></Code>
+  </Program>
+</Programs>

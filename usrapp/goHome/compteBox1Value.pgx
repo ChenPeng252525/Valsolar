@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="compteBox1Value" access="public">
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1">
+      <Parameter name="x_sName" type="string" xsi:type="element" />
+      <Parameter name="x_nKeySafeNum" type="num" xsi:type="array" use="reference" />
+    </Parameters>
+    <Locals>
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  x_nKeySafeNum[0]=9999
+  x_nKeySafeNum[1]=9999
+  x_nKeySafeNum[2]=9999
+  x_nKeySafeNum[3]=-9999
+  x_nKeySafeNum[4]=-9999
+  x_nKeySafeNum[5]=-9999
+  //得到最小X
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.x<x_nKeySafeNum[0] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[0]=sml:box[x_sName].pPointRx[i].trsf.x
+    endIf
+  endFor
+  //得到最小Y
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.y<x_nKeySafeNum[1] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[1]=sml:box[x_sName].pPointRx[i].trsf.y
+    endIf
+  endFor
+  //得到最小Z
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.z<x_nKeySafeNum[2] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[2]=sml:box[x_sName].pPointRx[i].trsf.z
+    endIf
+  endFor
+  //得到最大X
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.x>x_nKeySafeNum[3] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[3]=sml:box[x_sName].pPointRx[i].trsf.x
+    endIf
+  endFor
+  //得到最大Y
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.y>x_nKeySafeNum[4] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[4]=sml:box[x_sName].pPointRx[i].trsf.y
+    endIf
+  endFor
+  //得到最大Z
+  for i=0 to size(sml:box[x_sName].pPointRx)-1
+    if sml:box[x_sName].pPointRx[i].trsf.z>x_nKeySafeNum[5] and left(sml:box[x_sName].comment[i],1)=="#"
+      x_nKeySafeNum[5]=sml:box[x_sName].pPointRx[i].trsf.z
+    endIf
+  endFor
+end]]></Code>
+  </Program>
+</Programs>

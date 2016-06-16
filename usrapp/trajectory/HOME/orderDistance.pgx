@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="orderDistance" access="private" >
+    <Parameters xmlns="http://www.staubli.com/robotics/VAL3/Param/1" >
+      <Parameter name="x_nValue" type="num" use="reference" xsi:type="array" dimensions="1" />
+      <Parameter name="x_nCoeff" type="num" use="value" xsi:type="element" dimensions="1" />
+    </Parameters>
+    <Locals>
+      <Local name="l_nValue" type="num" xsi:type="array" size="4" />
+      <Local name="i" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  //
+  // x_nValue[0]= home index
+  // x_nValue[1]= joint index
+  // x_nValue[2]= nDistance
+  // x_nCoeff = coefficent using J4 J5 J6
+  //
+  // INIT
+  //
+  // copy
+  l_nValue=x_nValue
+  l_nValue[1]=x_nValue[1]
+  l_nValue[2]=x_nValue[2]
+  l_nValue[3]=x_nCoeff
+  //
+  if nDistance==-1
+    nDistance=x_nValue[2]
+    nJoint=x_nValue[1]
+    nHome=x_nValue
+    nCoeff=x_nCoeff
+  else
+    // MAKE THE  LIST
+    for i=0 to size(nDistance)-1
+      // a minimum find
+      if x_nValue[2]<nDistance[i]
+        call insertValue(l_nValue,i)
+        return
+      else
+        // not found put at the end
+        if i==size(nDistance)-1
+          call insertValue(l_nValue,i+1)
+          return
+        endIf
+      endIf
+    endFor
+  endIf
+end]]></Code>
+  </Program>
+</Programs>
